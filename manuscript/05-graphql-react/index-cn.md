@@ -1,6 +1,24 @@
-# React with GraphQL
+> React with GraphQL
 
-In this client-sided GraphQL application we'll build together, you will learn how to combine React with GraphQL. There is no clever library like [Apollo Client](https://github.com/apollographql/apollo-client) or [Relay](https://github.com/facebook/relay) to help you get started yet, so instead, you will perform GraphQL queries and mutations with basic HTTP requests. Later, in the next application we are going to build together, I'll introduce Apollo as a GraphQL client for your React.js application. For now, the application we build should only show how to use GraphQL in React with HTTP.
+# React和GraphQL的结合
+
+
+
+>  In this client-sided GraphQL application we'll build together, you will learn how to combine React with GraphQL. 
+
+在我们将一起构建的这个GraphQL的客户端程序中，你将了解如何将React与GraphQL结合起来。
+
+> There is no clever library like [Apollo Client](https://github.com/apollographql/apollo-client) or [Relay](https://github.com/facebook/relay) to help you get started yet, so instead, you will perform GraphQL queries and mutations with basic HTTP requests. 
+
+目前还没有像 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay)这样便捷的库来帮助你入门，因此，你将使用基本的HTTP请求执行GraphQL查询和修改。
+
+>  Later, in the next application we are going to build together, I'll introduce Apollo as a GraphQL client for your React.js application. 
+
+在我们将要一起构建的下一个应用程序中，我将介绍Apollo作为你的React.js应用程序的GraphQL客户机。
+
+> For now, the application we build should only show how to use GraphQL in React with HTTP.
+
+目前，我们构建的应用程序只展示如何在React with HTTP中使用GraphQL。
 
 Along the way, you will build a simplified GitHub client, basically an issue tracker for GitHub, that consumes [GitHub's GraphQL API](https://developer.github.com/v4/). You will perform GraphQL queries and mutations to read and write data, and by the end, you should be able to showcase a GraphQL in React example that can be used by other developers as a learning tool. The final application you are going to build can be found in this [repository on GitHub](https://github.com/rwieruch/react-graphql-github-vanilla).
 
