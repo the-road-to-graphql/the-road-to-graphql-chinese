@@ -1,12 +1,12 @@
-# GraphQL Setup, Tools and APIs
+# GraphQL 准备, 相关工具和 API
 
-Step-by-step is often the easiest way to learn something new, so it's fortunate that learning GraphQL in JavaScript teaches both the client and the server-side of an application. Seeing both sides of the web transactions is useful, but the catch is you have to learn two environments. The step-by-step mentality can be difficult to apply here, so I encourage beginners to start with a client-side application by consuming a third-party GraphQL API before the server side, which uses a GraphQL server.
+循序渐进通常是学习新东西最简单的方式，使用 JavaScript 来学习 GraphQL 是一件非常幸运的事，因为它同时教你应用程序的客户端和服务端。同时了解网络服务的前后端非常有用，但问题是你需要同时了解两个环境。这样使用循序渐进的方式会比较困难，所以我鼓励初学者从客户端应用程序开始，服务端则使用一个使用了 GraphQL 服务第三方的 API。
 
-[GitHub](https://github.com) is one of the first major tech brands to adopt GraphQL. They even managed to [release](https://githubengineering.com/the-github-graphql-api) a public GraphQL API [(official documentation)](https://developer.github.com/v4), which is quite popular among developers, because most are familiar enough with GitHub from using it for their own projects.
+[GitHub](https://github.com)是首批采用 GraphQL 技术的大型科技公司之一。他们甚至[发布了](https://githubengineering.com/the-github-graphql-api)一个公共 GraphQL API [官方文档](https://developer.github.com/v4)，这在开发者中非常受欢迎，因为大多数人都非常熟悉 GitHub 并将其用于自己的项目。
 
-In this chapter, I hope to cover everything you need to get started with GitHub's GraphQL API, and learning to use GraphQL in JavaScript from a client-side perspective by consuming their API. You should gain understanding about GitHub's terminology, and how to consume account data using its GraphQL API. There are a few applications we will implement with this GraphQL API from a client perspective, so it makes sense to invest time into this section to avoid any fundamental mistakes. Afterward, we will transition to the server-side by implementing our own GraphQL server.
+在本章中，我希望能涵盖开始使用 GitHub 的 GraphQL API 所需的一切，并通过使用该 API 从客户端的角度学习如何在 JavaScript 中使用 GraphQL。 你能够了解到 GitHub 的术语，以及如何使用 GraphQL API 来消费帐户数据。 从客户端的角度来看，我们将使用该 GraphQL API 实现一些应用程序，因此在本节中投入时间是有意义的，可以避免犯一些基础性的错误。 之后，我们会转向服务器，自己实现我们的 GraphQL 服务器。
 
-## Feeding the API with Data on GitHub
+## 利用 Github 数据来提供 API
 
 If you don't have an account on GitHub yet, and don't know much about its ecosystem, follow [this official GitHub Learning Lab](https://lab.github.com/). If you want to dive deeper into Git and its essential commands, check out [this guide](https://www.robinwieruch.de/git-essential-commands/) about it. This might come in handy if you decide to share projects with others on GitHub in the future. It is a good way to showcase a development portfolio to potential clients or hiring companies.
 
