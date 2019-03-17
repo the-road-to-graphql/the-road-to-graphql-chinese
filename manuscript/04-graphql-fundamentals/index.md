@@ -320,13 +320,21 @@ The query in GraphQL gives you all you need to read data from a GraphQL API. The
   * operation names
   * directives
 
-## GraphQL Operation: Mutation
+> ##GraphQL Operation: Mutation
 
-This section introduces the GraphQL mutation. It complements the GraphQL query because it is used for writing data instead of reading it. The mutation shares the same principles as the query: it has fields and objects, arguments and variables, fragments and operation names, as well as directives and nested objects for the returned result. With mutations you can specify data as fields and objects that should be returned after it 'mutates' into something acceptable. Before you start making your first mutation, be aware that you are using live GitHub data, so if you follow a person on GitHub using your experimental mutation, you will follow this person for real. Fortunately this sort of behavior is encouraged on GitHub.
+##GraphQL操作：变更
 
-In this section, you will star a repository on GitHub, the same one you used a query to request before, using a mutation [from GitHub's API](https://developer.github.com/v4/mutation/addstar). You can find the `addStar` mutation in the "Docs" sidebar. The repository is a project for teaching developers about the fundamentals of React, so starring it should prove useful.
+> This section introduces the GraphQL mutation. It complements the GraphQL query because it is used for writing data instead of reading it. The mutation shares the same principles as the query: it has fields and objects, arguments and variables, fragments and operation names, as well as directives and nested objects for the returned result. With mutations you can specify data as fields and objects that should be returned after it 'mutates' into something acceptable. Before you start making your first mutation, be aware that you are using live GitHub data, so if you follow a person on GitHub using your experimental mutation, you will follow this person for real. Fortunately this sort of behavior is encouraged on GitHub.
 
-You can visit [the repository](https://github.com/the-road-to-learn-react/the-road-to-learn-react) to see if you've given a star to the repository already. We want an unstarred repository so we can star it using a mutation. Before you can star a repository, you need to know its identifier, which can be retrieved by a query:
+这部分将会介绍GraphQL变更。它作为GraphQL查询的补充，用于改写数据而不是读取。变更和查询拥有着同样的原则：拥有字段和对象、参数和变量、片段和操作名称、指令和返回结果中的嵌套对象。通过变更你可以指定在想要的"改变"发生后返回数据的字段和对象。在你开始你尝试第一次变更之前，请注意你在使用实时Github数据，也就是说如果你在尝试变更的时候关注了Github上的一个人，你就真的关注了这个人。幸运的是这种行为在Github上是受到鼓励的。
+
+> In this section, you will star a repository on GitHub, the same one you used a query to request before, using a mutation [from GitHub's API](https://developer.github.com/v4/mutation/addstar). You can find the `addStar` mutation in the "Docs" sidebar. The repository is a project for teaching developers about the fundamentals of React, so starring it should prove useful.
+
+接下来你将会Star一个Github上的代码库，而和你之前使用的查询请求一样，将使用[来自Github API](https://developer.github.com/v4/mutation/addstar)的一种变更。你可以在"Docs"侧边栏中找到`addStar`这种变更。这个代码库是一个教开发者关于React基础的项目，所以Star这个代码库能够证明它有用。
+
+> You can visit [the repository](https://github.com/the-road-to-learn-react/the-road-to-learn-react) to see if you've given a star to the repository already. We want an unstarred repository so we can star it using a mutation. Before you can star a repository, you need to know its identifier, which can be retrieved by a query:
+
+你可以访问[这个代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来查看你是否已经成功Star。我们想要一个尚未Star过的代码库，这样我们可以通过变更操作来Star它。在你Star一个代码库前，你需要知道它的ID，而这个ID你可以通过下面的查询获取：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -344,14 +352,18 @@ query {
 }
 ~~~~~~~~
 
-In the results for the query in GraphiQL, you should see the identifier for the repository:
+> In the results for the query in GraphiQL, you should see the identifier for the repository:
+
+在GraphiQL的查询结果中，你应该能看到代码库的ID：
 
 {title="Code Playground",lang="json"}
 ~~~~~~~~
 MDEwOlJlcG9zaXRvcnk2MzM1MjkwNw==
 ~~~~~~~~
 
-Before using the identifier as a variable, you can structure your mutation in GraphiQL the following way:
+>  Before using the identifier as a variable, you can structure your mutation in GraphiQL the following way:
+
+在使用ID作为参数之前，你可以在GraphiQL中使用以下结构的变更操作：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -365,7 +377,9 @@ mutation AddStar($repositoryId: ID!) {
 }
 ~~~~~~~~
 
-The mutation's name is given by GitHub's API: `addStar`. You are required to pass it the `starrableId` as `input` to identify the repository; otherwise, the GitHub server won't know which repository to star with the mutation. In addition, the mutation is a named mutation: `AddStar`. It's up to you to give it any name. Last but not least, you can define the return values of the mutation by using objects and fields again. It's identical to a query. Finally, the variables tab provides the variable for the mutation you retrieved with the last query:
+> The mutation's name is given by GitHub's API: `addStar`. You are required to pass it the `starrableId` as `input` to identify the repository; otherwise, the GitHub server won't know which repository to star with the mutation. In addition, the mutation is a named mutation: `AddStar`. It's up to you to give it any name. Last but not least, you can define the return values of the mutation by using objects and fields again. It's identical to a query. Finally, the variables tab provides the variable for the mutation you retrieved with the last query:
+
+这个变更的名称参照于Github API提供的`addStar`。你需要将`starrableId`作为`input` 传参来识别代码库；否则Github服务器无从得知这个变更是要Star哪个代码库。另外，这个变更被命名为：`AddStar`。你也可以给它任意名称。然后你可以再次通过对象和字段来规定这个变更的返回值，这和查询是完全一样的。最后一点，在变量区中提供你在上个查询中取回的变量用于这次变更：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -374,7 +388,9 @@ The mutation's name is given by GitHub's API: `addStar`. You are required to pas
 }
 ~~~~~~~~
 
-Once you execute the mutation, the result should look like the following. Since you specified the return values of your mutation using the `id` and `viewerHasStarred` fields, you should see them in the result.
+> Once you execute the mutation, the result should look like the following. Since you specified the return values of your mutation using the `id` and `viewerHasStarred` fields, you should see them in the result.
+
+一旦你执行了这个变更，结果应该基本和下面一样。因为你使用了`id`和`viewerHasStarred`字段指定你的变更的返回值，所以你应该能在结果中找到它们。
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -390,20 +406,45 @@ Once you execute the mutation, the result should look like the following. Since 
 }
 ~~~~~~~~
 
-The repository is starred now. It's visible in the result, but you can verify it in the [repository on GitHub](https://github.com/the-road-to-learn-react/the-road-to-learn-react). Congratulations, you made your first mutation.
+> The repository is starred now. It's visible in the result, but you can verify it in the [repository on GitHub](https://github.com/the-road-to-learn-react/the-road-to-learn-react). Congratulations, you made your first mutation.
 
-### Exercises:
+这个代码库现在已经Star了。在结果中能够看到，但你也可以通过查看[Github上的代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来确认。恭喜，你完成了你的第一个变更操作。
 
-* Read more about [the Mutation in GraphQL](http://graphql.org/learn/queries/#mutations)
-* Explore GitHub's mutations by using the "Docs" sidebar in GraphiQL
-* Find GitHub's `addStar` mutation in the "Docs" sidebar in GraphiQL
-  * Check its possible fields for returning a response
-* Create a few other mutations for this or another repository such as:
-  * Unstar repository
-  * Watch repository
-* Create two named mutations side by side in the GraphiQL panel and execute them
-* Read more about [the schema and types](http://graphql.org/learn/schema)
-  * Make yourself a picture of it, but don't worry if you don't understand everything yet
+> ###Exercises:
+
+### 练习：
+
+> * Read more about [the Mutation in GraphQL](http://graphql.org/learn/queries/#mutations)
+
+* 阅读更多关于[GraphQL中的变更](http://graphql.org/learn/queries/#mutations)
+
+> * Explore GitHub's mutations by using the "Docs" sidebar in GraphiQL
+
+* 通过GraphiQL上的"Docs"侧边栏探索Github的更多变更操作
+
+> * Find GitHub's `addStar` mutation in the "Docs" sidebar in GraphiQL
+> 	* Check its possible fields for returning a response 	
+
+* 在GraphiQL上的"Docs"侧边栏中找到Github的`addStar`变更
+	* 检查它能够用于返回的字段
+
+> * Create a few other mutations for this or another repository such as:
+>   * Unstar repository
+>   * Watch repository
+
+* 创建一些这个或者其他代码库的变更，比如：
+	* 取消Star代码库
+	* Watch代码库
+
+> * Create two named mutations side by side in the GraphiQL panel and execute them
+
+* 在GraphiQL上创建两个命名变更并执行它们
+
+> * Read more about [the schema and types](http://graphql.org/learn/schema)
+>   * Make yourself a picture of it, but don't worry if you don't understand everything yet
+
+* 阅读更多关于[schema和类型](http://graphql.org/learn/schema)
+	* 你可以只是大概了解一下，不要担心你有不理解的地方
 
 ## GraphQL Pagination
 
