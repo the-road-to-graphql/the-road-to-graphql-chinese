@@ -16,25 +16,17 @@
 
 ## 编写你的第一个 React GraphQL 客户端
 
-> After the last sections, you should be ready to use queries and mutations in your React application.
+> After the last sections, you should be ready to use queries and mutations in your React application.In this section, you will create a React application that consumes the GitHub GraphQL API. The application should show open issues in a GitHub repository, making it a simple issue tracker.Again, if you lack experience with React, see [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react) to learn more about it. After that you should be well set up for the following section.
 
-在上一节之后，你应该准备好了在 React 应用程序中使用查询和突变。
+在上一节之后，你应该准备好了在 React 应用程序中使用查询和突变。在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。应用程序应该在 GitHub 代码库中显示 open issues，使其成为一个简单的问题跟踪器。同样，如果你对 React 缺乏经验，那就看看 [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识。阅读之后，你就为接下来的部分做好了充分的准备。
 
->  In this section, you will create a React application that consumes the GitHub GraphQL API. 
+> For this application, no elaborate React setup is needed. You will simply use [create-react-app](https://github.com/facebook/create-react-app) to create your React application with zero-configuration. Install it with npm by typing the following instructions on the command line: `npm install -g create-react-app`. If you want to have an elaborated React setup instead, read this [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/).
 
-在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。
+对于这个应用程序，不需要复杂的 React 设置。你只需使用 [create-react-app](https://github.com/facebook/create-react-app) 创建 zero-configuration 的 React 应用程序。在命令行中输入以下指令，用npm安装它：`npm install -g create-react-app`。如果你想要一个详细的 React 设置，请阅读 [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。
 
-> The application should show open issues in a GitHub repository, making it a simple issue tracker.
+> Now, let's create the application with create-react-app. In your general projects folder, type the following instructions: 
 
-应用程序应该在 GitHub 代码库中显示 open issues，使其成为一个简单的问题跟踪器。
-
-> Again, if you lack experience with React, see [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react) to learn more about it. After that you should be well set up for the following section.
-
-同样，如果你对 React 缺乏经验，那就看看 [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识。阅读之后，你就为接下来的部分做好了充分的准备。
-
-For this application, no elaborate React setup is needed. You will simply use [create-react-app](https://github.com/facebook/create-react-app) to create your React application with zero-configuration. Install it with npm by typing the following instructions on the command line: `npm install -g create-react-app`. If you want to have an elaborated React setup instead, read this [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/).
-
-Now, let's create the application with create-react-app. In your general projects folder, type the following instructions:
+现在，让我们使用 create-react-app 创建应用程序。在你的常规项目文件夹中，键入以下说明：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
