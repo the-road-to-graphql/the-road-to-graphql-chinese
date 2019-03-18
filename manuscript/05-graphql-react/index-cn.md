@@ -1,30 +1,46 @@
 > React with GraphQL
 
-# React和GraphQL的结合
-
-
+# React 和 GraphQL 的结合
 
 >  In this client-sided GraphQL application we'll build together, you will learn how to combine React with GraphQL. 
 
-在我们将一起构建的这个GraphQL的客户端程序中，你将了解如何将React与GraphQL结合起来。
+在我们将一起构建的这个 GraphQL 的客户端程序中，你将了解如何将 React 与 GraphQL 结合起来。
 
 > There is no clever library like [Apollo Client](https://github.com/apollographql/apollo-client) or [Relay](https://github.com/facebook/relay) to help you get started yet, so instead, you will perform GraphQL queries and mutations with basic HTTP requests. 
 
-目前还没有像 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay)这样便捷的库来帮助你入门，因此，你将使用基本的HTTP请求执行GraphQL查询和修改。
+目前还没有像 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay) 这样便捷的库来帮助你入门，因此，你将使用基本的 HTTP 请求执行 GraphQL 查询和修改。
 
 >  Later, in the next application we are going to build together, I'll introduce Apollo as a GraphQL client for your React.js application. 
 
-在我们将要一起构建的下一个应用程序中，我将介绍Apollo作为你的React.js应用程序的GraphQL客户机。
+在我们将要一起构建的下一个应用程序中，我将介绍 Apollo 作为你的 React.js 应用程序的 GraphQL 客户端。
 
 > For now, the application we build should only show how to use GraphQL in React with HTTP.
 
-目前，我们构建的应用程序只展示如何在React with HTTP中使用GraphQL。
+我们当前构建的应用程序只展示如何在 React with HTTP 中使用 GraphQL。
 
-Along the way, you will build a simplified GitHub client, basically an issue tracker for GitHub, that consumes [GitHub's GraphQL API](https://developer.github.com/v4/). You will perform GraphQL queries and mutations to read and write data, and by the end, you should be able to showcase a GraphQL in React example that can be used by other developers as a learning tool. The final application you are going to build can be found in this [repository on GitHub](https://github.com/rwieruch/react-graphql-github-vanilla).
+> Along the way, you will build a simplified GitHub client, basically an issue tracker for GitHub, that consumes [GitHub's GraphQL API](https://developer.github.com/v4/). 
 
-## Writing your first React GraphQL Client
+在此过程中，你将构建一个简单的 GitHub 客户机，基本上算是一个使用 [GitHub's GraphQL API](https://developer.github.com/v4/) 的 GitHub 的问题跟踪器。
 
-After the last sections, you should be ready to use queries and mutations in your React application. In this section, you will create a React application that consumes the GitHub GraphQL API. The application should show open issues in a GitHub repository, making it a simple issue tracker. Again, if you lack experience with React, see [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react) to learn more about it. After that you should be well set up for the following section.
+> You will perform GraphQL queries and mutations to read and write data, and by the end, you should be able to showcase a GraphQL in React example that can be used by other developers as a learning tool.
+
+你将执行 GraphQL 的查询和修改来读写数据，到最后，你能够在 React 示例中展示一个 GraphQL，作为其他开发人员的学习工具。
+
+> The final application you are going to build can be found in this [repository on GitHub](https://github.com/rwieruch/react-graphql-github-vanilla).
+
+你将要构建的最终应用程序可以在 [repository on GitHub](https://github.com/rwieruch/react-graphql-github-vanilla) 中找到。
+
+
+
+>  Writing your first React GraphQL Client
+
+## 编写你的第一个 React GraphQL 客户端
+
+> After the last sections, you should be ready to use queries and mutations in your React application.
+
+在上一节之后，你应该准备好在 React 应用程序中使用查询和突变。
+
+In this section, you will create a React application that consumes the GitHub GraphQL API. The application should show open issues in a GitHub repository, making it a simple issue tracker. Again, if you lack experience with React, see [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react) to learn more about it. After that you should be well set up for the following section.
 
 For this application, no elaborate React setup is needed. You will simply use [create-react-app](https://github.com/facebook/create-react-app) to create your React application with zero-configuration. Install it with npm by typing the following instructions on the command line: `npm install -g create-react-app`. If you want to have an elaborated React setup instead, read this [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/).
 
