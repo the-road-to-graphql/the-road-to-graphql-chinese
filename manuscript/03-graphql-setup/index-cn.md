@@ -12,16 +12,16 @@
 
 在我们与 GitHub GraphQL API 交互的过程中，你将使用自己的账号信息来进行读写操作。在此之前，为了能够在使用 API 的时候读到这些信息，请提供附加信息以完善 GitHub 的个人信息。
 
-### Exercises:
+### 练习题：
 
-* Create a GitHub account if you don't have one
-* Provide additional information for your GitHub profile
+* 创建一个 GitHub 账号，如果你没有的话
+* 提供 GitHub 账号的其他信息
 
-### GitHub Repositories
+### GitHub 代码仓库
 
-You can also create repositories on GitHub. In the words of their official glossary: *"A repository is the most basic element of GitHub. They're easiest to imagine as a project's folder. A repository contains all of the project files (including documentation), and stores each file's revision history. Repositories can have multiple collaborators and can be either public or private."* [GitHub's glossary](https://help.github.com/articles/github-glossary/) will explain the key terms--repository, issue, clone, fork, push--which are necessary to follow along with the upcoming chapters to learn about GraphQL. Basically a repository is the place for application source code that can be shared with others. I encourage you to put a few of your projects into GitHub repositories, so you can access them all later with what you've learned about their GraphQL API.
+你还可以在 GitHub 上创建代码仓库。用他们的官方词汇来说：*“代码仓库是 GitHub 的基本元素。它们最容易被想象为项目的文件夹。代码仓库包含项目的所有文件（包括文档），并存储每个文件的修订历史。代码仓库可以有多个协作者，可以是公有仓库也可以是私有仓库。”*[GitHub的术语表]（https://help.github.com/articles/github-glossary/）解释了关键术语——repository，issue，clone，fork，push——在接下来了解 GraphQL 的章节中会使用到这些术语。基本上来说代码仓库是一个可以和他人分享应用程序源码的地方。我鼓励你将一些项目放在 GitHub 代码仓库中，以便以后可以使用 GraphQL API 来访问它们。
 
-If you don't have any projects to upload, you can always 'fork' repositories from other GitHub users and work on copies of them. A fork is basically a clone of a repository where you can add changes without altering the original. There are many public repositories on GitHub that can be cloned to your local machine or forked to your list so you can get an understanding of the mechanic through experimentation. For example, if you visit [my GitHub profile](https://github.com/rwieruch), you can see all my public repositories, though not all of these are mine, because some of them are just forks of others. Feel free to fork these repositories if you'd like to use them as practice, and if you'd like them to be accessible via GitHub's GraphQL API from your own account.
+如果你没有上传任何项目，你可以随时从其他 GitHub 用户“fork”代码仓库，并在其副本上进行操作。fork 大体来说是其他代码仓库的克隆，可以让你在不改变原始仓库的基础上进行添加修改。GitHub 上有很多开放的代码仓库，可以克隆到本地或者 fork 到你的代码仓库列表中，这样你就可以通过实验来了解它们的机制。例如，如果你访问[我的 GitHub 主页](https://github.com/rwieruch)，你可以看到我所有的代码仓库，但并非所有的代码仓库都是我的，因为有些是从别人那儿 fork 来的。如果你想使用它们来进行练习，或者通过 GitHub 的 GraphQL API 来访问，请随意 fork 这些仓库。
 
 ### Exercises:
 
