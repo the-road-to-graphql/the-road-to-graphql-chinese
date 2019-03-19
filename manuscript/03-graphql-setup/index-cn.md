@@ -8,9 +8,9 @@
 
 ## 利用 Github 数据来提供 API
 
-If you don't have an account on GitHub yet, and don't know much about its ecosystem, follow [this official GitHub Learning Lab](https://lab.github.com/). If you want to dive deeper into Git and its essential commands, check out [this guide](https://www.robinwieruch.de/git-essential-commands/) about it. This might come in handy if you decide to share projects with others on GitHub in the future. It is a good way to showcase a development portfolio to potential clients or hiring companies.
+如果你还有没 Github 账号，对它的生态系统了解也不多，请关注[这个 GitHub 官方的学习实验室](https://lab.github.com/)。如果想深入了解 Git 及其基本命令，请查看[本指南]（https://www.robinwieruch.de/git-essential-commands/）。如果你想将来在 GitHub 上与其他人分享项目，会发现这些非常有用。这也是向潜在客户或招聘公司展示开发作品的好方式。
 
-For our interactions with GitHub's GraphQL API, you will use your own account with information to read/write from/to this data. Before that, complete your GitHub profile by providing additional information so you can recognize it later when it is read by the API.
+在我们与 GitHub GraphQL API 交互的过程中，你将使用自己的账号信息来进行读写操作。在此之前，为了能够在使用 API 的时候读到这些信息，请提供附加信息以完善 GitHub 的个人信息。
 
 ### Exercises:
 
