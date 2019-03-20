@@ -561,9 +561,12 @@ What you have done in the last steps of this section were pure React implementat
 * Read more about [queries with Apollo Client in React](https://www.apollographql.com/docs/react/essentials/queries.html)
 * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53Q6K3V)
 
-## Apollo Client Error Handling in React
+> ## Apollo Client Error Handling in React
+## Apollo Client 在 React 中的错误处理
 
-Before diving into GraphQL mutations in React with Apollo Client, this section should clarify error handling with Apollo in React. The error handling happens on two levels: the application level and the query/mutation level. Both can be implemented with the two cases that follow. On a query level, in your Profile component, you have access to the query `data` and `loading` properties. Apart from these, you can also access the `error` object, which can be used to show a conditional error message.
+> Before diving into GraphQL mutations in React with Apollo Client, this section should clarify error handling with Apollo in React. The error handling happens on two levels: the application level and the query/mutation level. Both can be implemented with the two cases that follow. On a query level, in your Profile component, you have access to the query `data` and `loading` properties. Apart from these, you can also access the `error` object, which can be used to show a conditional error message.
+
+在我们更深入探究在React和Apollo Client中如何使用GraphQL变更（mutations）的知识之前，这一节将阐述如何在React中使用Apollo进行错误处理。错误处理出现在两个级别：应用程序级别，和查询/变更级别（query/mutation）。两种情况都可以通过以下两种方法处理。在查询级别中，你可以在你的配置组件中访问`data`和`loading`属性，除此之外，你也可以访问`error`对象，该对象可用于显示错误消息。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -600,7 +603,9 @@ const Profile = () => (
 export default Profile;
 ~~~~~~~~
 
-Whereas the ErrorMessage component from the *src/Error/index.js* could look like the following:
+> Whereas the ErrorMessage component from the *src/Error/index.js* could look like the following:
+
+而*src/Error/index.js*文件中的ErrorMessage组件代码如下：
 
 {title="src/Error/index.js",lang="javascript"}
 ~~~~~~~~
@@ -617,14 +622,17 @@ const ErrorMessage = ({ error }) => (
 export default ErrorMessage;
 ~~~~~~~~
 
-Try to change the name of a field in your query to something not offered by GitHub's GraphQL API, and observe what's rendered in the browser. You should see something like this: *Error: GraphQL error: Field 'viewers' doesn't exist on type 'Query'*. Or, if you simulate offline functionality, you'll see: *Error: Network error: Failed to fetch*. That's how errors can be separated into GraphQL errors and network errors. You can handle errors on a component or query level, but it will also help with mutations later. To implement error handling on an application level, install another Apollo package:
+> Try to change the name of a field in your query to something not offered by GitHub's GraphQL API, and observe what's rendered in the browser. You should see something like this: *Error: GraphQL error: Field 'viewers' doesn't exist on type 'Query'*. Or, if you simulate offline functionality, you'll see: *Error: Network error: Failed to fetch*. That's how errors can be separated into GraphQL errors and network errors. You can handle errors on a component or query level, but it will also help with mutations later. To implement error handling on an application level, install another Apollo package:
+
+尝试将查询中的字段名字更改为Github的GraphQL API未提供的内容，然后观察浏览器的渲染内容。你应该可以看到如下内容：*Error: GraphQL error: Field 'viewers' doesn't exist on type 'Query'*。或者，如果你模拟了离线功能，你将会看到：*Error: Network error: Failed to fetch*。这就是GraphQL错误的划分方式，可以被分为GraphQL错误和网络错误。你可以在组件或者查询级别上来处理这些错误，但是它也将对后续讲到变更（mutations）操作有所帮助。想要在应用程序级别处理错误，需要安装另一个Apollo包：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install apollo-link-error --save
 ~~~~~~~~
 
-You can import it in your *src/index.js* file and create such an error link:
+> You can import it in your *src/index.js* file and create such an error link:
+你可以在*src/index.js*文件中导入这个包，并且创建一个如下所示的错误链接（link）：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -653,16 +661,22 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 # leanpub-end-insert
 ~~~~~~~~
 
-You could differentiate the error handling at the application level into development and production mode. During development, it might be sufficient to console log the errors to a developer console in the browser. In production mode, you can setup an error tracking service like [Sentry](https://sentry.io). It will teach you to identify bugs in a web dashboard more efficiently.
+> You could differentiate the error handling at the application level into development and production mode. During development, it might be sufficient to console log the errors to a developer console in the browser. In production mode, you can setup an error tracking service like [Sentry](https://sentry.io). It will teach you to identify bugs in a web dashboard more efficiently.
 
-Now you have two links in your application: `httpLink` and `errorLink`. To combine them for use with the Apollo Client instance, we'll download yet another useful package in the Apollo ecosystem that makes link compositions possible in the command line:
+你可以将应用程序级别的错误区分为开发和生产模式。在开发期间，将错误打印到浏览器的控制台可能就足够了。在生产模式下，你可以构建一个错误跟踪服务，比如[Sentry](https://sentry.io)。它将教你更有效的在Web面板中识别错误。
+
+>Now you have two links in your application: `httpLink` and `errorLink`. To combine them for use with the Apollo Client instance, we'll download yet another useful package in the Apollo ecosystem that makes link compositions possible in the command line:
+
+现在，在你的应用程序里有两个链接：`httpLink`和`errorLink`。为了将它们和Apollo Client实例结合使用，我们需要在Apollo的生态系统中下载另一个有用的包，它可以实现链接组合，使用如下命令安装：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install apollo-link --save
 ~~~~~~~~
 
-And second, use it to combine your two links in the *src/index.js* file:
+> And second, use it to combine your two links in the *src/index.js* file:
+
+然后，在*src/index.js*文件中使用它来组合你的两个链接：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -695,16 +709,24 @@ const client = new ApolloClient({
 });
 ~~~~~~~~
 
-That's how two or multiple links can be composed for creating an Apollo Client instance. There are several links developed by the community and Apollo maintainers that extend the Apollo Client with advanced functionality. Remember, it's important to understand that links can be used to access and modify the GraphQL control flow. When doing so, be careful to chain the control flow in the correct order. The `apollo-link-http` is called a **terminating link** because it turns an operation into a result that usually occurs from a network request. On the other side, the `apollo-link-error` is a **non-terminating link**. It only enhances your terminating link with features, since a terminating link has to be the last entity in the control flow chain.
+> That's how two or multiple links can be composed for creating an Apollo Client instance. There are several links developed by the community and Apollo maintainers that extend the Apollo Client with advanced functionality. Remember, it's important to understand that links can be used to access and modify the GraphQL control flow. When doing so, be careful to chain the control flow in the correct order. The `apollo-link-http` is called a **terminating link** because it turns an operation into a result that usually occurs from a network request. On the other side, the `apollo-link-error` is a **non-terminating link**. It only enhances your terminating link with features, since a terminating link has to be the last entity in the control flow chain.
 
-### Exercises:
+这就是如何组合两个或者多个链接来创建一个Apollo Client实例。Apollo社区和维护人员发了几个链接用以拓展Apollo Client的高级功能。请记住，链接可被用于访问和修改GraphQL控制流程。当我们使用链接时，要注意以正确的顺序链接控制流程。`apollo-link-http`被叫做**终止链接**，因为它会将操作转换成一个网络请求。另一方面，`apollo-link-error`是**非终止链接**，它仅仅是增强了终止链接的功能，因此终止链接必须是控制链中的最后一个实体。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
-* Read more about [different Apollo Error types and error policies](https://www.apollographql.com/docs/react/features/error-handling.html)
-* Read more about [Apollo Links](https://www.apollographql.com/docs/link/)
-* Read more about [composable Apollo Links](https://www.apollographql.com/docs/link/composition.html)
-* Implement the [apollo-link-retry](https://www.apollographql.com/docs/link/links/retry.html) in case a network request fails
-* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53HLLFX)
+> ### Exercises:
+### 练习：
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
+* 确认[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
+> * Read more about [different Apollo Error types and error policies](https://www.apollographql.com/docs/react/features/error-handling.html)
+* 阅读更多关于[不同的Apollo错误类型和错误策略](https://www.apollographql.com/docs/react/features/error-handling.html)
+> * Read more about [Apollo Links](https://www.apollographql.com/docs/link/)
+* 阅读更多关于[Apollo链接](https://www.apollographql.com/docs/link/)
+> * Read more about [composable Apollo Links](https://www.apollographql.com/docs/link/composition.html)
+* 阅读更多关于[可组合的Apollo链接](https://www.apollographql.com/docs/link/composition.html)
+>* Implement the [apollo-link-retry](https://www.apollographql.com/docs/link/links/retry.html) in case a network request fails
+* 实现[Apollo链接重试](https://www.apollographql.com/docs/link/links/retry.html)处理网络请求失败
+>* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53HLLFX)
+* 花3分钟来l做一个[练习](https://www.surveymonkey.com/r/53HLLFX)
 
 ## GraphQL Mutation with Apollo Client in React
 
@@ -1236,6 +1258,7 @@ On an implementation level, you learned about extracting fragments from a query 
 * Read more about [Caching in Apollo Client and the composite key to identify entities](https://www.apollographql.com/docs/react/advanced/caching.html)
 * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5BSDXF7)
 
+****** end here ******
 ## Apollo Client Optimistic UI in React
 
 We've covered the basics, so now it's time for the advanced topics. One of those topics is the optimistic UI with React Apollo, which makes everything onscreen more synchronous. For instance, when liking a post on Twitter, the like appears immediately. As developers, we know there is a request that sends the information for the like to the Twitter backend. This request is asynchronous and doesn't resolve immediately with a result. The optimistic UI immediately assumes a successful request and mimics the result of such request for the frontend so it can update its UI immediately, before the real response arrives later. With a failed request, the optimistic UI performs a rollback and updates itself accordingly. Optimistic UI improves the user experience by omitting inconvenient feedback (e.g. loading indicators) for the user. The good thing is that React Apollo comes with this feature out of the box.
