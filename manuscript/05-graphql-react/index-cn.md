@@ -8,7 +8,7 @@
 
 > Along the way, you will build a simplified GitHub client, basically an issue tracker for GitHub, that consumes [GitHub's GraphQL API](https://developer.github.com/v4/). You will perform GraphQL queries and mutations to read and write data, and by the end, you should be able to showcase a GraphQL in React example that can be used by other developers as a learning tool.The final application you are going to build can be found in this [repository on GitHub](https://github.com/rwieruch/react-graphql-github-vanilla).
 
-在此过程中，你将构建一个简单的 GitHub 客户机，相当于是一个简单的使用 [GitHub's GraphQL API](https://developer.github.com/v4/) 的 GitHub 的问题跟踪器。你将执行 GraphQL 的查询和修改来读写数据，最后，你能够在 React 示例中展示一个 GraphQL，作为其他开发人员的学习工具。你将要构建的最终应用程序可以在 [repository on GitHub](https://github.com/rwieruch/react-graphql-github-vanilla) 中找到。
+在此过程中，你将构建一个简单的 GitHub 客户机，相当于是一个简单的使用 [GitHub's GraphQL API](https://developer.github.com/v4/) 的 GitHub 的问题跟踪器。你将执行 GraphQL 的查询和修改来读写数据，最后，你能够在 React 示例中展示一个 GraphQL，作为其他开发人员的学习工具。你将要构建的最终应用程序可以在 [GitHub 的代码库](https://github.com/rwieruch/react-graphql-github-vanilla) 中找到。
 
 
 
@@ -18,15 +18,15 @@
 
 > After the last sections, you should be ready to use queries and mutations in your React application.In this section, you will create a React application that consumes the GitHub GraphQL API. The application should show open issues in a GitHub repository, making it a simple issue tracker.Again, if you lack experience with React, see [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react) to learn more about it. After that you should be well set up for the following section.
 
-在上一节之后，你应该准备好了在 React 应用程序中使用查询和突变。在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。应用程序应该在 GitHub 代码库中显示 open issues，使其成为一个简单的问题跟踪器。同样，如果你对 React 缺乏经验，那就看看 [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识。阅读之后，你就为接下来的部分做好了充分的准备。
+在上一节之后，你应该准备好了在 React 应用程序中使用查询和修改。在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。应用程序应该在 GitHub 代码库中显示 open issues，使其成为一个简单的问题跟踪器。同样，如果你对 React 缺乏经验，那就看看 [React 学习之道](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识。阅读之后，你就为接下来的部分做好了充分的准备。
 
 > For this application, no elaborate React setup is needed. You will simply use [create-react-app](https://github.com/facebook/create-react-app) to create your React application with zero-configuration. Install it with npm by typing the following instructions on the command line: `npm install -g create-react-app`. If you want to have an elaborated React setup instead, read this [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/).
 
-对于这个应用程序，不需要复杂的 React 设置。你只需使用 [create-react-app](https://github.com/facebook/create-react-app) 创建 zero-configuration 的 React 应用程序。在命令行中输入以下指令，用npm安装它：`npm install -g create-react-app`。如果你想要一个详细的 React 设置，请阅读 [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。
+对于这个应用程序，不需要复杂的 React 设置。你只需使用 [create-react-app](https://github.com/facebook/create-react-app) 创建 zero-configuration 的 React 应用程序。在命令行中输入以下指令，用npm安装它：`npm install -g create-react-app`。如果你想要一个详细的 React 设置，请阅读 [React 的 Webpack 设置指南](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。
 
 > Now, let's create the application with create-react-app. In your general projects folder, type the following instructions: 
 
-现在，让我们使用 create-react-app 创建应用程序。在你的常规项目文件夹中，键入以下说明：
+现在，让我们使用 create-react-app 创建应用程序。在你的常规项目文件夹中，输入以下命令：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -34,9 +34,13 @@ create-react-app react-graphql-github-vanilla
 cd react-graphql-github-vanilla
 ~~~~~~~~
 
-After your application has been created, you can test it with `npm start` and `npm test`. Again, after you have learned about plain React in *the Road to learn React*, you should be familiar with npm, create-react-app, and React itself.
+> After your application has been created, you can test it with `npm start` and `npm test`. Again, after you have learned about plain React in *the Road to learn React*, you should be familiar with npm, create-react-app, and React itself.
 
-The following application will focus on the *src/App.js* file. It's up to you to split out components, configuration, or functions to their own folders and files. Let's get started with the App component in the mentioned file. In order to simplify it, you can change it to the following content:
+创建应用程序之后，可以使用 `npm start` 和 `npm test` 对其进行测试。同样的，在学习了简单的 React 之后，你应该熟悉 npm，create-react-app 和 React 本身。
+
+> The following application will focus on the *src/App.js* file. It's up to you to split out components, configuration, or functions to their own folders and files. Let's get started with the App component in the mentioned file. In order to simplify it, you can change it to the following content:
+
+接下来的应用程序将关注 src/App.js 文件。如果你愿意，可以将组件、配置或函数拆分到它们自己的文件夹和文件中。我们从上述文件中的 App 组件开始。为了简化它，你可以将其更改为以下内容：
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -57,16 +61,22 @@ class App extends Component {
 export default App;
 ~~~~~~~~
 
-The component only renders a `title` as a headline. Before implementing any more React components, let's install a library to handle GraphQL requests, executing queries and mutations, using a HTTP POST method. For this, you will use [axios](https://github.com/axios/axios). On the command line, type the following command to install axios in the project folder:
+> The component only renders a `title` as a headline. Before implementing any more React components, let's install a library to handle GraphQL requests, executing queries and mutations, using a HTTP POST method. For this, you will use [axios](https://github.com/axios/axios). On the command line, type the following command to install axios in the project folder:
+
+当前组件将只会渲染一个 `title` 作为标题。在实现任何更多的 React 组件之前，我们先安装一个库来处理 GraphQL 请求，使用 HTTP、POST 方法执行查询和修改。这里推荐使用 [axios](https://github.com/axios/axios)。在命令行中，输入以下命令在项目文件夹中安装 axios：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install axios --save
 ~~~~~~~~
 
-Afterward, you can import axios next to your App component and configure it. It's perfect for the following application, because somehow you want to configure it only once with your personal access token and GitHub's GraphQL API.
+> Afterward, you can import axios next to your App component and configure it. It's perfect for the following application, because somehow you want to configure it only once with your personal access token and GitHub's GraphQL API.
 
-First, define a base URL for axios when creating a configured instance from it. As mentioned before, you don't need to define GitHub's URL endpoint every time you make a request because all queries and mutations point to the same URL endpoint in GraphQL. You get the flexibility from your query and mutation structures using objects and fields instead.
+接下来，你可以在你的 App 组件中导入并配置它。对于接下面的应用程序来说，它是很不错的，因为在某种程度上，你只需要用你的个人访问令牌和 GitHub 的 GraphQL API 配置它一次。
+
+> First, define a base URL for axios when creating a configured instance from it. As mentioned before, you don't need to define GitHub's URL endpoint every time you make a request because all queries and mutations point to the same URL endpoint in GraphQL. You get the flexibility from your query and mutation structures using objects and fields instead.
+
+首先，在从 axios 创建配置实例时，为它定义一个基本 URL。如前所述，你不需要在每次发出请求时都定义 GitHub 的 URL 端点，因为所有查询和修改都指向 GraphQL 中的相同 URL 端点。你可以使用对象和字段很灵活的查询和修改结构。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -84,7 +94,9 @@ const axiosGitHubGraphQL = axios.create({
 export default App;
 ~~~~~~~~
 
-Second, pass the personal access token as header to the configuration. The header is used by each request made with this axios instance.
+> Second, pass the personal access token as header to the configuration. The header is used by each request made with this axios instance.
+
+其次，将个人访问令牌作为 header 传递到配置。使用这个axios实例发出的每个请求都使用这个 header。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -102,21 +114,27 @@ const axiosGitHubGraphQL = axios.create({
 ...
 ~~~~~~~~
 
-Replace the `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` string with your personal access token. To avoid cutting and pasting your access token directly into the source code, you can create a *.env* file to hold all your environment variables on the command line in your project folder. If you don't want to share the personal token in a public GitHub repository, you can add the file to your *.gitignore*.
+> Replace the `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` string with your personal access token. To avoid cutting and pasting your access token directly into the source code, you can create a *.env* file to hold all your environment variables on the command line in your project folder. If you don't want to share the personal token in a public GitHub repository, you can add the file to your *.gitignore*.
+
+用你的个人访问令牌替换 `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` 字符串。为了避免将访问令牌直接剪切和粘贴到源代码中，你可以创建一个 *.env* 文件来保存项目文件夹中命令行上的所有环境变量。如果不想在公开的GitHub代码库中共享个人令牌，可以将该文件添加到.gitignore。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 touch .env
 ~~~~~~~~
 
-Environment variables are defined in this *.env* file. Be sure to follow the correct naming constraints when using create-react-app, which uses `REACT_APP` as prefix for each key. In your *.env* file, paste the following key value pair. The key has to have the `REACT_APP` prefix, and the value has to be your personal access token from GitHub.
+> Environment variables are defined in this *.env* file. Be sure to follow the correct naming constraints when using create-react-app, which uses `REACT_APP` as prefix for each key. In your *.env* file, paste the following key value pair. The key has to have the `REACT_APP` prefix, and the value has to be your personal access token from GitHub.
+
+环境变量定义在这个 *.env* 文件中。在使用 create-response-app 时，请确保遵循正确的命名约束，它使用 `REACT_APP` 作为每个 key 的前缀。将下面的键值对粘贴在你的 *.env* 文件中。密钥必须有 `REACT_APP` 前缀，并且值必须是你 GitHub 的个人访问令牌。
 
 {title=".env",lang="javascript"}
 ~~~~~~~~
 REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN=xxxXXX
 ~~~~~~~~
 
-Now, you can pass the personal access token as environment variable to your axios configuration with string interpolation ([template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)) to create a configured axios instance.
+> Now, you can pass the personal access token as environment variable to your axios configuration with string interpolation ([template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)) to create a configured axios instance.
+
+现在，你可以将个人访问令牌作为环境变量传递给 axios 配置，并使用字符串插值（ [模版字符](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) ）创建一个配置好的axios实例。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -136,11 +154,17 @@ const axiosGitHubGraphQL = axios.create({
 ...
 ~~~~~~~~
 
-The initial axios setup is essentially the same as we completed using the GraphiQL application before to access GitHub's GraphQL API, when you had to set a header with a personal access token and endpoint URL as well.
+> The initial axios setup is essentially the same as we completed using the GraphiQL application before to access GitHub's GraphQL API, when you had to set a header with a personal access token and endpoint URL as well.
 
-Next, set up a form for capturing details about a GitHub organization and repository from a user. It should be possible to fill out an input field to request a paginated list of issues for a specific GitHub repository. First, there needs to be a form with an input field to enter the organization and repository. The input field has to update React's local state. Second, the form needs a submit button to request data about the organization and repository that the user provided in the input field, which are located in the component's local state. Third, it would be convenient to have an initial local state for the organization and repository to request initial data when the component mounts for the first time.
+axios 的初始设置基本上与我们之前使用 GraphiQL 应用程序访问 GitHub 的 GraphQL API 时所完成的设置相同，那时你还必须设置带有个人访问令牌和端点 URL 的头文件。
 
-Let's tackle implementing this scenario in two steps. The render method has to render a form with an input field. The form has to have an `onSubmit` handler, and the input field needs an `onChange` handler. The input field uses the `path` from the local state as a value to be a controlled component. The `path` value in the local state from the `onChange` handler updates in the second step.
+> Next, set up a form for capturing details about a GitHub organization and repository from a user. It should be possible to fill out an input field to request a paginated list of issues for a specific GitHub repository. First, there needs to be a form with an input field to enter the organization and repository. The input field has to update React's local state. Second, the form needs a submit button to request data about the organization and repository that the user provided in the input field, which are located in the component's local state. Third, it would be convenient to have an initial local state for the organization and repository to request initial data when the component mounts for the first time.
+
+接下来需要添加一个表单，用于从用户处获得关于 GitHub 组织和代码库的详细信息。这个表单需要一个输入栏，为特定的 GitHub 代码库请求一个可以分页的 issues 列表。
+
+> Let's tackle implementing this scenario in two steps. The render method has to render a form with an input field. The form has to have an `onSubmit` handler, and the input field needs an `onChange` handler. The input field uses the `path` from the local state as a value to be a controlled component. The `path` value in the local state from the `onChange` handler updates in the second step.
+
+让我们分两步来实现这个场景。render方法需要渲染一个带有输入栏的表单。表单必须有一个 `onSubmit` 处理方法，而输入栏需要一个 `onChange` 处理方法。输入栏使用组件中 state 的 `path` 作为值成为一个受控组件。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -172,7 +196,9 @@ class App extends Component {
 }
 ~~~~~~~~
 
-Declare the class methods to be used in the render method. The `componentDidMount()` lifecycle method can be used to make an initial request when the App component mounts. There needs to be an initial state for the input field to make an initial request in this lifecycle method.
+> Declare the class methods to be used in the render method. The `componentDidMount()` lifecycle method can be used to make an initial request when the App component mounts. There needs to be an initial state for the input field to make an initial request in this lifecycle method.
+
+声明要在 render 方法中使用的类方法。`componentDidMount()` 生命周期方法可用于在应用程序组件挂载时发出初始请求。在这个生命周期方法中，需要发出初始化请求为输入栏设置一个初始值。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -201,9 +227,13 @@ class App extends Component {
 }
 ~~~~~~~~
 
-The previous implementation uses a React class component syntax you might have not used before. If you are not familiar with it, check this [GitHub repository](https://github.com/the-road-to-learn-react/react-alternative-class-component-syntax) to gain more understanding. Using **class field declarations** lets you omit the constructor statement for initializing the local state, and eliminates the need to bind class methods. Instead, arrow functions will handle all the binding.
+> The previous implementation uses a React class component syntax you might have not used before. If you are not familiar with it, check this [GitHub repository](https://github.com/the-road-to-learn-react/react-alternative-class-component-syntax) to gain more understanding. Using **class field declarations** lets you omit the constructor statement for initializing the local state, and eliminates the need to bind class methods. Instead, arrow functions will handle all the binding.
 
-Following a best practice in React, make the input field a controlled component. The input element shouldn't be used to handle its internal state using native HTML behavior; it should be React.
+你可能在前面的实现中使用了以前未使用过的 React 类组件语法。如果你不熟悉它，请查看这个 [GitHub 代码库](https://github.com/the-road-to-learn-react/react-alternative-class-component-syntax) 以获得更多的理解。使用**类字段声明**可以省略初始化本地状态的构造函数语句，而且不需要绑定类方法。相反，箭头函数将处理所有绑定行为。
+
+> Following a best practice in React, make the input field a controlled component. The input element shouldn't be used to handle its internal state using native HTML behavior; it should be React.
+
+依照 React 的最佳实践，将输入栏设置为受控组件。输入元素不应使用原生的 HTML 行为处理其内部状态；而应该是自然反应。（译者注：原文为：The input element shouldn't be used to handle its internal state using native HTML behavior; it should be React.）
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -244,16 +274,28 @@ class App extends Component {
 }
 ~~~~~~~~
 
-The previous setup for the form--using input field(s), a submit button, `onChange()` and `onSubmit()` class methods--is a common way to implement forms in React. The only addition is the initial data fetching in the `componentDidMount()` lifecycle method to improve user experience by providing an initial state for the query to request data from the backend. It is a useful foundation for [fetching data from a third-party API in React](https://www.robinwieruch.de/react-fetching-data/).
+> The previous setup for the form--using input field(s), a submit button, `onChange()` and `onSubmit()` class methods--is a common way to implement forms in React. The only addition is the initial data fetching in the `componentDidMount()` lifecycle method to improve user experience by providing an initial state for the query to request data from the backend. It is a useful foundation for [fetching data from a third-party API in React](https://www.robinwieruch.de/react-fetching-data/).
+
+为表单提前设置——可使用的输入栏、一个提交按钮、`onChange()` 和 `onSubmit()` 类方法——是React中实现表单的一种常见方法。唯一增加的是 `componentDidMount()` 生命周期方法中的初始数据获取，通过为查询提供一个初始状态来从后端请求数据，从而改进用户体验。它是 [React 获取第三方API数据](https://www.robinwieruch.de/react-fetching-data/) 的基础。
 
 When you start the application on the command line, you should see the initial state for the `path` in the input field. You should be able to change the state by entering something else in the input field, but nothing happens with `componentDidMount()` and submitting the form yet.
 
+当你在命令行上启动应用程序时，应该会在输入栏中看到 `path` 的初始状态。并且能够通过在输入栏中输入其他内容来更改状态，但是在 `componentDidMount()` 方法中以及提交表单时什么都不会发生。
+
 You might wonder why there is only one input field to grab the information about the organization and repository. When opening up a repository on GitHub, you can see that the organization and repository are encoded in the URL, so it becomes a convenient way to show the same URL pattern for the input field. You can also split the `organization/repository` later at the `/` to get these values and perform the GraphQL query request.
 
-### Exercises:
+你可能想知道为什么只需要一个输入字段来获取关于组织和仓库的信息。在 GitHub 上打开代码库时，你可以看到组织和代码库都是在 URL 中编码的，因此可以方便地用输入的字段来匹配相似的 URL模式。你之后也可以在 `/` 中分割 `organization/repository`，以获取这些值并执行 GraphQL 查询请求。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
-* If you are unfamiliar with React, check out *The Road to learn React*
+> Exercises:
+
+### 练习：
+
+> Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
+
+* 确认你的 [最新部分源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
+> If you are unfamiliar with React, check out *The Road to learn React*
+
+* 如果你不熟悉React，可以看看 *React 学习之道*
 
 ## GraphQL Query in React
 
