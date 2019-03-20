@@ -1,6 +1,8 @@
 # Introduction
 
-The central theme of this book is GraphQL in modern applications. While GraphQL is only a specification that can be used in many programming languages, this book focuses on GraphQL in JavaScript. Facebook, the company behind the GraphQL specification, released GraphQL’s reference implementation in JavaScript, and for good reason: JavaScript is currently the most compelling programming language and ecosystem for companies and their client-server architecture.
+> The central theme of this book is GraphQL in modern applications. While GraphQL is only a specification that can be used in many programming languages, this book focuses on GraphQL in JavaScript. Facebook, the company behind the GraphQL specification, released GraphQL’s reference implementation in JavaScript, and for good reason: JavaScript is currently the most compelling programming language and ecosystem for companies and their client-server architecture.
+
+本书的主旨是 GraphQL 在现代应用中的使用。即使 GraphQL （是 | 只是）一种可以被使用在多种编程语言中的规范 （GraphQL 只是一种规范，虽然它可以运用在许多编程语言中），但本书将主要聚焦于 JavaScript 中的 GraphQL。GraphQL 规范（背后的公司|的缔造者） Facebook，发布了用 JavaScript 实现 GraphQL 的参考，而这么做的充分理由就是：对于许多公司和他们的客户端服务器架构来说， JavaScript 是近期来最备受瞩目的编程语言和生态系统了。
 
 GraphQL is a query language that can be used anywhere, but it often bridges the gap between client and server applications. It isn't opinionated about which network layer is used, so data can be read and written between client and server applications. It is used to complement the network stack for many libraries and frameworks in JavaScript. The client side takes advantage of popular solutions like React, Angular, and Vue, while the server side can use middleware libraries like Express, Koa, and Hapi in a Node.js environment. It is just a matter of sending GraphQL operations with HTTP across the wire to connect both sides.
 
