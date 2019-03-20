@@ -415,7 +415,7 @@ client
 
 > Previously, you learned how to query data from GitHub's GraphQL API using the Apollo Client. Once the client is set up with a configuration, you can use its `query()` method to send a GraphQL `query` with optional `variables`. As you have learned, reading data with GraphQL is not everything, because there are mutations for writing data as well. In this section, you are going to define a mutation to star a repository on GitHub. The Apollo Client instance sends the mutation, but first you have to define it.
 
-前几节你学习了如何使用Apollo Client从GitHub的GraphQL API查询数据。一旦配置好了Apollo Client，就可以使用其`query()`方法发送带有可选`variables`的GraphQL`查询`。正如您所了解的那样，我们不仅可以使用GraphQL来读取数据，还可以用变更来写入数据。在本节中，您将定义一个变更来为GitHub上的代码库加注星标。Apollo Client实例会发送变更，但首先你必须定义它。
+前几节你学习了如何使用Apollo Client从GitHub的GraphQL API查询数据。一旦配置好了Apollo Client，就可以使用其`query()`方法发送带有可选`variables`的GraphQL`查询`。正如您所了解的那样，我们不仅可以使用GraphQL来读取数据，还可以用变更来写入数据。在本节中，您将定义一个变更来为GitHub上的代码库加star。Apollo Client实例会发送变更，但首先你必须定义它。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -433,7 +433,7 @@ const ADD_STAR = gql`
 
 > The identifier for the repository is required, or GitHub's GraphQL server wouldn't know which repository you want to star. In the next code snippet, the Apollo Client is used to star a specific GitHub repository with a given identifier. The identifier can be retrieved by adding the `id` field to your repository `node` field in the query. Use the `mutate()` method on the Apollo Client to send the mutation in a `mutation` and `variables` payload. Anything can be done with the result to fit your application, but in this case, the result it is simply logged in the command line.
 
-代码库的标识符是必需的，否则GitHub的GraphQL服务器不知道您要为哪个代码库加注星标。在下一个代码片段中，Apollo Client用来为具有给定标识符的特定GitHub代码库加注星标。可以通过在查询中将`id`字段添加到你的代码库`node`字段来检索标识符。使用Apollo Client上的`mutate()`方法在`mutation`和`variables`有效载荷中发送变更。可以对结果进行任何操作以适用于你的应用程序，但在本例中，只需在命令行中记录结果即可。
+代码库的标识符是必需的，否则GitHub的GraphQL服务器不知道您要为哪个代码库加star。在下一个代码片段中，Apollo Client用来为具有给定标识符的特定GitHub代码库加注星标。可以通过在查询中将`id`字段添加到你的代码库`node`字段来检索标识符。使用Apollo Client上的`mutate()`方法在`mutation`和`variables`有效载荷中发送变更。可以对结果进行任何操作以适用于你的应用程序，但在本例中，只需在命令行中记录结果即可。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
