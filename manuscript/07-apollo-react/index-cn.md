@@ -716,23 +716,25 @@ const client = new ApolloClient({
 > ### Exercises:
 ### 练习：
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
-* 确认[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
+* 查看[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
 > * Read more about [different Apollo Error types and error policies](https://www.apollographql.com/docs/react/features/error-handling.html)
-* 阅读更多关于[不同的Apollo错误类型和错误策略](https://www.apollographql.com/docs/react/features/error-handling.html)
+* 阅读更多关于[不同的Apollo错误类型和错误策略](https://www.apollographql.com/docs/react/features/error-handling.html)的内容
 > * Read more about [Apollo Links](https://www.apollographql.com/docs/link/)
-* 阅读更多关于[Apollo链接](https://www.apollographql.com/docs/link/)
+* 阅读更多关于[Apollo链接](https://www.apollographql.com/docs/link/)的内容
 > * Read more about [composable Apollo Links](https://www.apollographql.com/docs/link/composition.html)
-* 阅读更多关于[可组合的Apollo链接](https://www.apollographql.com/docs/link/composition.html)
+* 阅读更多关于[可组合的Apollo链接](https://www.apollographql.com/docs/link/composition.html)的内容
 >* Implement the [apollo-link-retry](https://www.apollographql.com/docs/link/links/retry.html) in case a network request fails
 * 实现[Apollo链接重试](https://www.apollographql.com/docs/link/links/retry.html)处理网络请求失败
 >* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53HLLFX)
-* 花3分钟来l做一个[练习](https://www.surveymonkey.com/r/53HLLFX)
+* 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/53HLLFX)
 
-## GraphQL Mutation with Apollo Client in React
+>## GraphQL Mutation with Apollo Client in React
+## Apollo Client在React使用Mutation
+>The previous sections have taught you how to query data with React Apollo and the Apollo Client. In this section, you will learn about mutations. As in other applications before, you will implement starring a repository with GitHub's exposed `addStar` mutation.
+上一节已经教你如何使用React Apollo和Apollo Client查询数据。在这一节中，你将学习到关于mutation的知识。正如之前其他的应用程序一样，你将使用Github公开的`addStar`mutation实现star一个仓库。
+>The mutation starts out with a variable to identify the repository to be starred. We haven't used a variable in Query component yet, but the following mutation works the same way, which can be defined in the *src/Repository/RepositoryItem/index.js* file.
 
-The previous sections have taught you how to query data with React Apollo and the Apollo Client. In this section, you will learn about mutations. As in other applications before, you will implement starring a repository with GitHub's exposed `addStar` mutation.
-
-The mutation starts out with a variable to identify the repository to be starred. We haven't used a variable in Query component yet, but the following mutation works the same way, which can be defined in the *src/Repository/RepositoryItem/index.js* file.
+该mutation以一个变量来标识start的仓库。我们还虽然还没有在Query组件里面使用过变量，但是以下的mutation工作方式与之相同，它在*src/Repository/RepositoryItem/index.js* 文件中如下定义。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -759,8 +761,8 @@ const STAR_REPOSITORY = gql`
 ...
 ~~~~~~~~
 
-The mutation definition takes the `id` variable as input for the `addStar` mutation. As before, you can decide what should be returned in case of a successful mutation. Now, you can use a Mutation component that represents the previously used Query component, but this time for mutations. You have to pass the mutation prop, but also a variable prop for passing the identifier for the repository.
-
+> The mutation definition takes the `id` variable as input for the `addStar` mutation. As before, you can decide what should be returned in case of a successful mutation. Now, you can use a Mutation component that represents the previously used Query component, but this time for mutations. You have to pass the mutation prop, but also a variable prop for passing the identifier for the repository.
+该mutation使用变量`id`作为`addStar`的输入。和之前一样，你可以决定在mutation操作成功后返回哪些数据。现在，你可以使用与之前Query组件类似的Mutation组件，但是在本次使用mutation时，你必须传入相应mutation prop，并且也需要为variable prop传入仓库的标识变量。
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 import React from 'react';
@@ -807,9 +809,12 @@ const RepositoryItem = ({
 );
 ~~~~~~~~
 
-Note: The div element surrounding the Mutation component is there for other mutations you will implement in this section.
+>Note: The div element surrounding the Mutation component is there for other mutations you will implement in this section.
+注意：div元素所包裹的Mutation组件就是你将在本节实现的mutation
 
-The `id` for each repository should be available due to previous query result. It has to be used as a variable for the mutation to identify the repository. The Mutation component is used like the Query component, because it implements the render prop pattern as well. The first argument is different, though, as it is the mutation itself instead of the mutation result. Use this function to trigger the mutation before expecting a result. Later, you will see how to retrieve the mutation result; for now, the mutating function can be used in a button element. In this case, it is already in a Button component:
+>The `id` for each repository should be available due to previous query result. It has to be used as a variable for the mutation to identify the repository. The Mutation component is used like the Query component, because it implements the render prop pattern as well. The first argument is different, though, as it is the mutation itself instead of the mutation result. Use this function to trigger the mutation before expecting a result. Later, you will see how to retrieve the mutation result; for now, the mutating function can be used in a button element. In this case, it is already in a Button component:
+
+由于之前的查询结构，所以每一个仓库的`id`应该都是可用的。它必须被用做mutation的变量来标识每一个仓库。Mutatin组件的使用方式和Query组件类似，因为它也实现render prop模式。但是第一个参数是不同的，它是mutation本身，而不是mutation的结果。在期望得到结果时，使用此函数可以出发mutation操作。稍后，你将看到如何检索mutation的结果；就目前而言，mutation方法可以被用在button元素中。在下面这种情况，它已经被使用在Button组件中了：
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -848,8 +853,9 @@ const RepositoryItem = ({ ... }) => (
 );
 ~~~~~~~~
 
-The styled Button component could be implemented in the *src/Button/index.js* file. It's already extracted, because you will use it in this application later.
+>The styled Button component could be implemented in the *src/Button/index.js* file. It's already extracted, because you will use it in this application later.
 
+这个包含样式的Button组件已经在*src/Button/index.js*文件中被实现。它已经被单独提取出来，所以你可以在此后的应用程序中使用它。
 {title="src/Button/index.js",lang="javascript"}
 ~~~~~~~~
 import React from 'react';
@@ -875,8 +881,9 @@ const Button = ({
 export default Button;
 ~~~~~~~~
 
-Let's get to the mutation result which was left out before. Access it as a second argument in your child function of the render prop.
+>Let's get to the mutation result which was left out before. Access it as a second argument in your child function of the render prop.
 
+让我们来完成之前遗留的部分，去获取mutation的结果，在render prop的子函数的第二个参数访问它。
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 const RepositoryItem = ({ ... }) => (
@@ -905,10 +912,11 @@ const RepositoryItem = ({ ... }) => (
 );
 ~~~~~~~~
 
-A mutation works like a query when using React Apollo. It uses the render prop pattern to access the mutation and the result of the mutation. The mutation can be used as a function in the UI. It has access to the variables that are passed in the Mutation component, but it can also override the variables when you pass them in a configuration object to the function (e.g. `addStar({ variables: { id } })`). That's a general pattern in React Apollo: You can specify information like variables in the Mutation component, or when you call the mutating function to override it.
+> A mutation works like a query when using React Apollo. It uses the render prop pattern to access the mutation and the result of the mutation. The mutation can be used as a function in the UI. It has access to the variables that are passed in the Mutation component, but it can also override the variables when you pass them in a configuration object to the function (e.g. `addStar({ variables: { id } })`). That's a general pattern in React Apollo: You can specify information like variables in the Mutation component, or when you call the mutating function to override it.
 
-Note that if you use the `viewerHasStarred` boolean from the query result to show either a "Star" or "Unstar" button, you can do it with a conditional rendering:
-
+在使用React Apollo时，mutation工作方式和query很像，它也是使用render prop模式来访问mutation和mutation的结果。mutation可是在UI中作为一个函数。它可以访问Mutation组件中传入的变量，并且它也可以传入一个配置对象来覆盖之前的变量(例如`addStar({ variables: { id } })`)。这个是React Apollo通用模式：你可以在Mutation组件中指定variables等信息，或者在调用mutation函数时覆盖它。
+>Note that if you use the `viewerHasStarred` boolean from the query result to show either a "Star" or "Unstar" button, you can do it with a conditional rendering:
+请注意，如何你使用查询结果中的`viewerHasStarred`布尔值来显示"Star"或者"Unstart"按钮，则可是用条件渲染来执行此操作：
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 const RepositoryItem = ({ ... }) => (
@@ -947,23 +955,36 @@ const RepositoryItem = ({ ... }) => (
 );
 ~~~~~~~~
 
-When you star a repository as above, the "Star" button disappears. This is what we want, because it means the `viewerHasStarred` boolean has been updated in Apollo Client's cache for the identified repository. Apollo Client was able to match the mutation result with the repository identifier to the repository entity in Apollo Client's cache, the props were updated, and the UI re-rendered. Yet, on the other side, the count of stargazers who have starred the repository isn't updated because it cannot be retrieved from GitHub's API. The count must be updated in the Apollo Client's cache. You will find out more about this topic in one of the following sections.
+> When you star a repository as above, the "Star" button disappears. This is what we want, because it means the `viewerHasStarred` boolean has been updated in Apollo Client's cache for the identified repository. Apollo Client was able to match the mutation result with the repository identifier to the repository entity in Apollo Client's cache, the props were updated, and the UI re-rendered. Yet, on the other side, the count of stargazers who have starred the repository isn't updated because it cannot be retrieved from GitHub's API. The count must be updated in the Apollo Client's cache. You will find out more about this topic in one of the following sections.
+当你如上所诉的start一个仓库是，"Start"按钮将消失。这正是我们想要的，它意味着在Apollo Client的缓存中已经更新了所标识的仓库的`viewerHasStarred`布尔值。当props更新，UI重新渲染时,Apollo Client也能够将标识仓库的mutation结果与Apollo Client缓存中仓库实体相匹配。另一方面，star该仓库的人数并没有更新，这是因为它不能从Github的API中检索得到，它必须在Apollo Client的缓存中更新。你将会后续章节学习到更多关于此主题的知识。
+> ### Exercises:
+### 练习：
+>* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
+* 查看[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
+>* Read more about [mutations with Apollo Client in React](https://www.apollographql.com/docs/react/essentials/mutations.html)
+* 阅读更多关于[Apollo Client mutations](https://www.apollographql.com/docs/react/essentials/mutations.html)的内容
+> * Implement other mutations in the RepositoryItem component
+>  * Implement the `removeStar` mutation when the `viewerHasStarred` boolean is true
+>  * Show a button with the watchers count which should be used to watch/unwatch a repository
+>    * Implement the `updateSubscription` mutation from GitHub's GraphQL API to watch/unwatch a repository based on the `viewerSubscription` status
+>* Invest three minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5GJQWXC)
 
-### Exercises:
+* 在Repository组件中实现的其他mutations
+  * 当`viewerHasStarred`布尔值为true时，实现`removeStar` mutation
+  * 显示一个带有watcher数量的按钮，该按钮用于watch或者unwatch一个仓库
+    * 使用Github的GraphQL API实现`updateSubscription` mutation，它根据`viewerSubscription`状态实现watch或者unwatch一个仓库
+* 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5GJQWXC)
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
-* Read more about [mutations with Apollo Client in React](https://www.apollographql.com/docs/react/essentials/mutations.html)
-* Implement other mutations in the RepositoryItem component
-  * Implement the `removeStar` mutation when the `viewerHasStarred` boolean is true
-  * Show a button with the watchers count which should be used to watch/unwatch a repository
-    * Implement the `updateSubscription` mutation from GitHub's GraphQL API to watch/unwatch a repository based on the `viewerSubscription` status
-* Invest three minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5GJQWXC)
+> ## GraphQL Query/Mutation with Higher-Order Components in React
 
-## GraphQL Query/Mutation with Higher-Order Components in React
+##GraphQL高阶组件Query和Mutation
+>We've done Query and Mutation components from React Apollo to connect a data-layer (Apollo Client) with a view-layer (React). The Query component executes the query when it is rendered, whereas the Mutation component gives access to a function that triggers the mutation. Both components use the render props pattern to make the results accessible in their child functions.
 
-We've done Query and Mutation components from React Apollo to connect a data-layer (Apollo Client) with a view-layer (React). The Query component executes the query when it is rendered, whereas the Mutation component gives access to a function that triggers the mutation. Both components use the render props pattern to make the results accessible in their child functions.
+我们已经在React Apollo中使用Query和Mutation组件完成了数据层（Apollo Client）和视图层（React）的连接。Query组件在渲染后就会执行query操作，而Mutation组件允许访问一个函数来触发mutation。两个组件都使用的是render props模式，以便可以在子函数中访问结果。
 
-[Higher-Order Components (HOC)](https://www.robinwieruch.de/gentle-introduction-higher-order-components/) is a widely accepted alternative to React's render prop pattern. The React Apollo package implements a Higher-Order Component for queries and mutations as well, though the team behind Apollo doesn't advertise it, and even spoke in favor of render props as their first choice. Nonetheless, this section shows you the alternative, using a Higher-Order Component instead of a Render Prop, though this application will continue to use the render prop pattern afterward. If you already have access to the query result in the Profile component's arguments, there is no Query component needed in the component itself:
+>[Higher-Order Components (HOC)](https://www.robinwieruch.de/gentle-introduction-higher-order-components/) is a widely accepted alternative to React's render prop pattern. The React Apollo package implements a Higher-Order Component for queries and mutations as well, though the team behind Apollo doesn't advertise it, and even spoke in favor of render props as their first choice. Nonetheless, this section shows you the alternative, using a Higher-Order Component instead of a Render Prop, though this application will continue to use the render prop pattern afterward. If you already have access to the query result in the Profile component's arguments, there is no Query component needed in the component itself:
+
+[高阶组件](https://www.robinwieruch.de/gentle-introduction-higher-order-components/)是React中被广泛接受的可选使用方式。React Apollo包也为query和mutation实现了高阶组件。尽管Apollo团队没有宣传它，甚至说render props才是他们的首选方式。尽管如此，本节还是会使用高阶组件的方式取代render props。虽然本应用会在以后继续使用render prop模式。如果你可以在Profile组件的参数中访问query的结果，那么组件本身并不需要使用Query组件：
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -982,7 +1003,9 @@ const Profile = ({ data, loading, error }) => {
 };
 ~~~~~~~~
 
-There is no GraphQL involved here, because all you see is the pure view-layer. Instead, the data-layer logic is extracted into a Higher-Order Component. We import the `graphql` HOC from the React Apollo package in order to apply it on the Profile component, which takes the query definition as argument.
+>There is no GraphQL involved here, because all you see is the pure view-layer. Instead, the data-layer logic is extracted into a Higher-Order Component. We import the `graphql` HOC from the React Apollo package in order to apply it on the Profile component, which takes the query definition as argument.
+
+这里并没有涉及到GraphQL，因为你所看到的只是纯视图层。而数据层的逻辑会被提取到一个高阶组件中。我们将React Apollo包中的`graphql`导入，以便在Profile组件中使用它。它将query的定义作为一个参数。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1011,15 +1034,19 @@ export default graphql(GET_REPOSITORIES_OF_CURRENT_USER)(Profile);
 # leanpub-end-insert
 ~~~~~~~~
 
-I find the HOC approach cleaner than the render props, because it co-locates both the data-layer and view-layer instead of inserting the one into the other. However, the team behind Apollo made the decision to favor render props instead. While I find the HOC approach more concise, the render prop pattern comes with its own advantages for mutating and querying data. For instance, imagine a query depends on a prop used as variable. It would be cumbersome to access the incoming prop in a statically-defined Higher-Order Component, but it can be dynamically used in a render prop because it is used within the Profile component where the props are naturally accessible. Another advantage is the power of composition for render props, which is useful when one query depends on the result of another. It can be achieved with HOCs as well, but again, it is more cumbersome. It boils down to seemingly never ending "Higher-Order Components vs Render Props" discussions.
+> I find the HOC approach cleaner than the render props, because it co-locates both the data-layer and view-layer instead of inserting the one into the other. However, the team behind Apollo made the decision to favor render props instead. While I find the HOC approach more concise, the render prop pattern comes with its own advantages for mutating and querying data. For instance, imagine a query depends on a prop used as variable. It would be cumbersome to access the incoming prop in a statically-defined Higher-Order Component, but it can be dynamically used in a render prop because it is used within the Profile component where the props are naturally accessible. Another advantage is the power of composition for render props, which is useful when one query depends on the result of another. It can be achieved with HOCs as well, but again, it is more cumbersome. It boils down to seemingly never ending "Higher-Order Components vs Render Props" discussions.
 
-### Exercises:
-
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/694cc4ec8f0d3546c13e0a32cd1f18ba9a990713)
-* Come up with your own opinion about the advantages and disadvantages of using a Higher-Order Component or Render Prop
-* Try to implement one of your mutations with a Higher-Order Component
-* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5G6QPLY)
-
+我发现使用HOC比render props更清晰，因为它将数据层和视图层协同使用，而不是在一个组件里面使用另一个。然而，Apollo团队还是决定使用render props的模式。虽然我发现HOC方法更简洁，但是render prop模式也有它自己的优势。例如，假设一个query查询要使用一个prop作为variable。在静态定义的高阶组件中访问传入的prop会很麻烦，但是它可以在render prop中动态的使用，因为它在Profile组件中可以很自然的访问prop。另一个优势就是render props的组合能力，当一个query查询依赖于另一个的结果时会非常有用。它也能使用HOC来实现，但同样的也会很麻烦。“高阶组件 vs Render Props”的讨论似乎永远不会结束。
+> ### Exercises:
+### 练习：
+>* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/694cc4ec8f0d3546c13e0a32cd1f18ba9a990713)
+* 查看[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/694cc4ec8f0d3546c13e0a32cd1f18ba9a990713)
+> * Come up with your own opinion about the advantages and disadvantages of using a Higher-Order Component or Render Prop
+* 对使用高阶组件或者Render Prop的优缺点提出自己的看法
+> * Try to implement one of your mutations with a Higher-Order Component
+* 尝试使用高阶组件去实现一个mutation
+> * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5G6QPLY)
+* 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5G6QPLY)
 ## Local State Management with Apollo Client in React
 
 Let's get back to the Repository component. You have experienced that the `viewerHasStarred` boolean updates in the Apollo Client's cache after a mutation was successful. That's great, because Apollo Client handles this for you, based on the mutation result. If you have followed the exercises of the mutation section, you should probably see something like a toggling "Star" and "Unstar" label for the button. All of this happens because you returned the `viewerHasStarred` boolean in your mutation result. Apollo Client is clever enough to update the repository entity, which is normalized and accessible in the cache. That's powerful default behavior, isn't it? You don't need to handle the local state management yourself, since Apollo Client figures it out for you as long as you provide useful information in the mutation's result.
@@ -1257,7 +1284,6 @@ On an implementation level, you learned about extracting fragments from a query 
   * You will see in the next section a working solution for it
 * Read more about [Caching in Apollo Client and the composite key to identify entities](https://www.apollographql.com/docs/react/advanced/caching.html)
 * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5BSDXF7)
-
 ****** end here ******
 ## Apollo Client Optimistic UI in React
 
