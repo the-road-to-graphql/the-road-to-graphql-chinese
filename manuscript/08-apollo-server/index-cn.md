@@ -3488,21 +3488,30 @@ export default gql`
 > * Read more about [custom scalars in GraphQL](https://www.apollographql.com/docs/apollo-server/features/scalars-enums.html)
 
 ### 练习：
-* 验证你的 [最近这章的源码](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate/tree/709a406a8a94e15779d2e93cfb847d49de5aa6ca)
+* 验证你的 [此章的源码](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate/tree/709a406a8a94e15779d2e93cfb847d49de5aa6ca)
 * 查看更多关于 [GraphQL 中的自定义标量](https://www.apollographql.com/docs/apollo-server/features/scalars-enums.html)
 
 
 ## Pagination in GraphQL with Apollo Server
 
-Using GraphQL, you will almost certainly encounter a feature called **pagination** for applications with lists of items. Stored user messages in a chat application become long lists, and when the client application request messages for the display, retrieving all messages from the database at once can lead to severe performance bottlenecks. Pagination allows you to split up a list of items into multiple lists, called pages. A page is usually defined with a limit and an offset. That way, you can request one page of items, and when a user wants to see more, request another page of items.
+> Using GraphQL, you will almost certainly encounter a feature called **pagination** for applications with lists of items. Stored user messages in a chat application become long lists, and when the client application request messages for the display, retrieving all messages from the database at once can lead to severe performance bottlenecks. Pagination allows you to split up a list of items into multiple lists, called pages. A page is usually defined with a limit and an offset. That way, you can request one page of items, and when a user wants to see more, request another page of items.
 
-You will implement pagination in GraphQL with two different approaches in the following sections. The first approach will be the most naive approach, called **offset/limit-based pagination**. The advanced approach is **cursor-based pagination**, one of many sophisticated ways to allow pagination in an application.
+使用 GraphQL 必然会遇到列表应用的 **分页** 功能。在一个聊天应用中保存的用户消息会变得越来越长，当客户端请求消息记录用于展示时，一次性从数据库中获取所有的消息会导致服务器性能瓶颈。分页允许你把一个列表分成多个列表（其被称为页）。页通常会有大小限制和偏移量。通过分页，你可以请求一页的展示数据，如果用户想看更多的数据，就再请求一页。
 
-### Offset/Limit Pagination with Apollo Server and GraphQL
+> You will implement pagination in GraphQL with two different approaches in the following sections. The first approach will be the most naive approach, called **offset/limit-based pagination**. The advanced approach is **cursor-based pagination**, one of many sophisticated ways to allow pagination in an application.
 
-Offset/limit-based pagination isn't too difficult to implement. The limit states how many items you want to retrieve from the entire list, and the offset states where to begin in the whole list. Using different offsets, you can shift through the entire list of items and retrieve a sublist (page) of it with the limit.
+接下来，你将会通过两种方式在 GraphQL 中实现分页。第一种方法是最原始的方法，叫做**偏移/限制分页**。更高级的方式是**指针分页**，这是在应用中允许分页的众多经典实践的中一种。
 
-We set the message schema in the *src/schema/message.js* file to consider the two new arguments:
+> ### Offset/Limit Pagination with Apollo Server and GraphQL
+### Apollo 服务业和 GrapgQL 中的偏移/限制分页
+
+> Offset/limit-based pagination isn't too difficult to implement. The limit states how many items you want to retrieve from the entire list, and the offset states where to begin in the whole list. Using different offsets, you can shift through the entire list of items and retrieve a sublist (page) of it with the limit.
+
+偏移/限制分页并不是很难实现。限制规定了你每次想要从整个列表中获取多少条数据，偏移量指定了应该从整个列表的什么位置开始。使用不同的偏移量，你可以筛选整个列表并从中获取一个固定条数的子列表（页）。
+
+> We set the message schema in the *src/schema/message.js* file to consider the two new arguments:
+
+我们在文件 *src/schema/message.js* 中修改消息的 schema，增加两个新的参数：
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3530,7 +3539,9 @@ export default gql`
 `;
 ~~~~~~~~
 
-Then you can adjust the resolver in the *src/resolvers/message.js* file to handle the new arguments:
+> Then you can adjust the resolver in the *src/resolvers/message.js* file to handle the new arguments:
+
+然后，你可以修改 *src/resolvers/message.js* 文件中的解析器，以便处理这两个新的参数：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3563,7 +3574,9 @@ export default {
 };
 ~~~~~~~~
 
-Fortunately, your ORM (Sequelize) gives you everything you need for internal offset and limit functionality. Try it in GraphQL Playground yourself by adjusting the limit and offset.
+> Fortunately, your ORM (Sequelize) gives you everything you need for internal offset and limit functionality. Try it in GraphQL Playground yourself by adjusting the limit and offset.
+
+幸运的是，你的 ORM 为内部偏移和限制功能提供了支持。你可以在 GraphQL playground 上尝试修改限制和偏移量，体验分页功能。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3574,7 +3587,9 @@ query {
 }
 ~~~~~~~~
 
-Even though this approach is simpler, it comes with a few disadvantages. When your offset becomes very long, the database query takes longer, which  can lead to a poor client-side performance while the UI waits for the next page of data. Also, offset/limit pagination cannot handle deleted items in between queries. For instance, if you query the first page and someone deletes an item, the offset would be wrong on the next page because the item count is off by one. You cannot easily overcome this problem with offset/limit pagination, which is why cursor-based pagination might be necessary.
+> Even though this approach is simpler, it comes with a few disadvantages. When your offset becomes very long, the database query takes longer, which  can lead to a poor client-side performance while the UI waits for the next page of data. Also, offset/limit pagination cannot handle deleted items in between queries. For instance, if you query the first page and someone deletes an item, the offset would be wrong on the next page because the item count is off by one. You cannot easily overcome this problem with offset/limit pagination, which is why cursor-based pagination might be necessary.
+
+虽然这个方法很简单，但是它也有缺点。当偏移量变得非常长时，数据库查询时间会变长，客户端在等待下一页数据时的性能会比较差。同时，偏移/限制分页不能处理在查询之前删除一个数据的情况。例如，你查询了第一页，同时有人删除了第一中的一条数据，下一页的偏移量就会出错，因为数据已经减少一个了。在偏移/限制分页中，这个问题并不容易解决，所以指针分页就有必要了。
 
 ### Cursor-based Pagination with Apollo Server and GraphQL
 
