@@ -3233,9 +3233,12 @@ If you want to be even more exact than resolver level authorization, check out *
 * Find out more about field level authorization with Apollo Server and GraphQL
 * Find out more about data access level authorization with Apollo Server and GraphQL
 
-## GraphQL Custom Scalars in Apollo Server
+> ## GraphQL Custom Scalars in Apollo Server
+## Apollo Server 中的 GraphQL 自定义标量
 
-So far, you have used a couple of scalars in your GraphQL application, because each field resolves eventually to a scalar type. Let's add a String scalar for the date when a message got created. First, we'll extend the *src/schema/message.js* which uses this field for a message:
+> So far, you have used a couple of scalars in your GraphQL application, because each field resolves eventually to a scalar type. Let's add a String scalar for the date when a message got created. First, we'll extend the *src/schema/message.js* which uses this field for a message:
+
+目前为止，你已经在你的 GraphQL 应用中使用了很多标量了。这是因为每一个字段最后都会被解析为一个标量类型。下面让我们来将 message 的创建日期设为 String 标量类型。首先，我们需要扩展文件 *src/schema/message.js*，为其增加 createdAt 字段：
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3263,7 +3266,9 @@ export default gql`
 `;
 ~~~~~~~~
 
-Second, adjust the seed data in the *src/index.js* file. At the moment, all seed data is created at once, which applies to the messages as well. It would be better to have each message created in one second intervals. The creation date should differ for each message.
+> Second, adjust the seed data in the *src/index.js* file. At the moment, all seed data is created at once, which applies to the messages as well. It would be better to have each message created in one second intervals. The creation date should differ for each message.
+
+然后，修改 *src/index.js* 文件中的种子数据。目前所有的种子数据都是一次性生成的，message 也是。如果能够做到每条 message 都是隔一秒再创建的就更好了，这样每条 message 的创建时间就会不一样。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3331,7 +3336,9 @@ const createUsersWithMessages = async date => {
 };
 ~~~~~~~~
 
-Now you should be able to query the `createdAt` of a message in your GraphQL Playground:
+> Now you should be able to query the `createdAt` of a message in your GraphQL Playground:
+
+现在，你应该可以在 GraphQL Playgound 中查询 message 的 `createdAt` 字段：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3359,14 +3366,18 @@ query {
 }
 ~~~~~~~~
 
-You may have noticed something odd: While the date returned from a GraphQL Playground has a unix timestamp (e.g. 1540978531448), the date the database for a message (and other entities) has another format (e.g. 2018-10-31 17:35:31.448+08). Check it yourself with psql. That's the internal working of GraphQL which uses its internal formatting rules for dates. You can change this behavior by adding a custom scalar. First, install a popular GraphQL node package for custom date scalars.
+> You may have noticed something odd: While the date returned from a GraphQL Playground has a unix timestamp (e.g. 1540978531448), the date the database for a message (and other entities) has another format (e.g. 2018-10-31 17:35:31.448+08). Check it yourself with psql. That's the internal working of GraphQL which uses its internal formatting rules for dates. You can change this behavior by adding a custom scalar. First, install a popular GraphQL node package for custom date scalars.
+
+你可能已经注意到了这里的奇怪之处：从 GraphQL Playground 返回的数据中，日期是一个时间戳（例如：1540978531448）；而在数据库中，message 或者其他实体的日期有另外一个格式（例如：2018-10-31 17:35:31.448+08）。你可以自己用 psql 查看。这是因为 GraphQL 使用了它自己内部的格式化日期的规则。你可以通过自定义标量来改变这种行为。首先，我们需要安装一个主流的 GraphQL 自定义日期标量 node 依赖包。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install graphql-iso-date --save
 ~~~~~~~~
 
-Second, introduce a `Date` scalar in your schema in the *src/schema/index.js* file:
+> Second, introduce a `Date` scalar in your schema in the *src/schema/index.js* file:
+
+然后，在 *src/schema/index.js* 文件中 schema 中引入一个 `Date` 标量：
 
 {title="src/schema/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3389,7 +3400,9 @@ const linkSchema = gql`
 `;
 ~~~~~~~~
 
-Third, define the scalar with the help of the installed node package in your *src/resolvers/index.js* file:
+> Third, define the scalar with the help of the installed node package in your *src/resolvers/index.js* file:
+
+接着，在 *src/resolvers/index.js* 文件中定义这个标量。
 
 {title="src/resolvers/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3415,7 +3428,9 @@ export default [
 ];
 ~~~~~~~~
 
-And last but not least, change the scalar type from String to Date for your message schema in the *src/schema/message.js*:
+> And last but not least, change the scalar type from String to Date for your message schema in the *src/schema/message.js*:
+
+最后，在 *src/schema/message.js* 文件中，把 message schema 中的 createdAt 字段的标量类型从 String 变为 Date
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3443,7 +3458,9 @@ export default gql`
 `;
 ~~~~~~~~
 
-Now, query again your messages. The output for the `createdAt` date should be different.
+> Now, query again your messages. The output for the `createdAt` date should be different.
+
+现在，重新查询一遍 message，`createdAt` 日期的格式已经改变了。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3462,12 +3479,18 @@ Now, query again your messages. The output for the `createdAt` date should be di
 }
 ~~~~~~~~
 
-It's in a readable format now. You can dive deeper into the date formatting that can be adjusted with this library by checking out their [documentation](https://github.com/excitement-engineer/graphql-iso-date).
+> It's in a readable format now. You can dive deeper into the date formatting that can be adjusted with this library by checking out their [documentation](https://github.com/excitement-engineer/graphql-iso-date).
 
-### Exercises:
+现在它已经是一个可读的格式了。你可以通过查询 [文档](https://github.com/excitement-engineer/graphql-iso-date) 研究这个库能把日期转换成哪些格式。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate/tree/709a406a8a94e15779d2e93cfb847d49de5aa6ca)
-* Read more about [custom scalars in GraphQL](https://www.apollographql.com/docs/apollo-server/features/scalars-enums.html)
+> ### Exercises:
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate/tree/709a406a8a94e15779d2e93cfb847d49de5aa6ca)
+> * Read more about [custom scalars in GraphQL](https://www.apollographql.com/docs/apollo-server/features/scalars-enums.html)
+
+### 练习：
+* 验证你的 [最近这章的源码](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate/tree/709a406a8a94e15779d2e93cfb847d49de5aa6ca)
+* 查看更多关于 [GraphQL 中的自定义标量](https://www.apollographql.com/docs/apollo-server/features/scalars-enums.html)
+
 
 ## Pagination in GraphQL with Apollo Server
 
