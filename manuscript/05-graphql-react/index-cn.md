@@ -8,7 +8,7 @@
 
 > Along the way, you will build a simplified GitHub client, basically an issue tracker for GitHub, that consumes [GitHub's GraphQL API](https://developer.github.com/v4/). You will perform GraphQL queries and mutations to read and write data, and by the end, you should be able to showcase a GraphQL in React example that can be used by other developers as a learning tool.The final application you are going to build can be found in this [repository on GitHub](https://github.com/rwieruch/react-graphql-github-vanilla).
 
-在此过程中，你将构建一个简单的 GitHub 客户机，相当于是一个简单的使用 [GitHub's GraphQL API](https://developer.github.com/v4/) 的 GitHub 的问题跟踪器。你将执行 GraphQL 的查询和修改来读写数据，最后，你能够在 React 示例中展示一个 GraphQL，作为其他开发人员的学习工具。你将要构建的最终应用程序可以在 [GitHub 的代码库](https://github.com/rwieruch/react-graphql-github-vanilla) 中找到。
+在此过程中，你将构建一个简单的 GitHub 客户端，相当于是一个简单的使用 [GitHub's GraphQL API](https://developer.github.com/v4/) 的 GitHub 的问题跟踪器。你将执行 GraphQL 的查询和修改来读写数据，最后，你能够在 React 示例中展示一个 GraphQL，作为其他开发人员的学习工具。你将要构建的最终应用程序可以在 [GitHub 的代码库](https://github.com/rwieruch/react-graphql-github-vanilla) 中找到。
 
 
 
@@ -134,7 +134,7 @@ REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN=xxxXXX
 
 > Now, you can pass the personal access token as environment variable to your axios configuration with string interpolation ([template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)) to create a configured axios instance.
 
-现在，你可以将个人访问令牌作为环境变量传递给 axios 配置，并使用字符串插值（ [模版字符](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) ）创建一个配置好的axios实例。
+现在，你可以将个人访问令牌作为环境变量传递给 axios 配置，并使用字符串插值（ [模板字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) ）创建一个配置好的axios实例。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -286,6 +286,8 @@ You might wonder why there is only one input field to grab the information about
 
 你可能想知道为什么只需要一个输入字段来获取关于组织和仓库的信息。在 GitHub 上打开代码库时，你可以看到组织和代码库都是在 URL 中编码的，因此可以方便地用输入的字段来匹配相似的 URL模式。你之后也可以在 `/` 中分割 `organization/repository`，以获取这些值并执行 GraphQL 查询请求。
 
+
+
 > Exercises:
 
 ### 练习：
@@ -295,11 +297,17 @@ You might wonder why there is only one input field to grab the information about
 * 确认你的 [最新部分源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
 > If you are unfamiliar with React, check out *The Road to learn React*
 
-* 如果你不熟悉React，可以看看 *React 学习之道*
+* 如果你不熟悉React，可以阅读 *React 学习之道*
 
-## GraphQL Query in React
 
-In this section, you are going to implement your first GraphQL query in React, fetching issues from an organization's repository, though not all at once. Start by fetching only an organization. Let's define the query as a variable above of the App component.
+
+> GraphQL Query in React
+
+## 在 React 中执行 GraphQL 查询
+
+> In this section, you are going to implement your first GraphQL query in React, fetching issues from an organization's repository, though not all at once. Start by fetching only an organization. Let's define the query as a variable above of the App component.
+
+在本章节中，你将在 React 中实现第一个 GraphQL 查询，从组织的代码库中获取 issues，但不是一次获取所有问题，先获取一个组织。我们先将查询定义为 App 组件上面的一个变量。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -313,7 +321,9 @@ const GET_ORGANIZATION = `
 `;
 ~~~~~~~~
 
-Use template literals in JavaScript to define the query as string with multiple lines. It should be identical to the query you used before in GraphiQL or GitHub Explorer. Now, you can use axios to make a POST request to GitHub's GraphiQL API. The configuration for axios already points to the correct API endpoint and uses your personal access token. The only thing left is passing the query to it as payload during a POST request. The argument for the endpoint can be an empty string, because you defined the endpoint in the configuration. It will execute the request when the App component mounts in `componentDidMount()`. After the promise from axios has been resolved, only a console log of the result remains.
+> Use template literals in JavaScript to define the query as string with multiple lines. It should be identical to the query you used before in GraphiQL or GitHub Explorer. Now, you can use axios to make a POST request to GitHub's GraphiQL API. The configuration for axios already points to the correct API endpoint and uses your personal access token. The only thing left is passing the query to it as payload during a POST request. The argument for the endpoint can be an empty string, because you defined the endpoint in the configuration. It will execute the request when the App component mounts in `componentDidMount()`. After the promise from axios has been resolved, only a console log of the result remains.
+
+使用 JavaScript 中的模板字符串将查询语句定义为多行的字符串。与之前在 GraphiQL 或 GitHub Explorer 中使用的查询相同。现在你就可以使用 axios 向 GitHub 的 GraphiQL API 发出 POST 请求。axios 的配置已经指向正确的 API 端点，并使用的是你的个人访问令牌。唯一剩下的事情是在 POST 请求期间将查询作为有效负载传递给它。端点的参数可以是空字符串，因为你在配置中定义了端点。当 App 组件生命周期执行到 `componentDidMount()` 时，就会执行请求。在 axios 的 promise 被解析之后，结果将会保留在控制台日志中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -364,9 +374,13 @@ class App extends Component {
 }
 ~~~~~~~~
 
-You used only axios to perform a HTTP POST request with a GraphQL query as payload. Since axios uses promises, the promise resolves eventually and you should have the result from the GraphQL API in your hands. There is nothing magical about it. It's an implementation in plain JavaScript using axios as HTTP client to perform the GraphQL request with plain HTTP.
+> You used only axios to perform a HTTP POST request with a GraphQL query as payload. Since axios uses promises, the promise resolves eventually and you should have the result from the GraphQL API in your hands. There is nothing magical about it. It's an implementation in plain JavaScript using axios as HTTP client to perform the GraphQL request with plain HTTP.
 
-Start your application again and verify that you have got the result in your developer console log. If you get a [401 HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes), you didn't set up your personal access token properly. Otherwise, if everything went fine, you should see a similar result in your developer console log.
+你只需要使用 axios 执行一个 HTTP POST 请求，并将 GraphQL 查询作为有效负载。因为 axios 使用 promises，promise 最终会被解析后，你就掌握了 GraphQL API 的结果。这没什么惊讶的。它只是使用普通 JavaScript 实现的，用 axios 作为 HTTP 客户端，使用普通的 HTTP 执行 GraphQL 请求。
+
+> Start your application again and verify that you have got the result in your developer console log. If you get a [401 HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes), you didn't set up your personal access token properly. Otherwise, if everything went fine, you should see a similar result in your developer console log.
+
+再次启动你的应用程序，并确认你已经在开发者模式下的控制台日志中得到了结果。如果得到了  [401 HTTP 状态码](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)，说明你没有正确设置你的个人访问令牌。否则，你应该会在开发人员控制台日志中看到类似的结果。
 
 {title="Developer Tools",lang="json"}
 ~~~~~~~~
@@ -387,9 +401,13 @@ Start your application again and verify that you have got the result in your dev
 }
 ~~~~~~~~
 
-The top level information is everything axios returns you as meta information for the request. It's all axios, and nothing related to GraphQL yet, which is why most of it is substituted with a placeholder. Axios has a `data` property that shows the result of your axios request. Then again comes a `data` property which reflects the GraphQL result. At first, the `data` property seems redundant in the first result, but once you examine it you will know that one `data` property comes from axios, while the other comes from the GraphQL data structure. Finally, you find the result of the GraphQL query in the second `data` property. There, you should find the organization with its resolved name and url fields as string properties.
+> The top level information is everything axios returns you as meta information for the request. It's all axios, and nothing related to GraphQL yet, which is why most of it is substituted with a placeholder. Axios has a `data` property that shows the result of your axios request. Then again comes a `data` property which reflects the GraphQL result. At first, the `data` property seems redundant in the first result, but once you examine it you will know that one `data` property comes from axios, while the other comes from the GraphQL data structure. Finally, you find the result of the GraphQL query in the second `data` property. There, you should find the organization with its resolved name and url fields as string properties.
 
-In the next step, you're going to store the result holding the information about the organization in React's local state. You will also store potential errors in the state if any occur.
+最外层信息是 axios 的元信息返回给你所发请求的所有内容。它都是 axios，与 GraphQL 还没有任何关系，这就是为什么它的大部分被占位符所替代。Axios 有一个 `data` 属性，代表 Axios 请求的结果。里面包裹了一个反映GraphQL结果的 `data` 属性。首先，`data` 属性在第一个结果中看起来是冗余的，但是一旦理解了它，你就会知道一个 `data` 属性来自 axios，而另一个来自GraphQL数据结构。最后，在第二个 `data` 属性中找到GraphQL查询的结果。在里面也可以找到包含已解析的名称和 url 字段作为字符串属性的组织。
+
+> In the next step, you're going to store the result holding the information about the organization in React's local state. You will also store potential errors in the state if any occur.
+
+下一步，你将把包含组织信息的结果存储在 React的本地状态中。如果发生任何错误，还需要将潜在的错误存储在状态中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -422,7 +440,9 @@ class App extends Component {
 }
 ~~~~~~~~
 
-In the second step, you can display the information about the organization in your App component's `render()` method:
+> In the second step, you can display the information about the organization in your App component's `render()` method:
+
+接下来，你可以在App组件的 `render()` 方法中展示组织信息:
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -453,7 +473,9 @@ class App extends Component {
 }
 ~~~~~~~~
 
-Introduce the Organization component as a new functional stateless component to keep the render method of the App component concise. Because this application is going to be a simple GitHub issue tracker, you can already mention it in a short paragraph.
+> Introduce the Organization component as a new functional stateless component to keep the render method of the App component concise. Because this application is going to be a simple GitHub issue tracker, you can already mention it in a short paragraph.
+
+将组织组件作为一个新的功能无状态组件引入，保持App组件的渲染方法简洁。因为这个应用程序只是一个简单的GitHub 问题跟踪器，你已经可以在一小段话里提到它了。// TODO refactor
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -473,7 +495,9 @@ const Organization = ({ organization }) => (
 # leanpub-end-insert
 ~~~~~~~~
 
-In the final step, you have to decide what should be rendered when nothing is fetched yet, and what should be rendered when errors occur. To solve these edge cases, you can use [conditional rendering](https://www.robinwieruch.de/conditional-rendering-react/) in React. For the first edge case, simply check whether an `organization` is present or not.
+> In the final step, you have to decide what should be rendered when nothing is fetched yet, and what should be rendered when errors occur. To solve these edge cases, you can use [conditional rendering](https://www.robinwieruch.de/conditional-rendering-react/) in React. For the first edge case, simply check whether an `organization` is present or not.
+
+在最后一步中，你需要决定在还没有获取任何东西时界面应该渲染什么，以及在发生错误时应该渲染什么。可以在 React 中使用 [条件呈现](https://www.robinwieruch.de/conditional-rendering-react/) 解决这些边界情况。对于第一个边缘情况，只需检查 `organization` 是否存在。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -504,7 +528,9 @@ class App extends Component {
 }
 ~~~~~~~~
 
-For the second edge case, you have passed the errors to the Organization component. In case there are errors, it should simply render the error message of each error. Otherwise, it should render the organization. There can be multiple errors regarding different fields and circumstances in GraphQL.
+> For the second edge case, you have passed the errors to the Organization component. In case there are errors, it should simply render the error message of each error. Otherwise, it should render the organization. There can be multiple errors regarding different fields and circumstances in GraphQL.
+
+对于第二种边缘情况，你已经将错误传递给了组织组件。如果出现了错误，它应该简单地将每个错误的错误消息渲染出来。否则，它应该渲染组织信息。对于 GraphQL 中的不同字段和环境，可能会有多个错误。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -531,7 +557,9 @@ const Organization = ({ organization, errors }) => {
 # leanpub-end-insert
 ~~~~~~~~
 
-You performed your first GraphQL query in a React application, a plain HTTP POST request with a query as payload. You used a configured axios client instance for it. Afterward, you were able to store the result in React's local state to display it later.
+> You performed your first GraphQL query in a React application, a plain HTTP POST request with a query as payload. You used a configured axios client instance for it. Afterward, you were able to store the result in React's local state to display it later.
+
+你已经在 React 应用程序中执行了第一个 GraphQL 查询，虽然这只是一个带有查询作为有效负载的普通 HTTP POST 请求。使用了配置好的 axios client 实例。之后，你可以将结果存储在 React 的本地状态中，以便稍后显示。
 
 ### GraphQL Nested Objects in React
 
