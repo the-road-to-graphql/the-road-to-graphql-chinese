@@ -33,9 +33,9 @@ GitHub 的 GraphQL API 允许一次请求多个代码仓库，这对于分页来
 
 通过使用 GitHub 的 GraphQL API 进行分页，你可以按需调整，所以请务必按照自己的需求（例如个人或组织账号中的代码仓库数量）来调整数字（例如每页数量，偏移）。你需要拥有足够多的代码仓库才能在实际中看到分页功能，如果每页显示 10 个的话，我推荐超过 20 个代码仓库，如果每页显示两个的话，推荐 5 个以上。
 
-### Issues and Pull Requests
+### Issue 和 Pull Request
 
-Once you dive deeper into GitHub's GraphQL API and you start to request nested relationships (e.g. issues of repositories, pull requests of repositories), make sure that the repositories have a few issues or pull requests. This is so you'll see something when we implement the feature to show all the issues in a repository. It might be better to request repositories from a GitHub organization where there will be plenty of issues and pull requests.
+一旦你深入了解了 GitHub 的 GraphQL API 并开始请求一些嵌套关系的数据（例如代码仓库的 issue，pull request等），请确保代码仓库中存在一些 issue 和 pull request ，这样在实现获取代码仓库的 issue 时能够看到结果。请求一个组织的代码代码仓库可能会更好，因为那里有很多的 issue 和 pull request。
 
 ### Exercises:
 
