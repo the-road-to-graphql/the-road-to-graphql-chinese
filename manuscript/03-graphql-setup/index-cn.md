@@ -23,15 +23,15 @@
 
 如果你没有上传任何项目，你可以随时从其他 GitHub 用户“fork”代码仓库，并在其副本上进行操作。fork 大体来说是其他代码仓库的克隆，可以让你在不改变原始仓库的基础上进行添加修改。GitHub 上有很多开放的代码仓库，可以克隆到本地或者 fork 到你的代码仓库列表中，这样你就可以通过实验来了解它们的机制。例如，如果你访问[我的 GitHub 主页](https://github.com/rwieruch)，你可以看到我所有的代码仓库，但并非所有的代码仓库都是我的，因为有些是从别人那儿 fork 来的。如果你想使用它们来进行练习，或者通过 GitHub 的 GraphQL API 来访问，请随意 fork 这些仓库。
 
-### Exercises:
+### 练习：
 
-* Create/Fork a couple of GitHub repositories, and verify that they show in your account as copies. Copies are indicated by the username that proceeds the repository name in all its titles; for example, a repo called *OriginalAuthor/TestRepo* would be renamed to *YourUserName/TestRepo* once you've forked it.
+* 创建或 fork 几个 GitHub 代码仓库，并验证它们是否存以副本的形式存在于你的账户中。副本通过用户名标识，后面跟着代码仓库的名称，共同组成了该代码仓库的全称。例如，一个名为*原作者名字/TestRepo*的代码仓库，在你 fork 之后，会被命名为 *你的名字/TestRepo*。
 
-### Paginated Data
+### 分页数据
 
-GitHub's GraphQL API allows you to request multiple repositories at once, which is useful for pagination. Pagination is a programming mechanic invented to work with large lists of items. For example, imagine you have more than a hundred repositories in your GitHub account, but your UI only shows ten of them. Transferring the whole list across the wire for each request is impractical and inefficient, because only a subset is needed at a time, which pagination allows.
+GitHub 的 GraphQL API 允许一次请求多个代码仓库，这对于分页来说非常有用。分页是为处理大量数据而发明的一种编程机制。例如，假设你的 GitHub 账号拥有超过一百个代码仓库，但是 UI 仅显示其中的 10 个。每个网络请求都传输整个列表的数据是不切实际和低效的，因为一次只需要其中的一个子集，分页可以解决这样的问题。
 
-Using pagination with GitHub's GraphQL API lets you adjust the numbers to your own needs, so make sure to adjust the numbers (e.g. limit, offset) to your personal requirements (e.g. available repositories of your GitHub account or available repositories of a GitHub organization). You at least want to have enough repositories in your collection to see the pagination feature in action, so I recommend more than twenty (20), assuming each page will display ten (10), or use five(5) repositories when displaying two (2.)
+通过使用 GitHub 的 GraphQL API 进行分页，你可以按需调整，所以请务必按照自己的需求（例如个人或组织账号中的代码仓库数量）来调整数字（例如每页数量，偏移）。你需要拥有足够多的代码仓库才能在实际中看到分页功能，如果每页显示 10 个的话，我推荐超过 20 个代码仓库，如果每页显示两个的话，推荐 5 个以上。
 
 ### Issues and Pull Requests
 
