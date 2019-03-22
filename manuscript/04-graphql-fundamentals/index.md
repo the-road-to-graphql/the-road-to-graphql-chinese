@@ -330,11 +330,11 @@ The query in GraphQL gives you all you need to read data from a GraphQL API. The
 
 > In this section, you will star a repository on GitHub, the same one you used a query to request before, using a mutation [from GitHub's API](https://developer.github.com/v4/mutation/addstar). You can find the `addStar` mutation in the "Docs" sidebar. The repository is a project for teaching developers about the fundamentals of React, so starring it should prove useful.
 
-接下来你将会 Star 一个 Github 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 Github API ](https://developer.github.com/v4/mutation/addstar)的一种变更。你可以在" Docs "侧边栏中找到 `addStar` 这种变更。这个代码库是一个教开发者 React 基础的项目，所以 Star 这个代码库能够证明它有用。
+接下来你将会 star 一个 Github 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 Github API ](https://developer.github.com/v4/mutation/addstar)的一种变更。你可以在" Docs "侧边栏中找到 `addStar` 这种变更。这个代码库是一个教开发者 React 基础的项目，所以 star 这个代码库能够证明它有用。
 
 > You can visit [the repository](https://github.com/the-road-to-learn-react/the-road-to-learn-react) to see if you've given a star to the repository already. We want an unstarred repository so we can star it using a mutation. Before you can star a repository, you need to know its identifier, which can be retrieved by a query:
 
-你可以访问[这个代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来查看你是否已经成功 Star 。我们想要一个尚未 Star 过的代码库，这样我们可以通过一个变更来 Star 它。在你 Star 一个代码库前，你需要知道它的 ID ，而这个 ID 你可以通过下面的查询获取：
+你可以访问[这个代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来查看你是否已经成功 star 。我们想要一个尚未 star 过的代码库，这样我们可以通过一个变更来 star 它。在你 star 一个代码库前，你需要知道它的 ID ，而这个 ID 你可以通过下面的查询获取：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -379,7 +379,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > The mutation's name is given by GitHub's API: `addStar`. You are required to pass it the `starrableId` as `input` to identify the repository; otherwise, the GitHub server won't know which repository to star with the mutation. In addition, the mutation is a named mutation: `AddStar`. It's up to you to give it any name. Last but not least, you can define the return values of the mutation by using objects and fields again. It's identical to a query. Finally, the variables tab provides the variable for the mutation you retrieved with the last query:
 
-这个变更的名称是由 Github API 起的： `addStar` 。你需要传递 `starrableId` 作为 `input` 来识别代码库；否则 Github 服务器无从得知这个变更是要 Star 哪个代码库。另外，这个变更被命名为： `AddStar` 。你也可以给它任意名称。然后你可以再次通过对象和字段来定义这个变更的返回值，这和查询是相同的。最后一点，在变量区中提供你在上个查询中获得的变量用于这次变更：
+这个变更的名称是由 Github API 起的： `addStar` 。你需要传递 `starrableId` 作为 `input` 来识别代码库；否则 Github 服务器无从得知这个变更是要 star 哪个代码库。另外，这个变更被命名为： `AddStar` 。你也可以给它任意名称。然后你可以再次通过对象和字段来定义这个变更的返回值，这和查询是相同的。最后一点，在变量区中提供你在上个查询中获得的变量用于这次变更：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -408,7 +408,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > The repository is starred now. It's visible in the result, but you can verify it in the [repository on GitHub](https://github.com/the-road-to-learn-react/the-road-to-learn-react). Congratulations, you made your first mutation.
 
-这个代码库现在已经 Star 了。在返回的结果中能够看到，但你也可以通过查看[ Github 上的代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来确认。恭喜，你完成了你的第一个变更操作。
+这个代码库现在已经 star 了。在返回的结果中能够看到，但你也可以通过查看[ Github 上的代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来确认。恭喜，你完成了你的第一个变更操作。
 
 > ### Exercises:
 
