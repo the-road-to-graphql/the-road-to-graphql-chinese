@@ -1047,13 +1047,17 @@ export default graphql(GET_REPOSITORIES_OF_CURRENT_USER)(Profile);
 * 尝试使用高阶组件去实现一个mutation
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5G6QPLY)
 * 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5G6QPLY)
-## Local State Management with Apollo Client in React
+> ## Local State Management with Apollo Client in React
+## Apollo Client在React中使用本地状态管理
+>Let's get back to the Repository component. You have experienced that the `viewerHasStarred` boolean updates in the Apollo Client's cache after a mutation was successful. That's great, because Apollo Client handles this for you, based on the mutation result. If you have followed the exercises of the mutation section, you should probably see something like a toggling "Star" and "Unstar" label for the button. All of this happens because you returned the `viewerHasStarred` boolean in your mutation result. Apollo Client is clever enough to update the repository entity, which is normalized and accessible in the cache. That's powerful default behavior, isn't it? You don't need to handle the local state management yourself, since Apollo Client figures it out for you as long as you provide useful information in the mutation's result.
+让我们回到Repository组件。你已经完成了在mutation成功后更改Apollo Client缓存中`viewerHasStarred`的值。这非常棒，因为Apollo Client会根据mutation的结果为你做这样的处理。如果你已经完成了mutation章节的练习，你应该可以看到按钮带有类似于"Star"和"Unstart"的标签。所有这一切都是因为你在mutation结果中返回了`viewerHasStarred`。Apollo Cient非常聪明，它会去更新缓存中repository实体。这是一个强大的默认行为，不是吗？你不必自己处理本地状态管理。因为只要你在mutation结果中提供有用的信息，Apollo Client就会为你处理这些问题。
 
-Let's get back to the Repository component. You have experienced that the `viewerHasStarred` boolean updates in the Apollo Client's cache after a mutation was successful. That's great, because Apollo Client handles this for you, based on the mutation result. If you have followed the exercises of the mutation section, you should probably see something like a toggling "Star" and "Unstar" label for the button. All of this happens because you returned the `viewerHasStarred` boolean in your mutation result. Apollo Client is clever enough to update the repository entity, which is normalized and accessible in the cache. That's powerful default behavior, isn't it? You don't need to handle the local state management yourself, since Apollo Client figures it out for you as long as you provide useful information in the mutation's result.
+>Apollo Client doesn't update the count of stars after the mutation, though. Normally, it is assumed that the count of stars increments by one when it is starred, with the opposite for unstarring. Since we don't return a count of stargazers in the mutation result, you have to handle the update in Apollo Client's cache yourself. Using Apollo Client's `refetchQueries` option is the naive approach for a mutation call, or a Mutation component to trigger a refetch for all queries, where the query result might be affected by the mutation. But that's not the best way to deal with this problem. It costs another query request to keep the data consistent after a mutation. In a growing application, this approach will eventually become problematic. Fortunately, the Apollo Client offers other functionalities to read/write manually from/to the cache locally without more network requests. The Mutation component offers a prop where you can insert update functionality that has access to the Apollo Client instance for the update mechanism.
 
-Apollo Client doesn't update the count of stars after the mutation, though. Normally, it is assumed that the count of stars increments by one when it is starred, with the opposite for unstarring. Since we don't return a count of stargazers in the mutation result, you have to handle the update in Apollo Client's cache yourself. Using Apollo Client's `refetchQueries` option is the naive approach for a mutation call, or a Mutation component to trigger a refetch for all queries, where the query result might be affected by the mutation. But that's not the best way to deal with this problem. It costs another query request to keep the data consistent after a mutation. In a growing application, this approach will eventually become problematic. Fortunately, the Apollo Client offers other functionalities to read/write manually from/to the cache locally without more network requests. The Mutation component offers a prop where you can insert update functionality that has access to the Apollo Client instance for the update mechanism.
+Apollo Client不会在mutation成功后更新start的数量，通常情况下，假设star的数量在加star的时候增加1，反之减1。因为我们没有在mutation的结果中返回star的人数，所以你必须自己更新Apollo Client中的缓存。对于mutation来说，使用Apollo Client中的`refetchQueries`选项是一个简单的方式，或者使用Mutation组件触发所有query重新查询，query的结果可能会因受到mutatin的影响而改变。但是这不是最好的处理方式。它在mutation之后使用了一个query查询来保持数据的一致性。在一个不断增长的应用中，这种方法最终会成为一个问题。幸运的是，Apollo Client提供了其它的功能，让我们可以在不使用更多网络请求的情况下在本地收到的读写缓存。Mutation组件提供了一个prop，你可以通过这个prop传入一个更新函数，最终通过Apollo Client实例的更新机制更新缓存。
+> Before implementing the update functionality for the local state management, let's refactor another piece of code that will be useful for a local state update mechanism. The query definition next to your Profile component has grown to several fields with multiple object nestings. Previously, you learned about GraphQL fragments, and how they can be used to split parts of a query to reuse later. Next, we will split all the field information you used for the repository's node. You can define this fragment in the *src/Repository/fragments.js* file to keep it reusable for other components.
 
-Before implementing the update functionality for the local state management, let's refactor another piece of code that will be useful for a local state update mechanism. The query definition next to your Profile component has grown to several fields with multiple object nestings. Previously, you learned about GraphQL fragments, and how they can be used to split parts of a query to reuse later. Next, we will split all the field information you used for the repository's node. You can define this fragment in the *src/Repository/fragments.js* file to keep it reusable for other components.
+在实现这个更新功能之前，让我们重构一段对本地状态更新机制更有用的代码。在Profile组件中的query定义已经使用多个嵌套对象的多个字段。在这之前，你已经学习了GraphQL片段（fragment），以及它们如何用于拆分query以便在以后重用。接下来，我们将拆分所有用于repository的节点的字段信息，你可以在*src/Repository/fragments.js*文件中定义这个fragment，以便它可以重用于其他组件。
 
 {title="src/Repository/fragments.js",lang="javascript"}
 ~~~~~~~~
@@ -1086,10 +1090,12 @@ const REPOSITORY_FRAGMENT = gql`
 export default REPOSITORY_FRAGMENT;
 ~~~~~~~~
 
-You split this partial query (fragment), because it is used more often in this application in the next sections for a local state update mechanism, hence the previous refactoring.
+>You split this partial query (fragment), because it is used more often in this application in the next sections for a local state update mechanism, hence the previous refactoring.
 
-The fragment shouldn't be imported directly from the *src/Repository/fragments.js* path to your Profile component, because the *src/Repository/index.js* file is the preferred entry point to this module.
+你可以拆分这部分的query（fragment），因为之前的重构，它在后续章节会更频繁用于本地状态的管理机制。
+>The fragment shouldn't be imported directly from the *src/Repository/fragments.js* path to your Profile component, because the *src/Repository/index.js* file is the preferred entry point to this module.
 
+这个fragment不应该直接的从*src/Repository/fragments.js*路径导入到Profile组件，因为*src/Repository/index.js*文件才是此模块的首选入口点。
 {title="src/Repository/index.js",lang="javascript"}
 ~~~~~~~~
 import RepositoryList from './RepositoryList';
@@ -1104,8 +1110,8 @@ export { REPOSITORY_FRAGMENT };
 export default RepositoryList;
 ~~~~~~~~
 
-Finally, import the fragment in the Profile component's file to use it again.
-
+>Finally, import the fragment in the Profile component's file to use it again.
+最后，在Profile组件中导入这个fragment来使用。
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
 ...
@@ -1142,8 +1148,9 @@ const GET_REPOSITORIES_OF_CURRENT_USER = gql`
 ...
 ~~~~~~~~
 
-The refactoring is done. Your query is now more concise, and the fragment in its natural repository module can be reused for other places and functionalities. Next, use Mutation component's `update` prop to pass a function which will update the local cache eventually.
+>The refactoring is done. Your query is now more concise, and the fragment in its natural repository module can be reused for other places and functionalities. Next, use Mutation component's `update` prop to pass a function which will update the local cache eventually.
 
+重构到此就已经完成了。你的query查询现在更简洁了。位于repository模块中的fragment可以被重用的其他的功能。下一步，使用Mutation组件的`update` prop传递一个函数来更改本地的缓存。
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 ...
@@ -1183,7 +1190,8 @@ const RepositoryItem = ({ ... }) => (
 export default RepositoryItem;
 ~~~~~~~~
 
-The function is extracted as its own JavaScript variable, otherwise ends up too verbose in the RepositoryItem component when keeping it inlined in the Mutation component. The function has access to the Apollo Client and the mutation result in its argument, and you need both to update data so you can destructure the mutation result in the function signature. If you don't know how the mutation result looks like, check the `STAR_REPOSITORY` mutation definition again, where you defined all fields that should appear in the mutation result. For now, the `id` of the repository to be updated is the important part.
+>The function is extracted as its own JavaScript variable, otherwise ends up too verbose in the RepositoryItem component when keeping it inlined in the Mutation component. The function has access to the Apollo Client and the mutation result in its argument, and you need both to update data so you can destructure the mutation result in the function signature. If you don't know how the mutation result looks like, check the `STAR_REPOSITORY` mutation definition again, where you defined all fields that should appear in the mutation result. For now, the `id` of the repository to be updated is the important part.
+这个函数被单独抽离成一个变量，否则将它内联到Mutaition组件中时，RepositoryItem组件会变得十分亢长。该函数的参数包含了Apollo Client以及mutation的结果，你可以在函数签名中解构mutation的结果以便更新数据。如果你不知道mutation结果的结构，请再次查看`STAR_REPOSITORY`mutation的定义，定义中的所有字段都会出现的mutation的结果中。目前，要更新的repository的`id`是重点部分。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1197,9 +1205,13 @@ const updateAddStar = (
 };
 ~~~~~~~~
 
-You could have passed the `id` of the repository to the `updateAddStar()` function, which was a higher-order function in the Mutation component's render prop child function. You already have access to the repository's identifier in the Repository component.
+>You could have passed the `id` of the repository to the `updateAddStar()` function, which was a higher-order function in the Mutation component's render prop child function. You already have access to the repository's identifier in the Repository component.
 
-Now comes the most exciting part of this section. You can use the Apollo Client to read data from the cache, but also to write data to it. The goal is to read the starred repository from the cache, which is why we need the `id` to increment its stargazers count by one and write the updated repository back to the cache. You got the repository by its `id` from the cache by extracting the repository fragment. You can use it along with the repository identifier to retrieve the actual repository from Apollo Client's cache without querying all the data with a naive query implementation.
+你可以在`updateAddStar()`函数中传入repository的`id`，它是Mutation组件的render prop子函数中的高阶函数。你现在已经可以在Repository组件中访问repository的标识符了。
+
+>Now comes the most exciting part of this section. You can use the Apollo Client to read data from the cache, but also to write data to it. The goal is to read the starred repository from the cache, which is why we need the `id` to increment its stargazers count by one and write the updated repository back to the cache. You got the repository by its `id` from the cache by extracting the repository fragment. You can use it along with the repository identifier to retrieve the actual repository from Apollo Client's cache without querying all the data with a naive query implementation.
+
+现在到了本节最激动人心的部分了。你可以使用Apollo Client从缓存中读取数据，也可以向其中写入数据。我们的目标是从缓存中读取已经start的repository，这就是为什么我们需要`id`来找到相应的repository，将它的star数量加1并写入缓存中。你可以通过提取出来的repository fragment或者repository的缓存数据，你可以将该fragment和repository的id标识符一起使用，从而在Apollo Client的缓存中检索期望的repository数据，而不是使用简单的query查询去查询所有的数据。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1230,12 +1242,14 @@ const updateAddStar = (
 };
 ~~~~~~~~
 
-The Apollo Client's cache that you set up to initialize the Apollo Client normalizes and stores queried data. Otherwise, the repository would be a deeply nested entity in a list of repositories for the query structure used in the Profile component. Normalization of a data structure makes it possible to retrieve entities by their identifier and their GraphQL `__typename` meta field. The combination of both is the default key, which is called a [composite key](https://en.wikipedia.org/wiki/Compound_key), to read or write an entity from or to the cache. You may find out more about changing this default composite key in the exercises of this section.
+>The Apollo Client's cache that you set up to initialize the Apollo Client normalizes and stores queried data. Otherwise, the repository would be a deeply nested entity in a list of repositories for the query structure used in the Profile component. Normalization of a data structure makes it possible to retrieve entities by their identifier and their GraphQL `__typename` meta field. The combination of both is the default key, which is called a [composite key](https://en.wikipedia.org/wiki/Compound_key), to read or write an entity from or to the cache. You may find out more about changing this default composite key in the exercises of this section.
 
-Furthermore, the resulting entity has all properties specified in the fragment. If there is a field in the fragment not found on the entity in the cache, you may see the following error message: *Can't find field __typename on object ...*. That's why we use the identical fragment to read from the local cache to query the GraphQL API.
+Apollo Client会将所有的查询数据标准化储存到缓存中。否则，repository数据将会是Profile组件中使用query结构的repository列表中的深层嵌套的实体数据。标准化的数据结构使得可以通过它们的标识符和GraphQL的`__typename`元字段来检索实体数据。两者的组合是默认键，这个被称为[复合键](https://en.wikipedia.org/wiki/Compound_key)，用于从缓存中读取和写入实体。你将会在本节中找到更多关于更改默认复合键的信息。
+>Furthermore, the resulting entity has all properties specified in the fragment. If there is a field in the fragment not found on the entity in the cache, you may see the following error message: *Can't find field __typename on object ...*. That's why we use the identical fragment to read from the local cache to query the GraphQL API.
 
-After you have retrieved the repository entity with a fragment and its composite key, you can update the count of stargazers and write back the data to your cache. In this case, increment the number of stargazers.
-
+此外，生成的实体具有这个fragment所有的属性。如何在缓存中无法找到该实体上的某些字段，你会看到以下的错误：*Can't find field __typename on object ...*。这就是为什么我们用相同的fragment作为查询GraphQL API来读取本地缓存。
+> After you have retrieved the repository entity with a fragment and its composite key, you can update the count of stargazers and write back the data to your cache. In this case, increment the number of stargazers.
+在你使用fragment和它的复合键来检索repository实体之后，你可以更新star的人员数量，并把更新后的数据写入到缓存中。在这种情况下，就能够增加star的数量。
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 const updateAddStar = (
@@ -1267,24 +1281,37 @@ const updateAddStar = (
 };
 ~~~~~~~~
 
-Let's recap all three steps here. First, you have retrieved (read) the repository entity from the Apollo Client using an identifier and the fragment; second, you updated the information of the entity; and third, you wrote back the data with updated information, but kept all remaining information intact using the JavaScript spread operator. This is a manual update mechanism that can be used when a mutation is missing data.
+>Let's recap all three steps here. First, you have retrieved (read) the repository entity from the Apollo Client using an identifier and the fragment; second, you updated the information of the entity; and third, you wrote back the data with updated information, but kept all remaining information intact using the JavaScript spread operator. This is a manual update mechanism that can be used when a mutation is missing data.
+让我们回顾一下这三个步骤。首先，你使用标识符和fragment从Apollo Client中检索（读取）了repository的实体；第二步，你更新这个实体的数据信息；第三步，你将这个更新信息写回到缓存中，但是使用JavaScript的拓展运算符保留了所有其他的信息。这就是一种手动更新机制，可以在mutation缺失数据时使用。
+>It is a good practice to use an identical fragment for all three parts: the initial query, the `readFragment()`, and `writeFragment()` cache method. Your data structure for the entity stays consistent in your cache. For instance, if you forget to include a property defined by the fragment's fields in data object of the `writeFragment()` method, you get a warning: *Missing field __typename in ...*.
 
-It is a good practice to use an identical fragment for all three parts: the initial query, the `readFragment()`, and `writeFragment()` cache method. Your data structure for the entity stays consistent in your cache. For instance, if you forget to include a property defined by the fragment's fields in data object of the `writeFragment()` method, you get a warning: *Missing field __typename in ...*.
+对以下的三个部分都是用相同fragment是一个好的实践：初始的query，`readFragment（）`以及`writeFragment（）`方法。你的实体的数据结构在缓存中始终保持一致。例如，如果你忘了在`writeFragment（）`方法中的数据对象包含fragment所定义的字段，你将会得到一个警告：*Missing field __typename in ...*。
+>On an implementation level, you learned about extracting fragments from a query or mutation. Fragments allow you to define your shared entities by GraphQL types. You can reuse those in your queries, mutations or local state management methods to update the cache. On a higher level, you learned that Apollo Client's cache normalizes your data, so you can retrieve entities that were fetched with a deeply nested query using their type and identifier as composite key. Without it, you'd have to perform normalizations for all the fetched data before putting it in your store/state.
 
-On an implementation level, you learned about extracting fragments from a query or mutation. Fragments allow you to define your shared entities by GraphQL types. You can reuse those in your queries, mutations or local state management methods to update the cache. On a higher level, you learned that Apollo Client's cache normalizes your data, so you can retrieve entities that were fetched with a deeply nested query using their type and identifier as composite key. Without it, you'd have to perform normalizations for all the fetched data before putting it in your store/state.
+站在实践操作级别上看，你会学到从query和mutation中抽离fragment，fragment允许你定义你的GraphQL类型的共享实体。你可以在query，mutation或者本地状态管理方法中重用这些fragment来更新缓存。站在更高的级别上来看，你学习到Apollo Client的缓存标准化了你的数据，因此你可以使用实体的类型和他们的组合键来从深层嵌套的query结果中检索到你所期望的实体数据。没有她，你必须在将所有获取的数据存放到store或者state之前，将它们都进行标准化。
+>### Exercises:
+###练习：
+>* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
+* 查看[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
+>* Read more about [Local State Management in Apollo Client](https://www.apollographql.com/docs/react/essentials/local-state.html)
+* 阅读更多关于[Apollo Client本地状态管理](https://www.apollographql.com/docs/react/essentials/local-state.html)的内容
+>* Read more about [Fragments in Apollo Client](https://www.apollographql.com/docs/react/advanced/fragments.html)
+* 阅读更多关于[Apollo Client中fragment](https://www.apollographql.com/docs/react/advanced/fragments.html)的内容
 
-### Exercises:
-
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
-* Read more about [Local State Management in Apollo Client](https://www.apollographql.com/docs/react/essentials/local-state.html)
-* Read more about [Fragments in Apollo Client](https://www.apollographql.com/docs/react/advanced/fragments.html)
 * Implement local cache updates for all the other mutations from the previous exercises
   * Implement the identical local cache update, but with decreasing the count of stargazers, for your `removeStar` mutation
   * Implement the local cache update for the `updateSubscription` mutation
   * You will see in the next section a working solution for it
 * Read more about [Caching in Apollo Client and the composite key to identify entities](https://www.apollographql.com/docs/react/advanced/caching.html)
 * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5BSDXF7)
-****** end here ******
+
+* 为之前练习中的所有其他的mutations实现更新本地缓存
+  * 为`removeStar`mutation实现相同的本地缓存更新，但是是去减少stargazer的数量
+  * 为`updateSubscription` mutation实现本地缓存更新
+  * 你将会在下一节看到一个可行的解决方案
+* 阅读更多关于[Apollo CLient中的缓存以及用于标识实体的组合键](https://www.apollographql.com/docs/react/advanced/caching.html)
+* 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5BSDXF7)
+
 ## Apollo Client Optimistic UI in React
 
 We've covered the basics, so now it's time for the advanced topics. One of those topics is the optimistic UI with React Apollo, which makes everything onscreen more synchronous. For instance, when liking a post on Twitter, the like appears immediately. As developers, we know there is a request that sends the information for the like to the Twitter backend. This request is asynchronous and doesn't resolve immediately with a result. The optimistic UI immediately assumes a successful request and mimics the result of such request for the frontend so it can update its UI immediately, before the real response arrives later. With a failed request, the optimistic UI performs a rollback and updates itself accordingly. Optimistic UI improves the user experience by omitting inconvenient feedback (e.g. loading indicators) for the user. The good thing is that React Apollo comes with this feature out of the box.
