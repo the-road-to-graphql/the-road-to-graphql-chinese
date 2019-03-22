@@ -566,7 +566,7 @@ What you have done in the last steps of this section were pure React implementat
 
 > Before diving into GraphQL mutations in React with Apollo Client, this section should clarify error handling with Apollo in React. The error handling happens on two levels: the application level and the query/mutation level. Both can be implemented with the two cases that follow. On a query level, in your Profile component, you have access to the query `data` and `loading` properties. Apart from these, you can also access the `error` object, which can be used to show a conditional error message.
 
-在我们更深入探究在React和Apollo Client中如何使用GraphQL变更（mutations）的知识之前，这一节将阐述如何在React中使用Apollo进行错误处理。错误处理出现在两个级别：应用程序级别，和查询/变更级别（query/mutation）。两种情况都可以通过以下两种方法处理。在查询级别中，你可以在你的配置组件中访问`data`和`loading`属性，除此之外，你也可以访问`error`对象，该对象可用于显示错误消息。
+在我们更深入探究在React和Apollo Client中如何使用GraphQL突变的知识之前，这一节将阐述如何在React中使用Apollo进行错误处理。错误处理出现在两个级别：应用程序级别，查询/突变级别。两种情况都可以通过以下两种方法处理。在查询级别中，你可以在你的配置组件中访问`data`和`loading`属性，除此之外，你也可以访问`error`对象，该对象可用于显示错误消息。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -624,7 +624,7 @@ export default ErrorMessage;
 
 > Try to change the name of a field in your query to something not offered by GitHub's GraphQL API, and observe what's rendered in the browser. You should see something like this: *Error: GraphQL error: Field 'viewers' doesn't exist on type 'Query'*. Or, if you simulate offline functionality, you'll see: *Error: Network error: Failed to fetch*. That's how errors can be separated into GraphQL errors and network errors. You can handle errors on a component or query level, but it will also help with mutations later. To implement error handling on an application level, install another Apollo package:
 
-尝试将查询中的字段名字更改为Github的GraphQL API未提供的内容，然后观察浏览器的渲染内容。你应该可以看到如下内容：*Error: GraphQL error: Field 'viewers' doesn't exist on type 'Query'*。或者，如果你模拟了离线功能，你将会看到：*Error: Network error: Failed to fetch*。这就是GraphQL错误的划分方式，可以被分为GraphQL错误和网络错误。你可以在组件或者查询级别上来处理这些错误，但是它也将对后续讲到变更（mutations）操作有所帮助。想要在应用程序级别处理错误，需要安装另一个Apollo包：
+尝试将查询中的字段名字更改为Github的GraphQL API未提供的内容，然后观察浏览器的渲染内容。你应该可以看到如下内容：*Error: GraphQL error: Field 'viewers' doesn't exist on type 'Query'*。或者，如果你模拟了离线功能，你将会看到：*Error: Network error: Failed to fetch*。这就是GraphQL错误的划分方式，可以被分为GraphQL错误和网络错误。你可以在组件或者查询级别上来处理这些错误，但是它也将对后续讲到突变操作有所帮助。想要在应用程序级别处理错误，需要安装另一个Apollo包：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -632,7 +632,7 @@ npm install apollo-link-error --save
 ~~~~~~~~
 
 > You can import it in your *src/index.js* file and create such an error link:
-你可以在*src/index.js*文件中导入这个包，并且创建一个如下所示的错误链接（link）：
+你可以在*src/index.js*文件中导入这个包，并且创建一个如下所示的错误链接：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -724,17 +724,17 @@ const client = new ApolloClient({
 > * Read more about [composable Apollo Links](https://www.apollographql.com/docs/link/composition.html)
 * 阅读更多关于[可组合的Apollo链接](https://www.apollographql.com/docs/link/composition.html)的内容
 >* Implement the [apollo-link-retry](https://www.apollographql.com/docs/link/links/retry.html) in case a network request fails
-* 实现[Apollo链接重试](https://www.apollographql.com/docs/link/links/retry.html)处理网络请求失败
+* 实现[Apollo链接重试](https://www.apollographql.com/docs/link/links/retry.html)功能来处理网络请求失败
 >* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53HLLFX)
 * 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/53HLLFX)
 
 >## GraphQL Mutation with Apollo Client in React
-## Apollo Client在React使用Mutation
+## Apollo Client在React使用突变
 >The previous sections have taught you how to query data with React Apollo and the Apollo Client. In this section, you will learn about mutations. As in other applications before, you will implement starring a repository with GitHub's exposed `addStar` mutation.
-上一节已经教你如何使用React Apollo和Apollo Client查询数据。在这一节中，你将学习到关于mutation的知识。正如之前其他的应用程序一样，你将使用Github公开的`addStar`mutation实现star一个仓库。
+上一节已经教你如何使用React Apollo和Apollo Client查询数据。在这一节中，你将学习到关于突变的知识。正如之前其他的应用程序一样，你将使用Github公开的`addStar`突变实现star一个仓库。
 >The mutation starts out with a variable to identify the repository to be starred. We haven't used a variable in Query component yet, but the following mutation works the same way, which can be defined in the *src/Repository/RepositoryItem/index.js* file.
 
-该mutation以一个变量来标识start的仓库。我们还虽然还没有在Query组件里面使用过变量，但是以下的mutation工作方式与之相同，它在*src/Repository/RepositoryItem/index.js* 文件中如下定义。
+该图标以一个变量来标识star的repository。我们还虽然还没有在Query组件里面使用过变量，但是以下的突变工作方式与之相同，它在*src/Repository/RepositoryItem/index.js* 文件中如下定义。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -762,7 +762,7 @@ const STAR_REPOSITORY = gql`
 ~~~~~~~~
 
 > The mutation definition takes the `id` variable as input for the `addStar` mutation. As before, you can decide what should be returned in case of a successful mutation. Now, you can use a Mutation component that represents the previously used Query component, but this time for mutations. You have to pass the mutation prop, but also a variable prop for passing the identifier for the repository.
-该mutation使用变量`id`作为`addStar`的输入。和之前一样，你可以决定在mutation操作成功后返回哪些数据。现在，你可以使用与之前Query组件类似的Mutation组件，但是在本次使用mutation时，你必须传入相应mutation prop，并且也需要为variable prop传入仓库的标识变量。
+`addStar`突变使用变量`id`作为它的输入。和之前一样，你可以决定在突变操作成功后返回哪些数据。现在，你可以使用与之前Query组件类似的Mutation组件，但是在本次使用突变时，你必须传入相应突变prop，并且也需要为variable prop传入repository的标识符。
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 import React from 'react';
@@ -810,11 +810,11 @@ const RepositoryItem = ({
 ~~~~~~~~
 
 >Note: The div element surrounding the Mutation component is there for other mutations you will implement in this section.
-注意：div元素所包裹的Mutation组件就是你将在本节实现的mutation
+注意：div元素所包裹的Mutation组件就是你将在本节实现的突变
 
 >The `id` for each repository should be available due to previous query result. It has to be used as a variable for the mutation to identify the repository. The Mutation component is used like the Query component, because it implements the render prop pattern as well. The first argument is different, though, as it is the mutation itself instead of the mutation result. Use this function to trigger the mutation before expecting a result. Later, you will see how to retrieve the mutation result; for now, the mutating function can be used in a button element. In this case, it is already in a Button component:
 
-由于之前的查询结构，所以每一个仓库的`id`应该都是可用的。它必须被用做mutation的变量来标识每一个仓库。Mutatin组件的使用方式和Query组件类似，因为它也实现render prop模式。但是第一个参数是不同的，它是mutation本身，而不是mutation的结果。在期望得到结果时，使用此函数可以出发mutation操作。稍后，你将看到如何检索mutation的结果；就目前而言，mutation方法可以被用在button元素中。在下面这种情况，它已经被使用在Button组件中了：
+由于之前的查询结构，所以每一个repository的`id`应该都是可用的。它必须被用做突变的变量来标识每一个repository。Mutatin组件的使用方式和Query组件类似，因为它也实现render prop模式。但是第一个参数是不同的，它是突变本身，而不是突变的结果。在期望得到结果时，使用此函数可以触发突变操作。稍后，你将看到如何检索突变的结果；就目前而言，突变方法可以被用在button元素中。在下面这种情况，它已经被使用在Button组件中了：
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -883,7 +883,7 @@ export default Button;
 
 >Let's get to the mutation result which was left out before. Access it as a second argument in your child function of the render prop.
 
-让我们来完成之前遗留的部分，去获取mutation的结果，在render prop的子函数的第二个参数访问它。
+让我们来完成之前遗留的部分，去获取突变的结果，在render prop的子函数的第二个参数访问它。
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 const RepositoryItem = ({ ... }) => (
@@ -914,9 +914,9 @@ const RepositoryItem = ({ ... }) => (
 
 > A mutation works like a query when using React Apollo. It uses the render prop pattern to access the mutation and the result of the mutation. The mutation can be used as a function in the UI. It has access to the variables that are passed in the Mutation component, but it can also override the variables when you pass them in a configuration object to the function (e.g. `addStar({ variables: { id } })`). That's a general pattern in React Apollo: You can specify information like variables in the Mutation component, or when you call the mutating function to override it.
 
-在使用React Apollo时，mutation工作方式和query很像，它也是使用render prop模式来访问mutation和mutation的结果。mutation可是在UI中作为一个函数。它可以访问Mutation组件中传入的变量，并且它也可以传入一个配置对象来覆盖之前的变量(例如`addStar({ variables: { id } })`)。这个是React Apollo通用模式：你可以在Mutation组件中指定variables等信息，或者在调用mutation函数时覆盖它。
+在使用React Apollo时，突变工作方式和查询很像，它也是使用render prop模式来访问突变及其结果。突变可以是在UI中作为一个函数。它可以访问Mutation组件中传入的变量，并且它也可以传入一个配置对象来覆盖之前的变量(例如`addStar({ variables: { id } })`)。这个是React Apollo通用模式：你可以在Mutation组件中指定variables等信息，或者在调用突变函数时覆盖它。
 >Note that if you use the `viewerHasStarred` boolean from the query result to show either a "Star" or "Unstar" button, you can do it with a conditional rendering:
-请注意，如何你使用查询结果中的`viewerHasStarred`布尔值来显示"Star"或者"Unstart"按钮，则可是用条件渲染来执行此操作：
+请注意，如何你使用查询结果中的`viewerHasStarred`布尔值来显示"Star"或者"Unstar"按钮，则可是用条件渲染来执行此操作：
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 const RepositoryItem = ({ ... }) => (
@@ -956,23 +956,23 @@ const RepositoryItem = ({ ... }) => (
 ~~~~~~~~
 
 > When you star a repository as above, the "Star" button disappears. This is what we want, because it means the `viewerHasStarred` boolean has been updated in Apollo Client's cache for the identified repository. Apollo Client was able to match the mutation result with the repository identifier to the repository entity in Apollo Client's cache, the props were updated, and the UI re-rendered. Yet, on the other side, the count of stargazers who have starred the repository isn't updated because it cannot be retrieved from GitHub's API. The count must be updated in the Apollo Client's cache. You will find out more about this topic in one of the following sections.
-当你如上所诉的start一个仓库是，"Start"按钮将消失。这正是我们想要的，它意味着在Apollo Client的缓存中已经更新了所标识的仓库的`viewerHasStarred`布尔值。当props更新，UI重新渲染时,Apollo Client也能够将标识仓库的mutation结果与Apollo Client缓存中仓库实体相匹配。另一方面，star该仓库的人数并没有更新，这是因为它不能从Github的API中检索得到，它必须在Apollo Client的缓存中更新。你将会后续章节学习到更多关于此主题的知识。
+当你如上所诉的star一个repository时，"Star"按钮将消失。这正是我们想要的，它意味着在Apollo Client的缓存中已经更新了所标识的仓库的`viewerHasStarred`布尔值。当props更新，UI重新渲染时,Apollo Client也能够将标识的repository的突变结果与Apollo Client缓存中repository实体相匹配。另一方面，stargazer的数量并没有更新，这是因为它不能从Github的API中检索得到，它必须在Apollo Client的缓存中更新。你将会后续章节学习到更多关于此主题的知识。
 > ### Exercises:
 ### 练习：
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
 * 查看[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
 >* Read more about [mutations with Apollo Client in React](https://www.apollographql.com/docs/react/essentials/mutations.html)
-* 阅读更多关于[Apollo Client mutations](https://www.apollographql.com/docs/react/essentials/mutations.html)的内容
+* 阅读更多关于[Apollo Client突变](https://www.apollographql.com/docs/react/essentials/mutations.html)的内容
 > * Implement other mutations in the RepositoryItem component
 >  * Implement the `removeStar` mutation when the `viewerHasStarred` boolean is true
 >  * Show a button with the watchers count which should be used to watch/unwatch a repository
 >    * Implement the `updateSubscription` mutation from GitHub's GraphQL API to watch/unwatch a repository based on the `viewerSubscription` status
 >* Invest three minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5GJQWXC)
 
-* 在Repository组件中实现的其他mutations
-  * 当`viewerHasStarred`布尔值为true时，实现`removeStar` mutation
-  * 显示一个带有watcher数量的按钮，该按钮用于watch或者unwatch一个仓库
-    * 使用Github的GraphQL API实现`updateSubscription` mutation，它根据`viewerSubscription`状态实现watch或者unwatch一个仓库
+* 在Repository组件中实现的其他突变
+  * 当`viewerHasStarred`布尔值为true时，实现`removeStar`图标
+  * 显示一个带有watcher数量的按钮，该按钮用于watch或者unwatch一个repository
+    * 使用Github的GraphQL API实现`updateSubscription` mutation，它根据`viewerSubscription`状态实现watch或者unwatch一个repository
 * 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5GJQWXC)
 
 > ## GraphQL Query/Mutation with Higher-Order Components in React
@@ -980,11 +980,11 @@ const RepositoryItem = ({ ... }) => (
 ##GraphQL高阶组件Query和Mutation
 >We've done Query and Mutation components from React Apollo to connect a data-layer (Apollo Client) with a view-layer (React). The Query component executes the query when it is rendered, whereas the Mutation component gives access to a function that triggers the mutation. Both components use the render props pattern to make the results accessible in their child functions.
 
-我们已经在React Apollo中使用Query和Mutation组件完成了数据层（Apollo Client）和视图层（React）的连接。Query组件在渲染后就会执行query操作，而Mutation组件允许访问一个函数来触发mutation。两个组件都使用的是render props模式，以便可以在子函数中访问结果。
+我们已经在React Apollo中使用Query和Mutation组件完成了数据层（Apollo Client）和视图层（React）的连接。Query组件在渲染后就会执行查询操作，而Mutation组件允许访问一个函数来触发突变。两个组件都使用的是render props模式，以便可以在子函数中访问结果。
 
 >[Higher-Order Components (HOC)](https://www.robinwieruch.de/gentle-introduction-higher-order-components/) is a widely accepted alternative to React's render prop pattern. The React Apollo package implements a Higher-Order Component for queries and mutations as well, though the team behind Apollo doesn't advertise it, and even spoke in favor of render props as their first choice. Nonetheless, this section shows you the alternative, using a Higher-Order Component instead of a Render Prop, though this application will continue to use the render prop pattern afterward. If you already have access to the query result in the Profile component's arguments, there is no Query component needed in the component itself:
 
-[高阶组件](https://www.robinwieruch.de/gentle-introduction-higher-order-components/)是React中被广泛接受的可选使用方式。React Apollo包也为query和mutation实现了高阶组件。尽管Apollo团队没有宣传它，甚至说render props才是他们的首选方式。尽管如此，本节还是会使用高阶组件的方式取代render props。虽然本应用会在以后继续使用render prop模式。如果你可以在Profile组件的参数中访问query的结果，那么组件本身并不需要使用Query组件：
+[高阶组件](https://www.robinwieruch.de/gentle-introduction-higher-order-components/)是React中被广泛接受的可选使用方式。React Apollo包也为query和mutation实现了高阶组件。尽管Apollo团队没有宣传它，甚至说render props才是他们的首选方式。尽管如此，本节还是会使用高阶组件的方式取代render props。虽然本应用会在以后继续使用render prop模式。如果你可以在Profile组件的参数中访问查询的结果，那么组件本身并不需要使用Query组件：
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1005,7 +1005,7 @@ const Profile = ({ data, loading, error }) => {
 
 >There is no GraphQL involved here, because all you see is the pure view-layer. Instead, the data-layer logic is extracted into a Higher-Order Component. We import the `graphql` HOC from the React Apollo package in order to apply it on the Profile component, which takes the query definition as argument.
 
-这里并没有涉及到GraphQL，因为你所看到的只是纯视图层。而数据层的逻辑会被提取到一个高阶组件中。我们将React Apollo包中的`graphql`导入，以便在Profile组件中使用它。它将query的定义作为一个参数。
+这里并没有涉及到GraphQL，因为你所看到的只是纯视图层。而数据层的逻辑会被提取到一个高阶组件中。我们将React Apollo包中的`graphql`导入，以便在Profile组件中使用它。它将查询的定义作为一个参数。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1036,7 +1036,7 @@ export default graphql(GET_REPOSITORIES_OF_CURRENT_USER)(Profile);
 
 > I find the HOC approach cleaner than the render props, because it co-locates both the data-layer and view-layer instead of inserting the one into the other. However, the team behind Apollo made the decision to favor render props instead. While I find the HOC approach more concise, the render prop pattern comes with its own advantages for mutating and querying data. For instance, imagine a query depends on a prop used as variable. It would be cumbersome to access the incoming prop in a statically-defined Higher-Order Component, but it can be dynamically used in a render prop because it is used within the Profile component where the props are naturally accessible. Another advantage is the power of composition for render props, which is useful when one query depends on the result of another. It can be achieved with HOCs as well, but again, it is more cumbersome. It boils down to seemingly never ending "Higher-Order Components vs Render Props" discussions.
 
-我发现使用HOC比render props更清晰，因为它将数据层和视图层协同使用，而不是在一个组件里面使用另一个。然而，Apollo团队还是决定使用render props的模式。虽然我发现HOC方法更简洁，但是render prop模式也有它自己的优势。例如，假设一个query查询要使用一个prop作为variable。在静态定义的高阶组件中访问传入的prop会很麻烦，但是它可以在render prop中动态的使用，因为它在Profile组件中可以很自然的访问prop。另一个优势就是render props的组合能力，当一个query查询依赖于另一个的结果时会非常有用。它也能使用HOC来实现，但同样的也会很麻烦。“高阶组件 vs Render Props”的讨论似乎永远不会结束。
+我发现使用HOC比render props更清晰，因为它将数据层和视图层协同使用，而不是在一个组件里面使用另一个。然而，Apollo团队还是决定使用render props的模式。虽然我发现HOC方法更简洁，但是render prop模式也有它自己的优势。例如，假设一个查询要使用一个prop作为variable。在静态定义的高阶组件中访问传入的prop会很麻烦，但是它可以在render prop中动态的使用，因为它在Profile组件中可以很自然的访问prop。另一个优势就是render props的组合能力，当一个查询依赖于另一个的结果时会非常有用。它也能使用HOC来实现，但同样的也会很麻烦。“高阶组件 vs Render Props”的讨论似乎永远不会结束。
 > ### Exercises:
 ### 练习：
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/694cc4ec8f0d3546c13e0a32cd1f18ba9a990713)
@@ -1044,20 +1044,20 @@ export default graphql(GET_REPOSITORIES_OF_CURRENT_USER)(Profile);
 > * Come up with your own opinion about the advantages and disadvantages of using a Higher-Order Component or Render Prop
 * 对使用高阶组件或者Render Prop的优缺点提出自己的看法
 > * Try to implement one of your mutations with a Higher-Order Component
-* 尝试使用高阶组件去实现一个mutation
+* 尝试使用高阶组件去实现一个突变
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5G6QPLY)
 * 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5G6QPLY)
 > ## Local State Management with Apollo Client in React
 ## Apollo Client在React中使用本地状态管理
 >Let's get back to the Repository component. You have experienced that the `viewerHasStarred` boolean updates in the Apollo Client's cache after a mutation was successful. That's great, because Apollo Client handles this for you, based on the mutation result. If you have followed the exercises of the mutation section, you should probably see something like a toggling "Star" and "Unstar" label for the button. All of this happens because you returned the `viewerHasStarred` boolean in your mutation result. Apollo Client is clever enough to update the repository entity, which is normalized and accessible in the cache. That's powerful default behavior, isn't it? You don't need to handle the local state management yourself, since Apollo Client figures it out for you as long as you provide useful information in the mutation's result.
-让我们回到Repository组件。你已经完成了在mutation成功后更改Apollo Client缓存中`viewerHasStarred`的值。这非常棒，因为Apollo Client会根据mutation的结果为你做这样的处理。如果你已经完成了mutation章节的练习，你应该可以看到按钮带有类似于"Star"和"Unstart"的标签。所有这一切都是因为你在mutation结果中返回了`viewerHasStarred`。Apollo Cient非常聪明，它会去更新缓存中repository实体。这是一个强大的默认行为，不是吗？你不必自己处理本地状态管理。因为只要你在mutation结果中提供有用的信息，Apollo Client就会为你处理这些问题。
+让我们回到Repository组件。你已经完成了在突变成功后更改Apollo Client缓存中`viewerHasStarred`的值。这非常棒，因为Apollo Client会根据突变的结果为你做这样的处理。如果你已经完成了突变章节的练习，你应该可以看到按钮带有类似于"Star"和"Unstar"的标签。所有这一切都是因为你在突变结果中返回了`viewerHasStarred`。Apollo Cient非常聪明，它会去更新缓存中repository实体。这是一个强大的默认行为，不是吗？你不必自己处理本地状态管理。因为只要你在突变结果中提供有用的信息，Apollo Client就会为你处理这些问题。
 
 >Apollo Client doesn't update the count of stars after the mutation, though. Normally, it is assumed that the count of stars increments by one when it is starred, with the opposite for unstarring. Since we don't return a count of stargazers in the mutation result, you have to handle the update in Apollo Client's cache yourself. Using Apollo Client's `refetchQueries` option is the naive approach for a mutation call, or a Mutation component to trigger a refetch for all queries, where the query result might be affected by the mutation. But that's not the best way to deal with this problem. It costs another query request to keep the data consistent after a mutation. In a growing application, this approach will eventually become problematic. Fortunately, the Apollo Client offers other functionalities to read/write manually from/to the cache locally without more network requests. The Mutation component offers a prop where you can insert update functionality that has access to the Apollo Client instance for the update mechanism.
 
-Apollo Client不会在mutation成功后更新start的数量，通常情况下，假设star的数量在加star的时候增加1，反之减1。因为我们没有在mutation的结果中返回star的人数，所以你必须自己更新Apollo Client中的缓存。对于mutation来说，使用Apollo Client中的`refetchQueries`选项是一个简单的方式，或者使用Mutation组件触发所有query重新查询，query的结果可能会因受到mutatin的影响而改变。但是这不是最好的处理方式。它在mutation之后使用了一个query查询来保持数据的一致性。在一个不断增长的应用中，这种方法最终会成为一个问题。幸运的是，Apollo Client提供了其它的功能，让我们可以在不使用更多网络请求的情况下在本地收到的读写缓存。Mutation组件提供了一个prop，你可以通过这个prop传入一个更新函数，最终通过Apollo Client实例的更新机制更新缓存。
+Apollo Client不会在突变成功后更新star的数量，通常情况下，假设star的数量在被star的时候增加1，反之减1。因为我们没有在突变的结果中返回stargazer的数量，所以你必须自己更新Apollo Client中的缓存。对于突变来说，使用Apollo Client中的`refetchQueries`选项是一个简单的方式，或者使用Mutation组件重新触发所有查询，查询的结果可能会因受到mutatin的影响而改变。但是这不是最好的处理方式。它在突变之后使用了一个查询来保持数据的一致性。在一个不断增长的应用中，这种方法最终会成为一个问题。幸运的是，Apollo Client提供了其它的功能，让我们可以在不使用更多网络请求的情况下在本地收到的读写缓存。Mutation组件提供了一个prop，你可以通过这个prop传入一个更新函数，最终通过Apollo Client实例的更新机制更新缓存。
 > Before implementing the update functionality for the local state management, let's refactor another piece of code that will be useful for a local state update mechanism. The query definition next to your Profile component has grown to several fields with multiple object nestings. Previously, you learned about GraphQL fragments, and how they can be used to split parts of a query to reuse later. Next, we will split all the field information you used for the repository's node. You can define this fragment in the *src/Repository/fragments.js* file to keep it reusable for other components.
 
-在实现这个更新功能之前，让我们重构一段对本地状态更新机制更有用的代码。在Profile组件中的query定义已经使用多个嵌套对象的多个字段。在这之前，你已经学习了GraphQL片段（fragment），以及它们如何用于拆分query以便在以后重用。接下来，我们将拆分所有用于repository的节点的字段信息，你可以在*src/Repository/fragments.js*文件中定义这个fragment，以便它可以重用于其他组件。
+在实现这个更新功能之前，让我们重构一段对本地状态更新机制更有用的代码。在Profile组件中的query定义已经使用多个嵌套对象的多个字段。在这之前，你已经学习了GraphQL片段，以及它们如何用于拆分查询以便在以后重用。接下来，我们将拆分所有用于repository的节点的字段信息，你可以在*src/Repository/fragments.js*文件中定义这个片段，以便它可以重用于其他组件。
 
 {title="src/Repository/fragments.js",lang="javascript"}
 ~~~~~~~~
@@ -1092,10 +1092,10 @@ export default REPOSITORY_FRAGMENT;
 
 >You split this partial query (fragment), because it is used more often in this application in the next sections for a local state update mechanism, hence the previous refactoring.
 
-你可以拆分这部分的query（fragment），因为之前的重构，它在后续章节会更频繁用于本地状态的管理机制。
+你可以拆分这部分的查询（片段），因为之前的重构，它在后续章节会更频繁用于本地状态的管理机制。
 >The fragment shouldn't be imported directly from the *src/Repository/fragments.js* path to your Profile component, because the *src/Repository/index.js* file is the preferred entry point to this module.
 
-这个fragment不应该直接的从*src/Repository/fragments.js*路径导入到Profile组件，因为*src/Repository/index.js*文件才是此模块的首选入口点。
+这个片段不应该直接的从*src/Repository/fragments.js*路径导入到Profile组件，因为*src/Repository/index.js*文件才是此模块的首选入口点。
 {title="src/Repository/index.js",lang="javascript"}
 ~~~~~~~~
 import RepositoryList from './RepositoryList';
@@ -1111,7 +1111,7 @@ export default RepositoryList;
 ~~~~~~~~
 
 >Finally, import the fragment in the Profile component's file to use it again.
-最后，在Profile组件中导入这个fragment来使用。
+最后，在Profile组件中导入这个片段来使用。
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
 ...
@@ -1150,7 +1150,7 @@ const GET_REPOSITORIES_OF_CURRENT_USER = gql`
 
 >The refactoring is done. Your query is now more concise, and the fragment in its natural repository module can be reused for other places and functionalities. Next, use Mutation component's `update` prop to pass a function which will update the local cache eventually.
 
-重构到此就已经完成了。你的query查询现在更简洁了。位于repository模块中的fragment可以被重用的其他的功能。下一步，使用Mutation组件的`update` prop传递一个函数来更改本地的缓存。
+重构到此就已经完成了。你的查询现在更简洁了。位于repository模块中的片段可以被重用的其他的功能。下一步，使用Mutation组件的`update` prop传递一个函数来更改本地的缓存。
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 ...
@@ -1191,7 +1191,7 @@ export default RepositoryItem;
 ~~~~~~~~
 
 >The function is extracted as its own JavaScript variable, otherwise ends up too verbose in the RepositoryItem component when keeping it inlined in the Mutation component. The function has access to the Apollo Client and the mutation result in its argument, and you need both to update data so you can destructure the mutation result in the function signature. If you don't know how the mutation result looks like, check the `STAR_REPOSITORY` mutation definition again, where you defined all fields that should appear in the mutation result. For now, the `id` of the repository to be updated is the important part.
-这个函数被单独抽离成一个变量，否则将它内联到Mutaition组件中时，RepositoryItem组件会变得十分亢长。该函数的参数包含了Apollo Client以及mutation的结果，你可以在函数签名中解构mutation的结果以便更新数据。如果你不知道mutation结果的结构，请再次查看`STAR_REPOSITORY`mutation的定义，定义中的所有字段都会出现的mutation的结果中。目前，要更新的repository的`id`是重点部分。
+这个函数被单独抽离成一个变量，否则将它内联到Mutaition组件中时，RepositoryItem组件会变得十分亢长。该函数的参数包含了Apollo Client以及突变的结果，你可以在函数签名中解构突变的结果以便更新数据。如果你不知道突变结果的结构，请再次查看`STAR_REPOSITORY`突变的定义，定义中的所有字段都会出现的突变的结果中。目前，要更新的repository的`id`是重点部分。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1211,7 +1211,7 @@ const updateAddStar = (
 
 >Now comes the most exciting part of this section. You can use the Apollo Client to read data from the cache, but also to write data to it. The goal is to read the starred repository from the cache, which is why we need the `id` to increment its stargazers count by one and write the updated repository back to the cache. You got the repository by its `id` from the cache by extracting the repository fragment. You can use it along with the repository identifier to retrieve the actual repository from Apollo Client's cache without querying all the data with a naive query implementation.
 
-现在到了本节最激动人心的部分了。你可以使用Apollo Client从缓存中读取数据，也可以向其中写入数据。我们的目标是从缓存中读取已经start的repository，这就是为什么我们需要`id`来找到相应的repository，将它的star数量加1并写入缓存中。你可以通过提取出来的repository fragment或者repository的缓存数据，你可以将该fragment和repository的id标识符一起使用，从而在Apollo Client的缓存中检索期望的repository数据，而不是使用简单的query查询去查询所有的数据。
+现在到了本节最激动人心的部分了。你可以使用Apollo Client从缓存中读取数据，也可以向其中写入数据。我们的目标是从缓存中读取已经star的repository，这就是为什么我们需要`id`来找到相应的repository，将它的star数量加1并写入缓存中。你可以通过提取出来的repository片段获得repository的缓存数据，你可以将该片段和repository的id标识符一起使用，从而在Apollo Client的缓存中检索期望的repository数据，而不是简单使用去查询所有的数据。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1244,12 +1244,12 @@ const updateAddStar = (
 
 >The Apollo Client's cache that you set up to initialize the Apollo Client normalizes and stores queried data. Otherwise, the repository would be a deeply nested entity in a list of repositories for the query structure used in the Profile component. Normalization of a data structure makes it possible to retrieve entities by their identifier and their GraphQL `__typename` meta field. The combination of both is the default key, which is called a [composite key](https://en.wikipedia.org/wiki/Compound_key), to read or write an entity from or to the cache. You may find out more about changing this default composite key in the exercises of this section.
 
-Apollo Client会将所有的查询数据标准化储存到缓存中。否则，repository数据将会是Profile组件中使用query结构的repository列表中的深层嵌套的实体数据。标准化的数据结构使得可以通过它们的标识符和GraphQL的`__typename`元字段来检索实体数据。两者的组合是默认键，这个被称为[复合键](https://en.wikipedia.org/wiki/Compound_key)，用于从缓存中读取和写入实体。你将会在本节中找到更多关于更改默认复合键的信息。
+Apollo Client会将所有的查询数据标准化储存到缓存中。否则，repository数据将会是Profile组件中使用查询结构的repository列表中的深层嵌套的实体数据。标准化的数据结构使得可以通过它们的标识符和GraphQL的`__typename`元字段来检索实体数据。两者的组合是默认键，这个被称为[复合键](https://en.wikipedia.org/wiki/Compound_key)，用于从缓存中读取和写入实体。你将会在本节中找到更多关于更改默认复合键的信息。
 >Furthermore, the resulting entity has all properties specified in the fragment. If there is a field in the fragment not found on the entity in the cache, you may see the following error message: *Can't find field __typename on object ...*. That's why we use the identical fragment to read from the local cache to query the GraphQL API.
 
-此外，生成的实体具有这个fragment所有的属性。如何在缓存中无法找到该实体上的某些字段，你会看到以下的错误：*Can't find field __typename on object ...*。这就是为什么我们用相同的fragment作为查询GraphQL API来读取本地缓存。
+此外，生成的实体具有这个片段所有的属性。如何在缓存中无法找到该实体上的某些字段，你会看到以下的错误：*Can't find field __typename on object ...*。这就是为什么我们用相同的片段作为查询GraphQL API来读取本地缓存。
 > After you have retrieved the repository entity with a fragment and its composite key, you can update the count of stargazers and write back the data to your cache. In this case, increment the number of stargazers.
-在你使用fragment和它的复合键来检索repository实体之后，你可以更新star的人员数量，并把更新后的数据写入到缓存中。在这种情况下，就能够增加star的数量。
+在你使用片段和它的复合键来检索repository实体之后，你可以更新stargazer数量，并把更新后的数据写入到缓存中。在这种情况下，就能够增加stargazer的数量。
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
 const updateAddStar = (
@@ -1282,13 +1282,13 @@ const updateAddStar = (
 ~~~~~~~~
 
 >Let's recap all three steps here. First, you have retrieved (read) the repository entity from the Apollo Client using an identifier and the fragment; second, you updated the information of the entity; and third, you wrote back the data with updated information, but kept all remaining information intact using the JavaScript spread operator. This is a manual update mechanism that can be used when a mutation is missing data.
-让我们回顾一下这三个步骤。首先，你使用标识符和fragment从Apollo Client中检索（读取）了repository的实体；第二步，你更新这个实体的数据信息；第三步，你将这个更新信息写回到缓存中，但是使用JavaScript的拓展运算符保留了所有其他的信息。这就是一种手动更新机制，可以在mutation缺失数据时使用。
+让我们回顾一下这三个步骤。首先，你使用标识符和片段从Apollo Client中检索（读取）了repository的实体；第二步，你更新这个实体的数据信息；第三步，你将这个更新信息写回到缓存中，但是使用JavaScript的拓展运算符保留了所有其他的信息。这就是一种手动更新机制，可以在突变缺失数据时使用。
 >It is a good practice to use an identical fragment for all three parts: the initial query, the `readFragment()`, and `writeFragment()` cache method. Your data structure for the entity stays consistent in your cache. For instance, if you forget to include a property defined by the fragment's fields in data object of the `writeFragment()` method, you get a warning: *Missing field __typename in ...*.
 
-对以下的三个部分都是用相同fragment是一个好的实践：初始的query，`readFragment（）`以及`writeFragment（）`方法。你的实体的数据结构在缓存中始终保持一致。例如，如果你忘了在`writeFragment（）`方法中的数据对象包含fragment所定义的字段，你将会得到一个警告：*Missing field __typename in ...*。
+对以下的三个部分都是用相同fragment是一个好的实践：初始化的查询，`readFragment（）`以及`writeFragment（）`方法。你的实体的数据结构在缓存中始终保持一致。例如，如果你忘了在`writeFragment（）`方法中的数据对象包含片段所定义的字段，你将会得到一个警告：*Missing field __typename in ...*。
 >On an implementation level, you learned about extracting fragments from a query or mutation. Fragments allow you to define your shared entities by GraphQL types. You can reuse those in your queries, mutations or local state management methods to update the cache. On a higher level, you learned that Apollo Client's cache normalizes your data, so you can retrieve entities that were fetched with a deeply nested query using their type and identifier as composite key. Without it, you'd have to perform normalizations for all the fetched data before putting it in your store/state.
 
-站在实践操作级别上看，你会学到从query和mutation中抽离fragment，fragment允许你定义你的GraphQL类型的共享实体。你可以在query，mutation或者本地状态管理方法中重用这些fragment来更新缓存。站在更高的级别上来看，你学习到Apollo Client的缓存标准化了你的数据，因此你可以使用实体的类型和他们的组合键来从深层嵌套的query结果中检索到你所期望的实体数据。没有她，你必须在将所有获取的数据存放到store或者state之前，将它们都进行标准化。
+站在实践操作级别上看，你会学到从查询和突变中抽离片段，片段允许你定义你的GraphQL类型的共享实体。你可以在查询，突变或者本地状态管理方法中重用这些片段来更新缓存。站在更高的级别上来看，你学习到Apollo Client的缓存标准化了你的数据，因此你可以使用实体的类型和他们的组合键来从深层嵌套的查询结果中检索到你所期望的实体数据。没有它，你必须在将所有获取的数据存放到store或者state之前，将它们都进行标准化。
 >### Exercises:
 ###练习：
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
@@ -1296,18 +1296,18 @@ const updateAddStar = (
 >* Read more about [Local State Management in Apollo Client](https://www.apollographql.com/docs/react/essentials/local-state.html)
 * 阅读更多关于[Apollo Client本地状态管理](https://www.apollographql.com/docs/react/essentials/local-state.html)的内容
 >* Read more about [Fragments in Apollo Client](https://www.apollographql.com/docs/react/advanced/fragments.html)
-* 阅读更多关于[Apollo Client中fragment](https://www.apollographql.com/docs/react/advanced/fragments.html)的内容
+* 阅读更多关于[Apollo Client中片段](https://www.apollographql.com/docs/react/advanced/fragments.html)的内容
 
-* Implement local cache updates for all the other mutations from the previous exercises
-  * Implement the identical local cache update, but with decreasing the count of stargazers, for your `removeStar` mutation
-  * Implement the local cache update for the `updateSubscription` mutation
-  * You will see in the next section a working solution for it
-* Read more about [Caching in Apollo Client and the composite key to identify entities](https://www.apollographql.com/docs/react/advanced/caching.html)
-* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5BSDXF7)
+>* Implement local cache updates for all the other mutations from the previous exercises
+>  * Implement the identical local cache update, but with decreasing the count of stargazers, for your `removeStar` mutation
+>  * Implement the local cache update for the `updateSubscription` mutation
+>  * You will see in the next section a working solution for it
+>* Read more about [Caching in Apollo Client and the composite key to identify entities](https://www.apollographql.com/docs/react/advanced/caching.html)
+>* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5BSDXF7)
 
-* 为之前练习中的所有其他的mutations实现更新本地缓存
-  * 为`removeStar`mutation实现相同的本地缓存更新，但是是去减少stargazer的数量
-  * 为`updateSubscription` mutation实现本地缓存更新
+* 为之前练习中的所有其他的突变实现更新本地缓存
+  * 为`removeStar`突变实现相同的本地缓存更新，但是是去减少stargazer的数量
+  * 为`updateSubscription`突变实现本地缓存更新
   * 你将会在下一节看到一个可行的解决方案
 * 阅读更多关于[Apollo CLient中的缓存以及用于标识实体的组合键](https://www.apollographql.com/docs/react/advanced/caching.html)
 * 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5BSDXF7)
