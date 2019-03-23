@@ -1886,7 +1886,7 @@ That's it for the abstraction of the FetchMore button for paginated lists with A
 
 > In this section, you introduce [React Router](https://github.com/ReactTraining/react-router) to show two separate pages for your application. At the moment, you are only showing one page with a Profile component that displays all your repositories. We want to add another Organization component that shows repositories by an organization, and there could be a search field as well, to lookup individual organizations with their repositories on that page. Let's do this by introducing React Router to your application. If you haven't used React Router before, make sure to conduct the exercises of this section to learn more about it.
 
-在这一小节中， 你将会通过引入 [React Router](https://github.com/ReactTraining/react-router) 在你的程序中展示两个单独的页面。到目前为止，你还只是在一个页面中用 Profile 组件展示你所有的代码库。 我们想要添加另一个 Organization 组件来分组展示你的代码库，并且加上搜索框实现在这个页面上查找不同组的代码库。让我们通过在你的程序引入 React Router 中来实现它吧。如果你之前没有使用过 React Router，请务必进行此小节的练习来更好地了解它。
+在这一小节中， 你将会通过引入 [React Router](https://github.com/ReactTraining/react-router) 在你的程序中展示两个单独的页面。到目前为止，你还只是在一个页面中用 Profile 组件展示你所有的代码库。 我们想要添加另一个 Organization 组件来分组展示你的代码库，并且加上搜索框实现在这个页面上查找不同组的代码库的功能。让我们通过在你的程序引入 React Router 中来实现它吧。如果你之前没有使用过 React Router，请务必进行此小节的练习来更好地了解它。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -1895,7 +1895,7 @@ npm install react-router-dom --save
 
 > In your *src/constants/routes.js* file, you can specify both routes you want to make accessible by React Router. The `ORGANIZATION` route points to the base URL, while the `PROFILE` route points to a more specific URL.
 
-在你的 *src/constants/routes.js* 文件中你可以指定要通过 React Router 访问的路由。`ORGANIZATION` 路由指向根URL，`PROFILE` 路由指向更具体的URL。
+在 *src/constants/routes.js* 文件中你可以指定要通过 React Router 访问的路由。`ORGANIZATION` 路由指向根URL，`PROFILE` 路由指向更具体的URL。
 
 {title="src/constants/routes.js",lang="javascript"}
 ~~~~~~~~
@@ -2032,7 +2032,7 @@ export default Navigation;
 
 > The Profile page works as before, but the Organization page is empty. In the last step, you defined the two routes as constants, used them in the App component to map to their respective components, and introduced Link components to navigate to them in the Navigation component.
 
-Profile 页面与之前一样，但 Organization 是空的。在最后一步中，你将两个路由定义为常量，在 App 组件中将它们指向它们各自的组件，并引入 Link 组件来在 Navigation 组件中导航到它们。
+Profile 页面与之前一样，只是 Organization 页面是空的。在最后一步中，你将两个路由定义为常量，在 App 组件中将它们指向它们各自的组件，并引入 Link 组件来在 Navigation 组件中导航到它们。
 
 > Another great feature of the Apollo Client is that it caches query requests. When navigating from the Profile page to the Organization page and back to the Profile page, the results appear immediately because the Apollo Client checks its cache before making the query to the remote GraphQL API. It's a pretty powerful tool.
 
@@ -2084,11 +2084,11 @@ export default Organization;
 
 > The Query component in the Organization component takes a query tailored to the organization being the top level field of the query. It takes a variable to identify the organization, and it uses the newly introduced `skip` prop to skip executing the query if no organization identifier is provided. Later, you will pass an organization identifier from the App component. You may have noticed that the repository fragment you introduced earlier to update the local state in the cache can be reused here. It saves lines of code, and more importantly, ensures the returned list of repositories have identical structures to the list of repositories in the Profile component.
 
-Organization 组件中的 Query 组件实现对分组的定制查询作为查询的顶级字段。它通过一个变量来对分组进行标识，如果这个分组标识符没有被提供，则引入一个新的 `skip` prop 来跳过执行查询。然后，你会从 App 组件传递分组标识符。你可能已经注意到，之前引入的更新本地状态对代码可以在这里重用。这不仅仅是减少了代码冗余，更重要的是，这样确保了返回的代码库列表和和 Profile 组件中的代码库列表具有相同的结构。
+Organization 组件中的 Query 组件实现对分组的定制查询作为查询的顶级字段。它通过一个变量来对分组进行标识，如果这个分组标识符没有被提供，则引入一个新的 `skip` prop 来跳过执行查询。然后，你会从 App 组件中传递分组标识符。你可能已经注意到，之前引入的更新本地状态的代码可以在这里重用。这不仅仅是减少了代码冗余，更重要的是，这样确保了返回的代码库列表和和 Profile 组件中的代码库列表具有相同的结构。
 
 > Next, extend the query to fit the requirements of the pagination feature. It requires the `cursor` argument to identify the next page of repositories. The `notifyOnNetworkStatusChange` prop is used to update the `loading` boolean for paginated requests as well.
 
-接下来，对查询进行扩展以满足分页功能。这里需要 `cursor` 参数来标识代码库对下一页。`notifyOnNetworkStatusChange` prop 用来更新分页请求的 `loading` 状态(布尔值)。
+接下来，对查询进行扩展以满足分页功能。这里需要 `cursor` 参数来标识代码库的下一页。`notifyOnNetworkStatusChange` prop 用来更新分页请求的 `loading` 状态(布尔值)。
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2186,7 +2186,7 @@ export default Organization;
 
 > Provide a `organizationName` as prop when using the Organization in the App component, and leave it inlined for now. Later, you will make it dynamic with a search field.
 
-在 App 组件中提供一个 `organizationName` 作为 prop 给 Organization 组件并暂时保留，你会用它来动态化搜索字段。
+在 App 组件中提供一个 `organizationName` 作为 prop 传给 Organization 组件并暂时保留，你会用它来动态化搜索字段。
 
 {title="src/App/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2445,7 +2445,7 @@ export default withRouter(Navigation);
 
 > The OrganizationSearch component implemented in the same file would also work with the following implementation. It handles its own local state, the value that shows up in the input field, but uses it as an initial value from the parent component. It also receives a callback handler, which can be used in the `onSubmit()` class method to propagate the search fields value on a submit interaction up the component tree.
 
-在同一文件中实现的 OrganizationSearch 组件也可以采用如下实现。它处理自己的 state ，即输入框中显示的值，不过初始值来自于父组件。它还接受一个回调函数，该回调在 `onSubmit()` 中使用，用来在组件树中向上传递搜索的字段。
+在同一文件中实现的 OrganizationSearch 组件也可以采用如下实现方式。它处理自己的本地状态 ，即输入框中显示的值，不过初始值来自于父组件。它还接受一个回调函数，该回调在 `onSubmit()` 中使用，用来在组件树中向上传递搜索的字段。
 
 {title="src/App/Navigation/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2616,7 +2616,7 @@ export default App;
 
 > You have implemented a dynamic GraphQL query with a search field. Once a new `organizationName` is passed to the Organization component from a local state change, the Query component triggers another request due to a re-render. The request is not always made to the remote GraphQL API, though. The Apollo Client cache is used when an organization is searched twice. Also, you have used the well-known technique called lifting state in React to share the state across components.
 
-你已实现了使用搜索字段进行动态的GraphQL查询。一旦将新的 `organizationName` 变化从本地状态传递给 Organization 组件，Query 组件就会因为重新渲染而触发另一个请求。但它并不会总是向远程 GraphQL API 发送请求。一个分组被搜索多次时，则是使用的 Apollo Client 缓存。此外，你也在 React 中使用了总所周知的被称之为状态提升的技巧，来使组件之间的状态共享。
+你已实现了使用搜索字段进行动态的GraphQL查询。一旦将新的 `organizationName` 变化从本地状态传递给 Organization 组件，Query 组件就会因为重新渲染而触发另一个请求。但它并不会总是向远程 GraphQL API 发送请求。一个分组被搜索多次时，则是使用的 Apollo Client 缓存。此外，你也在 React 中使用了众所周知的被称之为状态提升的技巧，来使组件之间的状态共享。
 
 > ### Exercises:
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
