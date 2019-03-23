@@ -146,7 +146,7 @@ fragment sharedOrganizationFields on Organization {
 # leanpub-end-insert
 ~~~~~~~~
 
-As you can see, you have to specify on which **type** of object the fragment should be used. In this case, it is the type `Organization`, which is a custom type defined by GitHub's GraphQL API. This is how you use fragments to extract and reuse parts of your queries. At this point, you might want to open "Docs" on the right side of your GraphiQL application. The documentation gives you access to the GraphQL **schema**. A schema exposes the GraphQL API used by your GraphiQL application, which is Github's GraphQL API in this case. It defines the GraphQL **graph** that is accessible via the GraphQL API using queries and mutations. Since it is a graph, objects and fields can be deeply nested in it, which we'll certainly encounter as we move along.
+As you can see, you have to specify on which **type** of object the fragment should be used. In this case, it is the type `Organization`, which is a custom type defined by GitHub's GraphQL API. This is how you use fragments to extract and reuse parts of your queries. At this point, you might want to open "Docs" on the right side of your GraphiQL application. The documentation gives you access to the GraphQL **schema**. A schema exposes the GraphQL API used by your GraphiQL application, which is GitHub's GraphQL API in this case. It defines the GraphQL **graph** that is accessible via the GraphQL API using queries and mutations. Since it is a graph, objects and fields can be deeply nested in it, which we'll certainly encounter as we move along.
 
 Since we're exploring queries and not mutations at the moment, select "Query" in the "Docs" sidebar. Afterward, traverse the objects and fields of the graph, explore their optional arguments. By clicking them, you can see the accessible fields within those objects in the graph. Some fields are common GraphQL types such as `String`, `Int` and `Boolean`, while some other types are **custom types** like the `Organization` type we used. In addition, you can see whether arguments are required when requesting fields on an object. It can be identified by the exclamation point. For instance, a field with a `String!` argument requires that you pass in a `String` argument whereas a field with a `String` argument doesn't require you to pass it.
 
@@ -326,11 +326,11 @@ The query in GraphQL gives you all you need to read data from a GraphQL API. The
 
 > This section introduces the GraphQL mutation. It complements the GraphQL query because it is used for writing data instead of reading it. The mutation shares the same principles as the query: it has fields and objects, arguments and variables, fragments and operation names, as well as directives and nested objects for the returned result. With mutations you can specify data as fields and objects that should be returned after it 'mutates' into something acceptable. Before you start making your first mutation, be aware that you are using live GitHub data, so if you follow a person on GitHub using your experimental mutation, you will follow this person for real. Fortunately this sort of behavior is encouraged on GitHub.
 
-这部分将会介绍 GraphQL 变更。它作为 GraphQL 查询的补充，用于改写数据而不是读取。变更和查询拥有着同样的原则：拥有字段和对象、参数和变量、片段和操作名称、指令和返回结果中的嵌套对象。通过变更你可以指定在"改变"发生后所期望的返回数据的字段和对象。在你开始你的第一个变更之前，请注意你在使用真实的 Github 数据，也就是说如果你在尝试变更的时候关注了 Github 上的一个人，你就真的关注了这个人。幸运的是这种行为在 Github 上是受到鼓励的。
+这部分将会介绍 GraphQL 变更。它作为 GraphQL 查询的补充，用于改写数据而不是读取。变更和查询拥有着同样的原则：拥有字段和对象、参数和变量、片段和操作名称、指令和返回结果中的嵌套对象。通过变更你可以指定在"改变"发生后所期望的返回数据的字段和对象。在你开始你的第一个变更之前，请注意你在使用真实的 GitHub 数据，也就是说如果你在尝试变更的时候关注了 GitHub 上的一个人，你就真的关注了这个人。幸运的是这种行为在 GitHub 上是受到鼓励的。
 
 > In this section, you will star a repository on GitHub, the same one you used a query to request before, using a mutation [from GitHub's API](https://developer.github.com/v4/mutation/addstar). You can find the `addStar` mutation in the "Docs" sidebar. The repository is a project for teaching developers about the fundamentals of React, so starring it should prove useful.
 
-接下来你将会 star 一个 Github 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 Github API ](https://developer.github.com/v4/mutation/addstar)的一种变更。你可以在" Docs "侧边栏中找到 `addStar` 这种变更。这个代码库是一个教开发者 React 基础的项目，所以 star 这个代码库能够证明它有用。
+接下来你将会 star 一个 GitHub 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 GitHub API ](https://developer.github.com/v4/mutation/addstar)的一种变更。你可以在" Docs "侧边栏中找到 `addStar` 这种变更。这个代码库是一个教开发者 React 基础的项目，所以 star 这个代码库能够证明它有用。
 
 > You can visit [the repository](https://github.com/the-road-to-learn-react/the-road-to-learn-react) to see if you've given a star to the repository already. We want an unstarred repository so we can star it using a mutation. Before you can star a repository, you need to know its identifier, which can be retrieved by a query:
 
@@ -379,7 +379,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > The mutation's name is given by GitHub's API: `addStar`. You are required to pass it the `starrableId` as `input` to identify the repository; otherwise, the GitHub server won't know which repository to star with the mutation. In addition, the mutation is a named mutation: `AddStar`. It's up to you to give it any name. Last but not least, you can define the return values of the mutation by using objects and fields again. It's identical to a query. Finally, the variables tab provides the variable for the mutation you retrieved with the last query:
 
-这个变更的名称是由 Github API 起的： `addStar` 。你需要传递 `starrableId` 作为 `input` 来识别代码库；否则 Github 服务器无从得知这个变更是要 star 哪个代码库。另外，这个变更被命名为： `AddStar` 。你也可以给它任意名称。然后你可以再次通过对象和字段来定义这个变更的返回值，这和查询是相同的。最后一点，在变量区中提供你在上个查询中获得的变量用于这次变更：
+这个变更的名称是由 GitHub API 起的： `addStar` 。你需要传递 `starrableId` 作为 `input` 来识别代码库；否则 GitHub 服务器无从得知这个变更是要 star 哪个代码库。另外，这个变更被命名为： `AddStar` 。你也可以给它任意名称。然后你可以再次通过对象和字段来定义这个变更的返回值，这和查询是相同的。最后一点，在变量区中提供你在上个查询中获得的变量用于这次变更：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -408,7 +408,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > The repository is starred now. It's visible in the result, but you can verify it in the [repository on GitHub](https://github.com/the-road-to-learn-react/the-road-to-learn-react). Congratulations, you made your first mutation.
 
-这个代码库现在已经 star 了。在返回的结果中能够看到，但你也可以通过查看[ Github 上的代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来确认。恭喜，你完成了你的第一个变更操作。
+这个代码库现在已经 star 了。在返回的结果中能够看到，但你也可以通过查看[ GitHub 上的代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来确认。恭喜，你完成了你的第一个变更操作。
 
 > ### Exercises:
 
@@ -420,13 +420,13 @@ mutation AddStar($repositoryId: ID!) {
 
 > * Explore GitHub's mutations by using the "Docs" sidebar in GraphiQL
 
-* 通过 GraphiQL 上的" Docs "侧边栏探索 Github 的更多变更操作
+* 通过 GraphiQL 上的" Docs "侧边栏探索 GitHub 的更多变更操作
 
 > * Find GitHub's `addStar` mutation in the "Docs" sidebar in GraphiQL
 > 	* Check its possible fields for returning a response 	
 
-* 在 GraphiQL 上的" Docs "侧边栏中找到 Github 的 `addStar` 变更
-	* 检查它所有可以返回的字段
+* 在 GraphiQL 上的" Docs "侧边栏中找到 GitHub 的 `addStar` 变更
+  * 检查它所有可以返回的字段
 
 > * Create a few other mutations for this or another repository such as:
 >   * Unstar repository
@@ -452,7 +452,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > This is where we return to the concept of **pagination** mentioned in the first chapter. Imagine you have a list of repositories in your GitHub organization, but you only want to retrieve a few of them to display in your UI. It could take ages to fetch a list of repositories from a large organization. In GraphQL, you can request paginated data by providing arguments to a **list field**, such as an argument that says how many items you are expecting from the list.
 
-这里我们回到了在第一节提到的**分页**的概念。试想你在你的 Github 组织下有一个代码库列表，但你只想获得它们中的一部分来展示在你的 UI 上。如果是从一个大型组织下获取一个代码库列表的话，那将花费大量的时间。在 GraphQL 中，你可以通过提供参数到一个**列举字段**来请求分页数据，比如一个表明你希望从列表中获得多少项的参数。
+这里我们回到了在第一节提到的**分页**的概念。试想你在你的 GitHub 组织下有一个代码库列表，但你只想获得它们中的一部分来展示在你的 UI 上。如果是从一个大型组织下获取一个代码库列表的话，那将花费大量的时间。在 GraphQL 中，你可以通过提供参数到一个**列举字段**来请求分页数据，比如一个表明你希望从列表中获得多少项的参数。
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -475,7 +475,7 @@ query OrganizationForLearningReact {
 
 > A `first` argument is passed to the `repositories` list field that specifies how many items from the list are expected in the result. The query shape doesn't need to follow the `edges` and `node` structure, but it's one of a few solutions to define paginated data structures and lists with GraphQL. Actually, it follows the interface description of Facebook's GraphQL client called Relay. GitHub followed this approach and adopted it for their own GraphQL pagination API. Later, you will learn in the exercises about other strategies to implement pagination with GraphQL.
 
-这里一个 `first` 参数被传给了 `repositories` 的列举字段来指定希望从列表中获得多少项作为结果。这个查询的形态不是必须按照这个 `edges` 和 `node` 的结构，但这是仅有的几种用 GraphQL 定义分页数据结构和列表的解决方法之一。实际上它是按照 Facebook 的 GraphQL 客户端 Relay 的界面描述。Github 按照它的方式采用在了自己的 GraphQL 分页 API 中。之后你将会在练习中了解到其他用 GraphQL 实现分页的方法。
+这里一个 `first` 参数被传给了 `repositories` 的列举字段来指定希望从列表中获得多少项作为结果。这个查询的形态不是必须按照这个 `edges` 和 `node` 的结构，但这是仅有的几种用 GraphQL 定义分页数据结构和列表的解决方法之一。实际上它是按照 Facebook 的 GraphQL 客户端 Relay 的界面描述。GitHub 按照它的方式采用在了自己的 GraphQL 分页 API 中。之后你将会在练习中了解到其他用 GraphQL 实现分页的方法。
 
 > After executing the query, you should see two items from the list in the repositories field. We still need to figure out how to fetch the next two repositories in the list, however. The first result of the query is the first **page** of the paginated list, the second query result should be the second page. In the following, you will see how the query structure for paginated data allows us to retrieve meta information to execute successive queries. For instance, each edge comes with its own cursor field to identify its position in the list.
 
@@ -617,7 +617,7 @@ query OrganizationForLearningReact {
 
 > This meta information completes the pagination implementation. Information is made accessible using the GraphQL API to implement [paginated lists](https://www.robinwieruch.de/react-paginated-list/) and [infinite scroll](https://www.robinwieruch.de/react-infinite-scroll/). Note, this covers GitHub's GraphQL API; a different GraphQL API for pagination might use different naming conventions for the fields, exclude meta information, or employ different mechanisms altogether.
 
-这个元信息完成了分页的实现。使用 GraphQL API 来实现[分页列表](https://www.robinwieruch.de/react-paginated-list/)和[无限滚动](https://www.robinwieruch.de/react-infinite-scroll/)使得信息更加方便。注意这包含了 Github 的 GraphQL API; 一个不同的分页的 GraphQL API 的字段可能使用了不同的命名方式，除了元信息或者采用完全不同的机制。
+这个元信息完成了分页的实现。使用 GraphQL API 来实现[分页列表](https://www.robinwieruch.de/react-paginated-list/)和[无限滚动](https://www.robinwieruch.de/react-infinite-scroll/)使得信息更加方便。注意这包含了 GitHub 的 GraphQL API; 一个不同的分页的 GraphQL API 的字段可能使用了不同的命名方式，除了元信息或者采用完全不同的机制。
 
 > ### Exercises:
 
@@ -644,11 +644,11 @@ query OrganizationForLearningReact {
 >   * Make sure to understand the other solutions, too.
 
 * 阅读更多关于[ GraphQL 中的翻页](http://graphql.org/learn/pagination)。
-	* 使用 cursor 是Github唯一使用的解决方案。
-	* 请确保同样理解其他的解决方案。
+  * 使用 cursor 是GitHub唯一使用的解决方案。
+  * 请确保同样理解其他的解决方案。
 
 | |
 
 > Interacting with GitHub's GraphQL API via GraphiQL or GitHub's GraphQL Explorer is only the beginning. You should be familiar with the fundamental GraphQL concepts now. But there are a lot more exciting concepts to explore. In the next chapters, you will implement a fully working GraphQL client application with React that interacts with GitHub's API.
 
-通过 GraphiQL 或者 Github GraphQL Explorer 来与 Github 的 GraphQL API 交互仅仅只是开始。你现在应该已经掌握了 GraphQL 的基本概念。但是仍然有很多更加有趣的概念可以探索。在接下来的章节中，你会实现一个完整运行的使用 React 与 Github 的 API 进行交互的 GraphQL 客户端应用。
+通过 GraphiQL 或者 GitHub 提供的 GraphQL Explorer 来与 GitHub 的 GraphQL API 交互仅仅只是开始。你现在应该已经掌握了 GraphQL 的基本概念。但是仍然有很多更加有趣的概念可以探索。在接下来的章节中，你会实现一个完整运行的使用 React 与 GitHub 的 API 进行交互的 GraphQL 客户端应用。
