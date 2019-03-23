@@ -2084,7 +2084,7 @@ export default Organization;
 
 > The Query component in the Organization component takes a query tailored to the organization being the top level field of the query. It takes a variable to identify the organization, and it uses the newly introduced `skip` prop to skip executing the query if no organization identifier is provided. Later, you will pass an organization identifier from the App component. You may have noticed that the repository fragment you introduced earlier to update the local state in the cache can be reused here. It saves lines of code, and more importantly, ensures the returned list of repositories have identical structures to the list of repositories in the Profile component.
 
-Organization 组件中的 Query 组件实现对分组的定制查询作为查询的顶级字段。它通过一个变量来对分组进行标识，如果这个分组标识符没有被提供，则引入一个新的 `skip` prop 来跳过执行查询。然后，你会从 App 组件中传递分组标识符。你可能已经注意到，之前引入的更新本地状态的代码可以在这里重用。这不仅仅是减少了代码冗余，更重要的是，这样确保了返回的代码库列表和和 Profile 组件中的代码库列表具有相同的结构。
+Organization 组件中的 Query 组件实现对分组的定制查询作为查询的顶级字段。它通过一个变量来对分组进行标识，如果这个分组标识符没有被提供，则引入一个新的 `skip` prop 来跳过查询操作。然后，你会从 App 组件中传递分组标识符。你可能已经注意到，之前引入的更新本地状态的代码可以在这里重用。这不仅仅是减少了代码冗余，更重要的是，这样确保了返回的代码库列表和和 Profile 组件中的代码库列表具有相同的结构。
 
 > Next, extend the query to fit the requirements of the pagination feature. It requires the `cursor` argument to identify the next page of repositories. The `notifyOnNetworkStatusChange` prop is used to update the `loading` boolean for paginated requests as well.
 
