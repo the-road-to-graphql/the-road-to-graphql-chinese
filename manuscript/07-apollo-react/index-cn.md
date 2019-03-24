@@ -1245,7 +1245,7 @@ On an implementation level, you learned about extracting fragments from a query 
 
 > In this section, you will implement an optimistic UI for when a user clicks the watch/unwatch mutation you implemented in a previous exercise. If you haven't, it's time to implement it now, or you can substitute it with the star or unstar mutation. Either way, completing the optimistic UI behavior for all three mutations is the next exercise. For completeness, this is a possible implementation of the watch mutation as a button next to the "Star"/"Unstar" buttons. First, the mutation:
 
-在本节中，你将实现一个乐观 UI，以便用户点击你在上个练习中实现的 watch 或 unwatch 突变。如果你还没有，现在是时候实现它，或者你可以用 star 或 unstar 突变来代替。无论哪种方式，完成这三个突变的乐观 UI 行为就是下一个练习。为了完整起见，可以将 watch 突变实现为 "Star"/"Unstar" 按钮旁边的按钮。首先，突变：
+在本节中，你将实现一个乐观 UI，以便用户点击你在上个练习中实现的 watch 或 unwatch 变更。如果你还没有，现在是时候实现它，或者你可以用 star 或 unstar 变更来代替。无论哪种方式，完成这三个变更（操作）的乐观 UI 行为就是下一个练习。为了完整起见，可以将 watch 变更实现为 "Star"/"Unstar" 按钮旁边的按钮。首先，变更：
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1374,7 +1374,7 @@ const updateWatch = (
 
 > Now let's get to the optimistic UI feature. Fortunately, the Mutation component offers a prop for the optimistic UI strategy called `optimisticResponse`. It returns the same result, which is accessed as argument in the function passed to the `update` prop of the Mutation component. With a watch mutation, only the `viewerSubscription` status changes to subscribed or unsubscribed. This is an optimistic UI.
 
-现在让我们来看一下乐观 UI 特性。幸运的是，Mutation 组件为乐观 UI 策略提供了一个叫做 `optimisticResponse` 的属性。它返回相同的结果，该结果在传递给 Mutation 组件的 `update` 属性的函数中作为参数访问。对于 watch 突变，只有 `viewerSubscription` 状态更改为“已订阅”或者“未订阅”。这就是一个乐观 UI。
+现在让我们来看一下乐观 UI 特性。幸运的是，Mutation 组件为乐观 UI 策略提供了一个叫做 `optimisticResponse` 的属性。它返回相同的结果，该结果在传递给 Mutation 组件的 `update` 属性的函数中作为参数访问。对于 watch 变更，只有 `viewerSubscription` 状态更改为“已订阅”或者“未订阅”。这就是一个乐观 UI。
 
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
@@ -1429,7 +1429,7 @@ const RepositoryItem = ({ ... }) => (
 
 > An additional benefit of the optimistic response is that it makes the count of watchers updates optimistic, too. The function used in the `update` prop is called twice now, the first time with the optimistic response, and the second with a response from GitHub's GraphQL API. It makes sense to capture identical information in the optimistic response expected as a mutation result in the function passed to the `update` prop of the Mutation component. For instance, if you don't pass the `id` property in the `optimisticResponse` object, the function passed to the `update` prop throws an error, because it can't retrieve the repository from the cache without an identifier.
 
-乐观响应的另一个好处是让观察者的更新计数更变得乐观。在 `update` 属性中使用的函数现在被调用了两次：第一次调用乐观响应，第二次调用 GitHub 的 GraphQL API。在乐观响应中捕获相同的信息是有意义的，作为突变结果传递给 Mutation 组件的 `update` 属性 的函数。例如，如果你没有在 `optimisticResponse` 对象中传递 `id` 属性，那么传递给 `update` 属性的函数会抛出一个错误，因为它无法在没有标识符的情况下从缓存中检索代码库。
+乐观响应的另一个好处是让观察者的更新计数更变得乐观。在 `update` 属性中使用的函数现在被调用了两次：第一次调用乐观响应，第二次调用 GitHub 的 GraphQL API。在乐观响应中捕获相同的信息是有意义的，作为变更结果传递给 Mutation 组件的 `update` 属性 的函数。例如，如果你没有在 `optimisticResponse` 对象中传递 `id` 属性，那么传递给 `update` 属性的函数会抛出一个错误，因为它无法在没有标识符的情况下从缓存中检索代码库。
 
 > At this point, it becomes debatable whether or not the Mutation component becomes too verbose. Using the Render Props pattern co-locates the data layer even more to the view-layer than Higher-Order Components. One could argue it doesn't co-locate the data-layer, but inserts it into the view-layer. When optimizations like the `update` and `optimisticResponse` props are put into the Render Prop Component, it can become too verbose for a scaling application. I advise using techniques you've learned as well as your own strategies to keep your source code concise. I see four different ways to solve this issue:
 
@@ -1473,7 +1473,7 @@ const RepositoryItem = ({ ... }) => (
 
 > * Implement the optimistic UIs for the star and unstar mutations
 
-* 为 star 和 unstar 突变实现乐观 UI
+* 为 star 和 unstar 变更实现乐观 UI
 
 > * Read more about [Apollo Optimistic UI in React with GraphQL](https://www.apollographql.com/docs/react/features/optimistic-ui.html)
 
