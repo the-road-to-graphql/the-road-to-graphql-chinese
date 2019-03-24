@@ -1634,16 +1634,29 @@ We've completed the database setup for a GraphQL server. Next, you'll replace th
   * Check the Sequelize API by reading through their documentation
   * Look up any unfamiliar database jargon mentioned here.
 
-## Connecting Resolvers and Database
+> ## Connecting Resolvers and Database
 
-Your PostgreSQL database is ready to connect to a GraphQL server on startup. Now, instead of using the sample data, you will use data access layer (models) in GraphQL resolvers for reading and writing data to and from a database. In the next section, we will cover the following:
+## 连接Resolvers和数据库
 
-* Use the new models in your GraphQL resolvers
-* Seed your database with data when your application starts
-* Add a user model method for retrieving a user by username
-* Learn the essentials about `psql` for the command line
+> Your PostgreSQL database is ready to connect to a GraphQL server on startup. Now, instead of using the sample data, you will use data access layer (models) in GraphQL resolvers for reading and writing data to and from a database. In the next section, we will cover the following:
 
-Let's start by refactoring the GraphQL resolvers. You passed the models via Apollo Server's context object to each GraphQL resolver earlier. We used sample data before, but the Sequelize API is necessary for our real-word database operations. In the *src/resolvers/user.js* file, change the following lines of code to use the Sequelize API:
+既然你已经准备好PostgreSQL数据库在启动时连接到GraphQL服务器。现在，你将在GraphQL resolvers中使用数据访问层(models)来读写数据库中的数据而不是使用示例数据。在接下来的一节中我们将涵盖以下内容：
+
+> * Use the new models in your GraphQL resolvers
+* 在GraphQL resolvers中使用新的models
+
+> * Seed your database with data when your application starts
+* 在应用启动时准备好初始数据
+
+> * Add a user model method for retrieving a user by username
+* 增加一个user model方法，通过username检索user
+
+> * Learn the essentials about `psql` for the command line
+* 学习`psql`命令行的一些基本操作
+
+> Let's start by refactoring the GraphQL resolvers. You passed the models via Apollo Server's context object to each GraphQL resolver earlier. We used sample data before, but the Sequelize API is necessary for our real-word database operations. In the *src/resolvers/user.js* file, change the following lines of code to use the Sequelize API:
+
+我们开始重构GraphQL resolvers吧。你之前通过Apollo Server的context对象将models传递给了每一个GraphQL resolver。我们之前采用的是示例数据，但是对于我们的真实数据库操作，使用Sequelize API是必需的。在*src/resolvers/user.js*文件中，使用Sequelize API来修改下面的代码：
 
 {title="src/resolvers/user.js",lang="javascript"}
 ~~~~~~~~
@@ -1680,9 +1693,13 @@ export default {
 };
 ~~~~~~~~
 
-The `findAll()` and `findById()` are commonly used Sequelize methods for database operations. Finding all messages for a specific user is more specific, though. Here, you used the `where` clause to narrow down messages by the `userId` entry in the database. Accessing a database will add another layer of complexity to your application's architecture, so be sure to reference the Sequelize API documentation as much as needed going forward.
+> The `findAll()` and `findById()` are commonly used Sequelize methods for database operations. Finding all messages for a specific user is more specific, though. Here, you used the `where` clause to narrow down messages by the `userId` entry in the database. Accessing a database will add another layer of complexity to your application's architecture, so be sure to reference the Sequelize API documentation as much as needed going forward.
 
-Next, return to the *src/resolvers/message.js* file and perform adjustments to use the Sequelize API:
+`findAll()`和`findById()`是Sequelize常用的数据库操作方法。但是，查找一个特定user的所有message更具体。这里我们使用`where`语句通过`userId`来缩小message的搜索范围。由于访问数据库将未应用的架构增加一层复杂性，因此请务必尽可能多地参考Sequelize API文档。
+
+> Next, return to the *src/resolvers/message.js* file and perform adjustments to use the Sequelize API:
+
+接下来我们回到*src/resolvers/message.js*文件，使用Sequelize API来做一些调整：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -1727,11 +1744,17 @@ export default {
 };
 ~~~~~~~~
 
-Apart from the `findById()` and `findAll()` methods, you are creating and deleting a message in the mutations as well. Before, you had to generate your own identifier for the message, but now Sequelize takes care of adding a unique identifier to your message once it is created in the database.
+> Apart from the `findById()` and `findAll()` methods, you are creating and deleting a message in the mutations as well. Before, you had to generate your own identifier for the message, but now Sequelize takes care of adding a unique identifier to your message once it is created in the database.
 
-There was one more crucial change in the two files: [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function). Sequelize is a JavaScript promise-based ORM, so it always returns a JavaScript promise when operating on a database. That's where async/await can be used as a more readable version for asynchronous requests in JavaScript. You learned about the returned results of GraphQL resolvers in Apollo Server in a previous section. A result can be a JavaScript promise as well, because the resolvers are waiting for its actual result. In this case, you can also get rid of the async/await statements and your resolvers would still work. Sometimes it is better to be more explicit, however, especially when we add more business logic within the resolver's function body later, so we will keep the statements for now.
+除了`findById()` 和 `findAll()`方法以外，我们还将用到一些创建和删除message等这类修改操作。之前我们不得不为message生成一个唯一标识符，但是现在当message在数据库中创建后，Sequelize会为其添加唯一标识符。
 
-Now we'll shift to seeding the database with sample data when your applications starts with `npm start`. Once your database synchronizes before your server listens, you can create two user records manually with messages in your database. The following code for the *src/index.js* file shows how to perform these operations with async/await. Users will have a `username` with associated `messages`.
+> There was one more crucial change in the two files: [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function). Sequelize is a JavaScript promise-based ORM, so it always returns a JavaScript promise when operating on a database. That's where async/await can be used as a more readable version for asynchronous requests in JavaScript. You learned about the returned results of GraphQL resolvers in Apollo Server in a previous section. A result can be a JavaScript promise as well, because the resolvers are waiting for its actual result. In this case, you can also get rid of the async/await statements and your resolvers would still work. Sometimes it is better to be more explicit, however, especially when we add more business logic within the resolver's function body later, so we will keep the statements for now.
+
+这两个文件还有一个重要的变化：[async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)。Sequelize是一个基于promise的javascript对象关系映射，因此在做数据库操作时始终会返回一个promise。async/await的使用能够大大提高异步请求在javascript中可读性。在上一节中我们知道了在Apollo Server中GraphQL resolver的返回结果。由于resolver正在等待真实结果的返回，所以返回结果也可以是一个promise。在这种情况下，你还可以删除async/await语句，你的解析器仍然可以工作。然而，有时候表达明确一点更好，特别是当我们稍后在resolver函数中添加更多业务逻辑的时候，因此我们先保留现在的语句。
+
+> Now we'll shift to seeding the database with sample data when your applications starts with `npm start`. Once your database synchronizes before your server listens, you can create two user records manually with messages in your database. The following code for the *src/index.js* file shows how to perform these operations with async/await. Users will have a `username` with associated `messages`.
+
+现在我们将使用`npm start`在启动应用时，将一些示例数据作为种子数据录入到数据库中。在服务器侦听之前数据库同步后，你可以在数据库中手动创建两条user记录。下面 *src/index.js* 文件中的代码显示了如果使用async/await来执行这些操作。User将拥有一个`username`字段，还有一个关联的`messages`。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1789,9 +1812,13 @@ const createUsersWithMessages = async () => {
 # leanpub-end-insert
 ~~~~~~~~
 
-The `force` flag in your Sequelize `sync()` method can be used to seed the database on every application startup. You can either remove the flag or set it to `false` if you want to keep accumulated database changes over time. The flag should be removed for your production database at some point.
+> The `force` flag in your Sequelize `sync()` method can be used to seed the database on every application startup. You can either remove the flag or set it to `false` if you want to keep accumulated database changes over time. The flag should be removed for your production database at some point.
 
-Next, we have to handle the `me` user. Before, you used one of the users from the sample data; now, the user will come from a database. It's a good opportunity to write a custom method for your user model in the *src/models/user.js* file:
+在Sequelize的 `sync()`方法中`force`标记可用于在每次应用启动时插入种子数据。如果要随时保持累积的数据库更改，可以删除该标记或将其设置为`false`。当应用于生产数据时请记得删除这个标记。
+
+> Next, we have to handle the `me` user. Before, you used one of the users from the sample data; now, the user will come from a database. It's a good opportunity to write a custom method for your user model in the *src/models/user.js* file:
+
+接下来，我们必须处理`me`这个user。之前，我们使用了样本数据中的一个user; 现在，它将来自数据库。这是在 *src/models/user.js* 文件中为user model编写自定义方法的好机会：
 
 {title="src/models/user.js",lang="javascript"}
 ~~~~~~~~
@@ -1828,11 +1855,17 @@ const user = (sequelize, DataTypes) => {
 export default user;
 ~~~~~~~~
 
-The `findByLogin()` method on your user model retrieves a user by `username` or by `email` entry. You don't have an `email` entry on the user yet, but it will be added when the application has an authentication mechanism. The `login` argument is used for both `username` and `email`, for retrieving the user from the database, and you can see how it is used to sign in to an application with username or email.
+> The `findByLogin()` method on your user model retrieves a user by `username` or by `email` entry. You don't have an `email` entry on the user yet, but it will be added when the application has an authentication mechanism. The `login` argument is used for both `username` and `email`, for retrieving the user from the database, and you can see how it is used to sign in to an application with username or email.
 
-You have introduced your first custom method on a database model. It is always worth considering where to put this business logic. When giving your model these access methods, you may end up with a concept called *fat models*. An alternative would be writing separate services like functions or classes for these data access layer functionalities.
+在user model的`findByLogin()`方法中通过`username` 或 `email`条目检索user。我们还没有用户的 `email`条目，但是当应用具有身份验证机制时，它将被添加。`username`和`email`都可以作为`login`方法的参数来从数据库中检索user，你也可以看到这是如何使用username或email进行登录应用的。
 
-The new model method can be used to retrieve the `me` user from the database. Then you can put it into the context object when the Apollo Server is instantiated in the *src/index.js* file:
+> You have introduced your first custom method on a database model. It is always worth considering where to put this business logic. When giving your model these access methods, you may end up with a concept called *fat models*. An alternative would be writing separate services like functions or classes for these data access layer functionalities.
+
+我们已经在数据库模型上引入了第一个自定义方法，接下来我们将考虑把这个业务逻辑放在哪里。当为模型提供这些访问方法时，你可能最终会得到一个名为 *fat models* 的概念。另一种方法是为这些数据访问层功能编写单独的服务，如函数或类。
+
+> The new model method can be used to retrieve the `me` user from the database. Then you can put it into the context object when the Apollo Server is instantiated in the *src/index.js* file:
+
+新的model方法可用于检索从数据中检索 `me`。然后在 *src/index.js* 文件中，当实例化Apollo Server时我们可以将其放入上下文对象中：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1848,7 +1881,9 @@ const server = new ApolloServer({
 });
 ~~~~~~~~
 
-However, this cannot work yet, because the user is read asynchronously from the database, so `me` would be a JavaScript promise rather than the actual user; and because you may want to retrieve the `me` user on a per-request basis from the database. Otherwise, the `me` user has to stay the same after the Apollo Server is created. Instead, use a function that returns the context object rather than an object for the context in Apollo Server. This function uses the async/await statements. The function is invoked every time a request hits your GraphQL API, so the `me` user is retrieved from the database with every request.
+> However, this cannot work yet, because the user is read asynchronously from the database, so `me` would be a JavaScript promise rather than the actual user; and because you may want to retrieve the `me` user on a per-request basis from the database. Otherwise, the `me` user has to stay the same after the Apollo Server is created. Instead, use a function that returns the context object rather than an object for the context in Apollo Server. This function uses the async/await statements. The function is invoked every time a request hits your GraphQL API, so the `me` user is retrieved from the database with every request.
+
+但是这还不行，因为user是从数据库中异步读取的，因此`me`将是一个promise而不是实际的user；而且你可能希望在每次请求中都从数据库中检索出`me`。否则，一旦Apollo Server创建后`me`必须保持不变。相反，使用一个async/await异步函数返回上下文对象而不是Apollo Server中上下文的对象。每次请求到GraphQL API时都会调用该函数，因此每次请求都会从数据库中检索`me`。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1866,16 +1901,22 @@ const server = new ApolloServer({
 });
 ~~~~~~~~
 
-You should be able to start your application again. Try out different GraphQL queries and mutations in GraphQL Playground, and verify that everything is working for you. If there are any errors regarding the database, make sure that it is properly connected to your application and that the database is running on the command line too.
+> You should be able to start your application again. Try out different GraphQL queries and mutations in GraphQL Playground, and verify that everything is working for you. If there are any errors regarding the database, make sure that it is properly connected to your application and that the database is running on the command line too.
 
-Since you have introduced a database now, GraphQL Playground is not the only manual testing tool anymore. Whereas GraphQL Playground can be used to test your GraphQL API, you may want to use the `psql` command line interface to query your database manually. For instance, you may want to check user message records in the database or whether a message exists there after it has been created with a GraphQL mutation. First, connect to your database on the command line:
+你应该能够再次启动应用。在GraphQL Playground中尝试不同的GraphQL查询和修改，并验证一切都能正常工作。如果出现任何关于数据的错误，请确保它正确连接到你的应用，并且数据库能够在命令行正确运行。
+
+> Since you have introduced a database now, GraphQL Playground is not the only manual testing tool anymore. Whereas GraphQL Playground can be used to test your GraphQL API, you may want to use the `psql` command line interface to query your database manually. For instance, you may want to check user message records in the database or whether a message exists there after it has been created with a GraphQL mutation. First, connect to your database on the command line:
+
+由于现在已经引入了数据库，因此GraphQL Playground不再是唯一的手动测试工具。虽然GraphQL Playground可用于测试GraphQL API，但你可能更希望使用`psql`命令行界面手动查询数据库。例如，你可能希望检查数据库中user关联的message记录，或者在通过GraphQL创建message之后检查其是否存在数据库中。首先，通过命令行连接到你的数据库：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 psql mydatabasename
 ~~~~~~~~
 
-And second, try the following SQL statements. It's the perfect opportunity to learn more about SQL itself:
+> And second, try the following SQL statements. It's the perfect opportunity to learn more about SQL itself:
+
+然后，尝试执行下面的SQL语句。这是熟悉SQL操作最好的机会了：
 
 {title="psql",lang="sql"}
 ~~~~~~~~
@@ -1883,7 +1924,9 @@ SELECT * from users;
 SELECT text from messages;
 ~~~~~~~~
 
-Which leads to:
+> Which leads to:
+
+这里应该输出：
 
 {title="psql",lang="sql"}
 ~~~~~~~~
@@ -1903,17 +1946,37 @@ mydatabase=# SELECT text from messages;
 (3 rows)
 ~~~~~~~~
 
-Every time you perform GraphQL mutations, it is wise to check your database records with the `psql` command-line interface. It is a great way to learn about [SQL](https://en.wikipedia.org/wiki/SQL), which is normally abstracted away by using an ORM such as Sequelize.
+> Every time you perform GraphQL mutations, it is wise to check your database records with the `psql` command-line interface. It is a great way to learn about [SQL](https://en.wikipedia.org/wiki/SQL), which is normally abstracted away by using an ORM such as Sequelize.
 
-In this section, you have used a PostgreSQL database as data source for your GraphQL server, using Sequelize as the glue between your database and your GraphQL resolvers. However, this was only one possible solution. Since GraphQL is data source agnostic, you can opt-in any data source to your resolvers. It could be another database (e.g. MongoDB, Neo4j, Redis), multiple databases, or a (third-party) REST/GraphQL API endpoint. GraphQL only ensures all fields are validated, executed, and resolved when there is an incoming query or mutation, regardless of the data source.
+每次你运行完GraphQL操作后，最好使用`psql`命令行界面检查下数据库中记录。这是学习[SQL](https://en.wikipedia.org/wiki/SQL)的好方法，只是我们通常会使用像Sequelize这样的ORM来抽象。
 
-### Exercises:
+> In this section, you have used a PostgreSQL database as data source for your GraphQL server, using Sequelize as the glue between your database and your GraphQL resolvers. However, this was only one possible solution. Since GraphQL is data source agnostic, you can opt-in any data source to your resolvers. It could be another database (e.g. MongoDB, Neo4j, Redis), multiple databases, or a (third-party) REST/GraphQL API endpoint. GraphQL only ensures all fields are validated, executed, and resolved when there is an incoming query or mutation, regardless of the data source.
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/27a1372264760879e86be377e069da738270c4f3)
-* Experiment with psql and the seeding of your database
-* Experiment with GraphQL playground and query data which comes from a database now
-* Remove and add the async/await statements in your resolvers and see how they still work
-  * Read more about [GraphQL execution](https://graphql.github.io/learn/execution/)
+在本节中，我们使用PostgreSQL数据库作为GraphQL服务器的数据源，使用Sequelize来桥接数据库和GraphQL resolver。但是，这只是一种可行的解决方案。由于GraphQL与数据源无关，因此你可以选择将任何数据源添加到resolver中。它可以是另一个数据库（例如MongoDB，Neo4j，Redis），多个数据库或（第三方）REST / GraphQL API endpoint。GraphQL仅在存在进行查询或修改操作时确保所有字段都经过验证，执行和解析，而不管数据源如何。
+
+> ### Exercises:
+
+### 练习:
+
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/27a1372264760879e86be377e069da738270c4f3)
+
+* 确认你的[最后一节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/27a1372264760879e86be377e069da738270c4f3)
+
+> * Experiment with psql and the seeding of your database
+
+* 尝试使用psql插入种子数据到数据库中
+
+> * Experiment with GraphQL playground and query data which comes from a database now
+
+* 现在尝试使用GraphQL playground来查询来自数据库中数据
+
+> * Remove and add the async/await statements in your resolvers and see how they still work
+
+* 在解析器中删除和添加async/await语句，看看它们是如何工作的
+
+> * Read more about [GraphQL execution](https://graphql.github.io/learn/execution/)
+
+* 阅读更多关于[GraphQL执行](https://graphql.github.io/learn/execution/)的内容
 
 ## Apollo Server: Validation and Errors
 
