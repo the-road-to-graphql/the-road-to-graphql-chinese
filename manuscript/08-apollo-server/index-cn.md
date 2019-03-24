@@ -1,6 +1,6 @@
 > # Node.js with GraphQL and Apollo Server
 
-# 在GraphQL 和 Apollo Server中使用Node.js 
+# 在GraphQL 和 Apollo Server 中使用Node.js 
 
 > In this chapter, you will implement server-side architecture using GraphQL and Apollo Server. The GraphQL query language is implemented as a reference implementation in JavaScript by Facebook, while Apollo Server builds on it to simplify building GraphQL servers in JavaScript. Since GraphQL is a query language, its transport layer and data format is not set in stone. GraphQL isn't opinionated about it, but it is used as alternative to the popular REST architecture for client-server communication over HTTP with JSON.
 
@@ -20,7 +20,7 @@
 
 > There are two ways to start out with this application. You can follow my guidance in [this minimal Node.js setup guide step by step](https://www.robinwieruch.de/minimal-node-js-babel-setup) or you can find a starter project in this [GitHub repository](https://github.com/rwieruch/node-babel-server) and follow its installation instructions.
 
-有两种方法来开始这个应用程序。你可以按照我在这个 [手把手教你启动最小 Node.js 的指南](https://www.robinwieruch.de/minimal-node-js-babel-setup) 里的指导，或者在 [GitHub 代码库](https://github.com/rwieruch/node-babel-server) 找到一个启动项目，并根据它的安装说明操作。
+有两种方法来开始这个应用程序。你可以按照我在这个 [手把手教你启动最小 Node.js 的指南](https://www.robinwieruch.de/minimal-node-js-babel-setup) 里的指导，或者在这个 [GitHub 代码库](https://github.com/rwieruch/node-babel-server) 里找到一个启动项目，并根据它的安装说明操作。
 
 > Apollo Server can be used with several popular libraries for Node.js like Express, Koa, Hapi. It is kept library agnostic, so it's possible to connect it with many different third-party libraries in client and server applications. In this application, you will use [Express](https://expressjs.com/), because it is the most popular and common middleware library for Node.js.
 
@@ -84,7 +84,7 @@ app.listen({ port: 8000 }, () => {
 
 > Using Apollo Server's `applyMiddleware()` method, you can opt-in any middleware, which in this case is Express. Also, you can specify the path for your GraphQL API endpoint. Beyond this, you can see how the Express application gets initialized. The only missing items are the definition for the schema and resolvers for creating the Apollo Server instance. We'll implement them first and learn about them after:
 
-使用  Apollo Server 的 `applyMiddleware()` 方法，你可以选择任意中间件。此外，还可以指定 GraphQL API endpoint 的路径。此外，你还可以知道如何初始化 Express 应用程序。现在惟一缺少的是用于创建 Apollo Server 实例的 schema 和 resolvers 的定义。我们将先实现它们，之后再来学习它们：
+使用 Apollo Server 的 `applyMiddleware()` 方法，你可以添加任意中间件。此外，还可以指定 GraphQL API endpoint 的路径。而且，你还可以自定义初始化 Express 应用程序。现在惟一缺少的是用于创建 Apollo Server 实例的 schema 和 resolvers 的定义。我们将先实现它们，之后再来学习它们：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -122,7 +122,7 @@ const resolvers = {
 
 > The **GraphQL schema** provided to the Apollo Server is all the available data for reading and writing data via GraphQL. It can happen from any client who consumes the GraphQL API. The schema consists of **type definitions**, starting with a mandatory top level **Query type** for reading data, followed by **fields** and **nested fields**. In the schema from the Apollo Server setup, you have defined a `me` field, which is of the **object type** `User`. In this case, a User type has only a `username` field, a **scalar type**. There are various scalar types in the GraphQL specification for defining strings (String), booleans (Boolean), integers (Int), and more. At some point, the schema has to end at its leaf nodes with scalar types to resolve everything properly. Think about it as similar to a JavaScript object with objects or arrays inside, except it requires primitives like strings, booleans, or integers at some point.
 
-**GraphQL schema** 提供给 Apollo Server 的是所有能通过 GraphQL 读写的可用的数据。它可以提供给任何消费这个 GraphQL API 的客户端。 Schema 由**类型定义**组成，首先在顶级必须有用于读取数据的 **Query 类型**，然后是**字段**和**嵌套字段**。在这个准备设置给 Apollo Server 的 schema 中，定义了一个 `me` 字段，它的类型是**对象类型** `User`。在这里，User 类型只有一个 `username` 字段， 它是**标量**类型的。 GraphQL规范中有各种标量类型，用于定义字符串（ String ）、布尔值（ Boolean ）、整数（ Int ）等。一般情况下， schema 必须在其叶子节点处以标量类型结束，以便正确地解析所有内容。可以将其看作类似于 JavaScript 对象，其中包含对象、数组，此外也包括字符串、布尔值和整数等基本类型。
+**GraphQL schema** 是 Apollo Server 提供的所有能通过 GraphQL 读写的可用数据。它可以提供给任何消费这个 GraphQL API 的客户端。 Schema 由**类型定义**组成，首先在顶级必须有用于读取数据的 **Query 类型**，然后是**字段**和**嵌套字段**。在这个准备设置给 Apollo Server 的 schema 中，定义了一个 `me` 字段，它的类型是**对象类型** `User`。在这里，User 类型只有一个 `username` 字段， 它是**标量**类型的。 GraphQL规范中有各种标量类型，用于定义字符串（ String ）、布尔值（ Boolean ）、整数（ Int ）等。一般情况下， schema 的叶子节点必须以标量类型结束，以便正确地解析所有内容。可以将其类比为 JavaScript 对象，其中包含对象、数组，此外也包括字符串、布尔值和整数等基本类型。
 
 {title="Code Playground",lang="javascript"}
 ~~~~~~~~
@@ -133,9 +133,13 @@ const data = {
 };
 ~~~~~~~~
 
-In the GraphQL schema for setting up an Apollo Server, **resolvers** are used to return data for fields from the schema. The data source doesn't matter, because the data can be hardcoded, can come from a database, or from another (RESTful) API endpoint. You will learn more about potential data sources later. For now, it only matters that the resolvers are agnostic according to where the data comes from, which separates GraphQL from your typical database query language. Resolvers are functions that resolve data for your GraphQL fields in the schema. In the previous example, only a user object with the username "Robin Wieruch" gets resolved from the `me` field.
+> In the GraphQL schema for setting up an Apollo Server, **resolvers** are used to return data for fields from the schema. The data source doesn't matter, because the data can be hardcoded, can come from a database, or from another (RESTful) API endpoint. You will learn more about potential data sources later. For now, it only matters that the resolvers are agnostic according to where the data comes from, which separates GraphQL from your typical database query language. Resolvers are functions that resolve data for your GraphQL fields in the schema. In the previous example, only a user object with the username "Robin Wieruch" gets resolved from the `me` field.
 
-Your GraphQL API with Apollo Server and Express should be working now. On the command line, you can always start your application with the `npm start` script to verify it works after you make changes. To verify it without a client application, Apollo Server comes with GraphQL Playground, a built-in client for consuming GraphQL APIs. It is found by using a GraphQL API endpoint in a browser at `http://localhost:8000/graphql`. In the application, define your first GraphQL query to see its result:
+在这个为了设置 Apollo Server 而准备的 GraphQL 的 schema 中， **resolvers** 可以设定返回 schema 的字段组成的数据。数据源并不重要，因为数据可以硬编码，可以来自数据库，也可以来自其他 （RESTful） API endpoint。你将会在之后学习这些潜在的数据来源。现在只需要知道 resolvers 的数据来源是不可知的，这是 GraphQL 和典型的数据库查询语言不同的地方。 Resolvers 是 schema 中解析 GraphQL 字段的函数。上面的例子中，只有一个 username 为 "Robin Wieruch" 的 user 对象被解析为 `me` 字段
+
+> Your GraphQL API with Apollo Server and Express should be working now. On the command line, you can always start your application with the `npm start` script to verify it works after you make changes. To verify it without a client application, Apollo Server comes with GraphQL Playground, a built-in client for consuming GraphQL APIs. It is found by using a GraphQL API endpoint in a browser at `http://localhost:8000/graphql`. In the application, define your first GraphQL query to see its result:
+
+现在，你的用 Apollo Server 和 Express 实现的 GraphQL API 应该已经可以运行了。在命令行中，在命令行中，你可以使用 “npm start” 脚本启动应用程序，以便在你进行更改后验证它是否工作。为了在没有客户端应用程序的情况下验证它，Apollo Server 附带了 GraphQL Playground，这是一个用于消费 GraphQL api 的内置客户端。可以通过在浏览器的 `http://localhost:8000/graphql` 中找到这个使用 GraphQL API 的 endpoint。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -146,7 +150,9 @@ Your GraphQL API with Apollo Server and Express should be working now. On the co
 }
 ~~~~~~~~
 
-The result for the query should this or your defined sample data:
+> The result for the query should this or your defined sample data:
+
+查询的结果应该是这个或您定义的示例数据：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -159,14 +165,18 @@ The result for the query should this or your defined sample data:
 }
 ~~~~~~~~
 
-I might not mention GraphQL Playground as much moving forward, but I leave it to you to verify your GraphQL API with it after you make changes. It is useful tool to experiment and explore your own API. Optionally, you can also add [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) to your Express middleware. First, install CORS on the command line:
+> I might not mention GraphQL Playground as much moving forward, but I leave it to you to verify your GraphQL API with it after you make changes. It is useful tool to experiment and explore your own API. Optionally, you can also add [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) to your Express middleware. First, install CORS on the command line:
+
+我可能不会过多地提到 GraphQL Playground，但希望你在进行更改之后用它来验证一下你的 GraphQL API。它是一个有用的工具，可以用来试验和探索你自己的API。你还可以选择将 [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) 添加到你的 Express 中间件中。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install cors --save
 ~~~~~~~~
 
-Second, use it in your Express middleware:
+> Second, use it in your Express middleware:
+
+然后在你的 Express 中间件中使用它。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -185,7 +195,9 @@ app.use(cors());
 ...
 ~~~~~~~~
 
-CORS is needed to perform HTTP requests from another domain than your server domain to your server. Otherwise you may run into cross-origin resource sharing errors for your GraphQL server.
+> CORS is needed to perform HTTP requests from another domain than your server domain to your server. Otherwise you may run into cross-origin resource sharing errors for your GraphQL server.
+
+需要CORS来处理服务器的HTTP跨域请求。否则，你的 GraphQL server 可能会遇到跨域错误。
 
 ### Exercises:
 
