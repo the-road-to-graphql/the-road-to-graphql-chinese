@@ -3365,11 +3365,11 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 
 > * Implement an AddComment component that shows a `textarea` and a `submit` button to enable user comments. Use the `addComment` mutation from GitHub's GraphQL API and the Mutation component from React Apollo to execute the mutation with the submit button.
 
-* 实现一个 AddComment 组件， 这个组件需要为用户提供一个 `textarea` 和 `submit` 按钮来留言。使用 GitHub 中 GraphQL API 的 `addComment` mutation 和 React Apollo 中的 Mutation 组件来执行提交按钮的 mutation 。
+* 实现一个 AddComment 组件， 这个组件需要为用户提供一个 `textarea` 和 `submit` 按钮来留言。使用 GitHub 中 GraphQL API 的 `addComment` 变更和 React Apollo 中的 Mutation 组件来执行提交按钮的变更 。
 
 > * Improve the AddComment component with the optimistic UI feature (perhaps read again the [Apollo documentation about the optimistic UI with a list of items](https://www.apollographql.com/docs/react/features/optimistic-ui.html)). A comment should show up in the list of comments, even if the request is pending.
 
-* 用 optimistic UI 特性(你或许想再读一遍[Apollo documentation about the optimistic UI with a list of items](https://www.apollographql.com/docs/react/features/optimistic-ui.html))来美化 AddComment 组件。哪怕是请求还在继续，评论列表中也要展示出评论。
+* 用乐观 UI 特性(你或许想再读一遍[Apollo documentation about the optimistic UI with a list of items](https://www.apollographql.com/docs/react/features/optimistic-ui.html))来美化 AddComment 组件。哪怕是请求还在继续，评论列表中也要展示出评论。
 
 > I hope this section, building your own feature in the application with all the learned tools and techniques, matched your skills and challenged you to implement React applications with Apollo and GraphQL. I would recommend working to improve and extend the existing application. If you haven't implemented a GraphQL server yet, find other third-party APIs that offer a GraphQL API and build your own React with Apollo application by consuming it. Keep yourself challenged to grow your skills as a developer.
 
