@@ -4,11 +4,11 @@
 
 >  In this client-sided GraphQL application we'll build together, you will learn how to combine React with GraphQL. There is no clever library like [Apollo Client](https://github.com/apollographql/apollo-client) or [Relay](https://github.com/facebook/relay) to help you get started yet, so instead, you will perform GraphQL queries and mutations with basic HTTP requests. Later, in the next application we are going to build together, I'll introduce Apollo as a GraphQL client for your React.js application. For now, the application we build should only show how to use GraphQL in React with HTTP.
 
-在我们将一起构建的这个 GraphQL 的客户端程序中，你将了解如何将 React 与 GraphQL 结合起来。目前还没有像 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay) 这样便捷的库来帮助你入门。因此，你将使用基本的 HTTP 请求执行 GraphQL 查询和修改。在我们将要一起构建的下一个应用程序中，我会介绍 Apollo 作为你的 React.js 应用程序的 GraphQL 客户端。我们当前构建的应用程序只展示如何在 React with HTTP 中使用 GraphQL。
+我们将一起开发一个 GraphQL 的客户端程序，从中你将了解如何将 React 与 GraphQL 结合起来。目前我们不会使用 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay) 这样强大的工具来帮助你快速上手，而是使用基本的 HTTP 请求执行 GraphQL 查询和修改。在之后的下一个应用程序中，我们将引入 Apollo 作为你的 React.js 应用的 GraphQL 客户端。现阶段开发的应用只展示如何在 React 中基于 HTTP 使用 GraphQL。
 
 > Along the way, you will build a simplified GitHub client, basically an issue tracker for GitHub, that consumes [GitHub's GraphQL API](https://developer.github.com/v4/). You will perform GraphQL queries and mutations to read and write data, and by the end, you should be able to showcase a GraphQL in React example that can be used by other developers as a learning tool.The final application you are going to build can be found in this [repository on GitHub](https://github.com/rwieruch/react-graphql-github-vanilla).
 
-在此过程中，你将构建一个简单的 GitHub 客户端，相当于是一个简单的使用 [GitHub's GraphQL API](https://developer.github.com/v4/) 的 GitHub 的问题跟踪器。你将执行 GraphQL 的查询和修改来读写数据，最后，你能够在 React 示例中展示一个 GraphQL的案例，作为其他开发人员的学习工具。你将要构建的最终应用程序可以在 [GitHub 的代码库](https://github.com/rwieruch/react-graphql-github-vanilla) 中找到。
+在此过程中，你将构建一个类似 GitHub 的问题跟踪器，通过执行 GraphQL 的查询和修改来读写数据，基于 [GitHub's GraphQL API](https://developer.github.com/v4/) 的简单 GitHub 客户端。最终实现一个能够在 React 示例中展示 GraphQL的案例，也可以将其作为其他开发人员的学习工具，最终实现的应用程序可以参考 [GitHub 的代码库](https://github.com/rwieruch/react-graphql-github-vanilla)。
 
 
 
@@ -18,15 +18,15 @@
 
 > After the last sections, you should be ready to use queries and mutations in your React application.In this section, you will create a React application that consumes the GitHub GraphQL API. The application should show open issues in a GitHub repository, making it a simple issue tracker.Again, if you lack experience with React, see [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react) to learn more about it. After that you should be well set up for the following section.
 
-在上一节之后，你应该准备好了在 React 应用程序中使用查询和修改。在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。应用程序需要显示在 GitHub 代码库中的 open issues，使其成为一个简单的问题跟踪器。同样，如果你对 React 缺乏经验，可以阅读 [React 学习之道](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识。阅读之后，你就为接下来的部分做好了充分的准备。
+在上一节之后，你应该准备好了如何在 React 应用程序中使用查询和修改。在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。它是一个简单的问题跟踪器，需要显示在 GitHub 代码库中的一些公开的问题（原文：open issues）如果你对 React 缺乏经验，可以阅读 [React 学习之道](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识，为接下来的部分做好充分的准备。
 
 > For this application, no elaborate React setup is needed. You will simply use [create-react-app](https://github.com/facebook/create-react-app) to create your React application with zero-configuration. Install it with npm by typing the following instructions on the command line: `npm install -g create-react-app`. If you want to have an elaborated React setup instead, read this [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/).
 
-对于这个应用程序，不需要复杂的 React 设置。你只需使用 [create-react-app](https://github.com/facebook/create-react-app) 创建无需额外配置的 React 应用程序。在命令行中输入以下指令，用npm安装它：`npm install -g create-react-app`。如果你想要一个详细的 React 设置，请阅读 [React 的 Webpack 设置指南](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。
+现阶段的应用程序，不需要复杂的 React 配置。你只需使用 [create-react-app](https://github.com/facebook/create-react-app) 就可以创建无需额外配置的 React 应用程序。在命令行中输入以下指令，用npm安装它：`npm install -g create-react-app`。如果你想学习详细的 React 设置，请参考 [React 的 Webpack 设置指南](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。
 
 > Now, let's create the application with create-react-app. In your general projects folder, type the following instructions: 
 
-现在，让我们使用 create-react-app 创建应用程序。在你的常规项目文件夹中，输入以下命令：
+现在，让我们使用 create-react-app 创建应用程序。进入你常规的项目文件夹中，输入以下命令：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -36,11 +36,11 @@ cd react-graphql-github-vanilla
 
 > After your application has been created, you can test it with `npm start` and `npm test`. Again, after you have learned about plain React in *the Road to learn React*, you should be familiar with npm, create-react-app, and React itself.
 
-创建应用程序之后，可以使用 `npm start` 和 `npm test` 对其进行测试。当然，在学习了简单的 React 之后，你应该熟悉 npm，create-react-app 和 React。
+创建应用程序之后，可以使用 `npm start` 和 `npm test` 对其进行测试。在学习了简单的 React 之后，你应该熟悉 npm，create-react-app 和 React。
 
 > The following application will focus on the *src/App.js* file. It's up to you to split out components, configuration, or functions to their own folders and files. Let's get started with the App component in the mentioned file. In order to simplify it, you can change it to the following content:
 
-接下来的应用程序将关注 src/App.js 文件。如果你愿意，可以将组件、配置或函数拆分到它们自己的文件夹和文件中。我们从上述文件中的 App 组件开始。为了简化它，你可以将其更改为以下内容：
+接下来的应用程序将关注 src/App.js 文件，你也可以将组件、配置或函数拆分到它们自己的文件夹和文件中。我们从上述文件中的 App 组件开始，为了简化它，你可以将其更改为以下内容：
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -63,7 +63,7 @@ export default App;
 
 > The component only renders a `title` as a headline. Before implementing any more React components, let's install a library to handle GraphQL requests, executing queries and mutations, using a HTTP POST method. For this, you will use [axios](https://github.com/axios/axios). On the command line, type the following command to install axios in the project folder:
 
-当前组件将只会渲染一个 `title` 作为标题。在实现任何更多的 React 组件之前，我们先安装一个库来处理 GraphQL 请求，使用 HTTP、POST 方法执行查询和修改。这里推荐使用 [axios](https://github.com/axios/axios)。在命令行中，输入以下命令在项目文件夹中安装 axios：
+现阶段组件只会渲染一个 `title` 作为标题。在实现其他的 React 组件之前，我们先安装一个使用 HTTP POST 方法执行查询和修改的第三方库来处理 GraphQL 请求。推荐使用 [axios](https://github.com/axios/axios)。在命令行中，输入以下命令在项目文件夹中安装 axios：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -72,11 +72,11 @@ npm install axios --save
 
 > Afterward, you can import axios next to your App component and configure it. It's perfect for the following application, because somehow you want to configure it only once with your personal access token and GitHub's GraphQL API.
 
-接下来，你可以在你的 App 组件中导入并配置它。对于之后的应用程序来说，它是很不错的，因为在某种程度上，你只需要用你的个人访问令牌和 GitHub 的 GraphQL API 配置它一次。
+接下来，可以在你的 App 组件中导入并配置它。它可以简化后续的开发步骤，因为在某种程度上，你只需要用你的个人访问令牌和 GitHub 的 GraphQL API 配置它一次。
 
 > First, define a base URL for axios when creating a configured instance from it. As mentioned before, you don't need to define GitHub's URL endpoint every time you make a request because all queries and mutations point to the same URL endpoint in GraphQL. You get the flexibility from your query and mutation structures using objects and fields instead.
 
-首先，在从 axios 创建配置实例时，为它定义一个基本 URL。如前所述，你不需要在每次发出请求时都定义 GitHub 的 URL 端点，因为所有查询和修改都指向 GraphQL 中的相同 URL 端点。你可以使用对象和字段很灵活的查询和修改结构。
+首先，在从 axios 创建配置实例时，为它定义一个基本的 URL。如前所述，你不需要在每次发出请求时都定义 GitHub 的 URL 端点，因为所有查询和修改都指向 GraphQL 中的相同 URL 端点。你可以使用对象和字段灵活地进行查询和修改结构。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -96,7 +96,7 @@ export default App;
 
 > Second, pass the personal access token as header to the configuration. The header is used by each request made with this axios instance.
 
-其次，将个人访问令牌作为 header 传递到配置。使用这个axios实例发出的每个请求都使用这个 header。
+接下来，将个人访问令牌作为 header 传递到配置中。使用这个 axios 实例发出的每个请求都会使用这个 header。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -125,7 +125,7 @@ touch .env
 
 > Environment variables are defined in this *.env* file. Be sure to follow the correct naming constraints when using create-react-app, which uses `REACT_APP` as prefix for each key. In your *.env* file, paste the following key value pair. The key has to have the `REACT_APP` prefix, and the value has to be your personal access token from GitHub.
 
-环境变量定义在这个 *.env* 文件中。在使用 create-response-app 时，请确保遵循正确的命名约束，它使用 `REACT_APP` 作为每个 key 的前缀。将下面的键值对粘贴在你的 *.env* 文件中。密钥必须有 `REACT_APP` 前缀，并且值必须是你 GitHub 的个人访问令牌。
+将环境变量定义在这个 *.env* 文件中。在使用 create-react-app 时，确保遵循正确的命名约束，它使用 `REACT_APP` 作为每个 key 的前缀。将下面的键值对粘贴在你的 *.env* 文件中。密钥必须有 `REACT_APP` 前缀，并且值必须是你 GitHub 的个人访问令牌。
 
 {title=".env",lang="javascript"}
 ~~~~~~~~
@@ -164,7 +164,7 @@ axios 的初始设置基本上与我们之前使用 GraphiQL 应用程序访问 
 
 > Let's tackle implementing this scenario in two steps. The render method has to render a form with an input field. The form has to have an `onSubmit` handler, and the input field needs an `onChange` handler. The input field uses the `path` from the local state as a value to be a controlled component. The `path` value in the local state from the `onChange` handler updates in the second step.
 
-让我们分两步来实现这个场景。render方法需要渲染一个带有输入栏的表单。表单必须有一个 `onSubmit` 处理方法，而输入栏需要一个 `onChange` 处理方法。输入栏使用组件中 state 的 `path` 作为值成为一个受控组件。
+我们可以分两步来实现这个场景。render方法需要渲染一个带有输入栏的表单。表单必须有一个 `onSubmit` 处理方法，而输入栏需要一个 `onChange` 处理方法。输入栏使用组件中 state 的 `path` 作为值成为一个受控组件。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
