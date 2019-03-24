@@ -230,7 +230,9 @@ const schema = gql`
 `;
 ~~~~~~~~
 
-**GraphQL arguments** can be used to make more fine-grained queries because you can provide them to the GraphQL query. Arguments can be used on a per-field level with parentheses. You must also define the type, which in this case is a non-nullable identifier to retrieve a user from a data source. The query returns the User type, which can be null because a user entity might not be found in the data source when providing a non identifiable `id` for it. Now you can see how two queries share the same GraphQL type, so when adding fields to the it, a client can use them implicitly for both queries `id` field:
+> **GraphQL arguments** can be used to make more fine-grained queries because you can provide them to the GraphQL query. Arguments can be used on a per-field level with parentheses. You must also define the type, which in this case is a non-nullable identifier to retrieve a user from a data source. The query returns the User type, which can be null because a user entity might not be found in the data source when providing a non identifiable `id` for it. Now you can see how two queries share the same GraphQL type, so when adding fields to the it, a client can use them implicitly for both queries `id` field:
+
+GraphQL 参数可用于进行更细粒度的查询，因为可以将它们提供给 GraphQL 查询。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -248,8 +250,9 @@ const schema = gql`
   }
 `;
 ~~~~~~~~
+> You may be wondering about the ID scalar type. The ID denotes an identifier used internally for advanced features like caching or refetching. It is a superior string scalar type. All that's missing from the new GraphQL query is the resolver, so we'll add it to the map of resolvers with sample data:
 
-You may be wondering about the ID scalar type. The ID denotes an identifier used internally for advanced features like caching or refetching. It is a superior string scalar type. All that's missing from the new GraphQL query is the resolver, so we'll add it to the map of resolvers with sample data:
+你可能想了解标量类型 ID。ID 是用于表示诸如缓存或重新获取的内部高级特性的标识符。它继承自标量类型 string。新的 GraphQL query 缺少的只是 resolver，所以我们将它添加到带有示例数据的解析器映射中:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -270,8 +273,9 @@ const resolvers = {
   },
 };
 ~~~~~~~~
+> Second, make use of the incoming `id` argument from the GraphQL query to decide which user to return. All the arguments can be found in the second argument in the resolver function's signature:
 
-Second, make use of the incoming `id` argument from the GraphQL query to decide which user to return. All the arguments can be found in the second argument in the resolver function's signature:
+其次，使用来自 GraphQL query 的传入 `id` 参数来决定返回哪个 user。所有的参数都可以在 resolver 的签名函数的第二个参数中找到:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -292,8 +296,9 @@ const resolvers = {
   },
 };
 ~~~~~~~~
+> The first argument is called `parent` as well, but you shouldn't worry about it for now. Later, it will be showcased where it can be used in your resolvers. Now, to make the example more realistic, extract a map of sample users and return a user based on the `id` used as a key in the extracted map:
 
-The first argument is called `parent` as well, but you shouldn't worry about it for now. Later, it will be showcased where it can be used in your resolvers. Now, to make the example more realistic, extract a map of sample users and return a user based on the `id` used as a key in the extracted map:
+第一个参数也称为 `parent`，不过现在你不用担心它。稍后，将展示在 resolvers 中如何使它。现在，为了使示例更加真实，提取一个示例 users 的映射，并根据提取的映射中用作键的 `id` 返回一个 user:>
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -329,8 +334,9 @@ const resolvers = {
   },
 };
 ~~~~~~~~
+> Now try out your queries in GraphQL Playground:
 
-Now try out your queries in GraphQL Playground:
+现在在 GraphQL Playground 中试一下你的 queries：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -343,8 +349,9 @@ Now try out your queries in GraphQL Playground:
   }
 }
 ~~~~~~~~
+> It should return this result:
 
-It should return this result:
+应该拿到这样的结果：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -359,8 +366,9 @@ It should return this result:
   }
 }
 ~~~~~~~~
+> Querying a list of of users will be our third query. First, add the query to the schema again:
 
-Querying a list of of users will be our third query. First, add the query to the schema again:
+查询 users 列表将是我们的第三个 query。首先，再次将 query 添加到 schema 中:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -380,7 +388,9 @@ const schema = gql`
 `;
 ~~~~~~~~
 
-In this case, the `users` field returns a list of users of type User, which is denoted with the square brackets. Within the list, no user is allowed to be null, but the list itself can be null in case there are no users (otherwise, it could be also `[User!]!`). Once you add a new query to your schema, you are obligated to define it in your resolvers within the Query object:
+> In this case, the `users` field returns a list of users of type User, which is denoted with the square brackets. Within the list, no user is allowed to be null, but the list itself can be null in case there are no users (otherwise, it could be also `[User!]!`). Once you add a new query to your schema, you are obligated to define it in your resolvers within the Query object:
+
+在本例中，`users` 字段返回 User 类型的 users 列表，该列表用方括号表示。在列表中，不允许任何 user 为空，但是如果没有 user，列表本身可以为空（否则，它应该是  `[User!]!`）。一旦你在你的 schema 中添加了一个新的 query，你有义务在 Query 对象的 resolvers 中定义它:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -400,15 +410,19 @@ const resolvers = {
   },
 };
 ~~~~~~~~
+> You have three queries that can be used in your GraphQL client (e.g. GraphQL Playground) applications. All of them operate on the same User type to fulfil the data requirements in the resolvers, so each query has to have a matching resolver. All queries are grouped under one unique, mandatory Query type, which lists all available GraphQL queries exposed to your clients as your GraphQL API for reading data. Later, you will learn about the Mutation type, for grouping a GraphQL API for writing data.
 
-You have three queries that can be used in your GraphQL client (e.g. GraphQL Playground) applications. All of them operate on the same User type to fulfil the data requirements in the resolvers, so each query has to have a matching resolver. All queries are grouped under one unique, mandatory Query type, which lists all available GraphQL queries exposed to your clients as your GraphQL API for reading data. Later, you will learn about the Mutation type, for grouping a GraphQL API for writing data.
-
-### Exercises:
-
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/469080f810a0049442f02393fae746cebc391cc0)
-* Read more about [the GraphQL schema with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/essentials/schema.html)
-* Read more about [the GraphQL mindset: Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/)
-* Read more about [nullability in GraphQL](https://blog.apollographql.com/using-nullability-in-graphql-2254f84c4ed7)
+现在你有三个 queries 可以在GraphQL client （例如 GraphQL Playground）应用程序中使用。它们每个都对相同的 User 类型进行操作，以满足 resolvers 中的数据需求，因此每个 query 都必须有一个对应的 resolver。所有 queries 都分组在一个惟一的、强制的 Query 类型下，它列出所有公开给客户端的可用 GraphQL 查询，作为读取数据的 GraphQL API。稍后，你将学到 GraphQL API 的为了编组写入数据的 Mutation 类型。
+> ### Exercises:
+ ### 练习：
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/469080f810a0049442f02393fae746cebc391cc0)
+* 完成你的[最后一部分源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/469080f810a0049442f02393fae746cebc391cc0)
+> * Read more about [the GraphQL schema with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/essentials/schema.html)
+* 学习更多关于 [Apollo Server 中的 GraphQL schema](https://www.apollographql.com/docs/apollo-server/v2/essentials/schema.html) 的知识
+> * Read more about [the GraphQL mindset: Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/)
+* 学习更多关于 [GraphQL 思维模式：用图来思考](https://graphql.github.io/learn/thinking-in-graphs/)的知识
+> * Read more about [nullability in GraphQL](https://blog.apollographql.com/using-nullability-in-graphql-2254f84c4ed7)
+* 学习更多关于 [GraphQL 中的可空](https://blog.apollographql.com/using-nullability-in-graphql-2254f84c4ed7)的知识
 
 ## Apollo Server: Resolvers
 
