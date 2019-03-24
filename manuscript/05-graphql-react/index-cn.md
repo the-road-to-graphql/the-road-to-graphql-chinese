@@ -476,8 +476,10 @@ const Organization = ({ organization, errors }) => {
 You performed your first GraphQL query in a React application, a plain HTTP POST request with a query as payload. You used a configured axios client instance for it. Afterward, you were able to store the result in React's local state to display it later.
 
 ### GraphQL Nested Objects in React
+React-GraphQL 嵌套对象
 
 Next, we'll request a nested object for the organization. Since the application will eventually show the issues in a repository, you should fetch a repository of an organization as the next step. Remember, a query reaches into the GraphQL graph, so we can nest the `repository` field in the `organization` when the schema defined the relationship between these two entities.
+接下来，我们将为组织请求嵌套对象。由于应用程序最终会在仓库中显示 issue ，因此下一步您应该获取组织的仓库。请记住，查询会进入 GraphQL 图，因此我们可以在架构定义这两个实体之间的关系时将 `repository` 字段嵌套在 `organization` 中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -516,6 +518,7 @@ class App extends Component {
 ~~~~~~~~
 
 In this case, the repository name is identical to the organization. That's okay for now. Later on, you can define an organization and repository on your own dynamically. In the second step, you can extend the Organization component with another Repository component as child component. The result for the query should now have a nested repository object in the organization object.
+在这种情况下，仓库名称与组织相同。现在这样做没关系。稍后，您可以动态地定义组织和仓库。在第二步，您可以使用另一个仓库组件作为子组件扩展组织组件。现在，查询的结果应该在架构对象中具有一个嵌套的仓库对象。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -550,10 +553,13 @@ const Repository = ({ repository }) => (
 ~~~~~~~~
 
 The GraphQL query structure aligns perfectly with your component tree. It forms a natural fit to continue extending the query structure like this, by nesting other objects into the query, and extending the component tree along the structure of the GraphQL query. Since the application is an issue tracker, we need to add a list field of issues to the query.
+GraphQL 查询结构与组件树完全一致。它通过将其他对象嵌套到查询中，并沿着 GraphQL 查询的结构扩展组件树，这样就可以继续扩展这样的查询结构。由于应用程序是问题跟踪程序，我们需要向查询添加 issue 列表字段。
 
 If you want to follow the query structure more thoughtfully, open the "Docs" sidebar in GraphiQL to learn out about the types `Organization`, `Repository`, `Issue`. The paginated issues list field can be found there as well. It's always good to have an overview of the graph structure.
+如果您想更详细地了解查询结构，请打开 GraphiQL 中的“文档”侧栏以了解`Organization`, `Repository`, `Issue`。也可以在那里找到分页 issue 列表字段。那里对图形结构的概述是非常详尽的。
 
 Now let's extend the query with the list field for the issues. These issues are a paginated list in the end. We will cover these more later; for now, nest it in the `repository` field with a `last` argument to fetch the last items of the list.
+现在让我们用 issue 列表字段扩展查询。这些 issue 最终是一个分页列表。我们稍后会介绍这些内容；现在，将它嵌套在`repository`字段中，并使用`last`参数来获取列表的最后一项。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -585,6 +591,7 @@ const GET_ISSUES_OF_REPOSITORY = `
 ~~~~~~~~
 
 You can also request an id for each issue using the `id` field on the issue's `node` field, to use a `key` attribute for your list of rendered items in the component, which is considered [best practice in React](https://reactjs.org/docs/lists-and-keys.html). Remember to adjust the name of the query variable when its used to perform the request.
+您还可以使用问题的`node` 字段上的`id`字段为每个问题请求一个id，以便于在组件中使用在列表中呈现的`key`属性，这是在React中的最佳实践。记得要在执行请求时调整查询变量的名称。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -606,6 +613,7 @@ class App extends Component {
 ~~~~~~~~
 
 The component structure follows the query structure quite naturally again. You can add a list of rendered issues to the Repository component. It is up to you to extract it to its own component as a refactoring to keep your components concise, readable, and maintainable.
+组件结构非常自然地遵循了查询结构。您可以向仓库组件中添加已呈现的 issue 列表。您也可以将其作为重构提取到自己的组件中，让您的组件变得更加简洁，增加可读性和可维护性。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -630,12 +638,16 @@ const Repository = ({ repository }) => (
 ~~~~~~~~
 
 That's it for the nested objects, fields, and list fields in a query. Once you run your application again, you should see the last issues of the specified repository rendered in your browser.
+这就是查询中的嵌套对象，字段和列表字段。当您再次运行您的应用程序，您会在浏览器中看到指定仓库的最后提的 issue 
 
 ### GraphQL Variables and Arguments in React
+React-GraphQL 变量和参数
 
 Next we'll make use of the form and input elements. They should be used to request the data from GitHub's GraphQL API when a user fills in content and submits it. The content is also used for the initial request in `componentDidMount()` of the App component. So far, the organization `login` and repository `name` were inlined arguments in the query. Now, you should be able to pass in the `path` from the local state to the query to define dynamically an organization and repository. That's where variables in a GraphQL query came into play, do you remember?
+接下来我们将使用表单和 input 元素。当用户填写内容并提交内容时，它们应该用于从 Github GraphQL APl请求数据。该内容还用于App组件的 `componentDidMount()` 中的初始请求。目前，组织登录名和仓库名应该是查询中的内联参数。现在，您应该能够通过从本地状态到查询的路径来动态定义组织和仓库。这就是 GraphQL 查询中的变量发挥作用的地方，还记得吗？
 
 First, let's use a naive approach by performing string interpolation with JavaScript rather than using GraphQL variables. To do this, refactor the query from a template literal variable to a function that returns a template literal variable. By using the function, you should be able to pass in an organization and repository.
+首先，我们先使用一种简单的方法，通过 JavaScript 来执行字符串插值，注意不是 GraphQL 变量。为此，请将查询从模板文字变量重构为返回模板文字变量的函数。通过使用该函数，您应该能够传入组织和仓库。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -669,6 +681,7 @@ const getIssuesOfRepositoryQuery = (organization, repository) => `
 ~~~~~~~~
 
 Next, call the `onFetchFromGitHub()` class method in the submit handle, but also when the component mounts in `componentDidMount()` with the initial local state of the `path` property. These are the two essential places to fetch the data from the GraphQL API on initial render, and on every other manual submission from a button click.
+接下来，当组件在 `componentDidMount()` 中安装具有 `path` 属性的初始本地状态时，在提交句柄中调用 `onFetchFromGitHub()` 这个类方法。这些是在初始渲染时从 GraphQL API 获取数据的两个基本位置，以及从按钮单击获取每个手动提交的数据。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -708,6 +721,7 @@ class App extends Component {
 ~~~~~~~~
 
 Lastly, call the function that returns the query instead of passing the query string directly as payload. Use the [JavaScript's split method on a string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split) to retrieve the prefix and suffix of the `/` character from the path variable where the prefix is the organization and the suffix is the repository.
+最后，调用返回查询的函数，而不是直接将查询字符串作为有效负载传递。对字符串使用 JavaScript 的 [split](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split) 方法从路径变量中检索/字符的前缀和后缀，其中前缀是组织，后缀是仓库。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -738,10 +752,13 @@ class App extends Component {
 ~~~~~~~~
 
 Since the split returns an array of values and it is assumed that there is only one slash in the path, the array should consist of two values: the organization and the repository. That's why it is convenient to use a JavaScript array destructuring to pull out both values from an array in the same line.
+由于 split 方法的返回值是一个数组，假设路径中只有一个斜杠，那么该数组应包含两个值:组织和仓库。所以，使用 JavaScript 数组解构从同一行中的数组中提取两个值很方便。
 
 Note that the application is not built for to be robust, but is intended only as a learning experience. It is unlikely anyone will ask a user to input the organization and repository with a different pattern than *organization/repository*, so there is no validation included yet. Still, it is a good foundation for you to gain experience with the concepts.
+注意，此程序仅作为学习体验，未考虑其健壮性。任何人都不可能要求用户使用与组织/仓库不同的模式输入组织和仓库，所以这里没有包含任何验证。尽管如此，这也能为您学习概念打好良好的基础。
 
 If you want to go further, you can extract the first part of the class method to its own function, which uses axios to send a request with the query and return a promise. The promise can be used to resolve the result into the local state, using `this.setState()` in the `then()` resolver block of the promise.
+如果你想更进一步，可以将类方法的第一部分提取到它自己的函数中，该函数使用 axios 发送带有查询的请求并返回一个 promise，可用于将结果解析为本地状态，然后您可以在 `then()` 函数中使用 `this.setState()` 方法来解析程序块中的 promise.
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -774,6 +791,7 @@ class App extends Component {
 ~~~~~~~~
 
 You can always split your applications into parts, be they functions or components, to make them concise, readable, reusable and [testable](https://www.robinwieruch.de/react-testing-tutorial/). The function that is passed to `this.setState()` can be extracted as higher-order function. It has to be a higher-order function, because you need to pass the result of the promise, but also provide a function for the `this.setState()` method.
+您也可以将应用程序的功能或者组件拆分为多个部分，使它们简洁，可读，可重用和[可测试](https://www.robinwieruch.de/react-testing-tutorial/)。传递给 `this.setState()` 的函数可以作为高阶函数提取。它必须是高阶函数，因为您需要传递 promise 的结果，但也为 `this.setState()` 方法提供函数。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -800,8 +818,10 @@ class App extends Component {
 ~~~~~~~~
 
 Now you've made your query flexible by providing dynamic arguments to your query. Try it by starting your application on the command line and by filling in a different organization with a specific repository (e.g. *facebook/create-react-app*).
+现在，您已经通过在查询中提供动态参数灵活的进行查询。在终端尝试启动你的程序，在特定仓库（例如 facebook/create-react-app ）中填充不同的组织。
 
 It's a decent setup, but there was nothing to see about variables yet. You simply passed the arguments to the query using a function and string interpolation with template literals. Now we'll use GraphQL variables instead, to refactor the query variable again to a template literal that defines inline variables.
+这是一个很好的设置，但还没有什么可见的变量。您只需使用一个函数和带有模板文字的字符串插值将参数传递给查询。现在我们将使用 GraphQL 变量，将查询变量重新调整到定义内联变量的模板文本中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -833,6 +853,7 @@ const GET_ISSUES_OF_REPOSITORY = `
 ~~~~~~~~
 
 Now you can pass those variables as arguments next to the query for the HTTP POST request:
+现在，您可以将这些变量作为 HTTP POST 请求的查询参数：
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -849,14 +870,19 @@ const getIssuesOfRepository = path => {
 ~~~~~~~~
 
 Finally, the query takes variables into account without detouring into a function with string interpolation. I strongly suggest practicing with the exercises below before continuing to the next section. We've yet to discuss features like fragments or operation names, but we'll soon cover them using Apollo instead of plain HTTP with axios.
+最后，查询将变量纳入考虑，而不用字符串插值的方法去检测函数。我强烈建议在继续下一节之前先练习下面的练习。我们还没有讨论像碎片或操作名称这样的特性，但是我们很快就会使用 Apollo 代替普通的带 axios 的 HTTP 来覆盖它们。
 
 ### Exercises:
+练习：
 
 * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
+* 确认[最后一节的源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
 * Explore and add fields to your organization, repository and issues
+* 在您的 organization, repository and issues 中探索和添加字段
   * Extend your components to display the additional information
+  * 扩展您的组件以显示附加信息
 * Read more about [serving a GraphQL API over HTTP](http://graphql.org/learn/serving-over-http/)
-
+* 阅读更多关于 [serving a GraphQL API over HTTP](http://graphql.org/learn/serving-over-http/)
 ## GraphQL Pagination in React
 
 Last section you implemented a list field in your GraphQL query, which fit into the flow of structuring the query with nested objects and a list responsible for showing partial results of the query in React.
