@@ -1,6 +1,6 @@
 # GraphQL 准备, 相关工具和 API
 
-循序渐进通常是学习新东西最简单的方式，使用 JavaScript 来学习 GraphQL 是一件非常幸运的事，因为它同时教你应用程序的客户端和服务端。同时了解网络服务的前后端非常有用，但问题是你需要同时了解两个环境。这样使用循序渐进的方式会比较困难，所以我鼓励初学者从客户端应用程序开始，服务端则使用一个使用了 GraphQL 服务第三方的 API。
+循序渐进通常是学习新东西最简单的uud=dd方式，使用 JavaScript 来学习 GraphQL 是一件非常幸运的事，因为它同时教你应用程序的客户端和服务端。同时了解网络服务的前后端非常有用，但问题是你需要同时了解两个环境。这样使用循序渐进的方式会比较困难，所以我鼓励初学者从客户端应用程序开始，服务端则使用一个使用了 GraphQL 服务第三方的 API。
 
 [GitHub](https://github.com)是首批采用 GraphQL 技术的大型科技公司之一。他们甚至[发布了](https://githubengineering.com/the-github-graphql-api)一个公共 GraphQL API [官方文档](https://developer.github.com/v4)，这在开发者中非常受欢迎，因为大多数人都非常熟悉 GitHub 并将其用于自己的项目。
 
@@ -54,22 +54,22 @@ GitHub 的 GraphQL API 允许一次请求多个代码仓库，这对于分页来
 
 个人访问令牌随后会用于与 GitHub GraphQL API 进行交互。请注意不要与任何第三方共享这些令牌。
 
-## Interacting with GitHub's GraphQL API
+## 与 GitHub GraphQL API 交互
 
-There are two common ways to interact with the GitHub GraphQL API without writing any source code for it. First, you can use [GitHub's GraphQL Explorer](https://developer.github.com/v4/explorer/). You only need to sign up with your GitHub account to perform a query or mutation to their GraphQL API, and its a good way to simplify your first experience. Second, you can use a generic client in the form of an application. GraphiQL is a client that makes GraphQL requests as integration or as a standalone application. The former can be accomplished [by setting up GraphiQL directly in your application](https://github.com/skevy/graphiql-app); the latter may be more convenient for you by [using GraphiQL as standalone application](https://github.com/skevy/graphiql-app). It's a lightweight shell around GraphiQL that can be downloaded and installed manually or by the command line.
+有两种常见的方法可以与 GitHub GraphQL API 进行交互，而且无需为其编写任何源代码。第一种是使用[GitHub GraphQL Explorer](https://developer.github.com/v4/explorer/)。只需要使用 GitHub 账号登录就可以使用 GraphQL API 进行数据查询或者进行修改操作，这是简化初次体验的一个好方式。第二种方法，使用一个应用程序形式的通用客户端。GraphiQL 是一个客户端，可以让 GraphQL 请求功能集成到你的应用，或者作为一个独立的应用程序。前者可以通过[在应用程序中直接设置 GraphiQL](https://github.com/skevy/graphiql-app)来实现；后者可以通过[将 GraphiQL 作为独立的应用](https://github.com/skevy/graphiql-app)来实现。它是关于 GraphiQL 的轻量级 shell，可以手动或通过命令行下载和安装。
 
-GitHub's GraphQL Explorer knows about your credentials, since you need to sign up using it, but the GraphiQL application needs to know about the personal access token you created. You can add it in your HTTP header for every request in the headers configuration.
+因为需要注册才能使用，所以 GitHub GraphQL Explorer 知道你的凭证，但 GraphiQL 也需要知道你创建的个人访问令牌。你可以在头部（header）配置中为每个请求的 HTTP 标头中添加访问令牌。
 
 ![](images/graphiql-headers_1024.jpg)
 
-In the next step, we add a new header with a name and value to your GraphiQL configuration. To communicate with GitHub's GraphQL API, fill in the header name with "Authorization" and the header value with "bearer [your personal access token]". Save this new header for your GraphiQL application. Finally, you are ready to make requests to GitHub's GraphQL API with your GraphiQL application.
+在下一步中，我们在 GraphiQL 配置中添加一个键值对。为了与 GitHub GraphQL API 通信，在头部加上「Authorization」，值为「bearer [你个人的访问令牌]」。为 GraphiQL 应用程序保存此设定。 最后，你已准备好使用 GraphiQL 应用程序向 GitHub GraphQL API 发送请求了。
 
 ![](images/graphiql-authorization_1024.jpg)
 
-If you use your own GraphiQL application, you'll need to provide the GraphQL endpoint for GitHub's GraphQL API: `https://api.github.com/graphql`. For GitHub's GraphQL API, use the [POST HTTP method](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) for queries and mutations, and to transfer data as a payload to your GraphQL endpoint.
+如果你使用自己的 GraphiQL 应用程序，则需要为 GitHub 的 GraphQL API 提供 GraphQL端点：`https://api.github.com/graphql`。 对于 GitHub GraphQL API，使用[POST HTTP方法](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods)进行查询和修改，并将数据作为负载进行传输。
 
-This section provided you with two ways to interact with GitHub's GraphQL API. Where GitHub's GraphQL Explorer can only be used for GitHub's API, GraphiQL integrated into an application or standalone can be used for any GraphQL API. The difference is that it requires a bit more setup. The GitHub GraphQL Explorer is really nothing more than a hosted standalone GraphiQL application tailored to use GitHub's GraphQL API.
+本节提供了两种与 GitHub GraphQL API交互的方法。GitHub 的 GraphQL Explorer 只能用于 GitHub API，集成到应用程序或独立的 GraphiQL 可用于任何的 GraphQL API。不同点在于后者需要一些额外的配置。GitHub GraphQL Explorer 实际上只是为使用 GitHub GraphQL API 而定制的独立 GraphiQL 应用程序。
 
 | |
 
-After you've set up GitHub to use their GraphQL API to learn about GraphQL, you should be ready to implement your first GraphQL client interactions. Follow along and create your first GraphQL client-side application with the tools you have just set up but also with React.
+为了使用 GitHub GraphQL API 来了解 GraphQL，在设置好 GitHub 之后，你已经可以开始实现你的第一个可交互的 GraphQL 客户端了。继续阅读，利用你刚设置好的工具和 React 来创建你的第一个 GraphQL 客户端应用。
