@@ -1978,9 +1978,13 @@ mydatabase=# SELECT text from messages;
 
 * 阅读更多关于[GraphQL执行](https://graphql.github.io/learn/execution/)的内容
 
-## Apollo Server: Validation and Errors
+> ## Apollo Server: Validation and Errors
 
-Validation, error, and edge case handling are not often verbalized in programming. This section should give you some insights into these topics for Apollo Server and GraphQL. With GraphQL, you are in charge of what returns from GraphQL resolvers. It isn't too difficult inserting business logic into your resolvers, for instance, before they read from your database.
+## Apollo Server：校验和错误处理
+
+> Validation, error, and edge case handling are not often verbalized in programming. This section should give you some insights into these topics for Apollo Server and GraphQL. With GraphQL, you are in charge of what returns from GraphQL resolvers. It isn't too difficult inserting business logic into your resolvers, for instance, before they read from your database.
+
+我们通常不会在编码过程中明确提出对于校验，错误以及边缘场景的处理。这节中应该为你提供一些关于Apollo Server和GraphQL这方面的见解。使用GraphQL过程中，你只负责GraphQL resolver的返回值。例如，在从数据库读取数据之前，将业务逻辑插入到resolver中并不太困难。
 
 {title="src/resolvers/user.js",lang="javascript"}
 ~~~~~~~~
@@ -2007,11 +2011,17 @@ export default {
 };
 ~~~~~~~~
 
-It may be a good idea keeping the resolvers surface slim but adding business logic services on the side. Then it is always simple to reason about the resolvers. In this application, we keep the business logic in the resolvers to keep everything at one place and avoid scattering logic across the entire application.
+> It may be a good idea keeping the resolvers surface slim but adding business logic services on the side. Then it is always simple to reason about the resolvers. In this application, we keep the business logic in the resolvers to keep everything at one place and avoid scattering logic across the entire application.
 
-Let's start with the validation, which will lead to error handling. GraphQL isn't directly concerned about validation, but it operates between tech stacks that are: the client application (e.g. showing validation messages) and the database (e.g. validation of entities before writing to the database).
+保持resolver层轻量同时添加业务逻辑到service层是一个不错的方法。这样resolver变得足够简单。在我们的应用中，我们将业务逻辑都保留在resolver中，是为了将所有代码都保存在同一个地方，避免在整个应用中逻辑变得分散。
 
-Let's add some basic validation rules to your database models. This section gives an introduction to the topic, as it would become too verbose to cover all uses cases in this application. First, add validation to your user model in the *src/models/user.js* file:
+> Let's start with the validation, which will lead to error handling. GraphQL isn't directly concerned about validation, but it operates between tech stacks that are: the client application (e.g. showing validation messages) and the database (e.g. validation of entities before writing to the database).
+
+我们先从校验开始，这将使得我们的程序产生错误。GraphQL和校验并没有直接关系，但是它在客户端应用（例如显示校验信息）和数据库（例如在写到数据库之前对实体进行校验）之间发挥作用。
+
+> Let's add some basic validation rules to your database models. This section gives an introduction to the topic, as it would become too verbose to cover all uses cases in this application. First, add validation to your user model in the *src/models/user.js* file:
+
+我们先来为数据库model添加一些基本的校验规则。本节只会一些简单的介绍，因为如果在我们的应用中涵盖所有的场景将会变得过于冗长。首先，我们在*src/models/user.js*文件中为user model添加如下校验：
 
 {title="src/models/user.js",lang="javascript"}
 ~~~~~~~~
@@ -2037,7 +2047,9 @@ const user = (sequelize, DataTypes) => {
 export default user;
 ~~~~~~~~
 
-Next, add validation rules to your message model  in the *src/models/message.js* file:
+> Next, add validation rules to your message model  in the *src/models/message.js* file:
+
+接下来，在*src/models/message.js*文件中为message model添加校验规则：
 
 {title="src/models/message.js",lang="javascript"}
 ~~~~~~~~
@@ -2061,7 +2073,9 @@ const message = (sequelize, DataTypes) => {
 export default message;
 ~~~~~~~~
 
-Now, try to create a message with an empty text in GraphQL Playground. It still requires a non-empty text for your message in the database. The same applies to your user entities, which now require a unique username. GraphQL and Apollo Server can handle these cases. Let's try to create a message with an empty text. You should see a similar input and output:
+> Now, try to create a message with an empty text in GraphQL Playground. It still requires a non-empty text for your message in the database. The same applies to your user entities, which now require a unique username. GraphQL and Apollo Server can handle these cases. Let's try to create a message with an empty text. You should see a similar input and output:
+
+现在试下在GraphQL Playground中使用空的text字段创建一条message。你需要对数据库中的message提供一个非空的text字段。这同样适用于user实体，同时它的username字段还有唯一性要求。GraphQL和Apollo Server能够轻松应对这些场景。我们尝试使用空的text创建一个message。你会看到一个类似的输入和输出：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -2088,9 +2102,13 @@ mutation {
 }
 ~~~~~~~~
 
-It seems like Apollo Server's resolvers make sure to transform [JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) into valid GraphQL output. It is already possible to use this common error format in your client application without any additional error handling.
+> It seems like Apollo Server's resolvers make sure to transform [JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) into valid GraphQL output. It is already possible to use this common error format in your client application without any additional error handling.
 
-If you want to add custom error handling to your resolver, you always can add the commonly try/catch block statements for async/await:
+似乎Apollo Server的resolver确保将[JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)转换为有效的GraphQL输出。现在已经可以在客户端应用中使用此常见错误格式，而无需任何其他错误处理。
+
+> If you want to add custom error handling to your resolver, you always can add the commonly try/catch block statements for async/await:
+
+如果你想在resolver中添加自定义异常处理，你还可通过为async/await语句添加try/catch异常捕获。
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -2122,9 +2140,13 @@ export default {
 };
 ~~~~~~~~
 
-The error output for GraphQL should stay the same in GraphQL Playground, because you used the same error object to generate the Error instance. However, you could also use your custom message here with `throw new Error('My error message.');`.
+> The error output for GraphQL should stay the same in GraphQL Playground, because you used the same error object to generate the Error instance. However, you could also use your custom message here with `throw new Error('My error message.');`.
 
-Another way of adjusting your error message is in the database model definition. Each validation rule can have a custom validation message, which can be defined in the Sequelize model:
+因为你使用了相同的错误对象来生成错误实例，所以在GraphQL Playground错误输出应该保持不变。当然你也可以使用自定义的错误消息`throw new Error('My error message.');`。
+
+> Another way of adjusting your error message is in the database model definition. Each validation rule can have a custom validation message, which can be defined in the Sequelize model:
+
+另外一个调整错误消息的方法是对数据库model的定义的时候。你可以在定义Sequelize model的时候为每一次校验规则添加一个自定义的校验消息：
 
 {title="src/models/message.js",lang="javascript"}
 ~~~~~~~~
@@ -2153,7 +2175,9 @@ const message = (sequelize, DataTypes) => {
 export default message;
 ~~~~~~~~
 
-This would lead to the following error(s) when attempting to create a message with an empty text. Again, it is straightforward in your client application, because the error format stays the same:
+> This would lead to the following error(s) when attempting to create a message with an empty text. Again, it is straightforward in your client application, because the error format stays the same:
+
+当我们尝试使用空的text创建一条message的时候将产生以下错误。当然，因为错误格式保持不变，所以输出还是非常简单：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -2174,7 +2198,9 @@ This would lead to the following error(s) when attempting to create a message wi
 }
 ~~~~~~~~
 
-That's one of the main benefits of using Apollo Server for GraphQL. Error handling is often free, because an error--be it from the database, a custom JavaScript error or another third-party--gets transformed into a valid GraphQL error result. On the client side, you don't need to worry about the error result's shape, because it comes in a common GraphQL error format where the data object is null but the errors are captured in an array. If you want to change your custom error, you can do it on a resolver per-resolver basis. Apollo Server comes with a solution for global error handling:
+> That's one of the main benefits of using Apollo Server for GraphQL. Error handling is often free, because an error--be it from the database, a custom JavaScript error or another third-party--gets transformed into a valid GraphQL error result. On the client side, you don't need to worry about the error result's shape, because it comes in a common GraphQL error format where the data object is null but the errors are captured in an array. If you want to change your custom error, you can do it on a resolver per-resolver basis. Apollo Server comes with a solution for global error handling:
+
+这也是在GraphQL中使用Apollo Server最主要的原因之一。错误处理通常不不受约束的，因为错误可能来源于数据库、自定义抛出的JavaScript错误或者其他第三方，这些错误都将被转换成有效的GraphQL错误。在客户端，你不必担心具体的错误长什么样子，因为它有一个常见的GraphQL错误格式，其中数据对象为null但错误却是在数组中被捕获。如果你想更改自定义错误，你可以在resolver的基础上挨个处理。Apollo Server还提供了一种全局错误处理的解决方案：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2202,17 +2228,40 @@ const server = new ApolloServer({
 });
 ~~~~~~~~
 
-These are the essentials for validation and error handling with GraphQL in Apollo Server. Validation can happen on a database (model) level or on a business logic level (resolvers). It can happen on a directive level too (see exercises). If there is an error, GraphQL and Apollo Server will format it to work with GraphQL clients. You can also format errors globally in Apollo Server.
+> These are the essentials for validation and error handling with GraphQL in Apollo Server. Validation can happen on a database (model) level or on a business logic level (resolvers). It can happen on a directive level too (see exercises). If there is an error, GraphQL and Apollo Server will format it to work with GraphQL clients. You can also format errors globally in Apollo Server.
 
-### Exercises:
+这些是在Apollo Server中进行GraphQL校验和错误处理的基本要素。校验可以在数据库（model）层或者业务逻辑（resolver）层，也可以在directive层（见练习）。如果出现错误，GraphQL和Apollo Server将对其进行格式化以兼容GraphQL客户端。你也可以在Apollo Server中进行全局的错误格式化处理。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/83b2a288ccd65c574ac3f2083c4ceee3197700e7)
-* Add more validation rules to your database models
-  * Read more about validation in the Sequelize documentation
-* Read more about [Error Handling with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/errors.html)
-  * Get to know the different custom errors in Apollo Server
-* Read more about [GraphQL field level validation with custom directives](https://blog.apollographql.com/graphql-validation-using-directives-4908fd5c1055)
-  * Read more about [custom schema directives](https://www.apollographql.com/docs/apollo-server/v2/features/directives.html)
+> ### Exercises:
+### 练习：
+
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/83b2a288ccd65c574ac3f2083c4ceee3197700e7)
+
+* 确认你的[最后一节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/83b2a288ccd65c574ac3f2083c4ceee3197700e7)
+
+> * Add more validation rules to your database models
+
+* 在你的数据库model上添加更多的校验规则
+
+> * Read more about validation in the Sequelize documentation
+
+* 阅读更多关于Sequelize校验规则的文档
+
+> * Read more about [Error Handling with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/errors.html)
+
+* 了解更多关于[Apollo Server的错误处理](https://www.apollographql.com/docs/apollo-server/v2/features/errors.html)
+
+> * Get to know the different custom errors in Apollo Server
+
+* 了解在Apollo Server中不同的自定义错误
+
+> * Read more about [GraphQL field level validation with custom directives](https://blog.apollographql.com/graphql-validation-using-directives-4908fd5c1055)
+
+* 了解更多关于[GraphQL字段级校验以及自定义directive](https://blog.apollographql.com/graphql-validation-using-directives-4908fd5c1055)
+
+> * Read more about [custom schema directives](https://www.apollographql.com/docs/apollo-server/v2/features/directives.html)
+
+* 了解更多关于[自定义schema directive](https://www.apollographql.com/docs/apollo-server/v2/features/directives.html)
 
 ## Apollo Server: Authentication
 
