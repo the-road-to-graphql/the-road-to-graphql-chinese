@@ -859,11 +859,19 @@ Finally, the query takes variables into account without detouring into a functio
 
 ## GraphQL Pagination in React
 
+## React 中的 GraphQL 分页
+
 Last section you implemented a list field in your GraphQL query, which fit into the flow of structuring the query with nested objects and a list responsible for showing partial results of the query in React.
+
+上一节中，你在 React 应用上实现了一个用于 GraphQL 查询的列表字段，它能得到一个包含部分查询结果的列表，其中的元素满足指定的嵌套结构。
 
 In this section, you will explore pagination with list fields with GraphQL in React in more detail. Initially, you will learn more about the arguments of list fields. Further, you will add one more nested list field to your query. Finally, you will fetch another page of the paginated `issues` list with your query.
 
+本节将继续在使用 React 的基础上，更为深入地探索基于 GraphQL 列表字段实现的分页功能。你将首先了解列表字段的参数使用，而后在查询中添加另一个嵌套列表字段，从而能够在查询中实现获取下一页 `issues` 的功能。
+
 Let's start by extending the `issues` list field in your query with one more argument:
+
+我们首先为这个 `issues` 列表字段添加一个额外参数：
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -894,7 +902,11 @@ const GET_ISSUES_OF_REPOSITORY = `
 
 If you read the arguments for the `issues` list field using the "Docs" sidebar in GraphiQL, you can explore which arguments you can pass to the field. One of these is the `states` argument, which defines whether or not to fetch open or closed issues. The previous implementation of the query has shown you how to refine the list field, in case you only want to show open issues. You can explore more arguments for the `issues` list field, but also for other list fields, using the documentation from Github's API.
 
+如果你在 GraphiQL 工具中通过 "Docs" 边栏查看过这个 `issues` 列表字段的参数信息，就能找到可供使用的参数信息。其中的一个参数便是 `states`，用于决定获取处在开启状态或关闭状态的 issues，亦或两者同时。如果仅需要展示处于开启状态的 issues，那么可以进一步提炼这个列表字段，方法如上述代码所示。通过 GitHub 的 API 文档，你能够查看关于这个 `issues` 列表字段的更多参数信息，其它的列表字段也是一样。
+
 Now we'll implement another nested list field that could be used for pagination. Each issue in a repository can have reactions, essentially emoticons like a smiley or a thumbs up. Reactions can be seen as another list of paginated items. First, extend the query with the nested list field for reactions:
+
+现在我们将实现另一个列表字段，以便用于完善分页功能。我们知道，仓库中的每个 issue 都可能具有 reactions，也就是像笑脸或者大拇指之类的表情。这些 reactions 可以被视作另一项分页内容，为了展示它们，首先在查询中添加一个嵌套的 reactions 列表字段：
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -933,6 +945,8 @@ const GET_ISSUES_OF_REPOSITORY = `
 
 Second, render the list of reactions in one of your React components again. Implement dedicated List and Item components, such as ReactionsList and ReactionItem for it. As an exercise, try keeping the code for this application readable and maintainable.
 
+之后，我们继续通过 React 组件来渲染 reactions 列表。这里本应当为列表和条目定义专门的组件，例如叫做 ReactionsList 和 ReactionItem，可以将此当作课后练习，从而提升应用代码的可读性和可维护性。
+
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
 const Repository = ({ repository }) => (
@@ -960,7 +974,11 @@ const Repository = ({ repository }) => (
 
 You extended the query and React's component structure to render the result. It's a straightforward implementation when you are using a GraphQL API as your data source which has a well defined underlying schema for these field relationships.
 
+通过扩展查询结构以及 React 组件内容，你已经成功渲染出相应结果。由于作为数据源的 GraphQL API 为其字段定义了清晰的结构和关联性，这里的实现方式直截了当。
+
 Lastly, you will implement real pagination with the `issues` list field, as there should be a button to fetch more issues from the GraphQL API to make it a function of a completed application. Here is how to implement a button:
+
+最后，为了做出完整的应用，你需要实现一个对 `issues` 列表字段的实际分页功能，通过点击一个按钮从 GraphQL API 获取更多的 issues。以下是按钮部分的实现代码：
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -989,6 +1007,8 @@ const Repository = ({
 ~~~~~~~~
 
 The handler for the button passes through all the components to reach the Repository component:
+
+该按钮的处理函数经由更外层传入 Repository 组件：
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1019,6 +1039,8 @@ const Organization = ({
 ~~~~~~~~
 
 Logic for the function is implemented in the App component as class method. It passes to the Organization component as well.
+
+该函数在 App 组件中作为类方法实现，同样也作为属性传入 Organization 组件。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1057,6 +1079,8 @@ class App extends Component {
 
 Before implementing the logic for it, there needs to be a way to identify the next page of the paginated list. To extend the inner fields of a list field with fields for meta information such as the `pageInfo` or the `totalCount` information, use `pageInfo` to define the next page on button-click. Also, the `totalCount` is only a nice way to see how many items are in the next list:
 
+开始实现功能之前，首先需要考虑如何标明这个分页列表中的下一页。在列表字段中，可以通过添加额外的内部字段来获取相关元信息，例如 `pageInfo` 和 `totalCount`，前者可用于按钮点击的事件处理中定义下一页的相关信息。此外，`totalCount` 可辅助判断下一页中的条目数量：
+
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
 const GET_ISSUES_OF_REPOSITORY = `
@@ -1086,6 +1110,8 @@ const GET_ISSUES_OF_REPOSITORY = `
 
 Now, you can use this information to fetch the next page of issues by providing the cursor as a variable to your query. The cursor, or the `after` argument, defines the starting point to fetch more items from the paginated list.
 
+通过这些信息，现在你能将这个游标（Cursor）作为变量传入查询中，从而获取下一页的 issues 内容。这个游标，也就是 `after` 参数，在分页列表中定义了获取更多条目所需的起始位置。
+
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
 class App extends Component {
@@ -1108,6 +1134,8 @@ class App extends Component {
 ~~~~~~~~
 
 The second argument wasn't introduced  to the `onFetchFromGitHub()` class method yet. Let's see how that turns out.
+
+名为 `onFetchFromGitHub` 的类方法尚未定义第二个参数，现在让我们来定义它。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1140,6 +1168,8 @@ class App extends Component {
 ~~~~~~~~
 
 The argument is simply passed to the `getIssuesOfRepository()` function, which makes the GraphQL API request, and returns the promise with the query result. Check the other functions that call the `onFetchFromGitHub()` class method, and notice how they don't make use of the second argument, so the cursor parameter will be `undefined` when it's passed to the GraphQL API call. Either the query uses the cursor as argument to fetch the next page of a list, or it fetches the initial page of a list by having the cursor not defined at all:
+
+新的参数被直接传入 `getIssuesOfRepository()` 函数，后者用于构造 GraphQL 的 API 请求，并返回对应查询结果的 Promise。通过观察其它对 `onFetchFromGitHub()` 类方法的调用，能够注意到它们并未使用第二个参数，因此实际传入 GraphQL API 调用中的参数是 `undefined`。最终，这个查询要么使用了传入的游标信息作为参数来获取下一页的列表，要么由于游标未定义获取到第一页的列表。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1176,7 +1206,11 @@ const GET_ISSUES_OF_REPOSITORY = `
 
 In the previous template string, the `cursor` is passed as variable to the query and used as `after` argument for the list field. The variable is not enforced though, because there is no exclamation mark next to it, so it can be `undefined`. This happens for the initial page request for a paginated list, when you only want to fetch the first page. Further, the argument `last` has been changed to `first` for the `issues` list field, because there won't be another page after you fetched the last item in the initial request. Thus, you have to start with the first items of the list to fetch more items until you reach the end of the list.
 
+上面的模板字符串中，`cursor` 作为变量传入到该列表字段的 `after` 参数中。因为没有后置的的感叹号声明强制要求，所以可以是 `undefined`，这种场景出现在分页列表中获取第一页的情况下。此外，`issues` 列表字段中的 `last` 参数改成了 `first`，因为获取到最后一个条目之后就不存在下一页了，因此必须从第一个条目开始不断获取更多内容，直到到达列表中的最后一个条目为止。
+
 That's it for fetching the next page of a paginated list with GraphQL in React, except one final step. Nothing updates the local state of the App component about a page of issues yet, so there are still only the issues from the initial request. You want to merge the old pages of issues with the new page of issues in the local state of the App component, while keeping the organization and repository information in the deeply nested state object intact. The perfect time for doing this is when the promise for the query resolves. You already extracted it as a function outside of the App component, so you can use this place to handle the incoming result and return a result with your own structure and information. Keep in mind that the incoming result can be an initial request when the App component mounts for the first time, or after a request to fetch more issues happens, such as when the "More" button is clicked.
+
+以上就基本是在 React 应用中使用 GraphQL 获取分页列表所需的过程，不过还差最后一步。目前为止，App 组件中关于 issues 的状态并未得到更新，因此仅显示第一个请求中的结果。为了在保持组织和仓库基本信息不变的情况下合并 issues 的分页列表，最佳的操作时间就是查询得到的 Promise 完成时。由于这个过程已经被提取为 App 组件之外的独立函数，因此可以在该函数中对输入数据进行必要的数据处理。需要注意的是，这里的输入数据既可以是应用挂载时的第一次请求结果，也可以是点击 "More" 按钮时获取的后续结果。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1214,7 +1248,11 @@ const resolveIssuesQuery = (queryResult, cursor) => state => {
 
 The function is a complete rewrite, because the update mechanism is more complex now. First, you passed the `cursor` as an argument to the function, which determines whether it was an initial query or a query to fetch another page of issues. Second, if the `cursor` is `undefined`, the function can return early with the state object that encapsulates the plain query result, same as before. There is nothing to keep intact in the state object from before, because it is an initial request that happens when the App component mounts or when a user submits another request which should overwrite the old state anyway. Third, if it is a fetch more query and the cursor is there, the old and new issues from the state and the query result get merged in an updated list of issues. In this case, a JavaScript destructuring alias is used to make naming both issue lists more obvious. Finally, the function returns the updated state object. Since it is a deeply nested object with multiple levels to update, use the JavaScript spread operator syntax to update each level with a new query result. Only the `edges` property should be updated with the merged list of issues.
 
+由于更新机制变得更复杂，该函数也经历了全面重写。首先，`cursor` 被作为函数参数传入，用于确定是首次查询还是获取下一页内容的查询；随后，当 `cursor` 是 `undefined` 时函数会提前结束并将查询结果简单包装后直接返回，与原先的逻辑相同，这里对应于 App 组件挂载或者用户提交新的输入的场景，应当覆盖之前的状态；其次，当 `cursor` 存在也就是加载更多的查询时，查询结果中的 issues 列表会与已有的列表进行合并，为了显得更为直观而使用了 JavaScript 解构别名语法；最后，该函数返回了更新后的对象，由于存在多层嵌套而使用了 JavaScript 扩展（Spread）语法逐层更新，不过只有 `edges` 属性需要更新为合并后的 issues 列表。
+
 Next, use the `hasNextPage` property from the `pageInfo` that you requested to show a "More" button (or not). If there are no more issues in the list, the button should disappear.
+
+之后，根据 `pageInfo` 对象中的 `hasNextPage` 来决定是否显示 "More" 按钮，当没有更多页面时按钮消失。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1237,17 +1275,30 @@ const Repository = ({ repository, onFetchMoreIssues }) => (
 
 Now you've implemented pagination with GraphQL in React. For practice, try more arguments for your issues and reactions list fields on your own. Check the "Docs" sidebar in GraphiQL to find out about arguments you can pass to list fields. Some arguments are generic, but have arguments that are specific to lists. These arguments should show you how finely-tuned requests can be with a GraphQL query.
 
+至此你已经成功地在 React 应用中实现了基于 GraphQL 的分页功能，如果需要，可以自行练习更多关于 issues 和 reactions 的参数使用。通过 GraphiQL 中地 "Docs" 边栏可以查看列表字段的参数信息，有些参数是公共的，而有些是部分列表所特有的，这些参数将帮助你实现精致的 GraphQL 查询。
+
 ### Exercises:
 
+### 练习：
+
 * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/060677346e8955fb1a6c7579859ce92e62e1f406)
+* 确认[上一节的源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/060677346e8955fb1a6c7579859ce92e62e1f406)
 * Explore further arguments, generic or specific for the type, on the `issues` and `reactions` list fields
   * Think about ways to beautify the updating mechanism of deeply nested state objects and [contribute your thoughts to it](https://github.com/rwieruch/react-graphql-github-apollo/pull/14)
+* 探索更多关于 `issues` 和 `reactions` 列表字段的参数信息，包括公共和类型独有的参数
+  * 思考对深度嵌套状态对象的更新机制的优化方案，并[在此贡献你的想法](https://github.com/rwieruch/react-graphql-github-apollo/pull/14)
 
 ## GraphQL Mutation in React
 
+## React 中的 GraphQL 变更操作
+
 You fetched a lot of data using GraphQL in React, the larger part of using GraphQL. However, there are always two sides to such an interface: read and write. That's where GraphQL mutations complement the interface. Previously, you learned about GraphQL mutations using GraphiQL without React. In this section, you will implement such a mutation in your React GraphQL application.
 
+你已经尝试了在 React 应用中通过 GraphQL 获取大量数据，这也是 GraphQL 的主要应用场景。不过，这种接口永远存在两个方向的操作：读取和写入。在 GraphQL 中写入操作被称为变更。此前，你已经在没有 React 的情况下通过 GraphiQL 使用过 GraphQL 变更操作，本节中你将在 React 应用中实现 GraphQL 变更操作。
+
 You have executed GitHub's `addStar` mutation before in GraphiQL. Now, let's implement this mutation in React. Before implementing the mutation, you should query additional information about the repository, which is partially required to star the repository in a mutation.
+
+你已经在 GraphiQL 执行过 GitHub 的 `addStar` 变更操作了，现在将通过 React 实现同样的操作。开始实现 star 某仓库这个变更操作之前，你需要查询关于这个仓库所需的部分额外信息。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1280,7 +1331,11 @@ const GET_ISSUES_OF_REPOSITORY = `
 
 The `viewerHasStarred` field returns a boolean that tells whether the viewer has starred the repository or not. This boolean helps determine whether to execute a `addStar` or `removeStar` mutation in the next steps. For now, you will only implement the `addStar` mutation. The `removeStar` mutation will be left off as part of the exercise. Also, the `id` field in the query returns the identifier for the repository, which you will need to clarify the target repository of your mutation.
 
+通过 `viewerHasStarred` 字段可以知晓当前用户是否已经 star 了这个仓库，从而帮助确定下一步的变更操作是 `addStar` 还是 `removeStar`。现在你只需要实现 `addStar` 变更操作，而 `removeStar` 部分将作为本节的练习。另外，查询操作中返回的 `id` 字段返回了该仓库的标识符，能够用于在后续变更操作中指明目标。
+
 The best place to trigger the mutation is a button that stars or unstars the repository. That's where the `viewerHasStarred` boolean can be used for a conditional rendering to show either a "Star" or "Unstar" button. Since you are going to star a repository, the Repository component is the best place to trigger the mutation.
+
+触发这个变更操作的最佳场景，莫过于一个对仓库 star 或取消 star 的按钮，通过 `viewerHasStarred` 这个布尔值进行条件渲染，得到一个显示内容为 "Star" 或 "Unstar" 的按钮。鉴于 star 的目标是一个仓库，因此在 Repository 组件中触发该变更操作最合适不过。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1312,6 +1367,8 @@ const Repository = ({
 
 To identify the repository to be starred, the mutation needs to know about the `id` of the repository. Pass the `viewerHasStarred` property as a parameter to the handler, since you'll use the parameter to determine whether you want to execute the star or unstar mutation later.
 
+为了确定用户 star 的是哪一个仓库，变更操作必须知晓该仓库的 `id` 信息，这里通过 `viewerHasStarred` 属性作为参数传入，以便后续能够区分 star 或取消 star 的场景。
+
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
 const Repository = ({ repository, onStarRepository }) => (
@@ -1335,6 +1392,8 @@ const Repository = ({ repository, onStarRepository }) => (
 ~~~~~~~~
 
 The handler should be defined in the App component. It passes through each component until it reaches the Repository component, also reaching through the Organization component on its way.
+
+对应的事件处理函数应该定义在 App 组件中，向下传递至 Repository 组件，中途也经过了 Organization 组件。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1364,6 +1423,8 @@ const Organization = ({
 ~~~~~~~~
 
 Now it can be defined in the App component. Note that the `id` and the `viewerHasStarred` information can be destructured from the App's local state, too. This is why you wouldn't need to pass this information in the handler, but use it from the local state instead. However, since the Repository component knew about the information already, it is fine to pass the information in the handler, which also makes the handler more explicit. It's also good preparation for dealing with multiple repositories and repository components later, since the handler will need to be more specific in these cases.
+
+现在可以尝试在 App 组件中定义这个方法，很容易发现 `id` 和 `viewerHasStarred` 的信息可以从应用的本地状态中解构得到，因此无需在函数中传入便可直接使用。不过，鉴于 Repository 已经知晓这些信息，作为函数参数中传入仍然是合理的选择，并且能够使得数据流更加直观。特别是考虑到之后有通过多个 Repository 组件处理多个仓库的需求，这种场景下函数需要具备更加充分的信息。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1403,6 +1464,8 @@ class App extends Component {
 
 Now, you can implement the handler. The mutation can be outsourced from the component. Later, you can use the `viewerHasStarred` boolean in the handler to perform a `addStar` or `removeStar` mutation. Executing the mutation looks similar to the GraphQL query from before. The API endpoint is not needed, because it was set in the beginning when you configured axios. The mutation can be sent in the `query` payload, which we'll cover later. The `variables` property is optional, but you need to pass the identifier.
 
+现在便可以开始实现这个事件处理函数，整个变更操作的执行过程可以从组件外包出去作为独立函数，之后就可以通过 `viewerHasStarred` 这个布尔值判断是执行 `addStar` 还是 `removeStar` 变更操作。GraphQL 中变更操作的执行十分类似于之前使用过的查询操作，API 地址的配置已经在最初的章节通过 axios 完成，并不需要重复进行。变更的内容可以通过 `query` 属性传输，这点我们会在之后详述，虽然 `variables` 属性在 API 中是可选的，但当前需要用于传入仓库标识符。
+
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
 # leanpub-start-insert
@@ -1429,6 +1492,8 @@ class App extends Component {
 
 Before you define the `addStar` mutation, check GitHub's GraphQL API again. There, you will find all information about the structure of the mutation, the required arguments, and the available fields for the result. For instance, you can include the `viewerHasStarred` field in the returned result to get an updated boolean of a starred or unstarred repository.
 
+定义 `addStar` 变更操作之前，先再次检查 GitHub 的 GraphQL API，从中你可以找到它的所有结构信息以及必须参数，还有可用的结果字段。例如，你可以在返回结果中包含 `viewerHasStarred` 字段来取得是否 star 该仓库的更新后结果。
+
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
 const ADD_STAR = `
@@ -1443,6 +1508,8 @@ const ADD_STAR = `
 ~~~~~~~~
 
 You could already execute the mutation in the browser by clicking the button. If you haven't starred the repository before, it should be starred after clicking the button. You can visit the repository on GitHub to get visual feedback, though you won't see any results reflected yet. The button still shows the "Star" label when the repository wasn't starred before, because the `viewerHasStarred` boolean wasn't updated in the local state of the App component after the mutation. That's the next thing you are going to implement. Since axios returns a promise, you can use the `then()` method on the promise to resolve it with your own implementation details.
+
+现在已经能够通过在浏览器中点击该按钮来执行变更操作，如果之前你没有 star 过这个仓库，在点击按钮之后就会进行 star。虽然可以在 GitHub 网站上得到可视化的反馈，不过在应用中并不会产生任何反应，即便已经进行 star 之后该按钮仍然会显示 "Star" 标签，这是由于 App 组件中的 `viewerHasStarred` 状态在变更操作后并未得到更新。这也是你下一步的工作，鉴于 axios 返回了一个 Promise，你可以在 `then()` 方法的回调中添加相关实现细节。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1469,6 +1536,8 @@ class App extends Component {
 
 When resolving the promise from the mutation, you can find out about the `viewerHasStarred` property in the result. That's because you defined this property as a field in your mutation. It returns a new state object for React's local state, because you used the function in `this.setState()`. The spread operator syntax is used here, to update the deeply nested data structure. Only the `viewerHasStarred` property changes in the state object, because it's the only property returned by the resolved promise from the successful request. All other parts of the local state stay intact.
 
+在变更操作的 Promise 结果中，你能看到一个 `viewerHasStarred` 属性，这是由于它被定义为变更操作中的一个字段。调用 `resolveAddStarMutation` 函数后产生了一个新的状态对象，用于 `this.setState()` 方法中。这里同样使用了扩展语法来更新深度嵌套结构，这个函数中除了 `viewerHasStarred` 属性之外的内容都不会发生变化，因为它是从响应中唯一能够得到的内容。
+
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
 const resolveAddStarMutation = mutationResult => state => {
@@ -1493,7 +1562,11 @@ const resolveAddStarMutation = mutationResult => state => {
 
 Now try to star the repository again. You may have to go on the GitHub page and unstar it first. The button label should adapt to the updated `viewerHasStarred` property from the local state to show a "Star" or "Unstar" label. You can use what you've learned about starring repositories to implement a `removeStar` mutation.
 
+现在可以重新尝试 star 这个仓库，虽然可能需要先到 GitHub 页面上取消 star。按钮中的文本将根据本地状态中 `viewerHasStarred` 更新后的值来决定显示 "Star" 或是 "Unstar" 标签，你可以根据目前习得的成果实现出 `removeStar` 变更操作。
+
  We also want to show the current number of people who have starred the repository, and update this count in the `addStar` and `removeStar` mutations. First, retrieve the total count of stargazers by adding the following fields to your query:
+
+我们想要更进一步显示出 star 了该仓库的当前人数，并在 `addStar` 或 `removeStar` 操作后更新，为此，首先需要在查询操作中添加 stargazers 字段来获取总人数：
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1527,6 +1600,8 @@ const GET_ISSUES_OF_REPOSITORY = `
 
 Second, you can show the count as a part of your button label:
 
+随后，你可以将人数作为按钮标签的一部分：
+
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
 const Repository = ({
@@ -1557,6 +1632,8 @@ const Repository = ({
 ~~~~~~~~
 
 Now we want the count to update when you star (or unstar) a repository. It is the same issue as the missing update for the `viewerHasStarred` property in the local state of the component after the `addStar` mutation succeeded. Return to your mutation resolver and update the total count of stargazers there as well. While the stargazer object isn't returned as a result from the mutation, you can increment and decrement the total count after a successful mutation manually using a counter along with the `addStar` mutation.
+
+现在我们希望这个数量随着 star（或取消 star）一个仓库而更新，而目前的问题就和在没有更新 `addStar` 变更操作成功后没有更新 `viewerHasStarred` 属性一样，为此在回调函数中一同更新本地的 stargazers 总数。虽然 stargazer 对象并没有作为变更结果返回，但仍然可以在 `addStar` 变更操作成功后人工增加或者减少计数。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1589,41 +1666,78 @@ const resolveAddStarMutation = mutationResult => state => {
 
 You have implemented your first mutation in React with GraphQL. So far, you have just implemented the `addStar` mutation. Even though the button already reflects the `viewerHasStarred` boolean by showing a "Star" or "Unstar" label, the button showing "Unstar" should still execute the `addStar` mutation. The `removeStar` mutation to unstar the repository is one of the practice exercises mentioned below.
 
+你已经在 React 应用中实现了首个 GraphQL 的变更操作，虽然目前为止，只有 `addStar` 一个操作。尽管按钮仍然能够通过显示 "Star" 或 "Unstar" 标签来反映 `viewerHasStarred` 的值，但在按钮显示为 "Unstar" 时仍然执行的是 `addStar` 操作，而用来取消 star 某仓库的 `removeStar` 变更操作就作为下面的练习之一。
+
 ### Exercises:
 
+### 练习：
+
 * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/3dcd95e32ef24d9e716a1e8ac144b62c0f41ca3c)
+* 确认[上一节的源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/3dcd95e32ef24d9e716a1e8ac144b62c0f41ca3c)
 * Implement the `removeStar` mutation, which is used analog to the `addStar` mutation.
   * The `onStarRepository` class method has already access to the `viewerHasStarred` property.
   * Conditionally execute a `addStar` or `removeStar` mutation in the class handler.
   * Resolve the new state after removing a star from a repository.
   * Align your final thoughts with [this implementation](https://github.com/rwieruch/react-graphql-github-vanilla).
+* 实现 `removeStar` 变更操作，应当与 `addStar` 操作类似。
+  * 仍然通过 `onStarRepository` 类方法访问 `viewerHasStarred` 属性。
+  * 在类方法中根据条件执行 `addStar` 或 `removeStar` 变更操作。
+  * 取消 star 一个仓库后更新本地状态。
+  * 保持你的最终思路与[该实现](https://github.com/rwieruch/react-graphql-github-vanilla)一致。
 * Implement the `addReaction` mutation for an issue
+* 为特定 issue 实现 `addReaction` 变更操作
 * Implement more fine-grained components (e.g. IssueList, IssueItem, ReactionList, ReactionItem)
   * Extract components to their own files and use import and export statements to use them again in the App or other extracted components
+* 将组件进一步细分（例如 IssueList、IssueItem、ReactionList 和 ReactionItem）
 
 ## Shortcomings of GraphQL in React without Apollo
 
+## React 中不借助 Apollo 使用 GraphQL 的缺点
+
 We implemented a simple GitHub issue tracker that uses React and GraphQL without a dedicated library for GraphQL, using only axios to communicate with the GraphQL API with HTTP POST methods. I think it is important to work with raw technologies, in this case GraphQL, using plain HTTP methods, before introducing another abstraction. The Apollo library offers an abstraction that makes using GraphQL in React much easier, so you will use Apollo for your next application. For now, using GraphQL with HTTP has shown you two important things before introducing Apollo:
+
+我们基于 React 和 GraphQL 实现了一个简单的 GitHub issue 追踪器，并未使用任何专用的 GraphQL 封装库，而是仅仅通过 axios 发送 HTTP POST 请求实现与 GraphQL API 的通信。我认为掌握底层技术是十分重要的，也就是能够在不引入额外抽象的情况下，使用普通 HTTP 请求实现 GraphQL 交互。不过，Apollo 库的抽象能够极大简化在 React 中使用 GraphQL 的成本，因此在下一个应用将使用 Apollo 进行开发。引入 Apollo 之前，使用 HTTP 与 GraphQL 的过程体现出了两项重要内容：
 
 * How GraphQL works when using a puristic interface such as HTTP.
 * The shortcomings of using no sophisticated GraphQL Client library in React, because you have to do everything yourself.
 
+* GraphQL 如何结合 HTTP 这样简洁的接口工作。
+* 缺乏成熟的 GraphQL 客户端工具情况下的缺点，因为你要将一切从头做起。
+
 Before we move on, I want to address the shortcomings of using puristic HTTP methods to read and write data to your GraphQL API in a React application:
+
+在继续下一章内容之前，我希望总结一下现有实现存在的缺点，即 React 应用中，直接使用 HTTP 方法来实现对 GraphQL API 读写数据的方式：
 
 * **Complementary:** To call a GraphQL API from your client application, use HTTP methods. There are several quality libraries out there for HTTP requests, one of which is axios. That's why you have used axios for the previous application. However, using axios (or any other HTTP client library) doesn't feel like the best fit to complement a GraphQL centred interface. For instance, GraphQL doesn't use the full potential of HTTP. It's just fine to default to HTTP POST and only one API endpoint. It doesn't use resources and methods on those resources like a RESTful interface, so it makes no sense to specify a HTTP method and an API endpoint with every request, but to set it up once in the beginning instead. GraphQL comes with its own constraints. You could see it as a layer on top of HTTP when it's not as important for a developer to know about the underlying HTTP.
 
+* **互补性：**为了从客户端应用中通过 HTTP 请求调用 GraphQL API，有很多优质的库可供选择，其中之一就是 axios，这也是为什么在上述应用中使用它的原因。然而，使用 axios（或者任何其它 HTTP 客户端）并不能很好填补 GraphQL 接口的需求。例如，GraphQL 并不需要使用全部 HTTP 功能，仅需要自动应用 POST 方法和唯一 API 地址即可。由于不需要 RESTful 接口中那样的资源路径和方法定义，因此对每个请求重复输入 HTTP 方法和 API 地址是毫无意义的，而是应当作为一劳永逸的配置。GraphQL 有着自己的约束，可以将其视作 HTTP 的上层抽象，因此底层的 HTTP 实现对于开发人员并不是必要的。
+
 * **Declarative:** Every time you make a query or mutation when using plain HTTP requests, you have to make a dedicated call to the API endpoint using a library such as axios. It's an imperative way of reading and writing data to your backend. However, what if there was a declarative approach to making queries and mutations? What if there was a way to co-locate queries and mutations to your view-layer components? In the previous application, you experienced how the query shape aligned perfectly with your component hierarchy shape. What if the queries and mutations would align in the same way? That's the power of co-locating your data-layer with your view-layer, and you will find out more about it when you use a dedicated GraphQL client library for it.
+
+* **声明式：**每当需要使用 HTTP 请求实现一个查询或变更，你都需要使用 axios 之类的库对专门的 API 地址进行调用，这样是命令式地对后端读取或写入数据。然而，要是存在声明式的手段来构造查询和变更呢？要是可以在视图层组件的协同定义查询和变更呢？上述应用中，你亲身体验了组件的层次结构与查询的结构高度是如何得高度相似，要是查询和变更也同样能够达到此等一致呢？这就是协同定义数据层与视图层带来的强大力量，通过使用一个专用的 GraphQL 客户端库，你将发现更多的简化方式。
 
 * **Feature Support:** When using plain HTTP requests to interact with your GraphQL API, you are not leveraging the full potential of GraphQL. Imagine you want to split your query from the previous application into multiple queries that are co-located with their respective components where the data is used. That's when GraphQL would be used in a declarative way in your view-layer. But when you have no library support, you have to deal with multiple queries on your own, keeping track of all of them, and trying to merge the results in your state-layer. If you consider the previous application, splitting up the query into multiple queries would add a whole layer of complexity to the application. A GraphQL client library deals with aggregating the queries for you.
 
+* **功能支持：**使用普通 HTTP 请求与 GraphQL API 交互时，你将无法发掘 GraphQL 的全部可能性。设想你希望把上述应用中的查询拆分，并且协同定义于实际使用数据的相应组件中，这时 GraphQL 将在视图层中以声明式的方式出现。但是当你缺少工具支持，只能人工处理多个查询，追踪各个查询的关系并且在状态层中合并查询结果。以上述应用为例，拆分查询内容会极大提升应用复杂度，而一个 GraphQL 客户端工具可以高效地实现查询间的级联。
+
 * **Data Handling:** The naive way for data handling with puristic HTTP requests is a subcategory of the missing feature support for GraphQL when not using a dedicated library for it. There is no one helping you out with normalizing your data and caching it for identical requests. Updating your state-layer when resolving fetched data from the data-layer becomes a nightmare when not normalizing the data in the first place. You have to deal with deeply nested state objects which lead to the verbose usage of the JavaScript spread operator. When you check the implementation of the application in the GitHub repository again, you will see that the updates of React's local state after a mutation and query are not nice to look at. A normalizing library such as [normalizr](https://github.com/paularmstrong/normalizr) could help you to improve the structure of your local state. You learn more about normalizing your state in the book [Taming the State in React](https://roadtoreact.com). In addition to a lack of caching and normalizing support, avoiding libraries means missing out on functionalities for pagination and optimistic updates. A dedicated GraphQL library makes all these features available to you.
+
+* **数据处理：**使用基础 HTTP 请求时的原生数据处理可以认为是缺少 GraphQL 功能支持的子集，没有专用工具的情况下，没有其他人会帮你进行数据规范化或者缓存相同请求。如果没有在第一时间对数据进行规范化，那么整个数据层的更新都将变成噩梦，你将不得不面对深层的嵌套对象，导致大量不必要的使用 JavaScript 的展开语法。当你在 GitHub 仓库中查看该应用的实现，你会发现在变更或者查询后 React 本地状态的更新过程并不美观，可以使用像 [normalizr](https://github.com/paularmstrong/normalizr) 这样强大的规范化工具来帮助你改善本地状态结构，在 [Taming the State in React](https://roadtoreact.com) 中可以了解更多关于规范化状态的信息。除了缺乏缓存于规范化过程之外，缺少工具意味着缺乏像分页和乐观更新这样的功能，而一个专用的 GraphQL 工具能够保证所有这些功能可用。
 
 * **GraphQL Subscriptions:** While there is the concept of a query and mutation to read and write data with GraphQL, there is a third concept of a GraphQL **subscription** for receiving real-time data in a client-sided application. When you would have to rely on plain HTTP requests as before, you would have to introduce [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) next to it. It enables you to introduce a long-lived connection for receiving results over time. In conclusion, introducing GraphQL subscriptions would add another tool to your application. However, if you would introduce a GraphQL library for it on the client-side, the library would probably implement GraphQL subscriptions for you.
 
+* **GraphQL 订阅：** GraphQL 中读写数据的概念除了查询和变更外，还存在第三个概念——**订阅**——用于在客户端应用中接收实时数据。当你依赖于基础 HTTP 请求进行读写时，如果需要实现订阅的等效功能，还需要依赖于 [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) 来接收实时数据。后者引入了长链接机制来持续接收结果。总而言之，使用 GraphQL 订阅能够为你的应用再添加一个工具，通过在客户端使用 GraphQL 工具，订阅功能可能已经被工具所自动实现。
+
 I am looking forward to introducing Apollo as a GraphQL client library to your React application. It will help with the aforementioned shortcomings. However, I do strongly believe it was good to learn about GraphQL in React without a GraphQL library in the beginning.
+
+我十分期待能够为这个 React 应用引入 Apollo 作为 GraphQL 客户端工具库，它会帮助解决上述提到的所有缺点。不过，我仍然坚信在不使用工具库的情况下入门 GraphQL 是一个很好的学习方式。
 
 | |
 
 You can find the final [repository on GitHub](https://github.com/rwieruch/react-graphql-github-vanilla). The repository showcases most of the exercise tasks too. The application is not feature complete since it doesn't cover all edge cases and isn't styled. However, I hope the implementation walkthrough with plain GraphQL in React has helped you to understand using only GraphQL client-side in React using HTTP requests. I feel it's important to take this step before using a sophisticated GraphQL client library such as Apollo or Relay.
 
+你能在[这个 GitHub 仓库](https://github.com/rwieruch/react-graphql-github-vanilla)中找到应用的最终版本，它还包含了绝大多数练习的答案。鉴于仍有大量边界场景未覆盖，同时缺少样式，这个应用并不能算开发完成。不过，我希望在 React 中通过 HTTP 手动实现能够帮助你了解客户端的 GraphQL 概念，我认为在使用一个像 Apollo 和 Relay 这样成熟的 GraphQL 客户端工具之前这个步骤是十分重要的。
+
 I've shown how to implement a React application with GraphQL and HTTP requests without using a library like Apollo. Next, you will continue learning about using GraphQL in React using Apollo instead of basic HTTP requests with axios. The Apollo GraphQL Client makes caching your data, normalizing it, performing optimistic updates, and pagination effortless. That's not all by a long shot, so stay tuned for the next applications you are are going to build with GraphQL.
+
+我已经演示了如何在 React 应用中通过普通的 HTTP 请求实现 GraphQL 交互，并未用到 Apollo 等工具库。之后，你将继续学习在 React 应用中通过 Apollo 来使用 GraphQL，而非基于 axios 的基础 HTTP 请求。借助 Apollo GraphQL 客户端能够零成本地实现数据缓存、数据规范化、乐观更新以及分页，甚至远不止这些，使用希望你能为后续 GraphQL 应用的开发做好准备。
