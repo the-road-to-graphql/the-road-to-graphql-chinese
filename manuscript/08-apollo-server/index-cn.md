@@ -1115,21 +1115,35 @@ const resolvers = {
 
 >There is only one GraphQL operation missing for making the messages features complete. It is possible to read, create, and delete messages, so the only operation left is updating them as an exercise.
 
-要使消息功能完整只缺少一个 GraphQL 操作。可以读取、创建和删除消息，因此剩下的唯一操作就是将它们作为练习。
+要使消息功能完整只缺少一个 GraphQL 操作。可以读取、创建和删除消息，因此剩下的就是将它们作为练习。
 
-### Exercises:
+>### Exercises:
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
-* Create a message in GraphQL Playground with a mutation
-  * Query all messages
-  * Query the `me` user with messages
-* Delete a message in GraphQL Playground with a mutation
-  * Query all messages
-  * Query the me user with messages
-* Implement an `updateMessage` mutation for completing all CRUD operations for a message in GraphQL
-* Read more about [GraphQL queries and mutations](https://graphql.github.io/learn/queries/)
+练习:
 
-## GraphQL Schema Stitching with Apollo Server
+>* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
+>* Create a message in GraphQL Playground with a mutation
+>  * Query all messages
+>  * Query the `me` user with messages
+>* Delete a message in GraphQL Playground with a mutation
+>  * Query all messages
+>  * Query the me user with messages
+>* Implement an `updateMessage` mutation for completing all CRUD operations for a message in GraphQL
+>* Read more about [GraphQL queries and mutations](https://graphql.github.io/learn/queries/)
+
+* 提交你的 [最后一部分源代码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
+* 使用一个变更在 GraphQL Playground 中创建消息
+  * 查询所有消息
+  * 通过消息查询 `me` 用户
+* 使用一个变更在 GraphQL Playground 中删除消息
+  * 查询所有消息
+  * 通过消息查询 `me` 用户
+* 实现一个 `updateMessage` 变更，用于在 GraphQL 中完成消息的所有 CRUD 操作
+* 阅读更多关于 [GraphQL 查询与变更](https://graphql.github.io/learn/queries/) 的信息
+
+>## GraphQL Schema Stitching with Apollo Server
+
+Apollo Server 中的 GraphQL 模式拼接
 
 >Schema stitching is a powerful feature in GraphQL. It's about merging multiple GraphQL schemas into one schema, which may be consumed in a GraphQL client application. For now, you only have one schema in your application, but there may come a need for more complicated operations that use multiple schemas and schema stitching. For instance, assume you have a GraphQL schema you want to modularize based on domains (e.g. user, message). You may end up with two schemas, where each schema matches one type (e.g. User type, Message type). The operation requires merging both GraphQL schemas to make the entire GraphQL schema accessible with your GraphQL server's API. That's one of the basic motivations behind schema stitching.
 
