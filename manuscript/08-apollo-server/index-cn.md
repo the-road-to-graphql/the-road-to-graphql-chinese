@@ -4244,9 +4244,13 @@ export default new PubSub();
 
 This PubSub instance is your API which enables subscriptions in your application. The overarching setup for subscriptions is done now.
 
-### Subscribing and Publishing with PubSub
+> ### Subscribing and Publishing with PubSub
 
-Let's implement the specific subscription for the message creation. It should be possible for another GraphQL client to listen to message creations. For instance, in a chat application it should be possible to see a message of someone else in real-time. Therefore, extend the previous *src/subscription/index.js* file with the following implementation:
+### 使用 PubSub 实现订阅及发布
+
+> Let's implement the specific subscription for the message creation. It should be possible for another GraphQL client to listen to message creations. For instance, in a chat application it should be possible to see a message of someone else in real-time. Therefore, extend the previous *src/subscription/index.js* file with the following implementation:
+
+让我们实现一个针对即时消息的订阅服务，它可以使 GraphQL 客户端监听新消息。例如，在聊天应用中能够实时的收到他人发来的信息。接下来，继续完成之前的 *src/subscription/index.js* ：
 
 {title="src/subscription/index.js",lang="javascript"}
 ~~~~~~~~
@@ -4265,16 +4269,22 @@ export const EVENTS = {
 export default new PubSub();
 ~~~~~~~~
 
-And add your first event in a new *src/subscription/message.js* file, which we used earlier:
+> And add your first event in a new *src/subscription/message.js* file, which we used earlier:
+
+在 *src/subscription/message.js* 中添加你的第一个事件常量：
 
 {title="src/subscription/message.js",lang="javascript"}
 ~~~~~~~~
 export const CREATED = 'CREATED';
 ~~~~~~~~
 
-This folder structure allows you to separate your events at the domain level. By exporting all events with their domains, you can import all events elsewhere and make use of the domain-specific events.
+> This folder structure allows you to separate your events at the domain level. By exporting all events with their domains, you can import all events elsewhere and make use of the domain-specific events.
 
-The only piece missing is using the event and the PubSub instance in your message resolver. In the beginning of this section, you added the new subscription to the message schema. Now you have to implement its counterpart in the *src/resolvers/message.js* file:
+通过按领域划分并导出相关事件常量，便于你在其他地方导入和使用。这样的目录结构让你能在领域层分离不同种类的事件。
+
+> The only piece missing is using the event and the PubSub instance in your message resolver. In the beginning of this section, you added the new subscription to the message schema. Now you have to implement its counterpart in the *src/resolvers/message.js* file:
+
+在本节的开始，你已经添加了新的订阅操作到 message schema 中。唯一缺失的就是在 message resolver 中处理订阅事件和 PubSub 实例。现在你需要在 *src/resolvers/message.js*  实现对应的部分：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -4309,9 +4319,13 @@ export default {
 };
 ~~~~~~~~
 
-The subscribe's function signature has access to the same arguments as the other resolver functions. Models from the context can be accessed here, but it isn't necessary for this application.
+> The subscribe's function signature has access to the same arguments as the other resolver functions. Models from the context can be accessed here, but it isn't necessary for this application.
 
-The subscription as resolver provides a counterpart for the subscription in the message schema. However, since it uses a publisher-subscriber mechanism (PubSub) for events, you have only implemented the subscribing, not the publishing. It is possible for a GraphQL client to listen for changes, but there are no changes published yet. The best place for publishing a newly created message is in the same file as the created message:
+subscribe 函数签名和其他解析函数相同。上下文提供的模型对象可以在这里访问，但是在本例中用不到。
+
+> The subscription as resolver provides a counterpart for the subscription in the  . However, since it uses a publisher-subscriber mechanism (PubSub) for events, you have only implemented the subscribing, not the publishing. It is possible for a GraphQL client to listen for changes, but there are no changes published yet. The best place for publishing a newly created message is in the same file as the created message:
+
+Subscription 里的解析器处理了 message schema 中所对应的订阅。上面的代码完成了消息的订阅。然而，在发布订阅模型中，你还需要实现发布。在订阅解析器的同一个文件中放置发布函数是最好的。
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -4364,7 +4378,9 @@ export default {
 };
 ~~~~~~~~
 
-You implemented your first subscription in GraphQL with Apollo Server and PubSub. To test it, create a new message with a logged in user. You can try both these GraphQL operations in two separate tabs in GraphQL Playground to compare their output. In the first tab, execute the subscription:
+> You implemented your first subscription in GraphQL with Apollo Server and PubSub. To test it, create a new message with a logged in user. You can try both these GraphQL operations in two separate tabs in GraphQL Playground to compare their output. In the first tab, execute the subscription:
+
+使用 Apollo Server 和 PubSub ，你在 GraphQL 中实现了第一个订阅服务。为了测试是否奏效，可以使用一个已登录的用户发送一条信息。你可以在两个不同的浏览器标签中打开 GraphQL Playground 分别执行订阅发布操作，对比输出结果。在第一个标签中，执行订阅操作。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -4383,7 +4399,9 @@ subscription {
 }
 ~~~~~~~~
 
-Results will indicate the tab is listening for changes. In the second tab, log in a user:
+> Results will indicate the tab is listening for changes. In the second tab, log in a user:
+
+执行订阅后，页面会提示正在监听。在第二个标签中，登录一个账户：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -4394,7 +4412,9 @@ mutation {
 }
 ~~~~~~~~
 
-Copy the token from the result, and then paste it to the HTTP headers panel in the same tab:
+> Copy the token from the result, and then paste it to the HTTP headers panel in the same tab:
+
+从结果中复制 token 并粘贴到当前标签的 HTTP headers 面板中：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -4403,7 +4423,9 @@ Copy the token from the result, and then paste it to the HTTP headers panel in t
 }
 ~~~~~~~~
 
-Then create a message in the second tab:
+> Then create a message in the second tab:
+
+然后在第二个标签中发送一条信息：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -4414,7 +4436,9 @@ mutation {
 }
 ~~~~~~~~
 
-Afterward, check your first tab again. It should show the created message:
+> Afterward, check your first tab again. It should show the created message:
+
+之后，检查第一个标签。应该会看到刚才的信息：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -4435,13 +4459,21 @@ Afterward, check your first tab again. It should show the created message:
 }
 ~~~~~~~~
 
-You have implemented GraphQL subscriptions. It can be a challenge to wrap your head around them, but once you've worked through some basic operations, you can use these as a foundation to create real-time GraphQL applications.
+> You have implemented GraphQL subscriptions. It can be a challenge to wrap your head around them, but once you've worked through some basic operations, you can use these as a foundation to create real-time GraphQL applications.
 
-### Exercises:
+你已经实现了 GraphQL 订阅。虽然要完全理清头绪还有些挑战，不过一旦你完成了一些基础操作，你就可以用这些知识去作为 GraphQL 实时应用的基础了。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/eeb50f34a2569fa85141bf8ec3f8e9baaf670170)
-* Read more about [Subscriptions with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html)
-* Watch a talk about [GraphQL Subscriptions](http://youtu.be/bn8qsi8jVew)
+> ### Exercises:
+
+### 练习:
+
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/eeb50f34a2569fa85141bf8ec3f8e9baaf670170)
+> * Read more about [Subscriptions with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html)
+> * Watch a talk about [GraphQL Subscriptions](http://youtu.be/bn8qsi8jVew)
+
+* 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/eeb50f34a2569fa85141bf8ec3f8e9baaf670170)
+* 阅读更多关于 [Apollo Server 订阅](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html)
+* 观看相关演讲 [GraphQL 订阅](http://youtu.be/bn8qsi8jVew)
 
 ## Testing a GraphQL Server
 
