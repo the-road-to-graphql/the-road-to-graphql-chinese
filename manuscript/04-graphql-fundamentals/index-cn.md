@@ -24,7 +24,7 @@
 
 > The `viewer` object can be used to request data about the currently authorized user. Since you are authorized by your personal access token, it should show data about your account. The `viewer` is an **object** in GraphQL terms. Objects hold data about an entity. This data is accessed using a so-called **field** in GraphQL. Fields are used to ask for specific properties in objects. For instance, the `viewer` object exposes a wide range of fields. Two fields for the object--`name` and `url`--were used in the query. In its most basic form, a query is just objects and fields, and objects can also be called fields.
 
-`viewer` 对象可以被用来获取当前授权的用户信息。通过你的个人 access token 获得授权并完成查询请求后，应该能看到相关的用户信息被正确返回。`viewer` 是一个 GraphQL 中**对象**的概念。 对象承载某个实体的数据。 从而这些数据可以通过 GraphQL 中的**字段**访问。字段被用于获取对象中指定的属性。举个例子来说，`viewer` 对象暴露了多个字段，在这个例子中，只有 `name` 和 `url` 在查询中用到了。在大多数基本情况下，一个查询只包含对象和字段，当然对象也是一种字段。
+`viewer` 对象可以被用来获取当前授权的用户信息。通过你的个人 access token 获得授权并完成查询请求后，应该能看到相关的用户信息被正确返回。`viewer` 是一个 GraphQL 中**对象**的概念。 对象承载某个实体的数据，这些数据可以通过 GraphQL 中的**字段**访问。字段被用于获取对象中指定的属性。举个例子来说，`viewer` 对象暴露了多个字段，在这个例子中，只有 `name` 和 `url` 在查询中用到了。在大多数基本情况下，一个查询只包含对象和字段，当然对象也是一种字段。
 
 > Once you run the query in GraphiQL, you should see output similar to the one below, where your name and URL are in the place of mine:
 
@@ -44,7 +44,7 @@
 
 > Congratulations, you have performed your first query to access fields from your own user data. Now, let's see how to request data from a source other than yourself, like a public GitHub organization. To specify a GitHub organization, you can pass an **argument** to fields:
 
-恭喜你，你成功地执行了第一个查询并且获取到了你在 GitHub 中个人信息中的相关字段。现在，让我们看看怎么去获取其他的资源，例如 GitHub 中开放出来的 组织信息。为了获取特定的 GitHub 组织信息，你需要传入一个**参数**：
+恭喜你，你成功地执行了第一个查询并且获取到了你在 GitHub 中个人信息中的相关字段。现在，让我们看看怎么去获取其他的资源，例如 GitHub 中开放出来的组织信息。为了获取特定的 GitHub 组织信息，你需要传入一个**参数**：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -263,7 +263,7 @@ query {
 
 > While it's not the shorthand version of the query, it still returns the same data as before, which is the desired outcome. The query statement is also called **operation type** in GraphQL lingua. For instance, it can also be a `mutation` statement. In addition to the operation type, you can also define an **operation name**.
 
-虽然使用了非简写版本，但仍然返回了与之前相同的数据，和我们设想的结果一样。查询语句在 GraphQL 语言中也称为 **操作类型**。例如，它也可以是`mutation` 语句。除了操作类型，你还可以定义**操作名称**。
+虽然使用了非简写版本，但仍然返回了与之前相同的数据，和我们设想的结果一样。查询语句在 GraphQL 语言中也称为**操作类型**。例如，它也可以是`mutation` 语句。除了操作类型，你还可以定义**操作名称**。
 
 
 {title="GitHub GraphQL Explorer",lang="json"}
