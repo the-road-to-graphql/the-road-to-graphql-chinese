@@ -8,7 +8,7 @@
 
 ## 利用 Github 数据来提供 API
 
-如果你还有没 Github 账号，对它的生态系统了解也不多，请关注[这个 GitHub 官方的学习实验室](https://lab.github.com/)。如果想深入了解 Git 及其基本命令，请查看[本指南]（https://www.robinwieruch.de/git-essential-commands/）。如果你想将来在 GitHub 上与其他人分享项目，会发现这些非常有用。这也是向潜在客户或招聘公司展示开发作品的好方式。
+如果你还有没 Github 账号，对它的生态系统了解也不多，请关注[这个 GitHub 官方的学习实验室](https://lab.github.com/)。如果想深入了解 Git 及其基本命令，请查看[本指南](https://www.robinwieruch.de/git-essential-commands/)。如果你想将来在 GitHub 上与其他人分享项目，会发现这些非常有用。这也是向潜在客户或招聘公司展示开发作品的好方式。
 
 在我们与 GitHub GraphQL API 交互的过程中，你将使用自己的账号信息来进行读写操作。在此之前，为了能够在使用 API 的时候读到这些信息，请提供附加信息以完善 GitHub 的个人信息。
 
@@ -19,7 +19,7 @@
 
 ### GitHub 代码仓库
 
-你还可以在 GitHub 上创建代码仓库。用他们的官方词汇来说：*“代码仓库是 GitHub 的基本元素。它们最容易被想象为项目的文件夹。代码仓库包含项目的所有文件（包括文档），并存储每个文件的修订历史。代码仓库可以有多个协作者，可以是公有仓库也可以是私有仓库。”*[GitHub的术语表]（https://help.github.com/articles/github-glossary/）解释了关键术语——repository，issue，clone，fork，push——在接下来了解 GraphQL 的章节中会使用到这些术语。基本上来说代码仓库是一个可以和他人分享应用程序源码的地方。我鼓励你将一些项目放在 GitHub 代码仓库中，以便以后可以使用 GraphQL API 来访问它们。
+你还可以在 GitHub 上创建代码仓库。用他们的官方词汇来说：*“代码仓库是 GitHub 的基本元素。它们最容易被想象为项目的文件夹。代码仓库包含项目的所有文件（包括文档），并存储每个文件的修订历史。代码仓库可以有多个协作者，可以是公有仓库也可以是私有仓库。”*[GitHub的术语表](https://help.github.com/articles/github-glossary/)解释了关键术语——repository，issue，clone，fork，push——在接下来了解 GraphQL 的章节中会使用到这些术语。基本上来说代码仓库是一个可以和他人分享应用程序源码的地方。我鼓励你将一些项目放在 GitHub 代码仓库中，以便以后可以使用 GraphQL API 来访问它们。
 
 如果你没有上传任何项目，你可以随时从其他 GitHub 用户“fork”代码仓库，并在其副本上进行操作。fork 大体来说是其他代码仓库的克隆，可以让你在不改变原始仓库的基础上进行添加修改。GitHub 上有很多开放的代码仓库，可以克隆到本地或者 fork 到你的代码仓库列表中，这样你就可以通过实验来了解它们的机制。例如，如果你访问[我的 GitHub 主页](https://github.com/rwieruch)，你可以看到我所有的代码仓库，但并非所有的代码仓库都是我的，因为有些是从别人那儿 fork 来的。如果你想使用它们来进行练习，或者通过 GitHub 的 GraphQL API 来访问，请随意 fork 这些仓库。
 
@@ -37,22 +37,22 @@ GitHub 的 GraphQL API 允许一次请求多个代码仓库，这对于分页来
 
 一旦你深入了解了 GitHub 的 GraphQL API 并开始请求一些嵌套关系的数据（例如代码仓库的 issue，pull request等），请确保代码仓库中存在一些 issue 和 pull request ，这样在实现获取代码仓库的 issue 时能够看到结果。请求一个组织的代码代码仓库可能会更好，因为那里有很多的 issue 和 pull request。
 
-### Exercises:
+### 练习：
 
-* Read more about the different terms in [GitHub's glossary](https://help.github.com/articles/github-glossary/). Consider these questions:
-  * What is a GitHub organization and GitHub user?
-  * What are repositories, issues and pull requests?
-  * What are GitHub repository stars and GitHub repository watchers?
-* Create or fork enough repositories to use the pagination feature.
-* Create pull requests and issues in a few of your GitHub repositories.
+* 在[GitHub的词汇表](https://help.github.com/articles/github-glossary/)中阅读关于不同术语的更多信息。 思考以下问题：
+  * 什么是 GitHub 的组织和用户？
+  * 什么是代码仓库，issue 和 pull request？
+  * 什么是 GitHub 代码仓库的 star 和 关注者（watcher）？
+* 创建或者 fork 足够多的代码仓库，来使用分页功能。
+* 在一些 GitHub 代码仓库中创建 pull request 和 issue。
 
-## Read/Write Data with GitHub's Personal Access Token
+## 使用 GitHub 的个人访问令牌（access token）来读写数据
 
-To use GitHub's GraphQL API, you need to generate a personal access token on their website. The access token authorizes users to interact with data, to read and write it under your username. [Follow their step by step instructions](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line) to obtain the personal access token, and be sure to check the necessary scopes (permissions) for it, as you will need them to implement a well-rounded GitHub client later.
+为了使用 GitHub GraphQL API，你需要在他们的网站上生成一个个人访问令牌。访问令牌授权用户与数据间的交互，使其能够对其所拥有的数据进行读写操作。[按照分步说明](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line)来获得个人访问令牌，并检查所需的权限范围，因为之后会利用它来实现一个多功能的  GitHub 客户端。
 
 ![](images/github-personal-access-token_1024.jpg)
 
-Later, the personal access token can be used to interact with GitHub's GraphQL API. Be careful not to share these authorizations with any third parties.
+个人访问令牌随后会用于与 GitHub GraphQL API 进行交互。请注意不要与任何第三方共享这些令牌。
 
 ## Interacting with GitHub's GraphQL API
 
