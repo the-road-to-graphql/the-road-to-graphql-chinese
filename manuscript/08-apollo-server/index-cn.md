@@ -3234,11 +3234,11 @@ If you want to be even more exact than resolver level authorization, check out *
 * Find out more about data access level authorization with Apollo Server and GraphQL
 
 > ## GraphQL Custom Scalars in Apollo Server
-## Apollo Server 中的 GraphQL 自定义标量
+## Apollo 服务器中的 GraphQL 自定义标量
 
 > So far, you have used a couple of scalars in your GraphQL application, because each field resolves eventually to a scalar type. Let's add a String scalar for the date when a message got created. First, we'll extend the *src/schema/message.js* which uses this field for a message:
 
-目前为止，你已经在你的 GraphQL 应用中使用了很多标量了。这是因为每一个字段最后都会被解析为一个标量类型。下面让我们来将 message 的创建日期设为 String 标量类型。首先，我们需要扩展文件 *src/schema/message.js*，为其增加 createdAt 字段：
+目前为止，你已经在你的 GraphQL 应用中使用过很多标量了，因为事实上每个字段最后都会被解析为一个标量类型。让我们来为消息的创建日期设置 String 标量类型。首先，我们要扩展文件 *src/schema/message.js*，为消息增加 createdAt 字段：
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3268,7 +3268,7 @@ export default gql`
 
 > Second, adjust the seed data in the *src/index.js* file. At the moment, all seed data is created at once, which applies to the messages as well. It would be better to have each message created in one second intervals. The creation date should differ for each message.
 
-然后，修改 *src/index.js* 文件中的种子数据。目前所有的种子数据都是一次性生成的，message 也是。如果能够做到每条 message 都是隔一秒再创建的就更好了，这样每条 message 的创建时间就会不一样。
+然后，修改 *src/index.js* 文件中的种子数据。目前，所有的种子数据都是一次性生成的，消息也是。如果能够做到每条消息都是隔一秒再创建的就更好了，这样每条消息的创建时间就会不一样。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3338,7 +3338,7 @@ const createUsersWithMessages = async date => {
 
 > Now you should be able to query the `createdAt` of a message in your GraphQL Playground:
 
-现在，你应该可以在 GraphQL Playgound 中查询 message 的 `createdAt` 字段：
+现在，你应该可以在 GraphQL Playground 中查询消息的 `createdAt` 字段：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3368,7 +3368,7 @@ query {
 
 > You may have noticed something odd: While the date returned from a GraphQL Playground has a unix timestamp (e.g. 1540978531448), the date the database for a message (and other entities) has another format (e.g. 2018-10-31 17:35:31.448+08). Check it yourself with psql. That's the internal working of GraphQL which uses its internal formatting rules for dates. You can change this behavior by adding a custom scalar. First, install a popular GraphQL node package for custom date scalars.
 
-你可能已经注意到了这里的奇怪之处：从 GraphQL Playground 返回的数据中，日期是一个时间戳（例如：1540978531448）；而在数据库中，message 或者其他实体的日期有另外一个格式（例如：2018-10-31 17:35:31.448+08）。你可以自己用 psql 查看。这是因为 GraphQL 使用了它自己内部的格式化日期的规则。你可以通过自定义标量来改变这种行为。首先，我们需要安装一个主流的 GraphQL 自定义日期标量 node 依赖包。
+你可能已经注意到了这里的奇怪之处：从 GraphQL Playground 返回的数据中，时间一个时间戳（例如：1540978531448）；而在数据库中，消息（以及其他实体）的时间有另外一个格式（例如：2018-10-31 17:35:31.448+08）。你可以自己用 psql 查看。这是 GraphQL 的内部机制，使用它自己内部的格式化日期的规则。你可以通过增加自定义标量来改变这种行为。首先，我们需要安装一个主流的 GraphQL 自定义时间标量的 node 依赖包。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -3377,7 +3377,7 @@ npm install graphql-iso-date --save
 
 > Second, introduce a `Date` scalar in your schema in the *src/schema/index.js* file:
 
-然后，在 *src/schema/index.js* 文件中 schema 中引入一个 `Date` 标量：
+然后，在 *src/schema/index.js* 文件中的 schema 中引入一个 `Date` 标量：
 
 {title="src/schema/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3402,7 +3402,7 @@ const linkSchema = gql`
 
 > Third, define the scalar with the help of the installed node package in your *src/resolvers/index.js* file:
 
-接着，在 *src/resolvers/index.js* 文件中定义这个标量。
+接着，在 *src/resolvers/index.js* 文件中，使用这个安装好的依赖包来定义这个标量。
 
 {title="src/resolvers/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3430,7 +3430,7 @@ export default [
 
 > And last but not least, change the scalar type from String to Date for your message schema in the *src/schema/message.js*:
 
-最后，在 *src/schema/message.js* 文件中，把 message schema 中的 createdAt 字段的标量类型从 String 变为 Date
+最后，在 *src/schema/message.js* 文件中，把消息 schema 中的 createdAt 字段的标量类型从 String 变为 Date
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3460,7 +3460,7 @@ export default gql`
 
 > Now, query again your messages. The output for the `createdAt` date should be different.
 
-现在，重新查询一遍 message，`createdAt` 日期的格式已经改变了。
+现在，重新查询一遍消息列表，`createdAt` 日期的格式已经改变了。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3498,7 +3498,7 @@ export default gql`
 
 > Using GraphQL, you will almost certainly encounter a feature called **pagination** for applications with lists of items. Stored user messages in a chat application become long lists, and when the client application request messages for the display, retrieving all messages from the database at once can lead to severe performance bottlenecks. Pagination allows you to split up a list of items into multiple lists, called pages. A page is usually defined with a limit and an offset. That way, you can request one page of items, and when a user wants to see more, request another page of items.
 
-使用 GraphQL 必然会遇到列表应用的 **分页** 功能。在一个聊天应用中保存的用户消息会变得越来越长，当客户端请求消息记录用于展示时，一次性从数据库中获取所有的消息会导致服务器性能瓶颈。分页允许你把一个列表分成多个列表（其被称为页）。页通常会有大小限制和偏移量。通过分页，你可以请求一页的展示数据，如果用户想看更多的数据，就再请求一页。
+使用 GraphQL 必然会遇到列表应用的 **分页** 功能。聊天应用中保存的用户消息会变得越来越长，当客户端请求消息记录用于展示时，一次性从数据库中获取所有的消息会导致服务器性能瓶颈。分页允许你把一个列表分成多个列表，即分页。一页通常会有大小限制和偏移量。通过分页，你可以只请求一页的展示数据，如果用户想查看更多的数据，就再请求一页。
 
 > You will implement pagination in GraphQL with two different approaches in the following sections. The first approach will be the most naive approach, called **offset/limit-based pagination**. The advanced approach is **cursor-based pagination**, one of many sophisticated ways to allow pagination in an application.
 
@@ -3579,7 +3579,7 @@ export default {
 
 > Fortunately, your ORM (Sequelize) gives you everything you need for internal offset and limit functionality. Try it in GraphQL Playground yourself by adjusting the limit and offset.
 
-幸运的是，你的 ORM 为内部偏移和限制功能提供了支持。你可以在 GraphQL playground 上尝试修改限制和偏移量，体验分页功能。
+幸运的是，你的 ORM (Sequelize) 为内部偏移和限制功能提供了支持。你可以在 GraphQL playground 上尝试修改限制和偏移量，体验分页功能。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3592,7 +3592,7 @@ query {
 
 > Even though this approach is simpler, it comes with a few disadvantages. When your offset becomes very long, the database query takes longer, which  can lead to a poor client-side performance while the UI waits for the next page of data. Also, offset/limit pagination cannot handle deleted items in between queries. For instance, if you query the first page and someone deletes an item, the offset would be wrong on the next page because the item count is off by one. You cannot easily overcome this problem with offset/limit pagination, which is why cursor-based pagination might be necessary.
 
-虽然这个方法很简单，但是它也有缺点。当偏移量变得非常长时，数据库查询时间会变长，客户端在等待下一页数据时的性能会比较差。同时，偏移/限制分页不能处理在查询之前删除一个数据的情况。例如，你查询了第一页，同时有人删除了第一中的一条数据，下一页的偏移量就会出错，因为数据已经减少一个了。在偏移/限制分页中，这个问题并不容易解决，所以指针分页就有必要了。
+虽然这个方法很简单，但是它也有缺点。当偏移量变得非常长时，数据库查询时间会变长，客户端在等待下一页数据时的性能会比较差。同时，偏移/限制分页不能处理在查询之前删除一个数据的情况。例如，你查询了第一页，同时有人删除了第一页中的一条数据，下一页的偏移量就会出错，因为数据已经减少一个了。在偏移/限制分页中，这个问题并不容易解决，所以指针分页就有必要了。
 
 > ### Cursor-based Pagination with Apollo Server and GraphQL
 
@@ -3600,11 +3600,11 @@ query {
 
 > In cursor-based pagination, the offset is given an identifier called a **cursor** rather counting items like offset/limit pagination. The cursor can be used to express "give me a limit of X items from cursor Y". A common approach to use dates (e.g. creation date of an entity in the database) to identify an item in the list. In our case, each message already has a `createdAt` date that is assigned to the entity when it is written to the database and we expose it already in the schema of the message entity. That's the creation date of each message that will be the cursor.
 
-与偏移/限制分页中用数据量的个数标记偏移量不同，在指针分页中，我们用**指针**标记偏移量。指针可用于表达：”给我从指针 Y 开始的 X 个数据”。一个常用的方法是用日期（例如：一个实体在数据库中的创建日期）来标识一个列表中的一条数据。在我们的例子中，每条消息已经有一个 `createdAt` 日期，即这个实体被写入数据库的时间，而且我们已经在消息实体的 schema 中暴露了这个字段。这个消息的创建日期就是指针。
+与偏移/限制分页中用数据量的个数标记偏移量不同，在指针分页中，我们用**指针**标记偏移量。指针可用于表达：”给我从指针 Y 开始的 X 个数据”。一个常用的方法是用时间（例如：一个实体在数据库中的创建时间）来标识一个列表中的某条数据。在我们的例子中，每条消息已经有一个 `createdAt` 时间，即这个实体被写入数据库的时间，而且我们已经在消息实体的 schema 中暴露了这个字段。这个消息的创建时间就是指针。
 
 > Now we have to change the original pagination to cursor-based in the *src/schema/message.js* file. You only need to exchange the offset with the cursor. Instead of an offset that can only be matched implicitly to an item in a list and changes once an item is deleted from the list, the cursor has a stable position within, because the message creation dates won't change.
 
-现在，我们在 *src/schema/message.js* 中将之前的分页改为指针分页。你只需要修改将偏移量变为指针（将 `offset` 变为 `cursor`）。与偏移量只能明确指向列表中的一条数据，而且一旦从列表中删除一条数据，偏移量就会发生变化这种现象不同，指针指向的位置是稳定的，因为消息创建的时间不会改变。
+现在，我们在 *src/schema/message.js* 中将之前的分页改为指针分页。你只需要修改将偏移量变为指针（将 `offset` 变为 `cursor`）。与偏移量只能明确指向列表中的一条数据，而且一旦从列表中删除一条数据，偏移量就会发生变化这种现象不同，指针指向的位置是固定不变的，因为消息创建的时间不会改变。
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3675,7 +3675,7 @@ export default {
 
 > Instead of the offset, the cursor is the `createdAt` property of a message. With Sequelize and other ORMs it is possible to add a clause to find all items in a list by a starting property (`createdAt`) with less than (`lt`) or greater than (`gt`, which is not used here) values for this property. Using a date as a cursor, the where clause finds all messages **before** this date, because there is an `lt` Sequelize operator. There are two more things to make it work:
 
-与偏移量不同，指针是消息的 `createdAt` 属性。通过 Sequelize 和其他 ORMs，我们可以添加一个方法，通过开始值（`createdAt`）来查找到列表中所有小于（`lt`）或者大于（`gt`，并没有再此处使用）这个值得所有数据。将日期当做指针，where 方法将找到所有在这个日前**之前**的消息。
+与偏移量不同，指针是消息的 `createdAt` 属性。通过 Sequelize 或其他 ORM 框架，我们可以添加一个查询子句来查找从开始值（`createdAt`）开始列表中所有小于（`lt`）或者大于（`gt`，并没有再此处使用）这个值的所有数据。将日期当做指针，配合 `lt` Sequelize 操作符，where 子句将查找所有在这个日前**之前**的消息。
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3717,11 +3717,11 @@ export default {
 
 > First, the list should be ordered by `createdAt` date, otherwise the cursor won't help. However, you can be sure that requesting the first page of messages without a cursor will lead to the most recent messages when the list is ordered. When you request the next page with a cursor based on the previous page's final creation date, you get the next page of messages ordered by creation date. That's how you can move page by page through the list of messages.
 
-首先，这个列表必须是通过 `createdAt` 排序的，否则指针是无用的。然而，当列表是有序的，你可以确保不带指针请求消息列表的第一页也可以返回最近的消息。当你将前一页的最后一个创建日期当做指针用于请求下一页时，你可以获得通过创建日期排序的下一页消息。这就是你怎么通过一页一页访问整个消息列表的。
+首先，这个列表必须是通过 `createdAt` 排序的，否则指针是无用的。无论如何，当列表是有序时，都可以确保不带指针请求消息列表的第一页也可以返回最近的消息。当你将前一页的最后一个创建时间当做指针用于请求下一页时，你可以获得通过创建时间排序的下一页消息。这就是你怎么通过一页一页访问整个消息列表的。
 
 > Second, the ternary operator for the cursor makes sure the cursor isn't needed for the first page request. As mentioned, the first page only retrieves the most recent messages in the list, so you can use the creation date of the last message as a cursor for the next page of messages.
 
-其次，the ternary operator for the cursor 确保了第一页请求不需要指针。之前提到过，第一页只获取列表中最近的消息，所以你可以利用最后一条消息的创建日期当做指针来请求下一页消息。
+其次，指针的三元操作符确保了第一页请求不需要指针。之前提到过，第一页只获取列表中最近的消息，所以你可以利用最后一条消息的创建时间当做指针来请求下一页消息。
 
 > You can also extract the where clause from the database query:
 
