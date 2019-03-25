@@ -1818,7 +1818,7 @@ const createUsersWithMessages = async () => {
 
 > Next, we have to handle the `me` user. Before, you used one of the users from the sample data; now, the user will come from a database. It's a good opportunity to write a custom method for your user model in the *src/models/user.js* file:
 
-接下来，我们必须要处理`me`这个user类型数据。之前，我们使用了示例数据中的一个user；现在，我们将从数据库中读取它。现在是时候在 *src/models/user.js* 文件中为user model编写一个自定义方法了：
+接下来，我们必须要处理`me`这个user类型数据了。之前，我们使用了示例数据中的一个user；现在，我们将从数据库中读取它。现在是时候在 *src/models/user.js* 文件中为user model编写一个自定义方法了：
 
 {title="src/models/user.js",lang="javascript"}
 ~~~~~~~~
@@ -1857,11 +1857,11 @@ export default user;
 
 > The `findByLogin()` method on your user model retrieves a user by `username` or by `email` entry. You don't have an `email` entry on the user yet, but it will be added when the application has an authentication mechanism. The `login` argument is used for both `username` and `email`, for retrieving the user from the database, and you can see how it is used to sign in to an application with username or email.
 
-在user model的`findByLogin()`方法中，我们通过`username` 或 `email`条目来检索user。虽然现在还没有用户的 `email`条目，但是当应用具有身份验证机制时，它将被添加。`username`和`email`都可以作为`login`方法的参数来从数据库中检索user，你也可以看到这是如何使用username或email进行登录应用的。
+在user model的`findByLogin()`方法中，我们通过`username` 或 `email`条目来检索user。虽然现在还没有用户的 `email`条目，但是当应用具有身份验证机制时，我们会添加上。`username`和`email`都可以作为`login`方法的参数来从数据库中检索user，你也可以看到这是如何使用username或email进行登录应用的。
 
 > You have introduced your first custom method on a database model. It is always worth considering where to put this business logic. When giving your model these access methods, you may end up with a concept called *fat models*. An alternative would be writing separate services like functions or classes for these data access layer functionalities.
 
-我们已经在数据库模型上引入了第一个自定义方法，接下来我们要考虑把这个业务逻辑放在哪里。当为model提供这些访问方法时，你可能最终会得到一个名为 *fat models* 的概念。另一种方法是为这些数据访问层功能编写单独的服务，如函数或类。
+我们已经在数据库模型上引入了第一个自定义方法，接下来我们要考虑的是把这个业务逻辑放在哪里。当为model提供这些访问方法时，你可能最终会得到一个名为 *fat models* 的概念。另一种方法是为这些数据访问层功能编写单独的服务，如函数或类。
 
 > The new model method can be used to retrieve the `me` user from the database. Then you can put it into the context object when the Apollo Server is instantiated in the *src/index.js* file:
 
@@ -1883,7 +1883,7 @@ const server = new ApolloServer({
 
 > However, this cannot work yet, because the user is read asynchronously from the database, so `me` would be a JavaScript promise rather than the actual user; and because you may want to retrieve the `me` user on a per-request basis from the database. Otherwise, the `me` user has to stay the same after the Apollo Server is created. Instead, use a function that returns the context object rather than an object for the context in Apollo Server. This function uses the async/await statements. The function is invoked every time a request hits your GraphQL API, so the `me` user is retrieved from the database with every request.
 
-但是这还不行，因为user是从数据库中异步读取的，因此`me`将是一个promise而不是实际的user；而且你可能希望在每次请求中都从数据库中检索出`me`。否则，一旦Apollo Server创建后`me`必须保持不变。相反，这里使用一个async/await异步函数来返回上下文对象而不是Apollo Server中一个直接的上下文对象。由于每次请求到GraphQL API时都会调用该函数，因此每次请求都会从数据库中检索出`me`。
+但是这还不行，因为user是从数据库中异步读取的，因此`me`将是一个promise而不是实际的user；而且你可能希望在每次请求中都从数据库中检索出`me`。否则，一旦Apollo Server创建后`me`必须保持不变。相反，这里使用一个返回上下文对象的async/await异步函数而不是Apollo Server中一个直接的上下文对象。由于每次请求到GraphQL API时都会调用该函数，因此每次请求都会从数据库中检索出`me`。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1952,7 +1952,7 @@ mydatabase=# SELECT text from messages;
 
 > In this section, you have used a PostgreSQL database as data source for your GraphQL server, using Sequelize as the glue between your database and your GraphQL resolvers. However, this was only one possible solution. Since GraphQL is data source agnostic, you can opt-in any data source to your resolvers. It could be another database (e.g. MongoDB, Neo4j, Redis), multiple databases, or a (third-party) REST/GraphQL API endpoint. GraphQL only ensures all fields are validated, executed, and resolved when there is an incoming query or mutation, regardless of the data source.
 
-在本节中，我们使用了PostgreSQL数据库作为GraphQL服务器的数据源，使用Sequelize来桥接数据库和GraphQL resolver。但是，这只是一种可行的解决方案。由于GraphQL与数据源无关，因此你可以选择将任何数据源添加到resolver中。它可以是另一个数据库（例如MongoDB，Neo4j，Redis），多个数据库或（第三方）REST/GraphQL API endpoint。GraphQL仅在存在进行查询或修改操作时确保所有字段都经过验证，执行和解析，而不管数据源如何。
+在本节中，我们使用了PostgreSQL数据库作为GraphQL服务器的数据源，使用Sequelize来桥接数据库和GraphQL resolver。但是，这只是一种可能的解决方案。由于GraphQL与数据源无关，因此你可以选择将任何数据源添加到resolver中。它可以是另一个数据库（例如MongoDB，Neo4j，Redis），多个数据库或（第三方）REST/GraphQL API endpoint。GraphQL仅在存在进行查询或修改操作时确保所有字段都经过验证，执行和解析，而不管数据源如何。
 
 > ### Exercises:
 
@@ -2013,11 +2013,11 @@ export default {
 
 > It may be a good idea keeping the resolvers surface slim but adding business logic services on the side. Then it is always simple to reason about the resolvers. In this application, we keep the business logic in the resolvers to keep everything at one place and avoid scattering logic across the entire application.
 
-保持resolver层轻量同时添加业务逻辑到service层是一个不错的方法，这样resolver变得足够简单。但是在我们这个应用中，我们将业务逻辑都保留在resolver中，是为了将所有代码都保存在同一个地方，避免在整个应用中逻辑变得分散。
+保持resolver层轻量同时添加业务逻辑到service层是一个不错的方法，这样resolver就变得足够简单。但是在我们这个应用中，我们将业务逻辑都保留在resolver中，是为了将所有代码都保存在同一个地方，避免在整个应用中逻辑变得分散。
 
 > Let's start with the validation, which will lead to error handling. GraphQL isn't directly concerned about validation, but it operates between tech stacks that are: the client application (e.g. showing validation messages) and the database (e.g. validation of entities before writing to the database).
 
-我们先从校验开始，这将使得我们的程序产生错误。GraphQL和校验并没有直接关系，但是它在客户端应用（例如显示校验信息）和数据库（例如在写到数据库之前对实体进行校验）之间发挥作用。
+我们先从校验开始，这将使得我们的程序产生错误。GraphQL和校验并没有直接关系，但是它在客户端应用（例如显示校验信息）和数据库（例如在写到数据库之前对实体进行校验）之间发挥着作用。
 
 > Let's add some basic validation rules to your database models. This section gives an introduction to the topic, as it would become too verbose to cover all uses cases in this application. First, add validation to your user model in the *src/models/user.js* file:
 
@@ -2104,7 +2104,7 @@ mutation {
 
 > It seems like Apollo Server's resolvers make sure to transform [JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) into valid GraphQL output. It is already possible to use this common error format in your client application without any additional error handling.
 
-似乎Apollo Server的resolver确保将[JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)转换为有效的GraphQL输出。现在已经可以在客户端应用中使用此常见错误格式，而无需任何其他错误处理。
+似乎Apollo Server的resolver一定能将[JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)转换为有效的GraphQL输出。现在已经可以在客户端应用中使用这种常见错误格式，而无需任何其他错误处理。
 
 > If you want to add custom error handling to your resolver, you always can add the commonly try/catch block statements for async/await:
 
