@@ -2,7 +2,7 @@
 
 > Finding the right solution for a given problem is not always simple, and web applications build with GraphQL are a good example of how changing times make for constantly evolving challenges. Moreover, evolving challenges create a scenario where the solutions must also evolve, so even the number of choices becomes a task. This article will decipher the pros and cons of one such solution: Apollo for GraphQL, with alternative solutions in case you decide against it.
 
-​	在给定问题上找到正确的解决方案并不总是那么简单，使用 GrahpQL 构建 Web 应用程序就是一个很好的例子来说明不断变化的时间如何应对不断变化的挑战。此外，不断变化的挑战也造成了解决方案也必须不断发展的情况，因此即使选择的数量也成了一项任务。这篇文章将会解读一个这样的解决方案的优缺点：用于 GraphQL 的 Apollo ，以及你决定使用它时的替代解决方案
+​	在给定问题上找到正确的解决方案并不总是那么简单，使用 GrahpQL 构建 Web 应用程序就是一个很好的例子来说明如何应对挑战与时俱进。此外，进化的挑战也造成了解决方案也必须不断进化的，因此即使选择也成了一项任务。这篇文章将会解读一个这样的解决方案的优缺点：用于 GraphQL 的 Apollo ，以及你决定使用它时的替代解决方案
 
 > GraphQL is only the query language that has a reference implementation in JavaScript, and Apollo builds its ecosystem on top to make GraphQL available for a wider audience. This includes the client-side as well as the server-side, because they provide a large ecosystem of libraries for both. The libraries provide an intermediate layer too: Apollo Engine, which is a GraphQL gateway. Essentially there's a reason Apollo is one of the most popular choices for using GraphQL in JavaScript applications.
 
