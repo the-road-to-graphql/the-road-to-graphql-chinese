@@ -368,7 +368,7 @@ const resolvers = {
 ~~~~~~~~
 > Querying a list of of users will be our third query. First, add the query to the schema again:
 
-查询 user 列表将是我们的第三个 query。首先，再次将 query 添加到 schema 中:
+查询 users 列表将是我们的第三个 query。首先，再次将 query 添加到 schema 中:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -389,7 +389,7 @@ const schema = gql`
 ~~~~~~~~
 > In this case, the `users` field returns a list of users of type User, which is denoted with the square brackets. Within the list, no user is allowed to be null, but the list itself can be null in case there are no users (otherwise, it could be also `[User!]!`). Once you add a new query to your schema, you are obligated to define it in your resolvers within the Query object:
 
-在本例中，`users` 字段返回 users，它是一个 User 类型的列表，该列表用方括号表示。在列表中，不允许任何 user 为空，但是如果没有 user，列表本身可以为空（否则，它应该是  `[User!]!` 的）。一旦你在你的 schema 中添加了一个新的查询，你必须在 Query 对象的 resolvers 中定义它:
+在本例中，`users` 字段返回一个 User 类型的列表，该列表用方括号表示。在列表中，不允许任何 user 为空，但是如果没有 user，列表本身可以为空（否则，它应该是  `[User!]!` 的）。一旦你在你的 schema 中添加了一个新的查询，你必须在 Query 对象的解析器中定义它:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -411,7 +411,7 @@ const resolvers = {
 ~~~~~~~~
 > You have three queries that can be used in your GraphQL client (e.g. GraphQL Playground) applications. All of them operate on the same User type to fulfil the data requirements in the resolvers, so each query has to have a matching resolver. All queries are grouped under one unique, mandatory Query type, which lists all available GraphQL queries exposed to your clients as your GraphQL API for reading data. Later, you will learn about the Mutation type, for grouping a GraphQL API for writing data.
 
-现在在GraphQL client（例如 GraphQL Playground）应用程序中，你有三个查询可以使用。它们每个都对相同的 User 类型进行操作，为了满足 resolvers 中的数据需求，每个查询都必须有一个对应的解析器。所有查询都分组在一个惟一的、强制的 Query 类型下，它列出所有公开给客户端的可用 GraphQL 查询，作为读取数据的 GraphQL API。稍后，你将会学到为 GraphQL API 编组写入数据的 Mutation 类型。
+现在在GraphQL client（例如 GraphQL Playground）应用程序中，你有三个查询可以使用。它们每个都对相同的 User 类型进行操作，为了满足解析器中的数据需求，每个查询都必须有一个对应的解析器。所有查询都分组在一个惟一的、强制的 Query 类型下，它列出所有公开给客户端的可用 GraphQL 查询，作为读取数据的 GraphQL API。稍后，你将会学到为 GraphQL API 编组写入数据的 Mutation 类型。
 > ### Exercises:
  ### 练习：
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/469080f810a0049442f02393fae746cebc391cc0)
@@ -456,7 +456,7 @@ const resolvers = {
 ~~~~~~~~
 > Once you start your application again and query for a list of users, every user should have an identical username.
 
-再次启动应用程序并查询 users 列表，列表中的每个元素都应该具有相同的 username。
+再次启动应用程序并查询 users 列表，列表中的每个 user 都具有相同的 username。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -489,7 +489,7 @@ const resolvers = {
 GraphQL 解析器可以在每个字段上进行更具体地操作。你可以通过解析一个 `username` 字段来覆盖每个 User 类型的 username。如果没有这么做的话，就会获取 User 实体的默认 `username` 属性。一般来说，这适用于每个字段。返回什么字段既可以是你在解析器函数中具体决定，也可以由 GraphQL 从 JavaScript 实体自动检索属性来尝试获取。
 > Let's evolve this a bit by diving into the function signatures of resolver functions. Previously, you have seen that the second argument of the resolver function is the incoming arguments of a query. That's how you were able to retrieve the `id` argument for the user from the Query. The first argument is called the parent or root argument, and always returns the previously resolved field. Let's check this for the new username resolver function.
 
-让我们通过深入研究解析器的参数来进一步改进它。在前面，你已经知道解析器的第二个参数是一次查询的传入参数。就是如何从 Query 中获取 user 的 `id` 参数。第一个参数称为父参数或根参数，并且总是返回以前解析过的字段。让我们检查一下新的 username 的解析器。
+让我们通过深入研究解析器函数的参数来进一步改进它。在前面，你已经知道解析器函数的第二个参数是一次查询的传入参数。就是如何从 Query 中获取 user 的 `id` 参数。第一个参数称为父参数或根参数，并且总是返回以前解析过的字段。让我们看一下新的 username 解析器函数。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -517,7 +517,7 @@ const resolvers = {
 ~~~~~~~~
 > When you query your list of users again in a running application, all usernames should complete correctly. That's because GraphQL first resolves all users in the `users` resolver, and then goes through the User's `username` resolver for each user. Each user is accessible as the first argument in the resolver function, so they can be used to access more properties on the entity. You can rename your parent argument to make it more explicit:
 
-当你在运行中的应用程序中再次查询 users 列表时，所有 username 都应该已经正确填写。这是因为 GraphQL 首先解析 `users` 解析器中的所有 users，然后为每个 user 遍历所有 User 的 `username` 解析器。每个 user 都可以作为访问解析器中的第一个参数，因此可以使用它们访问实体上的更多属性。你也可以显式地重命名父参数：
+当你在运行中的应用程序中再次查询 users 列表时，所有 username 都应该已经正确填写。这是因为 GraphQL 首先解析 `users` 解析器中的所有 users，然后为每个 user 遍历所有 User 的 `username` 解析器。每个 user 都可以作为访问解析器函数中的第一个参数，因此可以使用它们访问实体上的更多属性。你也可以显式地重命名父参数：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -537,7 +537,7 @@ const resolvers = {
 ~~~~~~~~
 > In this case, the `username` resolver function is redundant, because it only mimics the default behavior of a GraphQL resolver. If you leave it out, the username would still resolves with its correct property. However, this fine control over the resolved fields opens up powerful possibilities. It gives you the flexibility to add data mapping without worrying about the data sources behind the GraphQL layer. Here, we expose the full username of a user, a combination of its first and last name by using template literals:
 
-因为 `username` 解析器只是仿写了 GraphQL resolver 的默认行为，所以在本例中它是冗余的。即使省略掉它，username 属性仍然会正确地解析。不过，这种对已解析字段的精细控制为你提供了强大的可能性。它为你提供了添加数据映射的灵活性，而无需担心在 GraphQL 背后的数据来源。在这里，我们暴露一个 user 的完整的 username，它由 firstname 和 lastname 的字面量组合而成:
+由于 `username` 解析器函数只是仿写了 GraphQL 解析器的默认行为，所以在本例中它是冗余的。即使省略掉它，username 属性仍然会正确地解析。不过，这种对已解析字段的精细控制为你提供了强大的可能性。它为你提供了添加数据映射的灵活性，而无需担心在 GraphQL 背后的数据来源。在这里，我们暴露一个 user 的完整的 username，它由 firstname 和 lastname 的字面量组合而成:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -561,7 +561,7 @@ const resolvers = {
 ~~~~~~~~
 > The context argument is the third argument in the resolver function used to inject dependencies from the outside to the resolver function. Assume the signed-in user is known to the outside world of your GraphQL layer because a request to your GraphQL server is made and the authenticated user is retrieved from elsewhere. You might decide to inject this signed in user to your resolvers for application functionality, which is done with the `me` user for the `me` field. Remove the declaration of the `me` user (`let me = ...`) and pass it in the context object when Apollo Server gets initialized instead:
 
-上下文参数是解析器中的第三个参数，用于将依赖项从外部注入解析器。因为从其他地方取得的经过身份验证的用户也可以向 GraphQL 服务器发出请求，因此我们假设已登录 user 对 GraphQL 的外部世界是已知的。你可能想要将这个已登录的用户注入到应用程序的 resolvers 的方法中，这是可以通过 `me` 字段的 `me` user 完成。移除 `me` user 的声明 （`let me = ...`），并在Apollo Server初始化时将其传递给上下文对象:
+上下文参数是解析器函数中的第三个参数，用于将依赖项从外部注入解析器函数。因为从其他地方取得的经过身份验证的用户也可以向 GraphQL 服务器发出请求，因此我们假设已登录 user 对 GraphQL 的外部世界是已知的。你可能想要将这个已登录的用户注入到应用程序的 resolvers 的方法中，这是可以通过 `me` 字段的 `me` user 完成。移除 `me` user 的声明 （`let me = ...`），并在Apollo Server初始化时将其传递给上下文对象:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -577,7 +577,7 @@ const server = new ApolloServer({
 ~~~~~~~~
 > Next, access it in the resolver's function signature as a third argument, which gets destructured into the `me` property from the context object.
 
-接下来，在解析器中的第三个参数可以访问到它，该参数从上下文对象分解出 `me` 属性。
+接下来，在解析器函数中的第三个参数可以访问到它，该参数从上下文对象分解出 `me` 属性。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -599,10 +599,10 @@ const resolvers = {
 ~~~~~~~~
 > The context should be the same for all resolvers now. Every resolver that needs to access the context, or in this case the `me` user, can do so using the third argument of the resolver function.
 
-现在所有解析器的上下文应该是相同的。每个解析器所需要访问的上下文，比如在本例中命名为 `me` 的 user，都可以使用解析器的第三个参数来访问到。
+现在所有解析器的上下文应该是相同的。每个解析器所需要访问的上下文，比如在本例中命名为 `me` 的 user，都可以使用解析器函数的第三个参数来访问到。
 > The fourth argument in a resolver function, the info argument, isn't used very often, because it only gives you internal information about the GraphQL request. It can be used for debugging, error handling, advanced monitoring, and tracking. You don't need to worry about it for now.
 
-解析器中的第四个参数，信息参数，不常使用，因为它只是提供关于 GraphQL 请求的内部信息。它可以用于调试、错误处理、高级监视和跟踪。你现在不用关心。
+解析器函数中的第四个参数，信息参数，不常使用，因为它只是提供关于 GraphQL 请求的内部信息。它可以用于调试、错误处理、高级监视和跟踪。你现在不用关心。
 > A couple of words about the resolver's return values: a resolver can return arrays, objects and scalar types, but it has to be defined in the matching type definitions. The type definition has to define an array or non-nullable field to have the resolvers working appropriately. What about JavaScript promises? Often, you will make a request to a data source (database, RESTful API) in a resolver, returning a JavaScript promise in the resolver. GraphQL can deal with it, and waits for the promise to resolve. That's why you don't need to worry about asynchronous requests to your data source later.
 
 关于解析器的返回值的几句话：解析器可以返回数组、对象和标量类型，但是必须在匹配的类型定义中定义它。类型定义必须定义数组或非空字段，以便解析器能正常工作。关于 JavaScript 的 promises 有什么要说的么？通常，你可以在解析器中向数据源(数据库、RESTful API)发出请求，并在解析器中返回 JavaScript 的 promise。GraphQL 可以处理它，并等待 promise 的 resolve。因此不需要担心对数据源的异步请求。
