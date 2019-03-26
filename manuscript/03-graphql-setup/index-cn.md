@@ -1,18 +1,18 @@
 # GraphQL 准备, 相关工具和 API
 
-循序渐进通常是学习新东西最简单的uud=dd方式，使用 JavaScript 来学习 GraphQL 是一件非常幸运的事，因为它同时教你应用程序的客户端和服务端。同时了解网络服务的前后端非常有用，但问题是你需要同时了解两个环境。这样使用循序渐进的方式会比较困难，所以我鼓励初学者从客户端应用程序开始，服务端则使用一个使用了 GraphQL 服务第三方的 API。
+循序渐进通常是学习新东西最简单的方式，使用 JavaScript 来学习 GraphQL 是一件非常幸运的事，因为它同时教你应用程序的客户端和服务端。同时了解网络服务的前后端非常有用，但问题是你需要同时了解两个环境。这样使用循序渐进的方式会比较困难，所以我鼓励初学者从客户端应用程序开始，服务端则使用一个使用了 GraphQL 服务第三方的 API。
 
 [GitHub](https://github.com)是首批采用 GraphQL 技术的大型科技公司之一。他们甚至[发布了](https://githubengineering.com/the-github-graphql-api)一个公共 GraphQL API [官方文档](https://developer.github.com/v4)，这在开发者中非常受欢迎，因为大多数人都非常熟悉 GitHub 并将其用于自己的项目。
 
-在本章中，我希望能涵盖开始使用 GitHub 的 GraphQL API 所需的一切，并通过使用该 API 从客户端的角度学习如何在 JavaScript 中使用 GraphQL。 你能够了解到 GitHub 的术语，以及如何使用 GraphQL API 来消费帐户数据。 从客户端的角度来看，我们将使用该 GraphQL API 实现一些应用程序，因此在本节中投入时间是有意义的，可以避免犯一些基础性的错误。 之后，我们会转向服务器，自己实现我们的 GraphQL 服务器。
+在本章中，我希望能涵盖开始使用 GitHub GraphQL API 所需的一切，并通过使用该 API 从客户端的角度学习如何在 JavaScript 中使用 GraphQL。 你能够了解到 GitHub 的术语，以及如何使用 GraphQL API 来消费帐户数据。 从客户端的角度来看，我们将使用该 GraphQL API 实现一些应用程序，因此在本节中投入时间是有意义的，可以避免犯一些基础性的错误。 之后，我们会转向服务器，实现我们自己的 GraphQL 服务器。
 
-## 利用 Github 数据来提供 API
+## 利用 GitHub 数据来提供 API
 
-如果你还有没 Github 账号，对它的生态系统了解也不多，请关注[这个 GitHub 官方的学习实验室](https://lab.github.com/)。如果想深入了解 Git 及其基本命令，请查看[本指南](https://www.robinwieruch.de/git-essential-commands/)。如果你想将来在 GitHub 上与其他人分享项目，会发现这些非常有用。这也是向潜在客户或招聘公司展示开发作品的好方式。
+如果你还有没 GitHub 账号，对它的生态系统了解也不多，请关注[这个 GitHub 官方的学习实验室](https://lab.github.com/)。如果想深入了解 Git 及其基本命令，请查看[本指南](https://www.robinwieruch.de/git-essential-commands/)。如果你想将来在 GitHub 上与其他人分享项目，会发现这些非常有用。这也是向潜在客户或招聘公司展示开发作品的好方式。
 
 在我们与 GitHub GraphQL API 交互的过程中，你将使用自己的账号信息来进行读写操作。在此之前，为了能够在使用 API 的时候读到这些信息，请提供附加信息以完善 GitHub 的个人信息。
 
-### 练习题：
+### 练习：
 
 * 创建一个 GitHub 账号，如果你没有的话
 * 提供 GitHub 账号的其他信息
@@ -25,7 +25,7 @@
 
 ### 练习：
 
-* 创建或 fork 几个 GitHub 代码仓库，并验证它们是否存以副本的形式存在于你的账户中。副本通过用户名标识，后面跟着代码仓库的名称，共同组成了该代码仓库的全称。例如，一个名为*原作者名字/TestRepo*的代码仓库，在你 fork 之后，会被命名为 *你的名字/TestRepo*。
+* 创建或 fork 几个 GitHub 代码仓库，并验证它们是否存以副本的形式存在于你的账户中。副本通过用户名标识，后面跟着代码仓库的名称，共同组成了该代码仓库的全称。例如，一个名为*原作者名字/TestRepo*的代码仓库，在你 fork 之后，会被命名为*你的名字/TestRepo*。
 
 ### 分页数据
 
@@ -48,7 +48,7 @@ GitHub 的 GraphQL API 允许一次请求多个代码仓库，这对于分页来
 
 ## 使用 GitHub 的个人访问令牌（access token）来读写数据
 
-为了使用 GitHub GraphQL API，你需要在他们的网站上生成一个个人访问令牌。访问令牌授权用户与数据间的交互，使其能够对其所拥有的数据进行读写操作。[按照分步说明](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line)来获得个人访问令牌，并检查所需的权限范围，因为之后会利用它来实现一个多功能的  GitHub 客户端。
+为了使用 GitHub GraphQL API，你需要在他们的网站上生成一个个人访问令牌。访问令牌授权用户与数据间的交互，使其能够对其所拥有的数据进行读写操作。[按照分步说明](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line)来获得个人访问令牌，并检查所需的权限范围，因为之后会利用它来实现一个多功能的 GitHub 客户端。
 
 ![](images/github-personal-access-token_1024.jpg)
 
