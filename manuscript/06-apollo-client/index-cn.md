@@ -4,7 +4,7 @@
 
 > Apollo is an entire ecosystem built by developers as an infrastructure for GraphQL applications. You can use it on the client-side for a GraphQL client application, or server-side for a GraphQL server application. At the time of writing this tutorial, Apollo offers the richest and most popular ecosystem around GraphQL in JavaScript. There are other libraries for React applications like [Relay](http://facebook.github.io/relay) and [Urql](https://github.com/FormidableLabs/urql), but they are just for React applications, and they are not as popular as the Apollo Client. Apollo is framework agnostic, meaning you can use it with libraries other than React. It can be coupled with other libraries/frameworks like Vue and Angular as well, so everything you learn in this tutorial is likely transferable to the others.
 
-Apollo 是一个由开发人员构建的作为 GraphQL 应用程序基础设施的整个生态系统。你可以在客户端将其用于 GraphQL 客户端应用程序，或者在服务器端将其用于 GraphQL 服务端应用程序。在编写本教程时，Apollo 提供了在 JavaScript 中最丰富和最流行的 GraphQL 生态系统。尽管还有其他用于 React 应用程序的库，如 [Relay](http://facebook.github.io/relay) 和[Urql](https://github.com/FormidableLabs/urql)，但它们仅适用于 React 应用程序，并不像 Apollo Client 那么受欢迎。Apollo 是与框架无关的，这意味着你还可以将其与 React 之外的库一起使用，比如它也可以与 Vue 和 Angular 等其他库 / 框架结合使用，因此你在本教程中学到的所有内容都可以迁移到其他库 / 框架中。
+Apollo 是一个由开发人员构建的作为 GraphQL 应用程序基础设施的整个生态系统。你可以在客户端将其用于 GraphQL 客户端应用程序，或者在服务器端将其用于 GraphQL 服务端应用程序。在编写本教程时，Apollo 提供了在 JavaScript 中最丰富和最流行的 GraphQL 生态系统。尽管还有其他用于 React 应用程序的库，如 [Relay](http://facebook.github.io/relay) 和 [Urql](https://github.com/FormidableLabs/urql)，但它们仅适用于 React 应用程序，并不像 Apollo Client 那么受欢迎。Apollo 是与框架无关的，这意味着你还可以将其与 React 之外的库一起使用，比如 Vue 和 Angular 等，因此你在本教程中学到的所有内容都可以迁移到其他库 / 框架中。
 
 > ## Starting with Apollo Boost on the Command Line
 
@@ -359,7 +359,7 @@ client
 
 > You have seen a similar query structure in the application we created earlier, so this section has a couple of exercises for you to test the GraphQL skills you've learned. Solving the exercises will fortify your GraphQL skills, so that you can later focus on connecting the Apollo Client to your React application without any obstacles. You will find all the solutions to the exercises in a GitHub repository for this application at the end of the exercises, but you should consider working it out on your own first.
 
-在我们之前创建的应用程序中，你已经看到过类似的查询结构，因此本节提供几个练习供你测试所学的 GraphQL 技能。解决这些练习将强化你的 GraphQL 技能，这样你以后可以集中精力将 Apollo Client 连接到你的 React 应用程序，而不会遇到任何障碍。在练习结束后，你可以在此应用程序的 GitHub 代码库中找到所有练习的答案，但你应该先尝试自己完成它们。
+在我们之前创建的应用程序中，你已经看到过类似的查询结构，因此本节提供几个练习供你测试所学的 GraphQL 技能。通过这些练习能够强化你的 GraphQL 技能，这样你以后可以集中精力将 Apollo Client 连接到你的 React 应用程序，而不会遇到任何障碍。在练习结束后，你可以在此应用程序的 GitHub 代码库中找到所有练习的答案，但你应该先尝试自己完成它们。
 
 > ### Exercises:
 
@@ -375,11 +375,11 @@ client
 
   > * Extend the `repositories` list field by querying an ordered list of repositories which is ordered by the number of stargazers
 
-  * 扩展 `repositories` 列表字段来查询按 star 数量排序的代码库的有序列表
+  * 通过查询一个按照 star 数量排序的有序代码库列表来扩展 `repositories` 列表字段
 
 > * Extract the content of a repository `node` to a GraphQL a reusable fragment
 
-* 将 repository` 节点 ` 的内容提取为可重用的 GraphQL 片段
+* 将 repository `node` 的内容提取为可重用的 GraphQL 片段
 
 > * Read more about [pagination in GraphQL](https://graphql.org/learn/pagination)
 
@@ -411,11 +411,11 @@ client
 
 > ## Apollo Client and a GraphQL Mutation
 
-## Apollo Client 和一个 GraphQL 变更
+## Apollo Client 和 GraphQL 变更
 
 > Previously, you learned how to query data from GitHub's GraphQL API using the Apollo Client. Once the client is set up with a configuration, you can use its `query()` method to send a GraphQL `query` with optional `variables`. As you have learned, reading data with GraphQL is not everything, because there are mutations for writing data as well. In this section, you are going to define a mutation to star a repository on GitHub. The Apollo Client instance sends the mutation, but first you have to define it.
 
-前几节你学习了如何使用 Apollo Client 从 GitHub 的 GraphQL API 查询数据。一旦配置好了 Apollo Client，就可以使用其 `query()` 方法发送带有可选 `variables` 的 GraphQL` 查询 `。正如您所了解的那样，我们不仅可以使用 GraphQL 来读取数据，还可以用变更来写入数据。在本节中，您将定义一个变更来为 GitHub 上的代码库加 star。Apollo Client 实例会发送变更，但首先你必须定义它。
+前几节你学习了如何使用 Apollo Client 从 GitHub 的 GraphQL API 查询数据。一旦配置好了 Apollo Client，就可以使用其 `query()` 方法发送带有可选 `variables` 的 GraphQL` 查询 `。正如你所了解的那样，我们不仅可以使用 GraphQL 来读取数据，还可以用变更来写入数据。在本节中，你将定义一个变更来为 GitHub 上的代码库加 star。Apollo Client 实例会发送变更，但首先你必须定义它。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -433,7 +433,7 @@ const ADD_STAR = gql`
 
 > The identifier for the repository is required, or GitHub's GraphQL server wouldn't know which repository you want to star. In the next code snippet, the Apollo Client is used to star a specific GitHub repository with a given identifier. The identifier can be retrieved by adding the `id` field to your repository `node` field in the query. Use the `mutate()` method on the Apollo Client to send the mutation in a `mutation` and `variables` payload. Anything can be done with the result to fit your application, but in this case, the result it is simply logged in the command line.
 
-代码库的标识符是必需的，否则 GitHub 的 GraphQL 服务器不知道您要为哪个代码库加 star。在下一个代码片段中，Apollo Client 用来为具有给定标识符的特定 GitHub 代码库加注星标。可以通过在查询中将 `id` 字段添加到你的代码库 `node` 字段来检索标识符。使用 Apollo Client 上的 `mutate()` 方法在 `mutation` 和 `variables` 有效载荷中发送变更。可以对结果进行任何操作以适用于你的应用程序，但在本例中，只需在命令行中记录结果即可。
+代码库的标识符是必需的，否则 GitHub 的 GraphQL 服务器不知道你要为哪个代码库加 star。在下一个代码片段中，Apollo Client 用来为具有给定标识符的特定 GitHub 代码库加注星标。可以通过在查询中将 `id` 字段添加到你的代码库 `node` 字段来检索标识符。使用 Apollo Client 上的 `mutate()` 方法在 `mutation` 和 `variables` 有效载荷中发送变更。可以对结果进行任何操作以适用于你的应用程序，但在本例中，只需在命令行中记录结果即可。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -479,4 +479,4 @@ client
 
 > You have seen how Apollo Client can be used standalone in a Node.js project. Before this, you have used React with GraphQL standalone without Apollo. In the next chapter, you will combine both worlds. Be excited for your first full-fledged React client application with Apollo Client and GraphQL.
 
-你已经了解了如何在 Node.js 项目中单独使用 Apollo Client。在本章之前，你已经将 React 与不带 Apollo 的 GraphQL 结合使用。在下一章中，你讲把这两种结合起来。尽情期待你的第一个完整的使用 Apollo Client 和 GraphQL 的 React 客户端应用程序吧。
+你已经了解了如何在 Node.js 项目中单独使用 Apollo Client。在本章之前，你已经将 React 与不带 Apollo 的 GraphQL 结合使用。在下一章中，你将把这两种结合起来。尽情期待你的第一个完整的使用 Apollo Client 和 GraphQL 的 React 客户端应用程序吧。
