@@ -1119,7 +1119,7 @@ const resolvers = {
 
 >### Exercises:
 
-练习:
+### 练习:
 
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
 >* Create a message in GraphQL Playground with a mutation
