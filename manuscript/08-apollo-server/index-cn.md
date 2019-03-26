@@ -4475,27 +4475,39 @@ mutation {
 * 阅读更多关于 [Apollo Server 订阅](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html)
 * 观看相关演讲 [GraphQL 订阅](http://youtu.be/bn8qsi8jVew)
 
-## Testing a GraphQL Server
+> ## Testing a GraphQL Server
 
-Testing often get overlooked in programming instruction, so this section will focus on to end-to-end (E2E) testing of a GraphQL server. While unit and integration tests are the fundamental pillars of the popular testing pyramid, covering all standalone functionalities of your application, E2E tests cover user scenarios for the entire application. An E2E test will assess whether a user is able to sign up for your application, or whether an admin user can delete other users. You don't need to write as many E2E tests, because they cover larger and more complex user scenarios, not just basic functionality. Also, E2E tests cover all the technical corners of your application, such as the GraphQL API, business logic, and databases.
+## 测试 GraphQL 服务器
 
-### GraphQL Server E2E Test Setup
+> Testing often get overlooked in programming instruction, so this section will focus on to end-to-end (E2E) testing of a GraphQL server. While unit and integration tests are the fundamental pillars of the popular testing pyramid, covering all standalone functionalities of your application, E2E tests cover user scenarios for the entire application. An E2E test will assess whether a user is able to sign up for your application, or whether an admin user can delete other users. You don't need to write as many E2E tests, because they cover larger and more complex user scenarios, not just basic functionality. Also, E2E tests cover all the technical corners of your application, such as the GraphQL API, business logic, and databases.
 
-Programs called Mocha and Chai are really all you need to test the application we've created. Mocha is a test runner that lets you execute tests from an npm script, while providing an organized testing structure; Chai gives you all the functionalities to make assertions, e.g. "Expect X to be equal to Y" based on real-world scenarios and run through them.
+在编程中测试经常被忽视，因此本节将重点介绍 GraphQL 服务器的端到端（E2E）测试。虽然单元和集成测试是测试金字塔的基本支柱，覆盖了应用程序的所有独立功能，但 E2E 测试则覆盖了整个应用程序的用户场景。E2E 测试将确定用户是否能够注册你的应用程序，或管理员用户是否可以删除其他用户。你不需要编写尽可能多的 E2E 测试，因为它们覆盖的是更大，更复杂的用户场景，而不仅仅是基本功能。 此外，E2E 测试覆盖了应用程序的所有技术角落，例如 GraphQL API ，业务逻辑和数据库。
+
+> ### GraphQL Server E2E Test Setup
+
+### GraphQL 服务器 E2E 测试配置
+
+> Programs called Mocha and Chai are really all you need to test the application we've created. Mocha is a test runner that lets you execute tests from an npm script, while providing an organized testing structure; Chai gives you all the functionalities to make assertions, e.g. "Expect X to be equal to Y" based on real-world scenarios and run through them.
+
+这里使用测试组件 Mocha 和 Chai 用来测试我们的程序。Mocha 是一个测试运行器，它允许你从 npm 脚本执行测试，同时提供有组织的测试结构；Chai为你提供很多断言方法，例如： 基于真实场景，“期望 X 等于 Y ”。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install mocha chai --save-dev
 ~~~~~~~~
 
-To use these programs, you must first install a library called [axios](https://github.com/axios/axios) for making requests to the GraphQL API. When testing user sign-up, you can send a GraphQL mutation to the GraphQL API that creates a user in the database and returns their information.
+> To use these programs, you must first install a library called [axios](https://github.com/axios/axios) for making requests to the GraphQL API. When testing user sign-up, you can send a GraphQL mutation to the GraphQL API that creates a user in the database and returns their information.
+
+要使用这些程序，必须先安装 [axios](https://github.com/axios/axios) ，以便向 GraphQL API 发出请求。在测试用户注册时，你可以将 GraphQL 变更发送到 GraphQL API，该 API 在数据库中创建用户并返回其信息。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install axios --save-dev
 ~~~~~~~~
 
-Mocha is run using npm scripts in your *package.json* file. The pattern used here matches all test files with the suffix *.spec.js* within the *src/* folder.
+> Mocha is run using npm scripts in your *package.json* file. The pattern used here matches all test files with the suffix *.spec.js* within the *src/* folder.
+
+Mocha 使用 *package.json* 文件中的 npm 脚本运行。 此模式会匹配 *src/* 文件夹中带有 *.spec.js* 后缀的所有测试文件。
 
 {title="package.json",lang="javascript"}
 ~~~~~~~~
@@ -4511,7 +4523,9 @@ Mocha is run using npm scripts in your *package.json* file. The pattern used her
 }
 ~~~~~~~~
 
-Don't forget to install the babel node package with `npm install @babel/register --save-dev`. That should be sufficient to run your first test. Add a *src/tests/user.spec.js* to your application. and write your first test there:
+> Don't forget to install the babel node package with `npm install @babel/register --save-dev`. That should be sufficient to run your first test. Add a *src/tests/user.spec.js* to your application. and write your first test there:
+
+不要忘记使用 `npm install @babel/register --save-dev` 安装 babel 包，它应该足以让我们运行第一次测试。新建 *src/tests/user.spec.js* 文件，在里面写上你的第一个测试：
 
 {title="src/tests/user.spec.js",lang="javascript"}
 ~~~~~~~~
@@ -4526,9 +4540,13 @@ describe('users', () => {
 });
 ~~~~~~~~
 
-The test is executed by typing `npm test` into the command line. While it doesn't test any logic of your application, the test will verify that Mocha, Chai, and your new npm script are working.
+> The test is executed by typing `npm test` into the command line. While it doesn't test any logic of your application, the test will verify that Mocha, Chai, and your new npm script are working.
 
-Before you can write end-to-end tests for the GraphQL server, the database must be addressed. Since the tests run against the actual GraphQL server, so you only need to run against a test database rather than the production database. Add an npm script in the *package.json* to start the GraphQL server with a test database:
+在命令行中键入 `npm test` 来执行测试。虽然它不测试应用程序的任何逻辑，但测试将验证 Mocha ，Chai 和你的 npm 脚本是否正常工作。
+
+> Before you can write end-to-end tests for the GraphQL server, the database must be addressed. Since the tests run against the actual GraphQL server, so you only need to run against a test database rather than the production database. Add an npm script in the *package.json* to start the GraphQL server with a test database:
+
+在为 GraphQL 服务器编写端到端测试之前，必须先解决数据库问题。由于测试需要在真实的 GraphQL 服务器上运行，所以你需要使用测试数据库而不是生产数据库。 在 *package.json* 中添加 npm 脚本以使用测试数据库启动 GraphQL 服务器：
 
 {title="package.json",lang="javascript"}
 ~~~~~~~~
@@ -4545,7 +4563,9 @@ Before you can write end-to-end tests for the GraphQL server, the database must 
 }
 ~~~~~~~~
 
-The script must be started before the E2E GraphQL server tests. If the `TEST_DATABASE` environment flag is set, you have to adjust the database setup in the *src/models/index.js* file to use the test database instead:
+> The script must be started before the E2E GraphQL server tests. If the `TEST_DATABASE` environment flag is set, you have to adjust the database setup in the *src/models/index.js* file to use the test database instead:
+
+这个脚本需要在 E2E 测试启动前执行。上面设置了 `TEST_DATABASE` 环境变量，还须调整 *src/models/index.js* 文件中的数据库配置以使用测试数据库：
 
 {title="src/models/index.js",lang="javascript"}
 ~~~~~~~~
@@ -4565,9 +4585,13 @@ const sequelize = new Sequelize(
 ...
 ~~~~~~~~
 
-You also need to make sure to create such a database. Mine is called *mytestdatabase* in the npm script, which I added in the command line with `psql` and `createdb` or `CREATE DATABASE`.
+> You also need to make sure to create such a database. Mine is called *mytestdatabase* in the npm script, which I added in the command line with `psql` and `createdb` or `CREATE DATABASE`.
 
-Finally, you must start with a seeded and consistent database every time you run a test server. To do this, set the database re-seeding flag to depend on the set test database environment variable in the *src/index.js* file:
+你还需要确保刚才 npm 脚本中的 *mytestdatabase* 数据库已经创建，在命令行中键入 `psql` 然后执行 `createdb` 或 `CREATE DATABASE` 来创建数据库.
+
+> Finally, you must start with a seeded and consistent database every time you run a test server. To do this, set the database re-seeding flag to depend on the set test database environment variable in the *src/index.js* file:
+
+最后，每次运行测试服务器时，必须从一个初始一致的数据库开始。 为此，请将数据库 re-seeding 标志设置为依赖于 *src/index.js* 文件中设置的测试数据库环境变量：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -4592,7 +4616,9 @@ sequelize.sync({ force: isTest }).then(async () => {
 ...
 ~~~~~~~~
 
-Now you are ready to write tests against an actual running test sever (`npm run test-server`) that uses a consistently seeded test database. If you want to use async/await in your test environment, adjust your *.babelrc* file:
+> Now you are ready to write tests against an actual running test sever (`npm run test-server`) that uses a consistently seeded test database. If you want to use async/await in your test environment, adjust your *.babelrc* file:
+
+现在，你已准备好使用一致的种子测试数据库的测试服务器（`npm run test-server`）来编写测试。 如果要在测试环境中使用 async/await ，需修改 *.babelrc* 文件：
 
 {title=".babelrc",lang="javascript"}
 ~~~~~~~~
@@ -4609,11 +4635,17 @@ Now you are ready to write tests against an actual running test sever (`npm run 
 }
 ~~~~~~~~
 
-Now you can write tests with asynchronous business logic with async/await.
+> Now you can write tests with asynchronous business logic with async/await.
 
-### Testing User Scenarios with E2E Tests
+现在你可以使用 async/await 来测试异步逻辑。
 
-Every E2E test sends an actual request with axios to the API of the running GraphQL test server. Testing your `user` GraphQL query would look like the following in the *src/tests/user.spec.js* file:
+> ### Testing User Scenarios with E2E Tests
+
+### 使用 E2E 来测试用户场景
+
+> Every E2E test sends an actual request with axios to the API of the running GraphQL test server. Testing your `user` GraphQL query would look like the following in the *src/tests/user.spec.js* file:
+
+每个 E2E 测试都使用 axios 将真实的请求发送到正在运行的 GraphQL 测试服务器。接下来在 *src/tests/user.spec.js* 文件中编写 `user` GraphQL 查询的测试：
 
 {title="src/tests/user.spec.js",lang="javascript"}
 ~~~~~~~~
@@ -4643,9 +4675,13 @@ describe('users', () => {
 });
 ~~~~~~~~
 
-Each test should be as straightforward as this one. You make a GraphQL API request with axios, expecting a query/mutation result from the API. Behind the scenes, data is read or written from or to the database. The business logic such as authentication, authorization, and pagination works in between. A request goes through the whole GraphQL server stack from API to database. An end-to-end test doesn't test an isolated unit (unit test) or a smaller composition of units (integration test), but the entire pipeline.
+> Each test should be as straightforward as this one. You make a GraphQL API request with axios, expecting a query/mutation result from the API. Behind the scenes, data is read or written from or to the database. The business logic such as authentication, authorization, and pagination works in between. A request goes through the whole GraphQL server stack from API to database. An end-to-end test doesn't test an isolated unit (unit test) or a smaller composition of units (integration test), but the entire pipeline.
 
-The `userApi` function is the final piece needed to set up effective testing for this application. It's not implemented in the test, but in another *src/tests/api.js* file for portability. In this file, you will find all your functions which can be used to run requests against your GraphQL test server.
+每个测试都应该像这个一样简单直接。使用 axios 发出 GraphQL API 请求，期望来自 API 的查询/变更结果。 在幕后，数据从数据库读取或写入，身份验证、授权和分页等业务逻辑在期间执行。 请求会走完整个从 API 到数据库的 GraphQL 服务器流程。 端到端测试不会测试隔离单元（单元测试）或较小的单元组合（集成测试），而是整个管道（流程）。
+
+> The `userApi` function is the final piece needed to set up effective testing for this application. It's not implemented in the test, but in another *src/tests/api.js* file for portability. In this file, you will find all your functions which can be used to run requests against your GraphQL test server.
+
+`userApi` 函数是为此应用程序设置有效测试所需的最后一部分。它没有在这个测试中实现，而是在 *src/tests/api.js* 文件中测试的，在此文件中，你将找到用于请求 GraphQL 测试服务器的所有函数。
 
 {title="src/tests/api.js",lang="javascript"}
 ~~~~~~~~
@@ -4669,7 +4705,9 @@ export const user = async variables =>
   });
 ~~~~~~~~
 
-You can use basic HTTP to perform GraphQL operations across the network layer. It only needs a payload, which is the query/mutation and the variables. Beyond that, the URL of the GraphQL server must be known. Now, import the user API in your actual test file:
+> You can use basic HTTP to perform GraphQL operations across the network layer. It only needs a payload, which is the query/mutation and the variables. Beyond that, the URL of the GraphQL server must be known. Now, import the user API in your actual test file:
+
+您可以使用基本 HTTP 在网络层执行 GraphQL 操作。它需要一个有效载荷，即查询/变更和变量。 除此之外，必须知道 GraphQL 服务器的 URL。 现在，在实际测试文件中导入用户 API：
 
 {title="src/tests/user.spec.js",lang="javascript"}
 ~~~~~~~~
@@ -4694,7 +4732,9 @@ describe('users', () => {
 });
 ~~~~~~~~
 
-To execute your tests now, run your GraphQL test server in the command line with `npm run test-server`, and execute your tests in another command line tab with `npm test`. The output should appear as such:
+> To execute your tests now, run your GraphQL test server in the command line with `npm run test-server`, and execute your tests in another command line tab with `npm test`. The output should appear as such:
+
+要立即执行测试，请在命令行中使用 `npm run test-server` 运行 GraphQL 测试服务器，并在另一个命令行选项卡中键入 `npm test` 已执行测试。 输出应如下所示：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -4705,9 +4745,13 @@ users
 1 passing (123ms)
 ~~~~~~~~
 
-If your output is erroneous, the console logs may help you figure out what went wrong. Another option is to take the query from the axios request and put it into GraphQL Playground. The error reporting in Playground might make it easier to find problems.
+> If your output is erroneous, the console logs may help you figure out what went wrong. Another option is to take the query from the axios request and put it into GraphQL Playground. The error reporting in Playground might make it easier to find problems.
 
-That's your first E2E test against a GraphQL server. The next one uses the same API, and you can see how useful it is to extract the API layer as reusable functions. In your *src/tests/user.spec.js* file add another test:
+如果输出错误，控制台日志可能会帮助你找出问题所在。另一种选择是从 axios 请求中复制查询代码并将其放入GraphQL Playground 执行。 Playground 中的错误报告可能使查找问题变得更容易。
+
+> That's your first E2E test against a GraphQL server. The next one uses the same API, and you can see how useful it is to extract the API layer as reusable functions. In your *src/tests/user.spec.js* file add another test:
+
+这是你针对 GraphQL 服务器的第一次 E2E 测试。 下一个使用相同的 API，您可以看到将 API 层提取为可重用函数是多么有用。在你的 *src/tests/user.spec.js* 文件中添加另一个测试：
 
 {title="src/tests/user.spec.js",lang="javascript"}
 ~~~~~~~~
@@ -4744,9 +4788,13 @@ describe('users', () => {
 });
 ~~~~~~~~
 
-It is valuable to test the common path, but also less common edge cases. In this case, the uncommon path didn't return an error, but null for the user.
+> It is valuable to test the common path, but also less common edge cases. In this case, the uncommon path didn't return an error, but null for the user.
 
-Let's add another test that verifies non-admin user authorization related to deleting messages. Here you will implement a complete scenario from login to user deletion. First, implement the sign in and delete user API in the *src/tests/api.js* file:
+测试常见路径是有价值的，不太常见的边界场景也值得被测试。在这种边界场景下，查询不存在的用户不会返回错误，而是返回 null。
+
+> Let's add another test that verifies non-admin user authorization related to deleting messages. Here you will implement a complete scenario from login to user deletion. First, implement the sign in and delete user API in the *src/tests/api.js* file:
+
+让我们添加另一个测试来验证仅管理员才能删除用户。 在这里，你将实现从登录到删除用户的完整场景。 首先，在 *src/tests/api.js*  文件中实现登录和删除用户的 API：
 
 {title="src/tests/api.js",lang="javascript"}
 ~~~~~~~~
@@ -4787,7 +4835,9 @@ export const deleteUser = async (variables, token) =>
 # leanpub-end-insert
 ~~~~~~~~
 
-The `deleteUser` mutation needs the token from the `signIn` mutation's result. Next, you can test the whole scenario by executing both APIs in your new E2E test:
+> The `deleteUser` mutation needs the token from the `signIn` mutation's result. Next, you can test the whole scenario by executing both APIs in your new E2E test:
+
+`deleteUser` 需要使用 `signIn` 拿到的 token 。接下来，你可以通过在新的 E2E 测试中执行两个 API 来测试整个场景：
 
 {title="src/tests/user.spec.js",lang="javascript"}
 ~~~~~~~~
@@ -4825,7 +4875,9 @@ describe('users', () => {
 });
 ~~~~~~~~
 
-First, you are using the `signIn` mutation to login a user to the application. The login is fulfilled once the token is returned. The token can then be used for every other GraphQL operation. In this case, it is used for the `deleteUser` mutation. The mutation still fails, however, because the current user is not admin. You can try the same scenario on your own with an admin to test the simple path for reusing APIs.
+> First, you are using the `signIn` mutation to login a user to the application. The login is fulfilled once the token is returned. The token can then be used for every other GraphQL operation. In this case, it is used for the `deleteUser` mutation. The mutation still fails, however, because the current user is not admin. You can try the same scenario on your own with an admin to test the simple path for reusing APIs.
+
+首先，使用 `signIn` 登录用户，登录成功后返回 token。然后，此 token 可用于其他每个 GraphQL 操作。在这种场景下，它用于 `deleteUser` 。 但是，这个操作仍然失败了，因为当前用户不是管理员。你可以自行使用管理员账户并通过同样的 API 来尝试这个的场景。
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -4839,17 +4891,29 @@ users
 3 passing (276ms)
 ~~~~~~~~
 
-These E2E tests cover scenarios for user domains, going through the GraphQL API over business logic to the database access. However, there is still plenty of room for alternatives. Consider testing other user domain-specific scenarios such as a user sign up (registration), providing a wrong password on sign in (login), or requesting one and another page of paginated messages for the message domain.
+> These E2E tests cover scenarios for user domains, going through the GraphQL API over business logic to the database access. However, there is still plenty of room for alternatives. Consider testing other user domain-specific scenarios such as a user sign up (registration), providing a wrong password on sign in (login), or requesting one and another page of paginated messages for the message domain.
 
-This section only covered E2E tests. With Chai and Mocha at your disposal, you can also add smaller unit and integration tests for your different application layers (e.g. resolvers). If you need a library to spy, stub, or mock something, I recommend [Sinon](https://sinonjs.org) as a complementary testing library.
+这些 E2E 测试涵盖了用户领域的场景，从 GraphQL API 业务逻辑到数据库访问。但是，仍有可测试的空间。考虑测试其他用户特定领域的场景，例如用户注册，在登录时提供错误的密码，或者在消息领域中请求一页和另一页的带分页的消息。
 
-### Exercises:
+> This section only covered E2E tests. With Chai and Mocha at your disposal, you can also add smaller unit and integration tests for your different application layers (e.g. resolvers). If you need a library to spy, stub, or mock something, I recommend [Sinon](https://sinonjs.org) as a complementary testing library.
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/d11e0487085e014170146ec7479d0154c4a6fce4)
-* Implement tests for the message domain similar to the user domain
-* Write more fine-granular unit/integration tests for both domains
-* Read more about [GraphQL and HTTP](https://graphql.github.io/learn/serving-over-http/)
-* Read more about [Mocking with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/mocking.html)
+本节仅涉及 E2E 测试。使用 Chai 和 Mocha ，你还可以为不同的应用层（例如：解析器层）添加更小的单元和集成测试。如果你需要一个库来实现测试替身、测试桩或模拟某些东西，我建议使用 [Sinon](https://sinonjs.org) 作为补充测试库。
+
+> ### Exercises:
+
+### 练习:
+
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/d11e0487085e014170146ec7479d0154c4a6fce4)
+> * Implement tests for the message domain similar to the user domain
+> * Write more fine-granular unit/integration tests for both domains
+> * Read more about [GraphQL and HTTP](https://graphql.github.io/learn/serving-over-http/)
+> * Read more about [Mocking with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/mocking.html)
+
+* 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/d11e0487085e014170146ec7479d0154c4a6fce4)
+* 为消息领域实现与用户领域类似的测试
+* 为这两个领域编写更精细的单元/集成测试
+* 阅读更多关于 [GraphQL and HTTP](https://graphql.github.io/learn/serving-over-http/)
+* 阅读更多关于 [Mocking with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/mocking.html)
 
 ## Batching and Caching in GraphQL with Data Loader
 
