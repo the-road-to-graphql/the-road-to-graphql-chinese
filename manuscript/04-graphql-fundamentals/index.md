@@ -322,7 +322,7 @@ The query in GraphQL gives you all you need to read data from a GraphQL API. The
 
 > ## GraphQL Operation: Mutation
 
-## GraphQL 操作：变更
+## GraphQL 基础：变更
 
 > This section introduces the GraphQL mutation. It complements the GraphQL query because it is used for writing data instead of reading it. The mutation shares the same principles as the query: it has fields and objects, arguments and variables, fragments and operation names, as well as directives and nested objects for the returned result. With mutations you can specify data as fields and objects that should be returned after it 'mutates' into something acceptable. Before you start making your first mutation, be aware that you are using live GitHub data, so if you follow a person on GitHub using your experimental mutation, you will follow this person for real. Fortunately this sort of behavior is encouraged on GitHub.
 
@@ -330,7 +330,7 @@ The query in GraphQL gives you all you need to read data from a GraphQL API. The
 
 > In this section, you will star a repository on GitHub, the same one you used a query to request before, using a mutation [from GitHub's API](https://developer.github.com/v4/mutation/addstar). You can find the `addStar` mutation in the "Docs" sidebar. The repository is a project for teaching developers about the fundamentals of React, so starring it should prove useful.
 
-接下来你将会 star 一个 GitHub 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 GitHub API ](https://developer.github.com/v4/mutation/addstar)的一种变更。你可以在" Docs "侧边栏中找到 `addStar` 这种变更。这个代码库是一个教开发者 React 基础的项目，所以 star 这个代码库能够证明它有用。
+接下来你将会 star 一个 GitHub 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 GitHub API ](https://developer.github.com/v4/mutation/addstar)的一种变更。你可以在 "Docs" 侧边栏中找到 `addStar` 这种变更。这个代码库是一个教开发者 React 基础的项目，所以 star 这个代码库能够证明它有用。
 
 > You can visit [the repository](https://github.com/the-road-to-learn-react/the-road-to-learn-react) to see if you've given a star to the repository already. We want an unstarred repository so we can star it using a mutation. Before you can star a repository, you need to know its identifier, which can be retrieved by a query:
 
@@ -420,12 +420,12 @@ mutation AddStar($repositoryId: ID!) {
 
 > * Explore GitHub's mutations by using the "Docs" sidebar in GraphiQL
 
-* 通过 GraphiQL 上的" Docs "侧边栏探索 GitHub 的更多变更操作
+* 通过 GraphiQL 上的 "Docs" 侧边栏探索 GitHub 的更多变更操作
 
 > * Find GitHub's `addStar` mutation in the "Docs" sidebar in GraphiQL
 > 	* Check its possible fields for returning a response 	
 
-* 在 GraphiQL 上的" Docs "侧边栏中找到 GitHub 的 `addStar` 变更
+* 在 GraphiQL 上的 "Docs" 侧边栏中找到 GitHub 的 `addStar` 变更
   * 检查它所有可以返回的字段
 
 > * Create a few other mutations for this or another repository such as:
@@ -635,7 +635,7 @@ query OrganizationForLearningReact {
 >   * Explore the other arguments that can be passed to this list field.
 >   * Use the `orderBy` argument to retrieve an ascending or descending list.
 
-* 在 GraphiQL 的" Docs "侧边栏搜索 `repositories` 字段会看到：“A list of repositories that the ... owns.”
+* 在 GraphiQL 的 "Docs" 侧边栏搜索 `repositories` 字段会看到：“A list of repositories that the ... owns.”
 	* 探索其他可以传给这个列举字段的参数。
 	* 使用 `orderBy` 参数来获取一个递增或者递减的列表。
 
