@@ -891,10 +891,10 @@ const resolvers = {
 
 ### 练习:
 
-* 提交你的 [最后一部分源代码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/491d93a90f4ee3413d9226e0a18c10b7407949ef)
+* 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/491d93a90f4ee3413d9226e0a18c10b7407949ef)
 * 查询用户列表及其消息
 * 查询消息列表及其用户
-* 阅读更多关于 [ GraphQL 模式](https://graphql.github.io/learn/schema/) 的信息
+* 阅读更多关于 [ GraphQL 模式](https://graphql.github.io/learn/schema/)
 
 >## Apollo Server: Queries and Mutations
 
@@ -1131,7 +1131,7 @@ const resolvers = {
 >* Implement an `updateMessage` mutation for completing all CRUD operations for a message in GraphQL
 >* Read more about [GraphQL queries and mutations](https://graphql.github.io/learn/queries/)
 
-* 提交你的 [最后一部分源代码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
+* 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
 * 使用一个变更在 GraphQL Playground 中创建消息
   * 查询所有消息
   * 通过消息查询 `me` 用户
@@ -1139,7 +1139,7 @@ const resolvers = {
   * 查询所有消息
   * 通过消息查询 `me` 用户
 * 实现一个 `updateMessage` 变更，用于在 GraphQL 中完成消息的所有 CRUD 操作
-* 阅读更多关于 [GraphQL 查询与变更](https://graphql.github.io/learn/queries/) 的信息
+* 阅读更多关于 [GraphQL 查询与变更](https://graphql.github.io/learn/queries/)
 
 >## GraphQL Schema Stitching with Apollo Server
 
