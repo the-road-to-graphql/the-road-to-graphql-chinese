@@ -4250,7 +4250,7 @@ This PubSub instance is your API which enables subscriptions in your application
 
 > Let's implement the specific subscription for the message creation. It should be possible for another GraphQL client to listen to message creations. For instance, in a chat application it should be possible to see a message of someone else in real-time. Therefore, extend the previous *src/subscription/index.js* file with the following implementation:
 
-让我们实现一个针对即时消息的订阅服务，它可以使 GraphQL 客户端监听新消息。例如，在聊天应用中能够实时的收到他人发来的信息。接下来，继续完成之前的 *src/subscription/index.js* ：
+让我们实现一个针对即时消息的订阅服务，它可以使 GraphQL 客户端监听到新消息。例如，在聊天应用中实时的收到他人发来的信息。接下来，继续完成之前的 *src/subscription/index.js* ：
 
 {title="src/subscription/index.js",lang="javascript"}
 ~~~~~~~~
@@ -4461,7 +4461,7 @@ mutation {
 
 > You have implemented GraphQL subscriptions. It can be a challenge to wrap your head around them, but once you've worked through some basic operations, you can use these as a foundation to create real-time GraphQL applications.
 
-你已经实现了 GraphQL 订阅。虽然要完全理清头绪还有些挑战，不过一旦你完成了一些基础操作，你就可以用这些知识去作为 GraphQL 实时应用的基础了。
+你已经实现了 GraphQL 订阅。虽然要完全理清头绪还需要更多的挑战，不过一旦你完成了一些基本操作，你就可以用这些知识去作为 GraphQL 实时应用的基础了。
 
 > ### Exercises:
 
@@ -4481,7 +4481,7 @@ mutation {
 
 > Testing often get overlooked in programming instruction, so this section will focus on to end-to-end (E2E) testing of a GraphQL server. While unit and integration tests are the fundamental pillars of the popular testing pyramid, covering all standalone functionalities of your application, E2E tests cover user scenarios for the entire application. An E2E test will assess whether a user is able to sign up for your application, or whether an admin user can delete other users. You don't need to write as many E2E tests, because they cover larger and more complex user scenarios, not just basic functionality. Also, E2E tests cover all the technical corners of your application, such as the GraphQL API, business logic, and databases.
 
-在编程中测试经常被忽视，因此本节将重点介绍 GraphQL 服务器的端到端（E2E）测试。虽然单元和集成测试是测试金字塔的基本支柱，覆盖了应用程序的所有独立功能，但 E2E 测试则覆盖了整个应用程序的用户场景。E2E 测试将确定用户是否能够注册你的应用程序，或管理员用户是否可以删除其他用户。你不需要编写尽可能多的 E2E 测试，因为它们覆盖的是更大，更复杂的用户场景，而不仅仅是基本功能。 此外，E2E 测试覆盖了应用程序的所有技术角落，例如 GraphQL API ，业务逻辑和数据库。
+在编程开发中测试经常被忽视，因此本节将重点介绍 GraphQL 服务器的端到端（E2E）测试。虽然单元和集成测试是测试金字塔的基本支柱，覆盖了应用程序的所有独立功能，但 E2E 测试则覆盖了整个应用程序的用户场景。在本例中，E2E 测试将确定用户是否能够注册你的应用程序，或管理员用户是否可以删除其他用户。你不需要编写尽可能多的 E2E 测试，因为它们覆盖的是更大，更复杂的用户场景，而不仅仅是基本功能。 此外，E2E 测试覆盖了应用程序的所有技术角落，例如 GraphQL API ，业务逻辑和数据库。
 
 > ### GraphQL Server E2E Test Setup
 
@@ -4498,7 +4498,7 @@ npm install mocha chai --save-dev
 
 > To use these programs, you must first install a library called [axios](https://github.com/axios/axios) for making requests to the GraphQL API. When testing user sign-up, you can send a GraphQL mutation to the GraphQL API that creates a user in the database and returns their information.
 
-要使用这些程序，必须先安装 [axios](https://github.com/axios/axios) ，以便向 GraphQL API 发出请求。在测试用户注册时，你可以将 GraphQL 变更发送到 GraphQL API，该 API 在数据库中创建用户并返回其信息。
+要使用这些程序，必须先安装 [axios](https://github.com/axios/axios) ，以便向 GraphQL API 发出请求。在测试用户注册时，你可以将 GraphQL 变更操作发送到 GraphQL API，然后在数据库中创建用户并返回其信息。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -4542,11 +4542,11 @@ describe('users', () => {
 
 > The test is executed by typing `npm test` into the command line. While it doesn't test any logic of your application, the test will verify that Mocha, Chai, and your new npm script are working.
 
-在命令行中键入 `npm test` 来执行测试。虽然它不测试应用程序的任何逻辑，但测试将验证 Mocha ，Chai 和你的 npm 脚本是否正常工作。
+在命令行中键入 `npm test` 来执行测试。虽然它不测试应用程序的任何逻辑，但将验证 Mocha、Chai 和你的 npm 脚本是否正常工作。
 
 > Before you can write end-to-end tests for the GraphQL server, the database must be addressed. Since the tests run against the actual GraphQL server, so you only need to run against a test database rather than the production database. Add an npm script in the *package.json* to start the GraphQL server with a test database:
 
-在为 GraphQL 服务器编写端到端测试之前，必须先解决数据库问题。由于测试需要在真实的 GraphQL 服务器上运行，所以你需要使用测试数据库而不是生产数据库。 在 *package.json* 中添加 npm 脚本以使用测试数据库启动 GraphQL 服务器：
+在为 GraphQL 服务器编写E2E 测试之前，必须先解决数据库问题。由于测试需要在真实的 GraphQL 服务器上运行，所以需要使用测试数据库而不是生产数据库。 在 *package.json* 中添加 npm 脚本以使用测试数据库启动 GraphQL 服务器：
 
 {title="package.json",lang="javascript"}
 ~~~~~~~~
@@ -4587,11 +4587,11 @@ const sequelize = new Sequelize(
 
 > You also need to make sure to create such a database. Mine is called *mytestdatabase* in the npm script, which I added in the command line with `psql` and `createdb` or `CREATE DATABASE`.
 
-你还需要确保刚才 npm 脚本中的 *mytestdatabase* 数据库已经创建，在命令行中键入 `psql` 然后执行 `createdb` 或 `CREATE DATABASE` 来创建数据库.
+你还需要确保刚才 npm 脚本中的 *mytestdatabase* 数据库已经创建，在命令行中执行 `psql` 然后执行 `createdb` 或 `CREATE DATABASE` 来创建数据库.
 
 > Finally, you must start with a seeded and consistent database every time you run a test server. To do this, set the database re-seeding flag to depend on the set test database environment variable in the *src/index.js* file:
 
-最后，每次运行测试服务器时，必须从一个初始一致的数据库开始。 为此，请将数据库 re-seeding 标志设置为依赖于 *src/index.js* 文件中设置的测试数据库环境变量：
+最后，每次运行测试服务器时，必须从一个初始一致的数据库开始。 为此，请将数据库 re-seeding 设置为依赖 *src/index.js* 文件中配置的测试数据库环境变量：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -4618,7 +4618,7 @@ sequelize.sync({ force: isTest }).then(async () => {
 
 > Now you are ready to write tests against an actual running test sever (`npm run test-server`) that uses a consistently seeded test database. If you want to use async/await in your test environment, adjust your *.babelrc* file:
 
-现在，你已准备好使用一致的种子测试数据库的测试服务器（`npm run test-server`）来编写测试。 如果要在测试环境中使用 async/await ，需修改 *.babelrc* 文件：
+现在，你已准备好搭配种子测试数据库的测试服务器（`npm run test-server`）来编写测试了。 如果要在测试环境中使用 async/await ，还需修改 *.babelrc* 文件：
 
 {title=".babelrc",lang="javascript"}
 ~~~~~~~~
@@ -4645,7 +4645,7 @@ sequelize.sync({ force: isTest }).then(async () => {
 
 > Every E2E test sends an actual request with axios to the API of the running GraphQL test server. Testing your `user` GraphQL query would look like the following in the *src/tests/user.spec.js* file:
 
-每个 E2E 测试都使用 axios 将真实的请求发送到正在运行的 GraphQL 测试服务器。接下来在 *src/tests/user.spec.js* 文件中编写 `user` GraphQL 查询的测试：
+每个 E2E 测试都使用 axios 将真实的请求发送到正在运行的 GraphQL 测试服务器。接下来在 *src/tests/user.spec.js* 文件中编写 `user` 查询操作的测试：
 
 {title="src/tests/user.spec.js",lang="javascript"}
 ~~~~~~~~
@@ -4677,11 +4677,11 @@ describe('users', () => {
 
 > Each test should be as straightforward as this one. You make a GraphQL API request with axios, expecting a query/mutation result from the API. Behind the scenes, data is read or written from or to the database. The business logic such as authentication, authorization, and pagination works in between. A request goes through the whole GraphQL server stack from API to database. An end-to-end test doesn't test an isolated unit (unit test) or a smaller composition of units (integration test), but the entire pipeline.
 
-每个测试都应该像这个一样简单直接。使用 axios 发出 GraphQL API 请求，期望来自 API 的查询/变更结果。 在幕后，数据从数据库读取或写入，身份验证、授权和分页等业务逻辑在期间执行。 请求会走完整个从 API 到数据库的 GraphQL 服务器流程。 端到端测试不会测试隔离单元（单元测试）或较小的单元组合（集成测试），而是整个管道（流程）。
+每个测试都应该像这个一样简单直接。使用 axios 发出 GraphQL API 请求，期望来自 API 的查询/变更结果。 在幕后，数据从数据库读取或写入，身份验证、授权和分页等业务逻辑在期间执行。 请求会走完整个从 API 到数据库的 GraphQL 服务器流程。 E2E 测试不会测试隔离单元（单元测试）或较小的单元组合（集成测试），而是整个管道（流程）。
 
 > The `userApi` function is the final piece needed to set up effective testing for this application. It's not implemented in the test, but in another *src/tests/api.js* file for portability. In this file, you will find all your functions which can be used to run requests against your GraphQL test server.
 
-`userApi` 函数是为此应用程序设置有效测试所需的最后一部分。它没有在这个测试中实现，而是在 *src/tests/api.js* 文件中测试的，在此文件中，你将找到用于请求 GraphQL 测试服务器的所有函数。
+`userApi` 函数是确保此测试有效的最后一部分。它没有在这个测试中实现，而是在 *src/tests/api.js* 文件中测试的，在此文件中，你将找到用于请求 GraphQL 测试服务器的所有函数（的测试）。
 
 {title="src/tests/api.js",lang="javascript"}
 ~~~~~~~~
@@ -4707,7 +4707,7 @@ export const user = async variables =>
 
 > You can use basic HTTP to perform GraphQL operations across the network layer. It only needs a payload, which is the query/mutation and the variables. Beyond that, the URL of the GraphQL server must be known. Now, import the user API in your actual test file:
 
-您可以使用基本 HTTP 在网络层执行 GraphQL 操作。它需要一个有效载荷，即查询/变更和变量。 除此之外，必须知道 GraphQL 服务器的 URL。 现在，在实际测试文件中导入用户 API：
+你可以使用基本的 HTTP 作为 GraphQL 的网络层。它需要一个有效载荷，即查询/变更和变量。 除此之外，还必须提供 GraphQL 服务器的 URL。 现在，在实际测试文件中导入用户 API：
 
 {title="src/tests/user.spec.js",lang="javascript"}
 ~~~~~~~~
@@ -4734,7 +4734,7 @@ describe('users', () => {
 
 > To execute your tests now, run your GraphQL test server in the command line with `npm run test-server`, and execute your tests in another command line tab with `npm test`. The output should appear as such:
 
-要立即执行测试，请在命令行中使用 `npm run test-server` 运行 GraphQL 测试服务器，并在另一个命令行选项卡中键入 `npm test` 已执行测试。 输出应如下所示：
+要立即执行测试，请在命令行中执行 `npm run test-server` 来运行 GraphQL 测试服务器，并在另一个命令行选项卡中键入 `npm test` 来执行测试。 输出应如下所示：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -4747,11 +4747,11 @@ users
 
 > If your output is erroneous, the console logs may help you figure out what went wrong. Another option is to take the query from the axios request and put it into GraphQL Playground. The error reporting in Playground might make it easier to find problems.
 
-如果输出错误，控制台日志可能会帮助你找出问题所在。另一种选择是从 axios 请求中复制查询代码并将其放入GraphQL Playground 执行。 Playground 中的错误报告可能使查找问题变得更容易。
+如果输出错误，控制台日志可能会帮助你找出问题所在。另一种选择是从 axios 请求中复制查询代码并将其放入GraphQL Playground 执行。 Playground 中的错误报告可以使查找问题变得更容易。
 
 > That's your first E2E test against a GraphQL server. The next one uses the same API, and you can see how useful it is to extract the API layer as reusable functions. In your *src/tests/user.spec.js* file add another test:
 
-这是你针对 GraphQL 服务器的第一次 E2E 测试。 下一个使用相同的 API，您可以看到将 API 层提取为可重用函数是多么有用。在你的 *src/tests/user.spec.js* 文件中添加另一个测试：
+这是你针对 GraphQL 服务器的第一次 E2E 测试。 下一个测试会使用相同的 API，你可以看到将 API 层提取为可重用函数是多么有用。在你的 *src/tests/user.spec.js* 文件中添加另一个测试：
 
 {title="src/tests/user.spec.js",lang="javascript"}
 ~~~~~~~~
@@ -4877,7 +4877,7 @@ describe('users', () => {
 
 > First, you are using the `signIn` mutation to login a user to the application. The login is fulfilled once the token is returned. The token can then be used for every other GraphQL operation. In this case, it is used for the `deleteUser` mutation. The mutation still fails, however, because the current user is not admin. You can try the same scenario on your own with an admin to test the simple path for reusing APIs.
 
-首先，使用 `signIn` 登录用户，登录成功后返回 token。然后，此 token 可用于其他每个 GraphQL 操作。在这种场景下，它用于 `deleteUser` 。 但是，这个操作仍然失败了，因为当前用户不是管理员。你可以自行使用管理员账户并通过同样的 API 来尝试这个的场景。
+首先，使用 `signIn` 登录用户，登录成功后返回 token。然后，此 token 可用于其他每个 GraphQL 操作。在这种场景下，它用于 `deleteUser` 。 但是，这个操作仍然失败了，因为当前用户不是管理员。你可以自行使用管理员账户并通过同样的 API 来再次尝试这个的场景。
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
