@@ -1886,7 +1886,7 @@ That's it for the abstraction of the FetchMore button for paginated lists with A
 
 > In this section, you introduce [React Router](https://github.com/ReactTraining/react-router) to show two separate pages for your application. At the moment, you are only showing one page with a Profile component that displays all your repositories. We want to add another Organization component that shows repositories by an organization, and there could be a search field as well, to lookup individual organizations with their repositories on that page. Let's do this by introducing React Router to your application. If you haven't used React Router before, make sure to conduct the exercises of this section to learn more about it.
 
-在这一小节中， 你将会通过引入 [React Router](https://github.com/ReactTraining/react-router) 在你的程序中展示两个单独的页面。到目前为止，你还只是在一个页面中用 Profile 组件展示你所有的代码库。 我们想要添加另一个 Organization 组件来分组展示你的代码库，并且加上搜索框实现在这个页面上查找不同组的代码库的功能。让我们通过在你的程序引入 React Router 中来实现它吧。如果你之前没有使用过 React Router，请务必进行此小节的练习来更好地了解它。
+在这一小节中， 你将会通过引入 [React Router](https://github.com/ReactTraining/react-router) 在你的程序中展示两个单独的页面。到目前为止，你还只是在一个页面中用 Profile 组件展示你所有的代码库。 我们想要添加另一个 Organization 组件来按组织展示你的代码库，并且加上搜索框实现在这个页面上查找不同组织的代码库的功能。让我们通过在你的程序引入 React Router 中来实现它吧。如果你之前没有使用过 React Router，请务必进行此小节的练习来更好地了解它。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -2040,7 +2040,7 @@ Apollo Client 的另一个重要功能就是它的缓存查询请求。当页面
 
 > The next part of this section is the Organization component. It is the same as the Profile component, except the query differs because it takes a variable for the organization name to identify the organization's repositories.
 
-本小节的下一部分是 Organization 组件。和 Profile 组件基本一样，除了使用不同的查询来将分组名作为变量标识各分组的代码库。
+本小节的下一部分是 Organization 组件。和 Profile 组件基本一样，除了使用不同的查询来将组织名作为变量标识各组织的代码库。
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2084,7 +2084,7 @@ export default Organization;
 
 > The Query component in the Organization component takes a query tailored to the organization being the top level field of the query. It takes a variable to identify the organization, and it uses the newly introduced `skip` prop to skip executing the query if no organization identifier is provided. Later, you will pass an organization identifier from the App component. You may have noticed that the repository fragment you introduced earlier to update the local state in the cache can be reused here. It saves lines of code, and more importantly, ensures the returned list of repositories have identical structures to the list of repositories in the Profile component.
 
-Organization 组件中的 Query 组件实现对分组的定制查询作为查询的顶级字段。它通过一个变量来对分组进行标识，如果这个分组标识符没有被提供，则引入一个新的 `skip` prop 来跳过查询操作。然后，你会从 App 组件中传递分组标识符。你可能已经注意到，之前引入的更新本地状态的代码可以在这里重用。这不仅仅是减少了代码冗余，更重要的是，这样确保了返回的代码库列表和和 Profile 组件中的代码库列表具有相同的结构。
+Organization 组件中的 Query 组件实现对组织的定制查询作为查询的顶级字段。它通过一个变量来对组织进行标识，如果这个组织标识符没有被提供，则引入一个新的 `skip` prop 来跳过查询操作。然后，你会从 App 组件中传递组织标识符。你可能已经注意到，之前引入的更新本地状态的代码可以在这里重用。这不仅仅是减少了代码冗余，更重要的是，这样确保了返回的代码库列表和和 Profile 组件中的代码库列表具有相同的结构。
 
 > Next, extend the query to fit the requirements of the pagination feature. It requires the `cursor` argument to identify the next page of repositories. The `notifyOnNetworkStatusChange` prop is used to update the `loading` boolean for paginated requests as well.
 
@@ -2616,7 +2616,7 @@ export default App;
 
 > You have implemented a dynamic GraphQL query with a search field. Once a new `organizationName` is passed to the Organization component from a local state change, the Query component triggers another request due to a re-render. The request is not always made to the remote GraphQL API, though. The Apollo Client cache is used when an organization is searched twice. Also, you have used the well-known technique called lifting state in React to share the state across components.
 
-你已实现了使用搜索字段进行动态的GraphQL查询。一旦将新的 `organizationName` 变化从本地状态传递给 Organization 组件，Query 组件就会因为重新渲染而触发另一个请求。但它并不会总是向远程 GraphQL API 发送请求。一个分组被搜索多次时，则是使用的 Apollo Client 缓存。此外，你也在 React 中使用了众所周知的被称之为状态提升的技巧，来使组件之间的状态共享。
+你已实现了使用搜索字段进行动态的GraphQL查询。一旦将新的 `organizationName` 变化从本地状态传递给 Organization 组件，Query 组件就会因为重新渲染而触发另一个请求。但它并不会总是向远程 GraphQL API 发送请求。一个组织被搜索多次时，则是使用的 Apollo Client 缓存。此外，你也在 React 中使用了众所周知的被称之为状态提升的技巧，来使组件之间的状态共享。
 
 > ### Exercises:
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
@@ -2627,7 +2627,7 @@ export default App;
 
 * 确认 [最后一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
 * 如果你还不熟悉 React Router ，请练习 [这个实用的教程](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
-* 花3分钟进行参加[测验](https://www.surveymonkey.com/r/5HFQ3TD)
+* 花3分钟进行[测验](https://www.surveymonkey.com/r/5HFQ3TD)
 
 ## Implementing the Issues Feature: Setup
 
