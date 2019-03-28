@@ -479,7 +479,7 @@ You performed your first GraphQL query in a React application, a plain HTTP POST
 React-GraphQL 嵌套对象
 
 Next, we'll request a nested object for the organization. Since the application will eventually show the issues in a repository, you should fetch a repository of an organization as the next step. Remember, a query reaches into the GraphQL graph, so we can nest the `repository` field in the `organization` when the schema defined the relationship between these two entities.
-接下来，我们将为组织请求嵌套对象。由于应用程序最终会在代码库中显示 issue ，因此下一步你应该获取组织的代码库。请记住，查询会进入 GraphQL 图，因此我们可以在架构定义这两个实体之间的关系时将 `repository` 字段嵌套在 `organization` 中。
+接下来，我们将为组织请求嵌套对象。由于应用程序最终会在代码库中显示 issue ，因此下一步你应该获取组织的代码库。请记住，查询（操作）会进入 GraphQL 图，因此我们可以在架构定义这两个实体之间的关系时将 `repository` 字段嵌套在 `organization` 中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -518,7 +518,7 @@ class App extends Component {
 ~~~~~~~~
 
 In this case, the repository name is identical to the organization. That's okay for now. Later on, you can define an organization and repository on your own dynamically. In the second step, you can extend the Organization component with another Repository component as child component. The result for the query should now have a nested repository object in the organization object.
-在这种情况下，代码库名称与组织相同。现在这样做没关系。稍后，你可以动态地定义组织和代码库。在第二步，你可以使用另一个代码库组件作为子组件扩展组织组件。现在，查询的结果应该在架构对象中具有一个嵌套的代码库对象。
+在这种情况下，代码库名称与组织相同。现在这样做没关系。稍后，你可以动态地定义组织和代码库。在第二步，你可以使用另一个代码库组件作为子组件扩展组织组件。现在，查询（操作）的结果应该在架构对象中具有一个嵌套的代码库对象。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -559,7 +559,7 @@ If you want to follow the query structure more thoughtfully, open the "Docs" sid
 如果你想更详细地了解查询结构，请打开 GraphiQL 中的“文档”侧栏以了解`Organization`, `Repository`, `Issue`。也可以在那里找到分页 issue 列表字段。那里对图形结构的概述是非常详尽的。
 
 Now let's extend the query with the list field for the issues. These issues are a paginated list in the end. We will cover these more later; for now, nest it in the `repository` field with a `last` argument to fetch the last items of the list.
-现在让我们用 issue 列表字段扩展查询。这些 issue 最终是一个分页列表。我们稍后会介绍这些内容；现在，将它嵌套在`repository`字段中，并使用`last`参数来获取列表的最后一项。
+现在让我们用 issue 列表字段扩展查询（操作）。这些 issue 最终是一个分页列表。我们稍后会介绍这些内容；现在，将它嵌套在`repository`字段中，并使用`last`参数来获取列表的最后一项。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -638,16 +638,16 @@ const Repository = ({ repository }) => (
 ~~~~~~~~
 
 That's it for the nested objects, fields, and list fields in a query. Once you run your application again, you should see the last issues of the specified repository rendered in your browser.
-这就是查询中的嵌套对象，字段和列表字段。当你再次运行你的应用程序，你会在浏览器中看到指定代码库的最后提的 issue 
+这就是查询（操作）中的嵌套对象，字段和列表字段。当你再次运行你的应用程序，你会在浏览器中看到指定代码库的最后提的 issue 
 
 ### GraphQL Variables and Arguments in React
 React-GraphQL 变量和参数
 
 Next we'll make use of the form and input elements. They should be used to request the data from GitHub's GraphQL API when a user fills in content and submits it. The content is also used for the initial request in `componentDidMount()` of the App component. So far, the organization `login` and repository `name` were inlined arguments in the query. Now, you should be able to pass in the `path` from the local state to the query to define dynamically an organization and repository. That's where variables in a GraphQL query came into play, do you remember?
-接下来我们将使用表单和 input 元素。当用户填写内容并提交内容时，它们应该用于从 Github GraphQL APl请求数据。该内容还用于App组件的 `componentDidMount()` 中的初始请求。目前，组织登录名和代码库名应该是查询中的内联参数。现在，你应该能够通过从本地状态到查询的路径来动态定义组织和代码库。这就是 GraphQL 查询中的变量发挥作用的地方，还记得吗？
+接下来我们将使用表单和 input 元素。当用户填写内容并提交内容时，它们应该用于从 Github GraphQL APl请求数据。该内容还用于App组件的 `componentDidMount()` 中的初始请求。目前，组织登录名和代码库名应该是查询（操作）中的内联参数。现在，你应该能够通过从本地状态到查询的路径来动态定义组织和代码库。这就是 GraphQL 查询中的变量发挥作用的地方，还记得吗？
 
 First, let's use a naive approach by performing string interpolation with JavaScript rather than using GraphQL variables. To do this, refactor the query from a template literal variable to a function that returns a template literal variable. By using the function, you should be able to pass in an organization and repository.
-首先，我们先使用一种简单的方法，通过 JavaScript 来执行字符串插值，注意不是 GraphQL 变量。为此，请将查询从模板文字变量重构为返回模板文字变量的函数。通过使用该函数，你应该能够传入组织和代码库。
+首先，我们先使用一种简单的方法，通过 JavaScript 来执行字符串插值，注意不是 GraphQL 变量。为此，请将查询（操作）从模板文字变量重构为返回模板文字变量的函数。通过使用该函数，你应该能够传入组织和代码库。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -818,10 +818,10 @@ class App extends Component {
 ~~~~~~~~
 
 Now you've made your query flexible by providing dynamic arguments to your query. Try it by starting your application on the command line and by filling in a different organization with a specific repository (e.g. *facebook/create-react-app*).
-现在，你已经通过在查询中提供动态参数灵活的进行查询。在终端尝试启动你的程序，在特定代码库（例如 facebook/create-react-app ）中填充不同的组织。
+现在，你已经通过在查询中提供动态参数灵活的进行查询（操作）。在终端尝试启动你的程序，在特定代码库（例如 facebook/create-react-app ）中填充不同的组织。
 
 It's a decent setup, but there was nothing to see about variables yet. You simply passed the arguments to the query using a function and string interpolation with template literals. Now we'll use GraphQL variables instead, to refactor the query variable again to a template literal that defines inline variables.
-这是一个很好的设置，但还没有什么可见的变量。你只需使用一个函数和带有模板文字的字符串插值将参数传递给查询。现在我们将使用 GraphQL 变量，将查询变量重新调整到定义内联变量的模板文本中。
+这是一个很好的设置，但还没有什么可见的变量。你只需使用一个函数和带有模板文字的字符串插值将参数传递给查询（操作）。现在我们将使用 GraphQL 变量，将查询变量重新调整到定义内联变量的模板文本中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -870,7 +870,7 @@ const getIssuesOfRepository = path => {
 ~~~~~~~~
 
 Finally, the query takes variables into account without detouring into a function with string interpolation. I strongly suggest practicing with the exercises below before continuing to the next section. We've yet to discuss features like fragments or operation names, but we'll soon cover them using Apollo instead of plain HTTP with axios.
-最后，查询将变量纳入考虑，而不用字符串插值的方法去检测函数。我强烈建议在继续下一节之前先练习下面的练习。我们还没有讨论像碎片或操作名称这样的特性，但是我们很快就会使用 Apollo 代替普通的带 axios 的 HTTP 来覆盖它们。
+最后，查询（操作）将变量纳入考虑，而不用字符串插值的方法去检测函数。我强烈建议在继续下一节之前先练习下面的练习。我们还没有讨论像碎片或操作名称这样的特性，但是我们很快就会使用 Apollo 代替普通的带 axios 的 HTTP 来覆盖它们。
 
 ### Exercises:
 练习：
