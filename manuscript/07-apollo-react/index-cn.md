@@ -188,8 +188,8 @@ const client = new ApolloClient({
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/c7454c9f6b5f7cdf9d65722ccae7ae38f648aef3)
 > * Read more about [the network layer configuration in Apollo Client](https://www.apollographql.com/docs/react/advanced/network-layer.html)
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5FYZT8T)
-* 确认你[最后一部分的源代码是否正确](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/c7454c9f6b5f7cdf9d65722ccae7ae38f648aef3)
-* 了解更多关于[Apollo 中的网络层配置](https://www.apollographql.com/docs/react/advanced/network-layer.html)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/c7454c9f6b5f7cdf9d65722ccae7ae38f648aef3)
+* 延伸阅读：[Apollo 中的网络层配置](https://www.apollographql.com/docs/react/advanced/network-layer.html)
 * 请花费三分钟时间参与这份[测验](https://www.surveymonkey.com/r/5FYZT8T)
 
 > ## Connect Data-Layer to View-Layer: Introducing React Apollo
@@ -240,8 +240,8 @@ ReactDOM.render(
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/8377cbc55de3c860df0150d8946e261938a67db5)
 > * Read more about [configuring and connecting Apollo Client to React](https://www.apollographql.com/docs/react/essentials/get-started.html)
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5FHMHW8)
-* 确保代码和[最后一部分](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/8377cbc55de3c860df0150d8946e261938a67db5)一致
-* 了解更多关于文章[配置并将 Apollo Client 和 React 绑定](https://www.apollographql.com/docs/react/essentials/get-started.html)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/8377cbc55de3c860df0150d8946e261938a67db5)一致
+* 延伸阅读：[配置并将 Apollo Client 和 React 绑定](https://www.apollographql.com/docs/react/essentials/get-started.html)
 * 花费三分钟时间参与[测验](https://www.surveymonkey.com/r/5FHMHW8)
 
 > ## GraphQL Query with Apollo Client in React
@@ -641,8 +641,8 @@ export default Link;
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/44ceb0482442eb07e56d134e6e1da8abefd68afe)
 > * Read more about [queries with Apollo Client in React](https://www.apollographql.com/docs/react/essentials/queries.html)
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53Q6K3V)
-* 确保你的最终[代码一致](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/44ceb0482442eb07e56d134e6e1da8abefd68afe)
-* 详细了解[在 React 中使用 Apollo Client 进行查询](https://www.apollographql.com/docs/react/essentials/queries.html)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/44ceb0482442eb07e56d134e6e1da8abefd68afe)
+* 延伸阅读：[在 React 中使用 Apollo Client 进行查询](https://www.apollographql.com/docs/react/essentials/queries.html)
 * 花费 3 分钟参加这个[测验](https://www.surveymonkey.com/r/53Q6K3V)
 
 ## Apollo Client Error Handling in React
