@@ -4,18 +4,18 @@
 
 > In this tutorial, you will learn how to combine React with GraphQL in your application using Apollo. The Apollo toolset can be used to create a GraphQL client, GraphQL server, and other complementary applications, but you will use the Apollo Client for your React client-side application. Along the way, you will build a simplified GitHub client that consumes [GitHub's GraphQL API](https://developer.github.com/v4/) using Apollo instead of plain HTTP requests like the previous application. Apollo Client can be used to perform queries and mutations, and to read and write data. By the end, you should be able to showcase a React application using GraphQL and Apollo that can be used by other developers as a learning tool. You can find the final project as a [repository on GitHub](https://github.com/rwieruch/react-graphql-github-apollo).
 
-在本章中，你会学到如何通过 Apollo 将 GraphQL 与 React 结合。虽然 Apollo 工具集可以创建 GraphQL client、GraphQL server 以及其他通用应用，但是这里你会在 React 客户端应用使用 Apollo Client。通过这种方式，你将实现一个简单 Github client 使用 Apollo (而不是像之前那样直接使用普通 HTTP 请求的方式) 消费[Github 的 GraphQL API](https://developer.github.com/v4/)。Apollo 客户端可以通过来执行查询（query）和变更（mutation），来进行读写数据。在学完本章，你将得到一个使用 Apollo 和 GraphQL 的 React 应用，它可以做他其他开发者的一份学习参考。你可以在这里找到最终的项目——[GitHub 代码库](https://github.com/rwieruch/react-graphql-github-apollo)。
+在本章中，你会学到如何通过 Apollo 将 GraphQL 与 React 结合。虽然 Apollo 工具集可以创建 GraphQL client、GraphQL server 以及其他通用应用，但是这里你会在 React 客户端应用使用 Apollo Client。通过这种方式，你将实现一个简单 Github client 使用 Apollo (而不是像之前那样直接使用普通 HTTP 请求的方式) 消费[Github 的 GraphQL API](https://developer.github.com/v4/)。Apollo 客户端可以通过执行查询（query）和变更（mutation），来进行读写数据。在学完本章，你将得到一个使用 Apollo 和 GraphQL 的 React 应用，它可以作为其他开发者的一份学习参考。你可以在这里找到最终的项目——[GitHub 代码库](https://github.com/rwieruch/react-graphql-github-apollo)。
 
 > ## Writing your first React application with GraphQL and Apollo Client
 ## 编写第一个使用 GraphQL 和 Apollo Client 的 React 应用
 
 > Now we'll focus on using Apollo Client in React by building another client application. Basically, you will learn how to connect the data-layer to the view-layer. We'll cover how to send queries and mutations from the view-layer, and how to update the view-layer to reflect the result. Further, you will learn to use GraphQL features like pagination, optimistic UI, caching, local state management, and prefetching with Apollo Client in React.
 
-现在我们开始在 React 中使用 Apollo Client 构建另一个应用。你会学到如何连接数据层与视图层，涉及如何从视图层发送 query 和 mutation，以及何如根据返回结果更新视图层。然后，你将了解如何在 React 中结合 Apollo Client，使用如分页、乐观 UI、缓存、本地状态管理以及预加载的 GraphQL 特性。
+现在我们开始在 React 中使用 Apollo Client 构建另一个应用。你会学到如何连接数据层与视图层，涉及如何从视图层发送 query 和 mutation，以及如何根据返回结果更新视图层。然后，你将了解如何在 React 中结合 Apollo Client，使用如分页、乐观 UI、缓存、本地状态管理以及预加载的 GraphQL 特性。
 
 > For this application, no elaborate React setup is needed. Simply use [create-react-app](https://github.com/facebook/create-react-app) to create your React application. If you want to have an elaborate React setup instead, see this [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/). To get started, the following steps have to be performed:
 
-对于这个应用，不需要复杂的初始化配置。使用 [create-react-app](https://github.com/facebook/create-react-app) 创建一个即可。如果你希望有一个定制化的 React 初始化配置，看看这篇 [使用 Webpack 的 React 配置指南](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。为了继续，你需要完成下面的步骤：
+对于这个应用，不需要复杂的初始化配置。使用 [create-react-app](https://github.com/facebook/create-react-app) 创建一个即可。如果你希望有一个定制化的 React 初始化配置，看看这篇 [使用 Webpack 的 React 配置指南](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。首先，你需要完成下面的步骤：
 
 > * Create a new React application with create-react-app
 > * Create a folder/file structure for your project (recommendation below)
@@ -54,7 +54,7 @@
 
 > The folders primarily represent React components. Some components will be reusable UI components such as the Input and Link components, while other components like Repository and Profile components are domain specific for the GitHub client application. Only the top level folders are specified for now, though more can be introduced later if you choose. Moreover, the *constants* folder has only one file to specify the application's routes, which will be introduced later. You may want to navigate from a page that shows repositories of an organization (Organization component) to a page which shows repositories of yourself (Profile component).
 
-这个目录主要展示了 React 组件。其中有一些比如 Input 和 Link 组件将是可以复用的 UI 组件，其他的比如 Repository 和 Profile 组件是 GitHub 客户端应应用的特定领域组件。目前只有顶层的目录结构，后面需要可以按需引入更多的目录。还有就是，*contants* 目录现在只有一个用来指定路由的文件（后面会详细介绍），比如你可能希望从展示 GitHub 组织的一个代码库的页面（Organization 组件）跳转到你自己的代码库页面（Profile 组件）中。
+这个目录主要展示了 React 组件。其中有一些比如 Input 和 Link 组件将是可以复用的 UI 组件，其他的比如 Repository 和 Profile 组件是 GitHub 客户端应用的特定领域组件。目前只有顶层的目录结构，后面需要可以按需引入更多的目录。还有就是，*contants* 目录现在只有一个用来指定路由的文件（后面会详细介绍），比如你可能希望从展示 GitHub 组织的一个代码库的页面（Organization 组件）跳转到你自己的代码库页面（Profile 组件）中。
 
 > This application will use plain CSS classes and CSS files. By following the plain CSS classes, you can avoid difficulties that may occur with other tools. You will find all the CSS files and their content in the appendix section for this application. The components will use their class names without explaining them. The next sections should be purely dedicated to JavaScript, React, and GraphQL.
 
@@ -156,11 +156,11 @@ const httpLink = new HttpLink({
 
 > You may recall the mandatory configuration from previous applications. The `uri` is a mandatory value to define the only GraphQL API endpoint used by the Apollo Client. In this case, Github's GraphQL endpoint is passed as value. When consuming the GitHub GraphQL API, you have to authorize yourself with your personal access token. You should have already created the token in a previous section, which you can now define in a *.env* file in your project folder. Afterward, it should be accessible with `process.env`. Keep in mind that you have to use the `REACT_APP` prefix when using create-react-app, because that's how it is required by create-react-app. Otherwise, you would be free to choose your own naming for it.
 
-你可能记得在前面的应用中，GraphQL API endpoint 是 Apollo Client 需要的唯一配置项，本书的示例里，传入的是 Github 的 GraphQL endpoint。当消耗 Github GraphQL API，你必须使用你的个人 access token 进行认证。你应该在前一部分中已经创建了 token（你可以在项目目录中创建一个 *.env* 文件） 了。之后，应该可以通过 `process.env` 获取这个值。记住你在使用 create-react-app 时，需要加上 `REACT_APP` 前缀，这是 create-react-app 规定的。此外，你可以随意命名。
+你可能记得在前面的应用中，GraphQL API endpoint 是 Apollo Client 需要的唯一配置项，本书的示例里，传入的是 Github 的 GraphQL endpoint。在消费 Github GraphQL API 前，你必须使用你的个人 access token 进行认证。你应该在前一部分中已经创建了 token（你可以在项目目录中创建一个 *.env* 文件） 了。之后，应该可以通过 `process.env` 获取这个值。记住你在使用 create-react-app 时，需要加上 `REACT_APP` 前缀，这是 create-react-app 规定的。此外，你可以随意命名。
 
 > Second, create the cache as the place where the data is managed in Apollo Client. The cache normalizes your data, caches requests to avoid duplicates, and makes it possible to read and write data to the cache. You will use it multiple times while developing this application. The cache instantiation is straightforward, as it doesn't require you to pass any arguments to it. Check the API to explore further configurations.
 
-第二步，创建 Apollo Client 管理数据的缓存。缓存归一化数据，缓存可以避免多余重复的请求，也允许通过缓存读写数据。在开发这个应用中会多次用到它。实例化缓存非常直观，不需要传递任何参数。详细了解下它的 API 以便将来的进一步配置吧。
+第二步，创建 Apollo Client 管理数据的缓存。缓存能归一化数据，缓存可以避免多余重复的请求，也允许通过缓存读写数据。在开发这个应用中会多次用到它。实例化缓存非常直观，不需要传递任何参数。详细了解下它的 API 以便将来的进一步配置吧。
 
 
 {title="src/index.js",lang="javascript"}
@@ -180,7 +180,7 @@ const client = new ApolloClient({
 ~~~~~~~~
 
 > To initialize Apollo Client, you must specify link and cache properties on the config object. Once you start your application again, there should be no errors. If there are any, check whether you have implemented a basic App component in your *src/App/index.js* file because the ReactDOM API needs to hook this component into the HTML.
-为了实例化 Apollo Client，你必须在配置对象中，指定 link 和 cache 属性。应用一旦启动，应该没有应该报错。如果有报错信息，请检查在 *src/App/index.js* 文件中是否实现了基本的 App 组件，因为 ReactDOM API 需要一个组件用于在 HTML 中渲染。
+为了实例化 Apollo Client，你必须在配置对象中，指定 link 和 cache 属性。应用一旦启动，应该没有报错。如果有报错信息，请检查在 *src/App/index.js* 文件中是否实现了基本的 App 组件，因为 ReactDOM API 需要一个组件用于在 HTML 中渲染。
 
 > ### Exercises:
 ### 练习：
@@ -196,7 +196,7 @@ const client = new ApolloClient({
 ## 绑定数据层与视图层：介绍 React Apollo
 
 > All we've done thus far has been the framework agnostic part of Apollo Client. However, without connecting React to it, you'd have a hard time making effective use of GraphQL. That's why there is an official library to connect both worlds: [react-apollo](https://github.com/apollographql/react-apollo). The great thing about those connecting libraries is that there are solutions for other view-layer solutions like Angular and Vue, too, so you can use the Apollo Client in a framework agnostic way. In the following, it needs two steps to connect the Apollo Client with React. First, install the library in the command line in your project folder:
-目前我们完成的部分，仅仅是 Apollo Client 中框架无关的部分配置。如果没有与 React 进行绑定，那使用 GraphQL 会比较困难。这就是为什么有一个官方库[react-apollo](https://github.com/apollographql/react-apollo)，名字是两者的结合了。这些绑定库也提供了其他视图层的积极方案，比如说 Angular 和 Vue，使用 Apollo Client 是框架无关的。后面的部分，为了完成 Apollo Client 和 React 的绑定，需要两个步骤。首先在你的项目目录下安装必要的依赖：
+目前我们完成的部分，仅仅是 Apollo Client 中框架无关的部分配置。如果没有与 React 进行绑定，那使用 GraphQL 会比较困难。这就是为什么有一个连接两者的官方库[react-apollo](https://github.com/apollographql/react-apollo)存在了。这些绑定库也提供了其他视图层的积极方案，比如说 Angular 和 Vue，使用 Apollo Client 是框架无关的。后面的部分，为了完成 Apollo Client 和 React 的绑定，需要两个步骤。首先在你的项目目录下安装必要的依赖：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -248,7 +248,7 @@ ReactDOM.render(
 ## 在 React 中 使用 Apollo Client 进行 GraphQL 查询（Query）
 
 > In this section, you will implement your first GraphQL query using Apollo Client in React. You've seen how different entities, such as the current user (viewer) or repositories, can be queried from GitHub's GraphQL API. This time you will do it in React. A Profile component might be the best place to render the current user and its associated repositories. Start by using the not-yet-implemented Profile component in your App component in the *src/App/index.js* file, which we'll take care of next. It makes sense to extract the Profile component now, because the App component will be the static frame around the application later. Components like Navigation and Footer are static, and components such as Profile and Organization are dynamically rendered based on routing (URLs).
-在这部分，你需要使用 Apollo Client 在 React 中实现第一个 GraphQL 查询。这次你会在 React 中实现不同的实体，比如当前用户（viewer）或者代码库，在 GitHub 的 GraphQL API 的查询。Profile 组件适合渲染当前用户和他关联的代码库。后面我们会在 *src/App/index.js* 文件中使用还未实现的 Profile 组件。抽出 Profile 组件是有意义的，因为 App 组件以后再应用总会作为应用的静态框架，如 Navigation 和 Footer 组件也会是静态的，而 Profile 和 Organization 之类的组件会给予路由（URLs）动态渲染。
+在这部分，你需要使用 Apollo Client 在 React 中实现第一个 GraphQL 查询。这次你会在 React 中实现不同的实体，比如当前用户（viewer）或者代码库，在 GitHub 的 GraphQL API 的查询。Profile 组件适合渲染当前用户和他关联的代码库。后面我们会在 *src/App/index.js* 文件中使用还未实现的 Profile 组件。抽出 Profile 组件是有意义的，因为 App 组件以后再应用总会作为应用的静态框架，如 Navigation 和 Footer 组件也会是静态的，而 Profile 和 Organization 之类的组件会基于路由（URLs）动态渲染。
 
 {title="src/App/index.js",lang="javascript"}
 ~~~~~~~~
@@ -270,7 +270,7 @@ export default App;
 ~~~~~~~~
 
 > In your *src/Profile/index.js* file, add a simple functional stateless component. In the next step you will extend it with a GraphQL query.
-在 *src/Profile/index.js* 文件中，添加一个简单的无状态组件。下一步，你会基于其添加 GraphQL 查询。 
+在 *src/Profile/index.js* 文件中，添加一个简单的无状态组件。下一步，你使用 GraphQL 查询对其进行。 
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -283,11 +283,11 @@ export default Profile;
 ~~~~~~~~
 
 > Now we'll learn to query data with GraphQL and Apollo Client. The Apollo Client was provided in a previous section with React's Context API in a top level component. You have implicit access to it, but never use it directly for standard queries and mutations. It says "standard" here, because there will be situations where you use the Apollo Client instance directly while implementing this application.
-现在学习在使用 Apollo Client 查询数据。前一部分中，Apollo Client 是以 React Context API 提供的，你可以隐式的获取它，不过还没有使用它直接进行进行标准查询或变更。这里提到“标准”，是因为在实现这个应用的时候，你使用的是 Apollo Client 实例。
+现在学习在使用 Apollo Client 查询数据。前一部分中，Apollo Client 是以 React Context API 提供的，你可以隐式的获取它，不过还没有使用它直接进行标准查询或变更。这里提到“标准”，是因为在实现这个应用的时候，你使用的是 Apollo Client 实例。
 
 
 > The React Apollo package grants access to a Query component, which takes a query as prop and executes it when its rendered. That's the important part: it executes the query when it is rendered. It uses React's [render props](https://www.robinwieruch.de/react-render-props-pattern/) pattern, using a child as a function implementation where you can access the result of the query as an argument.
-React Apollo 库确保，Queryr 组件能接受一个查询 prop，并在渲染的时候被执行。这是最重要的一部分：当渲染的时候执行查询。它使用了 React 的 [render props](https://www.robinwieruch.de/react-render-props-pattern/) 模式，使用子函数的实现方式，获取查询结果。
+React Apollo 库确保，Query 组件能接受一个查询 prop，并在渲染的时候被执行。这是最重要的一部分：当渲染的时候执行查询。它使用了 React 的 [render props](https://www.robinwieruch.de/react-render-props-pattern/) 模式，使用子函数的实现方式，获取查询结果。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -341,7 +341,7 @@ export default Profile;
 ~~~~~~~~
 
 > Use the children as a function pattern to retrieve the query result as a data object, and render the information in your JSX.
-只有子函数模式拿到查询结果的数据对象，并将信息通过 JSX 语句渲染出来。
+使用子函数模式拿到查询结果的数据对象，并将信息通过 JSX 语句渲染出来。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -378,7 +378,7 @@ export default Profile;
 ~~~~~~~~
 
 > Make sure to give some type of visual feedback until your view-layer can be rendered with actual data:
-你要确保在视图层获得真实数据全，能有一些的界面上的反馈。
+确保在视图层获得真实数据前，能有一些的界面上的反馈。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -407,7 +407,7 @@ const Profile = () => (
 这就是你怎么使用一种声明的方式定义 GraphQL 查询语句。一旦 Query 组件渲染，请求就会被执行。在顶层组件中注入的 Apollo Client 会被用来执行查询。render props 模式允许在子函数中获得查询结果。你可以在浏览器验证它真实的工作方式。
 
 > There is more information found in the render prop function. Check the official React Apollo API for additional information beyond the examples in this application. Next, let's show a loading indicator when a query is pending:
-在 render props 函数中，可以获取更多的信息，请查看官方的 React Apollo API 以获取这个应用示例外的信息。然后，我们在请求还在等待结果是，加入一个 loading 指示器。
+在 render props 函数中，可以获取更多的信息，请查看官方的 React Apollo API 以获取这个应用示例外的信息。然后，我们在请求还在等待结果时，加入一个 loading 指示器。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -435,7 +435,7 @@ const Profile = () => (
 ~~~~~~~~
 
 > The application now shows a loading indicator when there is no `viewer` object or the `loading` boolean is set to true. As you can assume that the request will be pending when there is no `viewer`, you can show the loading indicator from the beginning. At this point, it's best to extract the loading indicator as its own component because you will have to reuse it later for other queries. You created a Loading folder for it before, which will house the *src/Loading/index.js* file. Then, use it in your Profile component.
-应用现在在没有视图对象的时候，loading 的值会被设置成 true，然后应用会展示 loading 指示器。当你假定请问会阻塞，你可以一开始就展示一个 loading 指示器。最好将 loading 指示器抽出成一个单独的足迹，因为你可能后面需要在其他的查询中使用。创建一个 Loading 目录，用来存放 *src/Loading/index.js* 文件，在你的 Profile 组件中使用。
+现在应用在没有视图对象的时候，loading 的值会被设置成 true，然后应用会展示 loading 指示器。当你假定请求会阻塞，你可以一开始就展示一个 loading 指示器。最好将 loading 指示器抽出成一个单独的组件，因为你可能后面需要在其他的查询中使用。创建一个 Loading 目录，用来存放 *src/Loading/index.js* 文件，在你的 Profile 组件中使用。
 
 {title="src/Loading/index.js",lang="javascript"}
 ~~~~~~~~
@@ -448,7 +448,7 @@ export default Loading;
 ~~~~~~~~
 
 > Next, extend the query with a nested list field for querying your own GitHub repositories. You have done it a few times before, so the query structure shouldn't be any different now. The following query requests a lot of information you will use in this application:
-接下来，扩展查询语句，添加一个内嵌的列表字段查询你自己的 Github 代码库。你之前已经做过几遍这个操作了，查询语句的结果不会有什么变化。下面的查询语句会在这个应用中使用，用来请求很多信息。
+接下来，扩展查询语句，添加一个内嵌的列表字段查询你自己的 Github 代码库。你之前已经做过几遍这个操作了，查询语句的结构不会有什么变化。下面的查询语句会在这个应用中使用，用来请求很多信息。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -493,7 +493,7 @@ const GET_REPOSITORIES_OF_CURRENT_USER = gql`
 ~~~~~~~~
 
 > Use this extended and renamed query in your Query component to request additional information about repositories. Pass these repositories from the query result to a new RepositoryList component which should do all the rendering for you. It's not the responsibility of the Profile component, and you may want to render a list of repositories somewhere else.
-在 Query 组件中使用这个扩展和重新命名的查询，请代码库的额外信息。将查询结果的代码库信息传给新的 RepositoryList 组件，它会被用来渲染所有的代码库，因为这并不是 Profile 组件的职责，而且你可能也会需要在其他地方渲染代码库列表。
+在 Query 组件中使用这个扩展和重新命名的查询，请求代码库的额外信息。将查询结果的代码库信息传给新的 RepositoryList 组件，它会被用来渲染所有的代码库，因为这并不是 Profile 组件的职责，而且你可能也会需要在其他地方渲染代码库列表。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -534,7 +534,7 @@ export default RepositoryList;
 ~~~~~~~~
 
 > Next, define the RepositoryList component in your *src/Repository/RepositoryList/index.js* file. The component only takes the array of repositories as props, which will be retrieved by the GraphQL query to render a list of RepositoryItem components. The identifier of each repository can be passed as key attribute to the rendered list. Otherwise, all props from one repository node are passed to the RepositoryItem using the JavaScript spread operator.
-接下来，在 *src/Repository/RepositoryList/index.js* 文件中定义 RepositoryList 组件。这个组件只需要接受一个代码库数组（从 GraphQL 查询中获取的数）作为 prop 输入，用来渲染一组 RepositoryItem 组件。每一个代码库的标识符会作为渲染列表的键存在。除此之外，每个代码库节点的 prop 会通过 JavaScript 的展开操作符传递给 RepositoryItem 组件。
+接下来，在 *src/Repository/RepositoryList/index.js* 文件中定义 RepositoryList 组件。这个组件只需要接受一个代码库数组（从 GraphQL 查询中获取的数据）作为 prop 输入，用来渲染一组 RepositoryItem 组件。每一个代码库的标识符会作为渲染列表的键存在。除此之外，每个代码库节点的 prop 会通过 JavaScript 的展开操作符传递给 RepositoryItem 组件。
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -555,7 +555,7 @@ export default RepositoryList;
 ~~~~~~~~
 
 Finally, define the RepositoryItem component in the *src/Repository/RepositoryItem/index.js* file to render all the queried information about each repository. The file already uses a couple of stylings which you may have defined in a CSS file as suggested before. Otherwise, the component renders only static information for now.
-> 最后，在 *src/Repository/RepositoryItem/index.js* 文件中，定义 RepositoryItem 组件。这个文件需要使用之前定义好的 CSS 文件中的一组样式。除此之前，现在组件只需渲染一些静态信息。
+> 最后，在 *src/Repository/RepositoryItem/index.js* 文件中，定义 RepositoryItem 组件，以便渲染查询到的每个代码库的信息。这个文件需要使用之前定义好的 CSS 文件中的一组样式。除此之外，现在组件只需渲染一些静态信息。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
