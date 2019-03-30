@@ -88,7 +88,7 @@
 
 > In this section, you will set up an Apollo Client instance like we did previously. However, this time you will use Apollo Client directly without the zero-configuration package Apollo Boost, meaning you'll need to configure the Apollo Client yourself without sensible defaults. While it's best to use a tool with sensible defaults for learning, configuring Apollo yourself exposes the composable ecosystem of Apollo Client, how to use it for an initial setup, and how to advance this setup later.
 
-本部分，和前面一样，我们需要设置好一个 Apollo Client 实例。不过，这部分，你需要直接配置 Apollo Client，而不借助于 Apollo Boost 的零配置方式。尽管使用工具的默认配置很适合初学，不过自己去配置 Apollo Client 可以了解 Apollo 里的整个生态，了解最开始使用怎么快速设置，又怎么取高级扩展配置。
+本部分，和前面一样，我们需要设置好一个 Apollo Client 实例。不过，这部分，你需要直接配置 Apollo Client，而不借助于 Apollo Boost 的零配置方式。尽管使用工具的默认配置很适合初学，不过自己去配置 Apollo Client 可以了解 Apollo 里的整个生态，了解最开始使用怎么开始初始化配置，又怎么去扩展增强这份配置。
 
 > The Apollo Client setup can be completed in the top-level *src/index.js* file, where the React to HTML entry point exists as well. First, install the Apollo Client in your project folder using the command line:
 Apollo Client 可以写在 *src/index.js* 文件中，虽然也可以在 HTML 中的 React 入口点设置。首先，在你的项目目录下，使用命令安装 Apollo Client：
