@@ -18,7 +18,7 @@
 
 > After the last sections, you should be ready to use queries and mutations in your React application.In this section, you will create a React application that consumes the GitHub GraphQL API. The application should show open issues in a GitHub repository, making it a simple issue tracker.Again, if you lack experience with React, see [The Road to learn React](https://www.robinwieruch.de/the-road-to-learn-react) to learn more about it. After that you should be well set up for the following section.
 
-在上一节之后，你应该准备好了如何在 React 应用程序中使用查询和修改。在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。它是一个简单的问题跟踪器，需要显示在 GitHub 代码库中的一些公开的问题（原文：open issues）如果你对 React 缺乏经验，可以阅读 [React 学习之道](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识，为接下来的部分做好充分的准备。
+在上一节之后，你应该准备好了如何在 React 应用程序中使用查询和修改。在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。它是一个简单的问题跟踪器，需要显示在 GitHub 代码库中的一些 open issues，如果你对 React 缺乏经验，可以阅读 [React 学习之道](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识，为接下来的部分做好充分的准备。
 
 > For this application, no elaborate React setup is needed. You will simply use [create-react-app](https://github.com/facebook/create-react-app) to create your React application with zero-configuration. Install it with npm by typing the following instructions on the command line: `npm install -g create-react-app`. If you want to have an elaborated React setup instead, read this [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/).
 
@@ -26,7 +26,7 @@
 
 > Now, let's create the application with create-react-app. In your general projects folder, type the following instructions: 
 
-现在，让我们使用 create-react-app 创建应用程序。进入你常规的项目文件夹中，输入以下命令：
+现在，让我们使用 create-react-app 创建应用程序。进入你常规的项目文件夹中，输入如下命令：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -40,7 +40,7 @@ cd react-graphql-github-vanilla
 
 > The following application will focus on the *src/App.js* file. It's up to you to split out components, configuration, or functions to their own folders and files. Let's get started with the App component in the mentioned file. In order to simplify it, you can change it to the following content:
 
-接下来的应用程序将关注 src/App.js 文件，你也可以将组件、配置或函数拆分到它们自己的文件夹和文件中。我们从上述文件中的 App 组件开始，为了简化它，你可以将其更改为以下内容：
+接下来我们将主要关注在 src/App.js 文件上，你也可以将组件、配置或函数拆分到它们自己的文件夹和文件中。我们从上述文件中的 App 组件开始，为了简化它，你可以将其更改为如下内容：
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -63,7 +63,7 @@ export default App;
 
 > The component only renders a `title` as a headline. Before implementing any more React components, let's install a library to handle GraphQL requests, executing queries and mutations, using a HTTP POST method. For this, you will use [axios](https://github.com/axios/axios). On the command line, type the following command to install axios in the project folder:
 
-现阶段组件只会渲染一个 `title` 作为标题。在实现其他的 React 组件之前，我们先安装一个使用 HTTP POST 方法执行查询和修改的第三方库来处理 GraphQL 请求。推荐使用 [axios](https://github.com/axios/axios)。在命令行中，输入以下命令在项目文件夹中安装 axios：
+现阶段组件只会渲染一个 `title` 作为标题。在实现其他的 React 组件之前，我们先安装一个使用 HTTP POST 方法执行查询和修改的第三方库来处理 GraphQL 请求。推荐使用 [axios](https://github.com/axios/axios)。在命令行中，输入如下命令在项目文件夹中安装 axios：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -72,7 +72,7 @@ npm install axios --save
 
 > Afterward, you can import axios next to your App component and configure it. It's perfect for the following application, because somehow you want to configure it only once with your personal access token and GitHub's GraphQL API.
 
-接下来，可以在你的 App 组件中导入并配置它。它可以简化后续的开发步骤，因为在某种程度上，你只需要用你的个人访问令牌和 GitHub 的 GraphQL API 配置它一次。
+接下来，可以在你的 App 组件中导入并配置它。它可以简化后续的开发步骤，因为在某种程度上，你只需要用你的 access token 和 GitHub 的 GraphQL API 配置它一次。
 
 > First, define a base URL for axios when creating a configured instance from it. As mentioned before, you don't need to define GitHub's URL endpoint every time you make a request because all queries and mutations point to the same URL endpoint in GraphQL. You get the flexibility from your query and mutation structures using objects and fields instead.
 
@@ -96,7 +96,7 @@ export default App;
 
 > Second, pass the personal access token as header to the configuration. The header is used by each request made with this axios instance.
 
-接下来，将个人访问令牌作为 header 传递到配置中。使用这个 axios 实例发出的每个请求都会使用这个 header。
+接下来，将 access token 作为 header 传递到配置中。使用这个 axios 实例发出的每个请求都会使用这个 header。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -116,7 +116,7 @@ const axiosGitHubGraphQL = axios.create({
 
 > Replace the `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` string with your personal access token. To avoid cutting and pasting your access token directly into the source code, you can create a *.env* file to hold all your environment variables on the command line in your project folder. If you don't want to share the personal token in a public GitHub repository, you can add the file to your *.gitignore*.
 
-用你的个人访问令牌替换 `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` 字符串。为了避免将访问令牌直接剪切和粘贴到源代码中，你可以创建一个 *.env* 文件来保存项目文件夹中命令行上的所有环境变量。如果不想在公开的GitHub代码库中共享个人令牌，可以将该文件添加到.gitignore。
+用你的 access token 替换 `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` 字符串。为了避免将访问令牌直接剪切和粘贴到源代码中，你可以创建一个 *.env* 文件来保存项目文件夹中命令行上的所有环境变量。如果不想在公开的GitHub代码库中共享个人令牌，可以将该文件添加到.gitignore。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -125,7 +125,7 @@ touch .env
 
 > Environment variables are defined in this *.env* file. Be sure to follow the correct naming constraints when using create-react-app, which uses `REACT_APP` as prefix for each key. In your *.env* file, paste the following key value pair. The key has to have the `REACT_APP` prefix, and the value has to be your personal access token from GitHub.
 
-将环境变量定义在这个 *.env* 文件中。在使用 create-react-app 时，确保遵循正确的命名约束，它使用 `REACT_APP` 作为每个 key 的前缀。将下面的键值对粘贴在你的 *.env* 文件中。密钥必须有 `REACT_APP` 前缀，并且值必须是你 GitHub 的个人访问令牌。
+将环境变量定义在这个 *.env* 文件中。在使用 create-react-app 时，确保遵循正确的命名约束，它使用 `REACT_APP` 作为每个 key 的前缀。将下面的键值对粘贴在你的 *.env* 文件中。密钥必须有 `REACT_APP` 前缀，并且值必须是你 GitHub 的 access token 。
 
 {title=".env",lang="javascript"}
 ~~~~~~~~
@@ -134,7 +134,7 @@ REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN=xxxXXX
 
 > Now, you can pass the personal access token as environment variable to your axios configuration with string interpolation ([template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)) to create a configured axios instance.
 
-现在，你可以将个人访问令牌作为环境变量传递给 axios 配置，并使用字符串插值（ [模板字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) ）创建一个配置好的axios实例。
+现在，你可以将 access token 作为环境变量传递给 axios 配置，并使用字符串插值（ [模板字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) ）创建一个配置好的axios实例。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -156,11 +156,11 @@ const axiosGitHubGraphQL = axios.create({
 
 > The initial axios setup is essentially the same as we completed using the GraphiQL application before to access GitHub's GraphQL API, when you had to set a header with a personal access token and endpoint URL as well.
 
-axios 的初始设置基本上与我们之前使用 GraphiQL 应用程序访问 GitHub 的 GraphQL API 时所完成的设置相同，那时你还必须设置带有个人访问令牌和端点 URL 的头文件。
+axios 的初始设置基本上与我们之前使用 GraphiQL 应用程序访问 GitHub 的 GraphQL API 时所完成的设置相同，那时你还必须设置带有 access token 和端点 URL 的头文件。
 
 > Next, set up a form for capturing details about a GitHub organization and repository from a user. It should be possible to fill out an input field to request a paginated list of issues for a specific GitHub repository. First, there needs to be a form with an input field to enter the organization and repository. The input field has to update React's local state. Second, the form needs a submit button to request data about the organization and repository that the user provided in the input field, which are located in the component's local state. Third, it would be convenient to have an initial local state for the organization and repository to request initial data when the component mounts for the first time.
 
-接下来需要添加一个表单，用于从用户处获得关于 GitHub 组织和代码库的详细信息。这个表单需要一个输入栏，为特定的 GitHub 代码库请求一个可以分页的 issues 列表。
+接下来需要添加一个表单，用于从用户处获得关于 GitHub 组织和代码库的详细信息。这个表单包含一个输入栏，可以为特定的 GitHub 代码库请求一个可以分页的 issues 列表。首先，需要一个带有输入栏的表单来输入组织和代码库。其次，表单需要一个提交按钮来请求用户在输入字段中提供的组织和代码库的数据，并且将这些数据存放在于组件的本地状态中。接下来，当组件第一次挂载时，组织和代码库有一个初始的本地状态来请求初始数据。
 
 > Let's tackle implementing this scenario in two steps. The render method has to render a form with an input field. The form has to have an `onSubmit` handler, and the input field needs an `onChange` handler. The input field uses the `path` from the local state as a value to be a controlled component. The `path` value in the local state from the `onChange` handler updates in the second step.
 
@@ -294,7 +294,7 @@ You might wonder why there is only one input field to grab the information about
 
 > Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
 
-* 确认你的 [最新部分源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
+* 查看 [本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
 > If you are unfamiliar with React, check out *The Road to learn React*
 
 * 如果你不熟悉React，可以阅读 *React 学习之道*
@@ -323,7 +323,7 @@ const GET_ORGANIZATION = `
 
 > Use template literals in JavaScript to define the query as string with multiple lines. It should be identical to the query you used before in GraphiQL or GitHub Explorer. Now, you can use axios to make a POST request to GitHub's GraphiQL API. The configuration for axios already points to the correct API endpoint and uses your personal access token. The only thing left is passing the query to it as payload during a POST request. The argument for the endpoint can be an empty string, because you defined the endpoint in the configuration. It will execute the request when the App component mounts in `componentDidMount()`. After the promise from axios has been resolved, only a console log of the result remains.
 
-使用 JavaScript 中的模板字符串将查询语句定义为多行的字符串。与之前在 GraphiQL 或 GitHub Explorer 中使用的查询相同。现在你就可以使用 axios 向 GitHub 的 GraphiQL API 发出 POST 请求。axios 的配置已经指向正确的 API 端点，并使用的是你的个人访问令牌。唯一剩下的事情是在 POST 请求期间将查询作为有效负载传递给它。端点的参数可以是空字符串，因为你在配置中定义了端点。当 App 组件生命周期执行到 `componentDidMount()` 时，就会执行请求。在 axios 的 promise 被解析之后，结果将会保留在控制台日志中。
+使用 JavaScript 中的模板字符串将查询语句定义为多行的字符串。与之前在 GraphiQL 或 GitHub Explorer 中使用的查询相同。现在你就可以使用 axios 向 GitHub 的 GraphiQL API 发出 POST 请求。axios 的配置已经指向正确的 API 端点，并使用的是你的 access token 。唯一剩下的事情是在 POST 请求期间将查询作为有效负载传递给它。端点的参数可以是空字符串，因为你在配置中定义了端点。当 App 组件生命周期执行到 `componentDidMount()` 时，就会执行请求。在 axios 的 promise 被解析之后，结果将会保留在控制台日志中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -380,7 +380,7 @@ class App extends Component {
 
 > Start your application again and verify that you have got the result in your developer console log. If you get a [401 HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes), you didn't set up your personal access token properly. Otherwise, if everything went fine, you should see a similar result in your developer console log.
 
-再次启动你的应用程序，并确认你已经在开发者模式下的控制台日志中得到了结果。如果得到了  [401 HTTP 状态码](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)，说明你没有正确设置你的个人访问令牌。否则，你应该会在开发人员控制台日志中看到类似的结果。
+再次启动你的应用程序，并确认你已经在开发者模式下的控制台日志中得到了结果。如果得到了  [401 HTTP 状态码](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)，说明你没有正确设置你的 access token 。否则，你应该会在开发人员控制台日志中看到类似的结果。
 
 {title="Developer Tools",lang="json"}
 ~~~~~~~~
