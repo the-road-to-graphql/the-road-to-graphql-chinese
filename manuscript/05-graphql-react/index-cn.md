@@ -476,7 +476,7 @@ const Organization = ({ organization, errors }) => {
 You performed your first GraphQL query in a React application, a plain HTTP POST request with a query as payload. You used a configured axios client instance for it. Afterward, you were able to store the result in React's local state to display it later.
 
 ### GraphQL Nested Objects in React
-React-GraphQL 嵌套对象
+React 中 GraphQL 嵌套对象的使用
 
 Next, we'll request a nested object for the organization. Since the application will eventually show the issues in a repository, you should fetch a repository of an organization as the next step. Remember, a query reaches into the GraphQL graph, so we can nest the `repository` field in the `organization` when the schema defined the relationship between these two entities.
 接下来，我们将为组织请求嵌套对象。由于应用程序最终会在代码库中显示 issue ，因此下一步你应该获取组织的代码库。请记住，查询（操作）会进入 GraphQL 图，因此我们可以在架构定义这两个实体之间的关系时将 `repository` 字段嵌套在 `organization` 中。
@@ -876,13 +876,13 @@ Finally, the query takes variables into account without detouring into a functio
 练习：
 
 * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
-* 确认[最后一节的源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
 * Explore and add fields to your organization, repository and issues
-* 在你的 organization, repository and issues 中探索和添加字段
+* 在你的组织、代码库和问题中探索和添加字段
   * Extend your components to display the additional information
   * 扩展你的组件以显示附加信息
 * Read more about [serving a GraphQL API over HTTP](http://graphql.org/learn/serving-over-http/)
-* 阅读更多关于 [serving a GraphQL API over HTTP](http://graphql.org/learn/serving-over-http/)
+* 延伸阅读：[通过HTTP 提供GraphQL API服务](http://graphql.org/learn/serving-over-http/)
 ## GraphQL Pagination in React
 
 Last section you implemented a list field in your GraphQL query, which fit into the flow of structuring the query with nested objects and a list responsible for showing partial results of the query in React.
