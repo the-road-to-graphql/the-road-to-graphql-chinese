@@ -10,7 +10,7 @@
 
 > In this section, you will interact with the GitHub API using queries and mutations without React, so you can use your GraphiQL application or GitHub's GraphQL Explorer to make GraphQL query requests to GitHub's API. Both tools should be authorized to make requests using a personal access token. On the left-hand side of your GraphiQL application, you can fill in GraphQL queries and mutations. Add the following query to request data about yourself.
 
-在本节中，你可以使用查询和变更同 GitHub API 交互，可以通过 GraphiQL 应用或者 GitHub 的 GraphQL Explorer 发送查询请求到 GitHub API。 这两种工具都需要使用个人申请的 access token 授权。在 GraphiQL 应用的左侧，允许你输入 GraphQL 查询和变更语句来调试 GraphQL 请求。尝试输入下面的语句获取你的个人信息数据。
+在本节中，你可以使用查询和变更同 GitHub API 交互，可以通过 GraphiQL 应用或者 GitHub 的 GraphQL Explorer 发送查询请求到 GitHub API，本节暂时不会涉及和 React 集成相关知识。 这两种工具都需要使用个人申请的 access token 授权。在 GraphiQL 应用的左侧，允许你输入 GraphQL 查询和变更语句来调试 GraphQL 请求。尝试输入下面的语句获取你的个人信息数据。
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -83,12 +83,12 @@ https://github.com/the-road-to-learn-react
 
 > In the previous query you passed an argument to a field. As you can imagine, you can add arguments to various fields using GraphQL. It grants a great deal of flexibility for structuring queries, because you can make specifications to requests on a field level. Also, arguments can be of different types. With the organization above, you provided an argument with the type `String`, though you can also pass types like enumerations with a fixed set of options, integers, or booleans.
 
-在上面的查询中，你传入了一个参数给某个字段。同理，你也可以使用 GraphQL 添加参数到不同的字段。由于 GraphQL 的参数支持在在字段级别做出约束，这为结构化查询提供了很大的灵活性。另外，参数可以是不同的类型。对于上面组织的例子，你可以提供了一个类型为 `String` 的参数，但你也可以使用一组固定的选项作为枚举、整数或布尔值。
+在上面的查询中，你传入了一个参数给某个字段。同理，你也可以使用 GraphQL 添加参数到不同的字段。由于 GraphQL 的参数支持在在字段级别作出约束，这为结构化查询提供了很大的灵活性。另外，参数可以是不同的类型。对于上面组织的例子，使用了一个类型为 `String` 的参数，但你也可以使用一组固定的选项作为枚举、整数或布尔值。
 
 
 > If you ever wanted to request data about two identical objects, you would have to use **aliases** in GraphQL. The following query wouldn't be possible, because GraphQL wouldn't know how to resolve the two organization objects in a result:
 
-如果你想要一个字段不同参数返回的数据，则需要在 GraphQL 中使用 **别名**。下面的查询语句不能被正常处理，因为 GraphQL 不知道如何在结果中解析两个组织对象：
+如果你想要一个字段不同参数返回的数据，则需要在 GraphQL 中使用 **别名**。下面的查询语句不能被正常处理，因为 GraphQL 不知道如何在结果中解析两个组织对象： 
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -183,12 +183,12 @@ fragment sharedOrganizationFields on Organization {
 
 > Since we're exploring queries and not mutations at the moment, select "Query" in the "Docs" sidebar. Afterward, traverse the objects and fields of the graph, explore their optional arguments. By clicking them, you can see the accessible fields within those objects in the graph. Some fields are common GraphQL types such as `String`, `Int` and `Boolean`, while some other types are **custom types** like the `Organization` type we used. In addition, you can see whether arguments are required when requesting fields on an object. It can be identified by the exclamation point. For instance, a field with a `String!` argument requires that you pass in a `String` argument whereas a field with a `String` argument doesn't require you to pass it.
 
-由于我们目前在探索查询相关的内容，所以可以在 “Docs” 侧边栏中选择 “query” 标签来了解更多信息。对比 graph 中的对象和字段，浏览它们的可选参数。点击它们，你可以在文档中查看这些对象中的可访问字段。有些字段是常见的 GraphQL 类型，如 `String`，`Int` 和 `Boolean`，而其他一些类型是**自定义类型**，就像我们使用的 `Organization` 类型。此外，通过感叹号标记你可以查看在对象上的字段的参数是否为必填。例如，带有 `String！` 参数的字段要求你必须传入 `String` 参数，而带有 `String` 参数的字段则是可选的。
+由于我们目前在探索查询相关的内容，所以可以在 “Docs” 侧边栏中选择 “Query” 标签来了解更多信息。对比 graph 中的对象和字段，浏览它们的可选参数。点击它们，你可以在文档中查看这些对象中的可访问字段。有些字段是常见的 GraphQL 类型，如 `String`，`Int` 和 `Boolean`，而其他一些类型是**自定义类型**，就像我们使用的 `Organization` 类型。此外，通过感叹号标记你可以查看在对象上的字段的参数是否为必填。例如，带有 `String！` 参数的字段要求你必须传入 `String` 参数，而带有 `String` 参数的字段则是可选的。
 
 
 > In the previous queries, you provided arguments that identified an organization to your fields; but you **inlined these arguments** in your query. Think about a query like a function, where it's important to provide dynamic arguments to it. That's where the **variable** in GraphQL comes in, as it allows arguments to be extracted as variables from queries. Here's how an organization's `login` argument can be extracted to a dynamic variable:
 
-在之前的学习中，你在构建查询时，传入了用于向字段标识某个组织的参数，但是是通过**内联参数**的方式。如果将查询作为函数一样看待，为它提供动态参数就很有意义了。这就是 GraphQL 中**变量**，它允许使用参数动态的构建查询。以下示例展示了组织的 `login` 参数是如何使用变量的：
+在之前的学习中，你在构建查询时，传入了用于向字段标识某个组织的参数，但是是通过**内联参数**的方式。如果将查询作为函数一样看待，为它提供动态参数就很有意义了。这就是 GraphQL 中**变量**，它允许使用参数动态地构建查询。以下示例展示了组织的 `login` 参数是如何使用变量的：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -221,7 +221,7 @@ In the "Query Variables" panel, the variables would have the following content f
 > Essentially, variables can be used to create dynamic queries. Following the best practices in GraphQL, we don't need manual string interpolation to structure a dynamic query later on. Instead, we provide a query that uses variables as arguments, which are available when the query is sent as a request to the GraphQL API. You will see both implementations later in your React application.
 
 
-基本的，变量被用来创建动态查询。遵循 GraphQL 中的最佳实践，我们不需要手动插入字符串来构建动态查询。实际开发过程中，当我们使用变量构建查询时，可以让参数在请求被发送时动态绑定。稍后你将在 React 应用程序中看到这两种实现。
+一般来说，变量被用来创建动态查询。遵循 GraphQL 中的最佳实践，我们不需要手动插入字符串来构建动态查询。实际开发过程中，当我们使用变量构建查询时，可以让参数在请求被发送时动态绑定。稍后你将在 React 应用程序中看到这两种实现。
 
 
 > Sidenote: You can also define a **default variable** in GraphQL. It has to be a non-required argument, or an error will occur about a **nullable variable** or **non-null variable**. For learning about default variables, we'll make the `organization` argument non-required by omitting the exclamation point. Afterwards, it can be passed as a default variable.
@@ -280,7 +280,7 @@ query OrganizationForLearningReact {
 
 > Compare it to anonymous and named functions in your code. A **named query** provides a certain level of clarity about what you want to achieve with the query in a declarative way, and it helps with debugging multiple queries, so it should be used when you want to implement an application. Your final query, without showing the variables panel again, could look like the following:
 
-同它与代码中的匿名和命名函数进行对比。**具名查询** 更为清晰，表明你希望以声明方式实现查询，在调试多个查询时非常有帮助，推荐在真实的项目中这样操作。完成查询的最终版本，应该像下面一样（省略了变量表）：
+同它与代码中的匿名和命名函数进行对比。**具名查询**更为清晰，表明你希望以声明方式实现查询，在调试多个查询时非常有帮助，推荐在真实的项目中这样操作。完成查询的最终版本（省略了变量表），应该像下面一样：
 
 
 {title="GitHub GraphQL Explorer",lang="json"}
@@ -340,7 +340,7 @@ query OrganizationForLearningReact(
 > A **directive** can be used to query data from your GraphQL API in a more powerful way, and they can be applied to fields and objects. Below, we use two types of directives: an **include directive**, which includes the field when the Boolean type is set to true; and the **skip directive**, which excludes it instead. With these directives, you can apply conditional structures to your shape of query. The following query showcases the include directive, but you can substitute it with the skip directive to achieve the opposite effect:
 
 
-**指令** 可用于以更强大的方式查询 GraphQL API 中的数据，并且它们可以应用于字段和对象。下面，我们来尝试使用两种指令：**include 指令**，用来包含布尔类型设置为 true 的字段; 和 **skip 指令**，与之相反排除那些为 true 的字段。使用这些指令，你可以将条件结构应用于查询。以下查询展示了include 指令，你也可以使用 skip 指令替换它实现相反的效果：
+**指令**可用于以更强大的方式查询 GraphQL API 中的数据，并且它们可以应用于字段和对象。下面，我们来尝试使用两种指令：**include 指令**，用来包含布尔类型设置为 true 的字段; 和 **skip 指令**，与之相反排除那些为 true 的字段。使用这些指令，你可以将条件结构应用于查询。以下查询展示了include 指令，你也可以使用 skip 指令替换它实现相反的效果：
 
 
 {title="GitHub GraphQL Explorer",lang="json"}
@@ -398,7 +398,7 @@ GraphQL中的查询为你提供了从 GraphQL API 读取数据时的全部功能
 
 ### 练习
 
-* 阅读更多关于 GraphQL 中的查询 [the Query in GraphQL](http://graphql.org/learn/queries).
+* 延伸阅读：[GraphQL 中的查询](http://graphql.org/learn/queries).
 * 使用 GraphiQL 中的 “Docs” 侧边栏探索 GitHub 的查询操作
 * 使用以下功能创建一些从 GitHub 的 GraphQL API 请求数据的查询：
   * 对象和字段
