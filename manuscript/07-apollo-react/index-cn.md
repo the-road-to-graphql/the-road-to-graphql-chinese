@@ -2625,7 +2625,7 @@ export default App;
 
 ### 练习：
 
-* 确认 [最后一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
+* 查看 [本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
 * 如果你还不熟悉 React Router ，请练习 [这个实用的教程](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
 * 花3分钟进行[测验](https://www.surveymonkey.com/r/5HFQ3TD)
 
