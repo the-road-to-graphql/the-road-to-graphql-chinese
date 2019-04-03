@@ -2141,7 +2141,7 @@ export default Organization;
 
 > Lastly, the render prop child function needs to be implemented. It doesn't differ much from the Query's content in the Profile component. Its purpose is to handle edge cases like loading and 'no data' errors, and eventually, to show a list of repositories. Because the RepositoryList component handles the pagination feature, this improvement is included in the newly implemented Organization component.
 
-最后一步，实现渲染子 prop 的功能。这和在 Profile 组件中渲染 Query 的内容基本一致。它主要是用于处理像“没有数据”这样的边界情况和错误，并最终显示出代码库列表。由于 RepositoryList 组件处理了分页功能，所以将这个改进放入新实现的 Organization 组件中。
+最后一步，实现 render prop 子函数。这和在 Profile 组件中渲染 Query 的内容基本一致。它主要是用于处理像“没有数据”这样的边界情况和错误，并最终显示出代码库列表。由于 RepositoryList 组件处理了分页功能，所以将这个改进放入新实现的 Organization 组件中。
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
