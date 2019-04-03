@@ -1968,7 +1968,7 @@ export default Organization;
 
 > Since you mapped both routes to their respective components, so you want to implement navigation from one route to another. For this, introduce a **Navigation** component in the App component.
 
-既然你已经将两个路由指向了它们各自的组件，你一定想要实现一个从一个路由到另一个路由的导航吧。在 App 组件中引入 **Navigation** 来实现它。
+既然你已经将两个路由指向了它们各自的组件，你一定想要实现一个从一个路由到另一个路由的导航吧。在 App 组件中引入 **Navigation** 组件来实现它。
 
 {title="src/App/index.js",lang="javascript"}
 ~~~~~~~~
