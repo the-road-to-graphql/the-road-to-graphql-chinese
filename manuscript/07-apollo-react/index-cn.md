@@ -717,17 +717,17 @@ const client = new ApolloClient({
 > ### Exercises:
 ### 练习：
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
-* 查看[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
 > * Read more about [different Apollo Error types and error policies](https://www.apollographql.com/docs/react/features/error-handling.html)
-* 阅读更多关于[不同的 Apollo 错误类型和错误策略](https://www.apollographql.com/docs/react/features/error-handling.html)的内容
+* 拓展阅读：[不同的 Apollo 错误类型和错误策略](https://www.apollographql.com/docs/react/features/error-handling.html)
 > * Read more about [Apollo Links](https://www.apollographql.com/docs/link/)
-* 阅读更多关于[ Apollo 链接](https://www.apollographql.com/docs/link/)的内容
+* 拓展阅读：[ Apollo 链接](https://www.apollographql.com/docs/link/)
 > * Read more about [composable Apollo Links](https://www.apollographql.com/docs/link/composition.html)
-* 阅读更多关于[可组合的 Apollo 链接](https://www.apollographql.com/docs/link/composition.html)的内容
+* 拓展阅读：[可组合的 Apollo 链接](https://www.apollographql.com/docs/link/composition.html)
 >* Implement the [apollo-link-retry](https://www.apollographql.com/docs/link/links/retry.html) in case a network request fails
 * 实现[ Apollo 链接重试](https://www.apollographql.com/docs/link/links/retry.html)功能来处理网络请求失败
 >* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53HLLFX)
-* 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/53HLLFX)
+* 花3分钟来做一个[测试](https://www.surveymonkey.com/r/53HLLFX)
 
 >## GraphQL Mutation with Apollo Client in React
 ## Apollo Client 在 React 使用突变
@@ -970,9 +970,9 @@ const RepositoryItem = ({ ... }) => (
 > ### Exercises:
 ### 练习：
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
-* 查看[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
 >* Read more about [mutations with Apollo Client in React](https://www.apollographql.com/docs/react/essentials/mutations.html)
-* 阅读更多关于[ Apollo Client 突变](https://www.apollographql.com/docs/react/essentials/mutations.html)的内容
+* 拓展阅读：[ Apollo Client 突变](https://www.apollographql.com/docs/react/essentials/mutations.html)
 > * Implement other mutations in the RepositoryItem component
 >  * Implement the `removeStar` mutation when the `viewerHasStarred` boolean is true
 >  * Show a button with the watchers count which should be used to watch/unwatch a repository
@@ -983,7 +983,7 @@ const RepositoryItem = ({ ... }) => (
   * 当 `viewerHasStarred` 布尔值为true时，实现 `removeStar` 图标
   * 显示一个带有 watcher 数量的按钮，该按钮用于 watch 或者 unwatch 一个 repository
     * 使用 Github 的 GraphQL API 实现 `updateSubscription` 突变，它根据  `viewerSubscription` 状态实现 watch 或者 unwatch 一个 repository
-* 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5GJQWXC)
+* 花3分钟来做一个[测试](https://www.surveymonkey.com/r/5GJQWXC)
 
 > ## GraphQL Query/Mutation with Higher-Order Components in React
 
@@ -1050,13 +1050,13 @@ export default graphql(GET_REPOSITORIES_OF_CURRENT_USER)(Profile);
 > ### Exercises:
 ### 练习：
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/694cc4ec8f0d3546c13e0a32cd1f18ba9a990713)
-* 查看[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/694cc4ec8f0d3546c13e0a32cd1f18ba9a990713)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/694cc4ec8f0d3546c13e0a32cd1f18ba9a990713)
 > * Come up with your own opinion about the advantages and disadvantages of using a Higher-Order Component or Render Prop
 * 对使用高阶组件或者 Render Prop 的优缺点提出自己的看法
 > * Try to implement one of your mutations with a Higher-Order Component
 * 尝试使用高阶组件去实现一个突变
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5G6QPLY)
-* 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5G6QPLY)
+* 花3分钟来做一个[测试](https://www.surveymonkey.com/r/5G6QPLY)
 > ## Local State Management with Apollo Client in React
 ## Apollo Client 在 React 中使用本地状态管理
 >Let's get back to the Repository component. You have experienced that the `viewerHasStarred` boolean updates in the Apollo Client's cache after a mutation was successful. That's great, because Apollo Client handles this for you, based on the mutation result. If you have followed the exercises of the mutation section, you should probably see something like a toggling "Star" and "Unstar" label for the button. All of this happens because you returned the `viewerHasStarred` boolean in your mutation result. Apollo Client is clever enough to update the repository entity, which is normalized and accessible in the cache. That's powerful default behavior, isn't it? You don't need to handle the local state management yourself, since Apollo Client figures it out for you as long as you provide useful information in the mutation's result.
@@ -1311,11 +1311,11 @@ const updateAddStar = (
 >### Exercises:
 ### 练习：
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
-* 查看[上一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
 >* Read more about [Local State Management in Apollo Client](https://www.apollographql.com/docs/react/essentials/local-state.html)
-* 阅读更多关于[ Apollo Client 本地状态管理](https://www.apollographql.com/docs/react/essentials/local-state.html)的内容
+* 拓展阅读：[ Apollo Client 本地状态管理](https://www.apollographql.com/docs/react/essentials/local-state.html)
 >* Read more about [Fragments in Apollo Client](https://www.apollographql.com/docs/react/advanced/fragments.html)
-* 阅读更多关于[ Apollo Client 中片段](https://www.apollographql.com/docs/react/advanced/fragments.html)的内容
+* 拓展阅读：[ Apollo Client 中片段](https://www.apollographql.com/docs/react/advanced/fragments.html)
 
 >* Implement local cache updates for all the other mutations from the previous exercises
 >  * Implement the identical local cache update, but with decreasing the count of stargazers, for your `removeStar` mutation
@@ -1328,8 +1328,8 @@ const updateAddStar = (
   * 为 `removeStar` 突变实现相同的本地缓存更新，但是是去减少 stargazer 的数量
   * 为 `updateSubscription` 突变实现本地缓存更新
   * 你将会在下一节看到一个可行的解决方案
-* 阅读更多关于[ Apollo Client 中的缓存以及用于标识实体的组合键](https://www.apollographql.com/docs/react/advanced/caching.html)
-* 花3分钟来做一个[小练习](https://www.surveymonkey.com/r/5BSDXF7)
+* 拓展阅读：[ Apollo Client 中的缓存以及用于标识实体的组合键](https://www.apollographql.com/docs/react/advanced/caching.html)
+* 花3分钟来做一个[测试](https://www.surveymonkey.com/r/5BSDXF7)
 
 ## Apollo Client Optimistic UI in React
 
