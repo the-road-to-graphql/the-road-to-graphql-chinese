@@ -4825,7 +4825,7 @@ This section only covered E2E tests. With Chai and Mocha at your disposal, you c
 
 > The section is about improving the requests to your database. While only one request (e.g. a GraphQL query) hits your GraphQL API, you may end up with multiple database reads and writes to resolve all fields in the resolvers. Let's see this problem in action using the following query in GraphQL Playground:
 
-这一部分内容介绍了如何优化数据库请求。每当有请求 (比如一个GraphQL query) 调用 GraphQL API，可能在resolver层需要有多数据库执行读和写操作。我们在 GraphQL Playground 中使用已下的查询来看看有什么问题：
+这一部分内容介绍了如何优化数据库请求。每当有请求 (比如一个 GraphQL 查询) 调用 GraphQL API，可能在 resolver 层需要有多数据库执行读和写操作。我们在 GraphQL Playground 中使用已下的查询来看看有什么问题：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -4888,11 +4888,11 @@ Executing (default): SELECT "id", "username", "email", "password", "role", "crea
 
 > There is one request made for the list of messages, and three requests for each individual user. That's the nature of GraphQL. Even though you can nest your GraphQL relationships and query structure, there will still be database requests. Check the resolvers for the message user in your *src/resolvers/message.js* file to see where this is happening. At some point, you may run into performance bottlenecks when nesting GraphQL queries or mutations too deeply, because a lot of items need to be retrieved from your database.
 
-messages表有一个请求，users表有三个请求。GraphQL 本质上就是这样。即使可以内嵌 GraphQL 关系和 query 结构, 数据库请求还是会存在. 在 *src/resolvers/message.js* 文件中查看消息作者的 resolever 可以找到这些请求。在使用深层内嵌查询或者更改的时候，你可能会遇到性能瓶颈，那是因为有特别多的数据需要从数据库读取。
+messages 表有一个请求，users 表有三个请求。GraphQL 本质上就是这样。即使可以内嵌 GraphQL 关系和查询结构, 数据库请求还是会存在. 在 *src/resolvers/message.js* 文件中查看消息作者的 resolever 可以找到这些请求。在使用深层内嵌查询或者更改的时候，你可能会遇到性能瓶颈，那是因为有特别多的数据需要从数据库读取。
 
 > In the following, you will optimize these database accesses with batching. It's a strategy used for a GraphQL server and its database, but also for other programming environments. Compare the query result in GraphQL Playground and your database output in the command line.
 
-下面这个示例演示了如何用批处理来优化数据库操作。这是个用于优化 GraphQL 服务器和数据库的策略，也可优化编程环境。在命令行里可以对比 GraqhQL Playground和数据库的查询结果。
+下面这个示例演示了如何用批处理来优化数据库操作。这是个用于优化 GraphQL 服务器和数据库的策略，也可优化编程环境。在命令行里可以对比 GraqhQL Playground 和数据库的查询结果。
 
 > There are two improvements that can be made with batching. First, one author of a message is retrieved twice from the database, which is redundant. Even though there are multiple messages, the author of some of these messages can be the same person. Imagine this problem on a larger scale for 100 messages between two authors in a chat application. There would be one request for the 100 messages and 100 requests for the 100 authors of each message, which would lead to 101 database accesses. If duplicated authors are retrieved only once, it would only need one request for the 100 messages and 2 requests for the authors, which reduces the 101 database hits to just 3. Since you know all the identifiers of the authors, these identifiers can be batched to a set where none are repeated. In this case, the two authors a list of [2, 2, 1] identifiers become a set of [2, 1] identifiers.
 
@@ -4972,7 +4972,7 @@ loaders 实际上是 models 的上层抽象，可以作为上下文传递给 res
 
 > Now we'll consider the function as argument for the DataLoader instantiation. The function gives you access to a list of keys in its arguments. These keys are your set of identifiers, purged of duplication, which can be used to retrieve items from a database. That's why keys (identifiers) and models (data access layer) are passed to the `batchUser()` function. The function then takes the keys to retrieve the entities via the model from the database. By the end of the function, the keys are mapped in the same order as the retrieved entities. Otherwise, it's possible to return users right after their retrieval from the database, though they have a different order than the incoming keys. As a result, users need to be returned in the same order as their incoming identifiers (keys).
 
-现在我们将该函数视为 DataLoader 实例化的参数。该函数使你可以访问其参数中的键列表。这些键是您的标识符集，已清除重复，可用于从数据库中拉取数据。这就是将键（id）和模型（数据访问层）传递给 `batchUser()` 函数的原因。然后，该函数使用 id 列表在数据库中的模型拉取实体。在函数结束时，id 列表的映射顺序与拉取到的实体的顺序相同。否则，如果在从数据库中拉取数据实体之后立即返回，就会导致它们的顺序与传入 id 列表不同。因此，数据实体需要以传入的 id(key) 列表的相同顺序返回。
+现在我们将该函数视为 DataLoader 实例化的参数。该函数使你可以访问其参数中的键列表。这些键就是标识符集，已清除重复，可用于从数据库中拉取数据。这就是将标识符（id）和模型（数据访问层）传递给 `batchUser()` 函数的原因。然后，该函数使用 id 列表在数据库中的模型拉取实体。在函数结束时，id 列表的映射顺序与拉取到的实体的顺序相同。否则，如果在从数据库中拉取数据实体之后立即返回，就会导致它们的顺序与传入 id 列表不同。因此，数据实体需要以传入的 id(标识符) 列表的相同顺序返回。
 
 > That's the setup for the loader, an improved abstraction on top of the model. Now, since you are passing the loader for the batched user retrieval as context to the resolvers, you can make use of it in the *src/resolvers/message.js* file:
  Now, s you can make use of it in the *src/resolvers/message.js* file:
@@ -5094,7 +5094,7 @@ Executing (default): SELECT "id", "text", "createdAt", "updatedAt", "userId" FRO
 > It's difficult to find the right timing for invalidating the cache, so I recommended performing the dataloader instantiation with every incoming GraphQL request. You lose the benefit of caching over multiple GraphQL requests, but still use the cache for every database access with one incoming GraphQL request. The dataloader package expresses it like this: *"DataLoader caching does not replace Redis, Memcache, or any other shared application-level cache. DataLoader is first and foremost a data loading mechanism, and its cache only serves the purpose of not repeatedly loading the same data in the context of a single request to your Application."* If you want to get into real caching on the database level, give [Redis](https://redis.io/) a shot.
 
 
-选择合适的时机作废缓存比较困难，所以我建议在每个 GraphQL 请求的时候重新初始化 dataloader。你将会失去在多个请求之间缓存数据的能力，但是还是可以在一个 GraphQL 请求里缓存所有的数据库请求。在 dataloader 包里这样陈述： *“Dataloader 缓存不是为了替代 Redis，Memcache，或者是别的任何应用层缓存组件。Dataloader 首先是一中数据加载机制，它的目的在于免于重复地在应用的同一个请求里查询相同的数据。”*  假如你需要真正的数据库级别缓存，可以试试[Redis](https://redis.io/) 。
+选择合适的时机清除缓存比较困难，所以我建议在每个 GraphQL 请求的时候重新初始化 dataloader。你将会失去在多个请求之间缓存数据的能力，但是还是可以在一个 GraphQL 请求里缓存所有的数据库请求。在 dataloader 包里这样陈述： *“Dataloader 缓存不是为了替代 Redis，Memcache，或者是别的任何应用层缓存组件。Dataloader 首先是一中数据加载机制，它的目的在于免于重复地在应用的同一个请求里查询相同的数据。”*  假如你需要真正的数据库级别缓存，可以试试[Redis](https://redis.io/) 。
 
 > Outsource the loaders into a different folder/file structure. Put the batching for the individual users into a new *src/loaders/user.js* file:
 
@@ -5287,7 +5287,7 @@ Use heroku addons:docs heroku-postgresql to view documentation
 
 > You are ready to take your application online. With the PostgreSQL add-on, you received a database URL as well. You can find it with `heroku config`. Now, let's step into your GraphQL server's code to make a couple of adjustments for production. In your *src/models/index.js*, you need to decide between development (coding, testing) and production (live) build. Because you have a new environment variable for your database URL, you can use this to make the decision:
 
-你已经准备好将自己的应用部署上线了。使用 PostgreSQL，你应该也有个数据库 URL。可以用 `heroku config` 找到它。现在需要检查 GraphQL 服务器的代码，为生产环境做一些改动。在 *src/models/index.js* 文件里，你需要在 development (coding, testing) 和 production (live) 构建中选择一个。由于你有一个新的环境变量来保存数据库 URL，可以这样来修改环境：
+你已经准备好将自己的应用部署上线了。使用 PostgreSQL，你应该也有个数据库 URL。可以用 `heroku config` 找到它。现在需要检查 GraphQL 服务器的代码，为生产环境做一些改动。在 *src/models/index.js* 文件里，你需要在 development(coding, testing) 和 production(live) 构建中选择一个。由于你有一个新的环境变量来保存数据库 URL，可以这样来修改环境：
 
 {title="src/models/index.js",lang="javascript"}
 ~~~~~~~~
