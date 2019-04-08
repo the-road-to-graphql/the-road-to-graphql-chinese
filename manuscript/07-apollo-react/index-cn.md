@@ -566,7 +566,7 @@ What you have done in the last steps of this section were pure React implementat
 
 > Before diving into GraphQL mutations in React with Apollo Client, this section should clarify error handling with Apollo in React. The error handling happens on two levels: the application level and the query/mutation level. Both can be implemented with the two cases that follow. On a query level, in your Profile component, you have access to the query `data` and `loading` properties. Apart from these, you can also access the `error` object, which can be used to show a conditional error message.
 
-在我们更深入探究在 React 和 Apollo Client 中如何使用 GraphQL 突变的知识之前，这一节将阐述如何在 React 中使用 Apollo 进行错误处理。错误处理出现在两个级别：应用程序级别，查询/突变级别。两种情况都可以通过以下两种方法处理。在查询级别中，你可以在你的配置组件中访问 `data` 和 `loading` 属性，除此之外，你也可以访问 `error` 对象，该对象可用于显示错误消息。
+在探究如何在 React 中结合 Apollo Client 进行GraphQL变更操作之前，这一节将阐明如何使用 Apollo 进行React中的错误处理。错误处理发生在两个级别：应用程序级别，查询/变更级别。这两种级别都可以通过以下两种情型处理。对于查询级别的情型，你可以在你的Profile组件中访问 `data` 和 `loading` 属性，除此之外，你也可以访问 `error` 对象，该对象可用于显示条件错误消息。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
