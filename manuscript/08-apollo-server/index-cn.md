@@ -2676,15 +2676,15 @@ The next section will teach you about authorization in GraphQL on the server-sid
 
 > In the last section, you set up GraphQL mutations to enable authentication with the server. You can register a new user with bcrypt hashed passwords and you can login with your user's credentials. Both GraphQL mutations related to authentication return a token (JWT) that secures non-sensitive user information with a secret.
 
-在上一节中，你已经设置了 GraphQL 变更（mutations）以启用服务器的身份验证。你可以使用 bcrypt 哈希密码注册新用户，并且可以用你的用户凭证进行登录。这两个与身份验证相关的 GraphQL 变更（mutations）都返回一个令牌（JWT），它使用密钥来保护非敏感用户信息。
+在上一节中，你已经设置了 GraphQL 变更（操作）以启用服务器的身份验证。你可以使用 bcrypt 哈希密码注册新用户，并且可以用你的用户凭证进行登录。这两个与身份验证相关的 GraphQL 变更（操作）都返回一个token（JWT），它使用密钥来保护非敏感用户信息。
 
 > The token, whether its obtained on registration or login, is returned to the client application after a successful GraphQL `signIn` or `signUp` mutation. The client application must store the token somewhere like [the browser's session storage](https://www.robinwieruch.de/local-storage-react). Every time a request is made to the GraphQL server, the token has to be attached to the HTTP header of the HTTP request. The GraphQL server can then validate the HTTP header, verify its authenticity, and perform a request like a GraphQL operation. If the token is invalid, the GraphQL server must return an error for the GraphQL client. If the client still has a token locally stored, it should remove the token and redirect the user to the login page.
 
-无论是在注册还是登录时获得的令牌，在成功的 GraphQL `signIn` 或 `signUp` 变更（mutation）后都会被返回给客户端。客户端必须将令牌存储在某个位置，例如浏览器的[会话存储](https://www.robinwieruch.de/local-storage-react)。每次向 GraphQL server 发起请求时，必须将令牌附加到 HTTP 请求头里面。然后，GraphQL server 可以校验 HTTP 请求头，验证其真实性，并执行类似 GraphQL 操作的请求。如果令牌无效，则 GraphQL server 必须向 GraphQL client 返回一个错误。如果客户端仍然本地存储着令牌，则应删除令牌并将用户重定向到登录页面。
+无论是在注册还是登录时获得的 token，在 GraphQL 成功变更（操作） signIn 或 signUp 后都会返回给客户端。客户端必须将 token 存储在某个位置，例如浏览器的[会话存储](https://www.robinwieruch.de/local-storage-react)。每次向 GraphQL server 发起请求时，必须将 token 附加到 HTTP 请求头里面。GraphQL server 接收到请求后，可以校验 HTTP 请求头，并执行类似 GraphQL 操作的请求。如果 token 无效，则 GraphQL server 必须向客户端返回一个错误。如果客户端仍然本地存储着 token，则应删除 token 并将用户重定向到登录页面。
 
 > Now we just need to perform the server part of the equation. Let's do it in the *src/index.js* file by adding a global authorization that verifies the incoming token before the request hits the GraphQL resolvers.
 
-现在我们只需要执行服务器的部分。让我们在 *src/index.js* 文件中添加一个全局授权，在请求命中 GraphQL 解析器之前校验传入的令牌。
+现在我们只需要执行服务器的部分。让我们在 *src/index.js* 文件中添加一个全局授权，在请求命中 GraphQL 解析器之前校验传入的 token。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2737,30 +2737,30 @@ const server = new ApolloServer({
 
 > In this general authorization on the server-side, you are injecting the `me` user, the authenticated user from the token, with every request to your Apollo Server's context. The `me` user is encoded in the token in the `createToken()` function. It's not a user from the database anymore, which spares the additional database request.
 
-在服务端的全局授权中，你将把通过令牌身份校验的用户 `me` 注入向 Apollo Server 发起的每个请求中。用户 `me` 在createToken（）函数中的令牌中已进行编码。它不再是数据库中的一个用户，这可以节省额外的数据库请求。
+在服务端的全局授权中，你将把通过 token 身份校验的用户 `me` 注入向 Apollo Server 发起的每个请求中。在 token 中的用户 `me` 会被 createToken() 函数编码。它不再是数据库中的一个用户，这可以避免额外的数据库请求。
 
 > In the `getMe()` function, you extract the HTTP header for the authorization called "x-token" from the incoming HTTP request. The GraphQL client application sends the token obtained from the registration or login with every other request in an HTTP header, along with the payload of the HTTP request (e.g. GraphQL operation). It can then be checked to see if there is such an HTTP header in the function or not. If not, the function continues with the request, but the `me` user is undefined. If there is a token, the function verifies the token with its secret and retrieves the user information that was stored when you created the token. If the verification fails because the token was invalid or expired, the GraphQL server throws a specific Apollo Server Error. If the verification succeeds, the function continues with the `me` user defined.
 
-在 `getMe()` 函数内，你从传入的 HTTP 请求中提取名为 "x-token" 的请求头以便进行授权校验 。在每次请求时，GraphQL client 都会把在注册或登录时获取的令牌及其他有效数据（例如 GraphQL 操作）一起放在 HTTP 请求头中发送。然后可以检查在函数中是否存在这样的 HTTP 请求头。如果没有，该函数继续请求，但用户 `me` 是未定义的。如果令牌存在，则该函数会使用其密钥验证令牌，并检索创建令牌时存储的用户信息。如果因令牌无效或过期导致验证失败，GraphQL server 会抛出特定的 Apollo Server 错误。如果验证成功，则函数将继续使用经过验证的用户 `me`。
+在 `getMe()` 函数内，你从传入的 HTTP 请求中提取名为 "x-token" 的请求头以便进行授权校验 。在每次请求时，GraphQL client 都会把在注册或登录时获取的 token 及其他有效数据（例如 GraphQL 操作）一起放在 HTTP 请求头中发送。然后可以检查在函数中是否存在这样的 HTTP 请求头。如果没有，该函数继续往下执行，但用户 `me` 是未定义的。如果 token 存在，则该函数会使用其密钥验证 token，并检索创建 token 时存储的用户信息。如果因 token 无效或过期导致验证失败，GraphQL server 会抛出特定的 Apollo Server 错误。如果验证成功，则函数将继续使用经过验证的用户 `me`。
 
 > The function returns an error when the client application sends an HTTP header with an invalid or expired token. Otherwise, the function waves the request through, because users must be checked at the resolver level to see if they're allowed to perform certain actions. A non-authenticated user--where the `me` user is undefined--might be able to retrieve messages but not create new ones. The application is now protected against invalid and expired tokens.
 
-当 GraphQL client 发送带有无效或过期令牌的 HTTP 请求时，该函数返回错误。否则，该函数会通过请求，因为必须在解析程序级别校验是否允许用户执行某些操作。未经身份验证的用户 -- 比如未定义的用户 `me` -- 也许能够查看消息，但不能创建新消息。现在，我们的 GraphQL server 可以防止无效和过期的令牌了。
+当 GraphQL client 发送带有无效或过期 token 的 HTTP 请求时，该函数返回错误。否则，该函数会通过请求，因为必须在解析程序级别校验是否允许用户执行某些操作。未经身份验证的用户 -- 比如未定义的用户 `me` -- 也许能够查看消息，但不能创建新消息。现在，我们的 GraphQL server 可以防止无效和过期的 token 了。
 
 > That's the most high-level authentication for your GraphQL server application. You are able to authenticate with your GraphQL server from a GraphQL client application with the `signUp` and `signIn` GraphQL mutations, and the GraphQL server only allows valid, non-expired tokens from the GraphQL client application.
 
-这是 GraphQL server 的最高级别身份验证。你可以使用 GraphQL server 对具有 `signUp` 和 `signIn` 变更的 GraphQL client 进行身份验证，并且 GraphQL server 仅允许来自 GraphQL client 的有效的，未过期的令牌通过验证。
+这是 GraphQL server 的最高级别身份验证。你可以使用 GraphQL server 对具有 `signUp` 和 `signIn` 变更（操作）的 GraphQL client 进行身份验证，并且 GraphQL server 仅允许来自 GraphQL client 的有效的，未过期的 token 通过验证。
 
 > ### GraphQL Authorization on a Resolver Level
 ### 解析器级别的 GraphQL 授权
 
 > A GraphQL HTTP request comes through the `getMe()` function, even if it has no HTTP header for a token. This is good default behavior, because you want to register new users and login to the application without a token for now. You might want to query messages or users without being authenticated with the application. It is acceptable and sometimes necessary to wave through some requests without authorization token, to grant different levels of access to different user types. There will be an error only when the token becomes invalid or expires.
 
-一个 GraphQL HTTP 请求，即使它的请求头里没有令牌，也会经过 getMe（）函数。这是一个很好的默认行为，因为你现在想要注册新用户并在没有令牌的情况下登录应用程序。你可能希望在未经授权验证的情况下查看邮件或用户。在没有授权令牌的情况下允许用户的某些请求是可接受的，有时甚至是必要的，这样可以对不同用户类型授予不同级别的访问权限，仅当令牌失效或过期时才会出现错误。
+一个 GraphQL HTTP 请求，即使它的请求头里没有 token，也会经过 getMe（）函数。这是一个很好的默认行为，因为你现在想要注册新用户并在没有 token 的情况下登录应用程序。你可能希望在未经授权验证的情况下查看消息或用户。在没有授权 token 的情况下允许用户的某些请求是可接受的，有时甚至是必要的，这样可以对不同用户类型授予不同级别的访问权限，仅当 token 失效或过期时getMe()函数才会返回错误。
 
 > However, certain GraphQL operations should have more specific authorizations. Creating a message should only be possible for authorized users. Otherwise, or there would be no way to track the messages' authors. The `createMessage` GraphQL mutation can be protected, or "guarded", on a GraphQL resolver level. The naive approach of protecting the GraphQL operation is to guard it with an if-else statement in the *src/resolvers/message.js* file:
 
-但是，某些 GraphQL 操作应具有更多特定授权，比如，只有授权用户才能创建消息。否则，可能造成无法追踪消息的作者。可以在 GraphQL 解析器级别上对 `createMessage` 这一 GraphQL 变更进行保护，或“保卫”，最简单的方法是在 *src/resolvers/message.js* 文件中的使用 if-else 语句：
+但是，某些 GraphQL 操作应具有更多特定授权，比如，只有授权用户才能创建消息。否则无法追踪消息的创建者。我们可以在 GraphQL 解析器级别保护 `createMessage` GraphQL 变更（操作），最简单的方法是在 *src/resolvers/message.js* 文件中的使用 if-else 语句：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -2796,7 +2796,7 @@ export default {
 
 > You can imagine how this becomes  and error prone if it is userepetitived for all GraphQL operations that are accessible to an authenticated user, as it mixes lots of authorization logic into the resolver functions. To remedy this, we introduce an authorization abstraction layer for protecting GraphQL operations, with solutions called **combined resolvers** or **resolver middleware**. Let's install this node package:
 
-你可以想象，如果它被用于授权所有经过身份验证的用户才可访问的 GraphQL 操作，将会变得多么重复且容易出错，因为它将大量授权逻辑混合到解析器函数中。为了解决这个问题，我们引入了一个授权抽象层来保护 GraphQL 操作，使用名为 **combined resolvers** 或 **resolver middleware** 的解决方案。我们来安装这个包：
+你可以想象，如果它被用于授权所有经过身份验证的用户才可访问的 GraphQL 操作，将会变得多么重复且容易出错，因为它将大量授权逻辑混合到解析函数中。为了解决这个问题，我们引入了一个授权抽象层来保护 GraphQL 操作，使用名为 **combined resolvers** 或 **resolver middleware** 的解决方案。我们来安装这个包：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -2805,7 +2805,7 @@ npm install graphql-resolvers --save
 
 > Let's implement a protecting resolver function with this package in a new *src/resolvers/authorization.js* file. It should only check whether there is a `me` user or not.
 
-让我们在新建的 *src/resolvers/authorization.js* 文件中，使用这个包来实现一个保护解析器函数。它应该只检验是否是用户 `me`。
+让我们在新建的 *src/resolvers/authorization.js* 文件中，使用这个包来实现一个保护解析函数。它应该只检验是否是用户 `me`。
 
 {title="src/resolvers/authorization.js",lang="javascript"}
 ~~~~~~~~
@@ -2818,7 +2818,7 @@ export const isAuthenticated = (parent, args, { me }) =>
 
 > The `isAuthenticated()` resolver function acts as middleware, either continuing with the next resolver (skip), or performing another action, like returning an error. In this case, an error is returned when the `me` user is not available. Since it is a resolver function itself, it has the same arguments as a normal resolver. A guarding resolver can be used when a message is created in the *src/resolvers/message.js* file. Import it with the `combineResolvers()` from the newly installed node package. The new resolver is used to protect the resolvers by combining them.
 
-这里的解析器函数 `isAuthenticated()` 充当中间件，要么继续下一个解析器（跳过），要么执行其他操作比如返回错误。在这种情况下，当用户 `me` 不可用时会返回错误。由于它本身就是一个解析器函数，因此它具有与普通解析器相同的参数。所以在 *src/resolvers/message.js* 文件中创建消息时，也可以使用这个保护解析器函数。引入并使用新安装的包中的 `combineResolvers()`，通过组合一个新的解析器来保护它们。
+这里的解析函数 `isAuthenticated()` 充当中间件，要么继续下一个解析（跳过），要么执行其他操作比如返回错误。在这种情况下，当用户 `me` 不可用时会返回错误。由于它本身就是一个解析函数，因此它具有与普通解析函数相同的参数。所以在 *src/resolvers/message.js* 文件中创建消息时，也可以使用这个保护解析函数。引入并使用新安装的包中的 `combineResolvers()`，通过组合一个新的解析来保护它们。
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -2857,7 +2857,7 @@ export default {
 
 > Now the `isAuthenticated()` resolver function always runs before the resolver that creates the message associated with the authenticated user in the database. The resolvers get chained to each other, and you can reuse the protecting resolver function wherever you need it. It only adds a small footprint to your actual resolvers, which can be changed in the *src/resolvers/authorization.js* file.
 
-现在，`isAuthenticated()` 解析器函数始终在创建消息的解析器之前运行。这些解析器相互链接，你可以在任何需要的地方重用保护解析器功能。而所需要做的仅仅是在 *src/resolvers/authorization.js* 文件中，在真正执行任务的解析器前做了一点小小的改动。
+现在，`isAuthenticated()` 解析函数始终在创建消息的解析器之前运行。这些解析器相互链接，你可以在任何需要的地方重用保护解析器功能。而所需要做的仅仅是在 *src/resolvers/authorization.js* 文件中，在真正执行任务的解析器前做了一点小小的改动。
 
 > ### Permission-based GraphQL Authorization
 ### 基于权限的 GraphQL 授权
@@ -2971,11 +2971,11 @@ export default {
 
 > We went from a high-level authorization to a more specific authorization with permission-based resolver protection. Now we'll cover yet another way to enable authorization called **roles**. The next code block is a GraphQL mutation that requires role-based authorization, because it has the ability to delete a user. This allows you to create users with admin roles.
 
-我们从高级授权转变为更具体的基于权限的解析程序保护的授权。现在我们将介绍另一种称为 **角色** 的方法来进行授权。下个代码块是基于角色授权的 GraphQL 变更，因为它具有删除用户的能力。这允许你创建具有管理角色的用户。
+我们从高级授权转变为更具体的基于权限的解析程序保护的授权。现在我们将介绍另一种称为 **角色** 的方法来进行授权。下个代码块是基于角色授权的 GraphQL 变更（操作），因为它具有删除用户的能力。这允许你创建具有管理角色的用户。
 
 > Let's implement the new GraphQL mutation first, followed by the role-based authorization. You can start in your *src/resolvers/user.js* file with a resolver function that deletes a user in the database by identifier:
 
-首先，让我们来实现新的 GraphQL 变更，然后是基于角色的授权。你可以在 *src/resolvers/user.js* 中开始写一个解析器函数，该函数通过标识符删除数据库中的用户：
+首先，让我们来实现新的 GraphQL 变更（操作），然后是基于角色的授权。你可以在 *src/resolvers/user.js* 中开始写一个解析函数，该函数通过标识符删除数据库中的用户：
 
 {title="src/resolvers/user.js",lang="javascript"}
 ~~~~~~~~
@@ -3004,7 +3004,7 @@ export default {
 
 > New GraphQL operations must be implemented in the resolvers and schema. Next, we'll add the new mutation in the *src/schema/user.js* file. It returns a boolean that tells you whether the deletion was successful or not:
 
-新的 GraphQL 操作必须在解析器和模式中实现。接下来，我们将在 *src/schema/user.js* 文件中添加新的变更。它返回一个布尔值，告诉你是否删除成功：
+新的 GraphQL 操作必须在解析器和模式中实现。接下来，我们将在 *src/schema/user.js* 文件中添加新的变更（操作）。它返回一个布尔值，告诉你是否删除成功：
 
 {title="src/schema/user.js",lang="javascript"}
 ~~~~~~~~
@@ -3123,7 +3123,7 @@ const createUsersWithMessages = async () => {
 
 > Because you are not retrieving the actual `me` user from the database in the *src/index.js* file, but the user from the token instead, you must add the role information of the user for the token when it's created in the *src/resolvers/user.js* file:
 
-你不是从 *src/index.js* 关联的数据库中检索实际的 `me` 用户，而是从令牌中检索用户，所以在 *src/resolvers/user.js* 中创建令牌时，必须为用户添加角色信息：
+你不是从 *src/index.js* 关联的数据库中检索实际的 `me` 用户，而是从 token 中检索用户，所以在 *src/resolvers/user.js* 中创建 token 时，必须为用户添加角色信息：
 
 {title="src/resolvers/user.js",lang="javascript"}
 ~~~~~~~~
@@ -3139,7 +3139,7 @@ const createToken = async (user, secret, expiresIn) => {
 
 > Next, protect the new GraphQL mutation with a role-based authorization. Create a new guarding resolver in your *src/resolvers/authorization.js* file:
 
-下一步，使用基于角色的授权保护新的 GraphQL 变更。在 *src/resolvers/authorization.js* 文件中创建一个新的保护解析器：
+下一步，使用基于角色的授权保护新的 GraphQL 变更（操作）。在 *src/resolvers/authorization.js* 文件中创建一个新的保护解析器：
 
 {title="src/resolvers/authorization.js",lang="javascript"}
 ~~~~~~~~
@@ -3230,7 +3230,7 @@ export default {
 
 > Before a user can perform a delete action, there must be a sign-in, so we execute a `signIn` mutation in GraphQL Playground with a non admin user. Consider trying this tutorial with an admin user later to see how it performs differently.
 
-在用户执行删除操作之前，必须先登录，因此我们先用非管理员用户在 GraphQL Playground 中执行 `signIn` 变更，稍后我们再用管理员用户进行操作，以区分它们的不同。
+在用户执行删除操作之前，必须先登录，因此我们先用非管理员用户在 GraphQL Playground 中执行 `signIn` 变更（操作），稍后我们再用管理员用户进行操作，以区分它们的不同。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3243,7 +3243,7 @@ mutation {
 
 > You should receive a token after logging into GraphQL Playground. The token needs to be set in the HTTP header for the next GraphQL operation. GraphQL Playground has a panel to add HTTP headers. Since your application is checking for an x-token, set the token as one:
 
-登录 GraphQL Playground 后，你会收到一个令牌，在接下来的 GraphQL 操作中都需要把这个令牌附到 HTTP 请求头里。GraphQL Playground 有一个用于添加 HTTP 请求头的面板。由于你的应用程序将检查 x-token 是否存在，请将令牌设置为：
+登录 GraphQL Playground 后，你会收到一个 token ，在接下来的 GraphQL 操作中都需要把这个 token 附到 HTTP 请求头里。GraphQL Playground 有一个用于添加 HTTP 请求头的面板。由于你的应用程序将检查 x-token 是否存在，请将 token 设置为：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3254,7 +3254,7 @@ mutation {
 
 > Your token will be different than the one above, but of a similar format. Since the token is set as an HTTP header now, you should be able to delete a user with the following GraphQL mutation in GraphQL Playground. The HTTP header with the token will be sent with the GraphQL operation:
 
-你的令牌应该与上面的令牌不同，但格式类似。设置好令牌，我们现在可以在 GraphQL Playground 上通过下面的 GraphQL 变更删除某个用户了。带有令牌的 HTTP 请求头将与 GraphQL 操作一起发送：
+你的 token 应该与上面的 token 不同，但格式类似。设置好 token ，我们现在可以在 GraphQL Playground 上通过下面的 GraphQL 变更（操作）删除某个用户了。带有 token 的 HTTP 请求头将与 GraphQL 操作一起发送：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3265,7 +3265,7 @@ mutation {
 
 > Instead of a successful request, you will see the following GraphQL error after executing the GraphQL mutation for deleting a user. That's because you haven't logged in as a user with an admin role.
 
-执行删除用户的 GraphQL 变更后，你看到的是 GraphQL 返回的错误，而不是成功的请求。那是因为你没有用管理员角色的用户登录。
+执行删除用户的 GraphQL 变更（操作）后，你看到的是 GraphQL 返回的错误，而不是成功的请求。那是因为你没有用管理员角色的用户登录。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
