@@ -605,7 +605,7 @@ export default Profile;
 
 > Whereas the ErrorMessage component from the *src/Error/index.js* could look like the following:
 
-而 *src/Error/index.js* 文件中的 ErrorMessage 组件代码如下：
+而 *src/Error/index.js* 文件中的 ErrorMessage 组件代码可能类似如下：
 
 {title="src/Error/index.js",lang="javascript"}
 ~~~~~~~~
