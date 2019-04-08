@@ -2676,7 +2676,7 @@ The next section will teach you about authorization in GraphQL on the server-sid
 
 > In the last section, you set up GraphQL mutations to enable authentication with the server. You can register a new user with bcrypt hashed passwords and you can login with your user's credentials. Both GraphQL mutations related to authentication return a token (JWT) that secures non-sensitive user information with a secret.
 
-在上一节中，你已经设置了 GraphQL 变更（操作）以启用服务器的身份验证。你可以使用 bcrypt 哈希密码注册新用户，并且可以用你的用户凭证进行登录。这两个与身份验证相关的 GraphQL 变更（操作）都返回一个token（JWT），它使用密钥来保护非敏感用户信息。
+在上一节中，你已经设置了 GraphQL 变更（操作）以启用服务器的身份验证。你可以使用 bcrypt 哈希密码注册新用户，并且用你的用户凭证进行登录。这两个与身份验证相关的 GraphQL 变更（操作）都返回一个token（JWT），它使用密钥来保护非敏感用户信息。
 
 > The token, whether its obtained on registration or login, is returned to the client application after a successful GraphQL `signIn` or `signUp` mutation. The client application must store the token somewhere like [the browser's session storage](https://www.robinwieruch.de/local-storage-react). Every time a request is made to the GraphQL server, the token has to be attached to the HTTP header of the HTTP request. The GraphQL server can then validate the HTTP header, verify its authenticity, and perform a request like a GraphQL operation. If the token is invalid, the GraphQL server must return an error for the GraphQL client. If the client still has a token locally stored, it should remove the token and redirect the user to the login page.
 
@@ -2818,7 +2818,7 @@ export const isAuthenticated = (parent, args, { me }) =>
 
 > The `isAuthenticated()` resolver function acts as middleware, either continuing with the next resolver (skip), or performing another action, like returning an error. In this case, an error is returned when the `me` user is not available. Since it is a resolver function itself, it has the same arguments as a normal resolver. A guarding resolver can be used when a message is created in the *src/resolvers/message.js* file. Import it with the `combineResolvers()` from the newly installed node package. The new resolver is used to protect the resolvers by combining them.
 
-这里的解析函数 `isAuthenticated()` 充当中间件，要么继续下一个解析（跳过），要么执行其他操作比如返回错误。在这种情况下，当用户 `me` 不可用时会返回错误。由于它本身就是一个解析函数，因此它具有与普通解析函数相同的参数。所以在 *src/resolvers/message.js* 文件中创建消息时，也可以使用这个保护解析函数。引入并使用新安装的包中的 `combineResolvers()`，通过组合一个新的解析来保护它们。
+这里的解析函数 `isAuthenticated()` 充当中间件，要么执行 skip，要么执行其他操作比如返回错误。在这种情况下，当用户 `me` 不可用时会返回错误。由于它本身就是一个解析函数，因此它具有与普通解析函数相同的参数。所以在 *src/resolvers/message.js* 文件中创建消息时，也可以使用这个保护解析函数。引入并使用新安装的包中的 `combineResolvers()`，通过组合一个新的解析器来保护它们。
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -2927,7 +2927,7 @@ export default {
 
 > The `deleteMessage` resolver is protected by an authorization resolver now. Only the message owner, i.e. the message creator, is allowed to delete a message. If the user isn't authenticated, you can stack your protecting resolvers onto each other:
 
-`deleteMessage` 解析程序现在被授权解析程序保护起来了，它仅允许消息所有者（即消息创建者）删除消息。如果用户未经过身份验证，您可以将保护解析器堆叠在一起：
+`deleteMessage` 现在被授权解析程序保护起来了，它仅允许消息所有者（即消息创建者）删除消息。如果用户未经过身份验证，会跳过 isAuthenticated 继续执行其他保护解析器：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3091,7 +3091,7 @@ export default gql`
 
 > Since you already have seed data in your *src/index.js* file for two users, you can give one of them a role. The admin role used in this case will be checked if the user attempts a delete operation:
 
-*src/index.js* 文件中现在已经有两个用户的种子数据了，因此你可以为其中一个用户提供一个角色。如果用户尝试删除操作，将会校验他是否具有管理员角色：
+*src/index.js* 文件中现在已经有两个用户的种子数据了，因此你可以为其中一个用户提供一个角色。如果用户尝试进行删除，将会校验他是否具有管理员角色：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
