@@ -3333,11 +3333,11 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5PLMBR3)
 
 > ## Exercise: Commenting Feature
-## 评论功能
+## 练习：评论功能
 
 > This last section is for hands-on experience with the application and implementing features yourself. I encourage you to continue implementing features for the application and improving it. There are a couple of guiding points to help you implementing the Commenting feature. In the end it should be possible to show a list of paginated comments per issue on demand. Finally, a user should be able to leave a comment. The source code of the implemented feature can be found [here](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/c689a90d43272bbcb64c05f85fbc84ad4fe4308d).
 
-最后一部分是亲自实践于这个应用并实现相关功能。我鼓励你继续实现并改进该应用的功能。这里有一些引导点可以帮助你来实现评论功能。在末尾，这个功能应该按要求展示出每个 issue 的评论分页列表。最后，用户可以留言。你可以在[这里](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/c689a90d43272bbcb64c05f85fbc84ad4fe4308d)找到已实现功能的源码。
+最后一部分是亲自实践这个应用并实现其相关功能。我鼓励你继续实现并改进该应用的功能。这里有一些引导点可以帮助你来实现评论功能。在末尾，这个功能应该按要求展示出每个 issue 的评论分页列表。最后，用户可以留言。你可以在[这里](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/c689a90d43272bbcb64c05f85fbc84ad4fe4308d)找到已实现功能的源码。
 
 > * Introduce components for fetching a list of comments (e.g. Comments), rendering a list of comments (e.g. CommentList), and rendering a single comment (e.g. CommentItem). They can render sample data for now.
 
@@ -3345,15 +3345,15 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 
 > * Use the top level comments component (e.g. Comments), which will be your container component that is responsible to query the list of comments, in the *src/Issue/IssueItem/index.js* file. In addition, add a toggle to either show or hide comments. The IssueItem component has to become a class component or needs to make use of the `withState` HOC from the recompose library.
 
-* 使用 *src/Issue/IssueItem/index.js* 文件中最顶层的评论组件(例如：Comments)，它会是负责查询评论列表的容器组件。
+* 使用 *src/Issue/IssueItem/index.js* 文件中最顶层的评论组件(例如：Comments)，它会是负责查询评论列表的容器组件。此外，添加一个切换展示或隐藏评论的按钮。IssueItem 组件必须转为类组件或利用 recompose 库中的 `withState` 高阶组件。
 
 > * Use the Query component from React Apollo in your container Comments component to fetch a list of comments. It should be similar to the query that fetches the list of issues. You only need to identify the issue for which the comments should be fetched.
 
-* 在你的容器组件：评论组件( Comments ) 中用 React Apollo 的 Query 组件来获取评论列表。这跟查询获取 issues 列表很相似。你只需要确定哪些评论是应该被 issue 获取到的。
+* 在你的容器组件：评论组件( Comments ) 中用 React Apollo 的 Query 组件来获取评论列表。这跟查询获取 issues 列表很相似。你只需确定哪些评论是应该被获取的。
 
 > * Handle all edge cases in the Comments to show loading indicator, no data, or error messages. Render the list of comments in the CommentList component and a single comment in the CommentItem component.
 
-* 处理评论组件( Comments )中的所有边界情况：展示加载标识、无数据、或错误信息。在 CommentList 组件中渲染评论列表，在 CommentItem 组件中渲染一条评论。
+* 处理评论组件( Comments )中的所有边界情况：展示加载标识、无数据、或错误信息。在 CommentList 组件中渲染评论列表，在 CommentItem 组件中渲染单条评论。
 
 > * Implement the pagination feature for comments. Add the necessary fields in the query, the additional props and variables to the Query component, and the reusable FetchMore component. Handle the merging of the state in the `updateQuery` prop.
 
@@ -3361,7 +3361,7 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 
 > * Enable prefetching of the comments when hovering the "Show/Hide Comments" button.
 
-* 允许在鼠标停留于 "显示/隐藏 评论(Show/Hide Comments)" 按钮时对评论数据的预提取。
+* 允许在鼠标停留于 "Show/Hide Comments" 按钮时对评论数据的预加载。
 
 > * Implement an AddComment component that shows a `textarea` and a `submit` button to enable user comments. Use the `addComment` mutation from GitHub's GraphQL API and the Mutation component from React Apollo to execute the mutation with the submit button.
 
@@ -3369,18 +3369,18 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 
 > * Improve the AddComment component with the optimistic UI feature (perhaps read again the [Apollo documentation about the optimistic UI with a list of items](https://www.apollographql.com/docs/react/features/optimistic-ui.html)). A comment should show up in the list of comments, even if the request is pending.
 
-* 用乐观 UI 特性(你或许想再读一遍[乐观 UI 结合列表项的 Apollo 文档](https://www.apollographql.com/docs/react/features/optimistic-ui.html)) 来美化 AddComment 组件。哪怕是请求还在继续，评论列表中也要展示出评论。
+* 用乐观 UI 特性(你或许想再读一遍[乐观 UI 结合列表项的 Apollo 文档](https://www.apollographql.com/docs/react/features/optimistic-ui.html)) 来优化 AddComment 组件。哪怕是请求还在继续，评论列表中也要展示出评论。
 
 > I hope this section, building your own feature in the application with all the learned tools and techniques, matched your skills and challenged you to implement React applications with Apollo and GraphQL. I would recommend working to improve and extend the existing application. If you haven't implemented a GraphQL server yet, find other third-party APIs that offer a GraphQL API and build your own React with Apollo application by consuming it. Keep yourself challenged to grow your skills as a developer.
 
-在这部分中，我希望你通过掌握的工具及方法并结合你的技能与遇到的挑战，去实现 Apollo 和 GraphQL 结合 React 的应用，在其中构建你自己的特性。我会建议你提升并且拓展当前已有的应用。如果你到目前为止还没有实现 GraphQL server，就找一个提供 GraphQL API 的第三方 API 库，用它来构建一个你自己的 React 结合 Apollo 的应用。作为一个开发者，让自己在受阻的过程中不断地去成长和提升技能吧。
+在这部分中，我希望你通过掌握的工具及方法并结合你的技能与遇到的挑战，去实现 Apollo 和 GraphQL 结合 React 的应用，在其中构建你自己的特性。我会建议你提升并且拓展当前已有的应用。如果你到目前为止还没有实现 GraphQL server，就找一个提供 GraphQL API 的第三方 API 库，用它来构建一个你自己的 React 结合 Apollo 的应用。作为一个开发者，不断挑战自己，提升自己的技能吧。
 
 > ## Appendix: CSS Files and Styles
 ## 附录: CSS文件与样式 
 
 > This section has all the CSS files as well as their content and locations, to give your React with GraphQL and Apollo Client application a nice touch. It even makes it responsive for mobile and tablet devices. These are only recommendations, though; you can experiment with them, or come up with your own styles.
 
-这个部分涵盖了所有CSS文件的内容与文件存放路径，给你的 React-GraphQL 及 Apollo Client 应用之旅带来一场绝妙体验。这些样式甚至可以在手机和平板设备上适配。当然了，这不过是些建议， 你也可以完全自己写样式来达到你想要的效果。
+这个部分涵盖了所有CSS文件的内容与文件存放路径，给你的集成了 GraphQL 和 Apollo Client 的 React 应用之旅带来一场绝妙体验。这些样式甚至可以在手机和平板设备上适配。当然了，这不过是些建议， 你也可以完全自己写样式来达到你想要的效果。
 
 {title="src/style.css",lang="css"}
 ~~~~~~~~
@@ -3731,4 +3731,4 @@ pre {
 
 > You can find the final [repository on GitHub](https://github.com/rwieruch/react-graphql-github-apollo) that showcases most of the exercise tasks. The application is not feature-complete and it doesn't cover all edge cases, but it should give insight into using GraphQL with Apollo in React applications. If you want to dive more deeply into different topics like testing and state management with GraphQL on the client-side, you can start here: [A minimal Apollo Client in React Example](https://www.robinwieruch.de/react-apollo-client-example). Try to apply what you've learned in this application (e.g. testing, state management). Otherwise, I encourage you to try to build your own GraphQL client library, which helps you understand more of the GraphQL internals: [How to build a GraphQL client library for React](https://www.robinwieruch.de/react-graphql-client-library). Whichever you decide, keep tinkering on this application, or start with another GraphQL client application to fortify your skill set. You have finished all the GraphQL client chapters now.
 
-你可以在 [Github的代码库](https://github.com/rwieruch/react-graphql-github-apollo) 中发现，绝大部分的练习任务都已被陈列出来。尽管这些案例的功能并不完善，也没有覆盖到涉及边界的所有情况，但它应该表达出了对 React 应用中使用 Apollo GraphQL 的深刻理解。假如你想钻研更多类似于在客户端中使用 GraphQL 进行测试和状态管理等深层次主题的话，你可以从这里开始：[Apollo Client 在 React 中的小例子](https://www.robinwieruch.de/react-apollo-client-example)。试着在这个应用结合你所学到的东西(例如：测试、状态管理)，否则的话，我更支持你去尝试着构建一个自己的 GraphQL client 库，[如何为 React 构建一个 GraphQL client 库](https://www.robinwieruch.de/react-graphql-client-library) 可以让你了解到更多 GraphQL 的内部构件，不管你最后怎么决定，记住要对这个应用反复锤炼，或者再另启一个 GraphQL client 应用来加强你的综合技能，做到学以致用。至此，你已经完成了该 GraphQL client 的章节。
+你可以在 [Github的代码库](https://github.com/rwieruch/react-graphql-github-apollo) 中发现，绝大部分的练习任务都已被陈列出来。尽管这些案例的功能并不完善，也没有覆盖到边界的所有情况，但它应该表达出了对 React 应用中与 Apollo 一起使用 GraphQL 的深刻理解。假如你想钻研更多类似于在客户端中使用 GraphQL 进行测试和状态管理等深层次主题的话，你可以从这里开始：[Apollo Client 在 React 中的小例子](https://www.robinwieruch.de/react-apollo-client-example)。试着在这个应用结合你所学到的东西(例如：测试、状态管理)，否则的话，我更支持你去尝试着构建一个自己的 GraphQL client 库，[如何为 React 构建一个 GraphQL client 库](https://www.robinwieruch.de/react-graphql-client-library) 可以让你了解到更多 GraphQL 的内部构件，不管你最后怎么决定，记住要对这个应用反复锤炼，或者再另启一个 GraphQL client 应用来加强你的综合技能，做到学以致用。至此，你已经完成了 GraphQL client 的所有章节。
