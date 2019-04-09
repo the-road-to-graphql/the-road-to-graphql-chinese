@@ -57,7 +57,7 @@ Access token 随后会用于与 GitHub GraphQL API 进行交互。请注意不�
 
 ## 与 GitHub GraphQL API 交互
 
-有两种常见的方法可以与 GitHub GraphQL API 进行交互，而且无需为其编写任何源代码。第一种是使用[GitHub GraphQL Explorer](https://developer.github.com/v4/explorer/)。只需要使用 GitHub 账号登录就可以使用 GraphQL API 进行数据查询或变更操作，这是一个简化初次体验的好方式。第二种是使用一个应用程序形式的通用客户端。GraphiQL 是一个客户端，可以让 GraphQL 请求功能集成到你的应用，或者作为一个独立的应用程序。前者可以通过[在应用程序中直接设置 GraphiQL](https://github.com/skevy/graphiql-app)来实现；后者可以通过[将 GraphiQL 作为独立的应用](https://github.com/skevy/graphiql-app)来实现。它是关于 GraphiQL 的轻量级 shell，可以手动或通过命令行下载和安装。
+有两种常见的方法可以与 GitHub GraphQL API 进行交互，而且无需为其编写任何源代码。第一种是使用[GitHub GraphQL Explorer](https://developer.github.com/v4/explorer/)。只需要使用 GitHub 账号登录就可以使用 GraphQL API 进行数据查询或变更操作，这是一个简化初次体验的好方式。第二种是使用一个应用程序形式的通用客户端。GraphiQL 是一个客户端，可以让 GraphQL 请求功能集成到你的应用，或者作为一个独立的应用程序。前者可以通过[在应用程序中直接设置 GraphiQL](https://github.com/skevy/graphiql-app)来实现；后者可以通过[将 GraphiQL 作为独立的应用](https://github.com/skevy/graphiql-app)来实现，更容易使用。它是一个关于 GraphiQL 的轻量级 shell，可以手动或通过命令行下载和安装。
 
 因为需要注册才能使用，所以 GitHub GraphQL Explorer 知道你的凭证，但 GraphiQL 也需要知道你创建的 access token。你可以在头部（header）配置中为每个请求的 HTTP 标头中添加 access token。
 
@@ -67,7 +67,7 @@ Access token 随后会用于与 GitHub GraphQL API 进行交互。请注意不�
 
 ![](images/graphiql-authorization_1024.jpg)
 
-如果你使用自己的 GraphiQL 应用程序，则需要为 GitHub 的 GraphQL API 提供 GraphQL端点：`https://api.github.com/graphql`。 对于 GitHub GraphQL API，使用[POST HTTP方法](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods)进行查询和变更，并将数据作为负载进行传输。
+如果你使用自己的 GraphiQL 应用程序，则需要为 GitHub 的 GraphQL API 提供 GraphQL 端点：`https://api.github.com/graphql`。 对于 GitHub GraphQL API，使用[POST HTTP方法](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods)进行查询和变更，并将数据作为负载进行传输。
 
 本节提供了两种与 GitHub GraphQL API交互的方法。GitHub 的 GraphQL Explorer 只能用于 GitHub API，集成到应用程序或独立的 GraphiQL 可用于任何的 GraphQL API。不同点在于后者需要一些额外的配置。GitHub GraphQL Explorer 实际上只是为使用 GitHub GraphQL API 而定制的独立 GraphiQL 应用程序。
 
