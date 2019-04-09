@@ -1082,7 +1082,7 @@ In our case, let's start with a separation by technical concerns for the GraphQL
 > ### Technical Separation
 ### 技术分离
 > Let's take the GraphQL schema from the application where you have a User type and Message type. In the same step, split out the resolvers to a dedicated place. The *src/index.js* file, where the schema and resolvers are needed for the Apollo Server instantiation, should only import both things. It becomes three things when outsourcing data, which in this case is the sample data, now called models.
-让我们从包含一种用 User 类型和 Message 类型的应用程序中获取 GraphQL 的模式。在同一步骤中，拆出解析器到特定位置。 在 *src/index.js* 中，应该只导入 Apollo Server 实例化所需要的模式和解析器。分发数据会变成三件事，在这种情况下是示例数据，现在称为模型。
+让我们从包含一种用 User 类型和 Message 类型的应用程序中获取 GraphQL schema。在同一步骤中，拆出解析器到特定位置。 在 *src/index.js* 中，应该只导入 Apollo Server 实例化所需要的 schema 和解析器。分发数据会变成三件事，在这种情况下是示例数据，现在称为模型。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1248,7 +1248,7 @@ export default {
 ~~~~~~~~
 
 > The resolvers receive all sample data as models in the context argument rather than operating directly on the sample data as before. As mentioned, it keeps the resolver functions pure. Later, you will have an easier time testing resolver functions in isolation. Next, move your schema's type definitions in the *src/schema/index.js* file:
-解析器在上下文参数中接收所有示例数据作为模型，而不像之前直接操作示例数据。如上所述，它使解析器功能保持纯净。稍后，你可以更轻松地单独测试解析器功能。接下来，把模式的类型定义移动到 *src/schema/index.js* 文件中：
+解析器在上下文参数中接收所有示例数据作为模型，而不像之前直接操作示例数据。如上所述，它使解析器功能保持纯净。稍后，你可以更轻松地单独测试解析器功能。接下来，把 schema 的类型定义移动到 *src/schema/index.js* 文件中：
 
 {title="src/schema/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1284,12 +1284,12 @@ export default gql`
 ~~~~~~~~
 
 > The technical separation is complete, but the separation by domains, where schema stitching is needed, isn't done yet. So far, you have only outsourced the schema, resolvers and data (models) from your Apollo Server instantiation file. Everything is separated by technical concerns now. You also made a small improvement for passing the models through the context, rather than importing them in resolver files.
-技术分离已经完成，但是需要进行模式拼接的域分离还没有完成。到目前为止，你只从 Apollo Server 实例化文件中分发了模式，解析器和数据（模型）。现在一切都被技术问题所分开。你还通过上下文传递模型，而不是在解析程序文件中导入它们，这也做了一些小的改进。
+技术分离已经完成，但是需要进行 schema 组合的域分离还没有完成。到目前为止，你只从 Apollo Server 实例化文件中拆分了 schema，解析器和数据（模型）。现在一切都被技术问题所分开。你还通过上下文传递模型，而不是在解析程序文件中导入它们，这也做了一些小的改进。
 
 > ### Domain Separation
 ### 域分离
 > In the next step, modularize the GraphQL schema by domains (user and message). First, separate the user-related entity in its own schema definition file called *src/schema/user.js*:
-在下一步，按域（user 和 message）模块化 GraphQL 模式。首先，将用户相关实体分隔在自己的模式定义文件中，该文件名为 *src/schema/user.js*：
+在下一步，按域（user 和 message）模块化 GraphQL schema。首先，将用户相关实体 schema 分离到名为 *src/schema/user.js*的 schema 定义文件中：
 
 {title="src/schema/user.js",lang="javascript"}
 ~~~~~~~~
@@ -1313,7 +1313,7 @@ export default gql`
 ~~~~~~~~
 
 > The same applies for the message schema definition in *src/schema/message.js*:
-这同样适用于 *src/schema/message.js* 中的消息模式定义：
+这同样适用于 *src/schema/message.js* 中的消息 schema 定义：
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -1370,10 +1370,10 @@ export default [linkSchema, userSchema, messageSchema];
 ~~~~~~~~
 
 > In this file, both schemas are merged with the help of a utility called `linkSchema`. The `linkSchema` defines all types shared within the schemas. It already defines a Subscription type for GraphQL subscriptions, which may be implemented later. As a workaround, there is an empty underscore field with a Boolean type in the merging utility schema, because there is no official way of completing this action yet. The utility schema defines the shared base types, extended with the `extend` statement in the other domain-specific schemas.
-在此文件中，两个模式都在名为 `linkSchema` 的实用程序的帮助下合并。`linkSchema` 定义了模式中共享的所有类型。它已经为 GraphQL 订阅集定义了一个订阅类型，可以在之后实现。因为还没有正式的方法来完成此操作，作为一种变通方法，在合并实用程序模式中存在一个带有布尔类型的空下划线字段。实用程序模式定义共享基类型，使用其他特定域模式中的 `extend` 语句进行扩展。
+在此文件中，两个 schemas 都在名为 `linkSchema` 的实用程序的帮助下合并。`linkSchema` 定义了 schemas 中共享的所有类型。它已经为 GraphQL 订阅集定义了一个订阅类型，可以在之后实现。因为还没有正式的方法来完成此操作，作为一种变通方法，在合并通用 schema 中存在一个带有布尔类型的空下划线字段。通用 schema 定义共享基类型，使用其他特定域的 schemas 的 `extend` 语句进行扩展。
 
 > This time, the application runs with a stitched schema instead of one global schema. What's missing are the domain separated resolver maps. Let's start with the user domain again in file in the *src/resolvers/user.js* file, whereas I leave out the implementation details for saving space here:
-这次，应用程序使用联合模式而不是一个全局模式运行。缺少的是域分离的解析器映射。让我们再次从 *src/resolvers/user.js* 文件中的用户域开始，而这里我为了节省空间省略了实现细节：
+这次，应用程序使用组合 schema 而不是一个全局 schema 运行。缺少的是域分离的解析器映射。让我们再次从 *src/resolvers/user.js* 文件中的用户域开始，而这里我为了节省空间省略了实现细节：
 
 {title="src/resolvers/user.js",lang="javascript"}
 ~~~~~~~~
@@ -1448,7 +1448,7 @@ export default [userResolvers, messageResolvers];
 然后，Apollo Server 可以将解析器列表实例化。再次启动你的应用程序并确认一切正常。
 
 > In the last section, you extracted schema and resolvers from your main file and separated both by domains. The sample data is placed in a *src/models* folder, where it can be migrated to a database-driven approach later. The folder structure should look similar to this:
-在上一节中，你从主文件中提取了模式和解析器，并按域分隔。示例数据放在 *src/models* 文件夹中，以后可以将其迁移到数据库驱动的方式。文件夹结构应该与此类似：
+在上一节中，你从主文件中提取了 schema 和解析器，并按域分隔。示例数据放在 *src/models* 文件夹中，以后可以将其迁移到数据库驱动的方式。文件夹结构应该与此类似：
 
 * src/
   * models/
@@ -1470,15 +1470,15 @@ export default [userResolvers, messageResolvers];
 ### 练习
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/953ef4b2ac8edc7c6338fb73ecdc1446e9cbdc4d)
-* 确认你[本节代码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/953ef4b2ac8edc7c6338fb73ecdc1446e9cbdc4d)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/953ef4b2ac8edc7c6338fb73ecdc1446e9cbdc4d)
 > * Read more about [schema stitching with Apollo Server](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
-* 阅读更多关于[使用 Apollo Server 进行模式拼接](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
+* 延伸阅读[使用 Apollo Server 进行 schema 组合](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
 > * Schema stitching is only a part of **schema delegation**
-* 模式拼接只是 **模式委派** 的一部分
+* schema 组合只是 ** schema 委派** 的一部分
   > * Read more about [schema delegation](https://www.apollographql.com/docs/graphql-tools/schema-delegation.html)
-  阅读更多关于[模式委派](https://www.apollographql.com/docs/graphql-tools/schema-delegation.html)
+  延伸阅读[schema 委派](https://www.apollographql.com/docs/graphql-tools/schema-delegation.html)
   > * Familiarize yourself with the motivation behind **remote schemas** and **schema transforms**
-  * 熟悉 **远程模式** 和 **模式转换** 背后的动机
+  * 熟悉 **远程 schema** 和 **schema 转换** 背后的动机
 
 > ## PostgreSQL with Sequelize for a GraphQL Server
 ## PostgreSQL 与 Sequelize 的 GraphQL 服务器
@@ -1497,7 +1497,7 @@ export default [userResolvers, messageResolvers];
 * 使用`createdb`或`CREATE DATABASE`创建数据库
 
 > You should be able to run and stop your database with the following commands:
-你应该能够使用以下命令运行和停止数据库：
+你应该能够使用如下命令运行和停止数据库：
 
 * pg_ctl -D /usr/local/var/postgres start
 * pg_ctl -D /usr/local/var/postgres stop
@@ -1673,7 +1673,7 @@ sequelize.sync().then(async () => {
 > ### Exercises:
 ### 练习
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a1927fc375a62a9d7d8c514f8bf7f576587cca93)
-* 确认你[本节代码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a1927fc375a62a9d7d8c514f8bf7f576587cca93)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a1927fc375a62a9d7d8c514f8bf7f576587cca93)
 > * Familiarize yourself with databases
 * 熟悉数据库
   > * Try the `psql` command-line interface to access a database
