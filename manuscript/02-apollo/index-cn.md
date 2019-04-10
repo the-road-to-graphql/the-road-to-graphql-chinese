@@ -78,7 +78,7 @@
 
 ### > Interoperability with other Frameworks
 
-### 和其他框架协作
+### 与其他框架协作
 
 > One of Apollo's libraries makes it possible to connect Apollo Client to React. Just like libraries like Redux and MobX, the React-Apollo library has higher-order and render prop components to connect both worlds. However, there are other libraries out there that bridge not only Apollo Client to React, but also Apollo to Angular or Apollo to Vue. That's what makes Apollo Client view layer agnostic, which is great for the growing JavaScript ecosystem.
 
@@ -90,7 +90,7 @@
 
 ### > Modern Data Handling with Apollo
 
-###现代数据处理与 Apollo
+###使用 Apollo 处理现代数据
 
 > Remember back when we had to trigger data fetching in a component's lifecycle methods imperatively? Apollo Client solves this, because its data queries are declarative. React often employs a higher-order component or render prop to trigger a query automatically when a component renders. The GraphQL mutations are triggered imperatively, but that's only because a higher-order component or render prop grants access to the function which executes the mutation (e.g. on a button click). Essentially, Apollo embraces declarative programming over imperative programming.
 
@@ -98,7 +98,7 @@
 
 ### > Modern State Management with GraphQL and Apollo
 
-### 现代状态管理与 GraphQL 和 Apollo
+### 使用 GraphQL 和 Apollo 管理现代状态
 
 > With the rise of GraphQL in JavaScript applications, state management entered another state of confusion. Even though lots of pain points are eliminated using a GraphQL library like Apollo Client, since it takes care of state management for remote data, some developers are confused about where to put state management libraries like Redux or MobX now. However, it can be made simple using these libraries for local data only and leaving the remote data to Apollo. There is no longer a need to fetch data with asynchronous actions in Redux, so it becomes a predictable state container for all the remaining application state (e.g. local data/view data/UI data). In fact, the remaining application state may be simple enough to be managed by React's local state instead of Redux.
 
@@ -208,9 +208,9 @@
 
 ### 针对 Node.js 的 Apollo Server 替代选择
 
-> When it comes to [Apollo Server](https://github.com/apollographql/apollo-server) for Node.js with Express, Koa, Hapi or something else, there are several alternatives you can check out. Obviously these come with their own advantages and disadvantages whereas these things are not covered here.
+> When it comes to [Apollo Server](https://github.com/apollographql/apollo-server)pollographql/apollo-server) for Node.js with Express, Koa, Hapi or something else, there are several alternatives you can check out. Obviously these come with their own advantages and disadvantages whereas these things are not covered here.
 
-​	对于 Express，Koa，Hapi 或者其他 Node.js 库的  Apollo Server，还有一些替代方案可以查看。显然它们都有自己的优劣势，然而并没有在这里讨论。
+​	对于 Express，Koa，Hapi 或者其他 Node.js 库的  [Apollo Server](https://github.com/apollographql/apollo-server)，还有一些替代方案可以查看。显然它们都有自己的优劣势，然而并没有在这里讨论。
 
 * > [express-graphql](https://github.com/graphql/express-graphql): The library provides a lower-level API to connect GraphQL layers to Express middleware. It takes the pure GraphQL.js reference implementation for defining GraphQL schemas, where Apollo Server simplifies it for developers.
 
