@@ -2392,7 +2392,7 @@ npm install bcrypt --save
 
 > Now it is possible to hash the password with bcrypt in the user's resolver function when it gets created on a `signUp` mutation. There is also an alternative way with Sequelize. In your user model, define a hook function that is executed every time a user entity is created:
 
-现在可以用 bcrypt 在用户的解析函数中哈希密码当用户被`signUp`变更（操作）创建的时候。还有一种代替的方法是通过 Sequelize。在你的用户模型中，定义一个钩子函数每当用户实例被创建的时候被调用。
+到此，当用户被signUp变更（操作）创建的时候可以用bcrypt在用户的解析函数中哈希密码。还有一种代替的方法是通过 Sequelize。在你的用户模型中，定义一个钩子函数每当用户实例被创建的时候被调用。
 
 {title="src/models/user.js",lang="javascript"}
 
