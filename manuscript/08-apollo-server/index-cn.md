@@ -2508,9 +2508,9 @@ const createToken = async user => {
 
 “签署” token 的第一个参数可以是除敏感数据之外的任何用户信息（例如密码），因为 token 将会被客户端获取。签署一个 token 意味着将数据放入其中，这个你已经做了，并保护它，这个你尚未完成。为了保护你的 token，传入一个密钥（**任意** 长字符串）**只能被你和你的服务器使用**。任何第三方实体都不应该具有访问权限，因为这个密钥将会被用来加密（签署）和解密你的 token。
 
-> Add the secret to your environment variables in the _.env_ file:
+> Add the secret to your environment variables in the *.env* file:
 
-在_.env_文件中，将密钥添加到你的环境变量：
+在*.env*文件中，将密钥添加到你的环境变量：
 
 {title=".env",lang="javascript"}
 
