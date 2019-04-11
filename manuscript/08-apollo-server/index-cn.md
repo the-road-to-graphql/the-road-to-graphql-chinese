@@ -590,7 +590,7 @@ const schema = gql`
 
 >Second, you have to add two resolvers for Apollo Server to match the two new top level queries:
 
-然后，你需要向 Apollo Server 添加两个解析器来匹配两个新的顶级查询:
+然后，你需要向 Apollo Server 添加两个解析器来匹配这两个新的顶级查询:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -750,7 +750,7 @@ const resolvers = {
 
 >Let's make the behavior more like in a real world application. Your sample data needs keys to reference entities to each other, so the message passes a `userId` property:
 
-让我们使它的行为更像真正的应用。你的示例数据需要键来让实体互相引用，所以消息传递了一个 `userId` 属性:
+让我们使它的行为更像现实中的应用。你的示例数据需要键来让实体互相引用，所以消息传递了一个 `userId` 属性:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -902,7 +902,7 @@ const resolvers = {
 
 >So far, you have only defined queries in your GraphQL schema using two related GraphQL types for reading data. These should work in GraphQL Playground, because you have given them equivalent resolvers. Now we'll cover GraphQL mutations for writing data. In the following, you create two mutations: one to create a message, and one to delete it. Let's start with creating a message as the currently signed in user (the `me` user).
 
-到目前为止，你只使用两个 GraphQL 相关的类型在 GraphQL 模式中定义了查询来读取数据。这些应该可以在 GraphQL Playground 中使用，因为你已经为它们提供了对应的解析器。现在我们将介绍用于编写数据的 GraphQL 变更。接下来，你将创建两个变更：一个用于创建消息，另一个用于删除消息。让我们从创建当前登录用户的消息开始 ( `me` 用户)。
+到目前为止，你只使用两个 GraphQL 相关的类型在 GraphQL 模式中定义了查询来读取数据。这些应该可以在 GraphQL Playground 中使用，因为你已经为它们提供了对应的解析器。现在我们将介绍用于编写数据的 GraphQL 变更。接下来，你将创建两个变更：一个用于创建消息，另一个用于删除消息。让我们从创建当前登录用户( `me` 用户)的消息开始 。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -956,7 +956,7 @@ const resolvers = {
 
 >The mutation's resolver has access to the text in its second argument. It also has access to the signed-in user in the third argument, used to associate the created message with the user. The parent argument isn't used. The one thing missing to make the message complete is an identifier. To make sure a unique identifier is used, install this neat library in the command line:
 
-变更的解析器可以从第二个参数中获取 text 。 它还可以从第三个参数中获取已登录用户，用于将创建的消息与用户相关联。parent 参数未被使用。要使消息完整还缺少一个标志符。请在命令行中安装这个整洁的库，以确保使用的标志符唯一:
+变更的解析器可以从第二个参数中获取 text 。 它还可以从第三个参数中获取已登录用户，用于将创建的消息与用户相关联。parent 参数未被使用。要使消息完整还缺少一个标志符。要使标志符唯一的话，请确保在命令行中安装这个整洁的库:
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -1051,7 +1051,7 @@ mutation {
 
 >The last part is essentially your writing operation to a data source. In this case, you have only updated the sample data, but it would most likely be a database in practical use. Next, implement the mutation for deleting messages:
 
-最后一部分实际上是对数据源的写入操作。在本例中，你只更新了示例数据，但它很可能是实际使用的数据库。接下来，让我们实现删除消息的变更:
+最后一部分实际上是对数据源的写入操作。在本例中，你只更新了示例数据，但在实际中，它很可能是使用的数据库。接下来，让我们实现删除消息的变更:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1078,7 +1078,7 @@ const schema = gql`
 
 >The mutation returns a boolean that tells if the deletion was successful or not, and it takes an identifier as input to identify the message. The counterpart of the GraphQL schema implementation is a resolver:
 
-这个变更返回一个布尔值告诉我们是否删除成功，并接受一个标识符作为输入来标识消息。对应 GraphQL 模式的实现部分是一个解析器:
+这个变更返回一个布尔值告诉我们是否删除成功，并接受一个标识符作为输入来标识消息。这在GraphQL 模式的实现中对应着一个解析器:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
