@@ -106,7 +106,7 @@
 
 > Meanwhile, Apollo has already released their own solution to manage local state--which is supposed to be managed by React's local state, Redux or MobX--by embracing GraphQL for everything. The Apollo Link State library lets us manage local data with GraphQL operations, except on the client-side in Apollo Client. It's Apollo saying: "You don't need any other state management library, we take care of your data." These are exciting times for developing JavaScript applications.
 
-​	与此同时，Apollo 已经发布了它自己的解决方案，即通过 GraphQL 来处理所有事情来管理原本应该由 React，Redux 或者 MobX 来管理的本地状态。Apollo 链接状态库使我们可以通过 GraphQL 的操作来管理本地数据，但 Apollo Client 中的客户端除外。Apollo 说："你不在需要其他的状态管理库，我们会处理你的数据"。这些是开发JavaScript应用程序的激动人心的时刻。
+​	与此同时，Apollo 已经发布了它自己的解决方案，即通过 GraphQL 来处理所有事情来管理原本应该由 React，Redux 或者 MobX 来管理的本地状态。Apollo Link State 库使我们可以通过 GraphQL 的操作来管理本地数据，但 Apollo Client 中的客户端除外。Apollo 说："你不在需要其他的状态管理库，我们会处理你的数据"。这些是开发JavaScript应用程序的激动人心的时刻。
 
 ### > Convenient Development Experience
 
