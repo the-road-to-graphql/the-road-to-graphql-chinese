@@ -2750,7 +2750,7 @@ export default user;
 
 > Now you have set up registration (sign up) and login (sign in) for your GraphQL server application. You used bcrypt to hash and compare a plain text password before it reaches the database with a Sequelize hook function, and you used JWT to encrypt user data with a secret to a token. Then the token is returned on every sign up and sign in. Then the client application can save the token (e.g. local storage of the browser) and send it along with every GraphQL query and mutation as authorization.
 
-现在你已经给你的 GraphQL 服务器应用设置好了注册和登录。你通过使用 Sequelize 钩子函数对即将到达数据库的明文密码使用 bcrypt 进行哈希和比较，同时你使用 JWT 和一个密钥将用户数据加密到一个 token。然后在每次注册和登录的时候返回这个 token。然后客户端应用可以保存 token（例如 浏览器本地存储）并做为认证随同每一个 GraphQL 请求和变更（操作）一起发送。
+现在你已经给你的 GraphQL 服务器应用设置好了注册和登录。你通过使用 Sequelize 钩子函数对即将到达数据库的明文密码使用 bcrypt 进行哈希和比较，同时你使用 JWT 和一个密钥将用户数据加密到一个 token。然后在每次注册和登录的时候返回这个 token。然后客户端应用可以保存 token（例如 浏览器本地存储）并做为认证随同每一个 GraphQL 查询（操作）和变更（操作）一起发送。
 
 > The next section will teach you about authorization in GraphQL on the server-side, and what should you do with the token once a user is authenticated with your application after a successful registration or login.
 
