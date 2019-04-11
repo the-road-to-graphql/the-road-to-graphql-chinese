@@ -2161,7 +2161,7 @@ These are the essentials for validation and error handling with GraphQL in Apoll
 
 > In preparation for the authentication mechanism with GraphQL, extend the user model in the _src/models/user.js_ file. The user needs an email address (as unique identifier) and a password. Both email address and username (another unique identifier) can be used to sign in to the application, which is why both properties were used for the user's `findByLogin()` method.
 
-在准备用 GraphQL 实现认证机制时，在_src/models/user.js_文件中扩展用户模型。用户需要一个电子邮件地址（作为唯一标识符）和一个密码。电子邮件地址和用户名（另一种唯一标识符）都可以被用于登录到应用，这就是为什么这两个属性都被用于用户的`findByLogin()`方法。
+在准备用 GraphQL 实现认证机制时，在_src/models/user.js_文件中扩展用户模型。用户需要一个电子邮件地址（作为唯一标识）和一个密码。电子邮件地址和用户名（另一种唯一标识）都可以被用于登录到应用，这就是为什么这两个属性都被用于用户的`findByLogin()`方法。
 
 {title="src/models/user.js",lang="javascript"}
 
