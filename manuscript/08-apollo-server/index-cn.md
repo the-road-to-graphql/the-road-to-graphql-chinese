@@ -2598,7 +2598,7 @@ export default {
 
 > Now you have secured your information in the token as well. If you would want to decode it, in order to access the secured data (the first argument of the `sign` method), you would need the secret again. Furthermore, the token is only valid for 30 minutes.
 
-现在你已经将你的信息保护在了 token 中。如果你想解密它，为了获取保护的数据（`签署`方法的第一个参数），你将再次需要这个密钥。此外，这个 token 的合法时间只有三十分钟。
+现在你已经将你的信息保护在了 token 中。如果你想解密它，为了获取保护的数据（`sign`方法的第一个参数），你将再次需要这个密钥。此外，这个 token 的合法时间只有三十分钟。
 
 > That's it for the registration: you are creating a user and returning a valid token that can be used from the client application to authenticate the user. The server can decode the token that comes with every request and allows the user to access sensitive data. You can try out the registration with GraphQL Playground, which should create a user in the database and return a token for it. Also, you can check your database with `psql` to test if the use was created and with a hashed password.
 
