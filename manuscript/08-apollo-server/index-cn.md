@@ -2767,10 +2767,10 @@ export default user;
 * Login (sign in) a user with GraphQL Playground
   * copy and paste the token to the interactive token decoding on the JWT website (conclusion: the information itself isn't secure, that's why you shouldn't put a password in the token)
 
-* 浏览[本节源代码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/831ab566f0b5c5530d9270a49936d102f7fdf73c)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/831ab566f0b5c5530d9270a49936d102f7fdf73c)
 * 用 GraphQL Playground 注册一个新用户
 * 用`psql`在数据库中检查你的用户和其加密的密码
-* 了解更多关于[JSON web tokens (JWT)](https://jwt.io/)
+* 延伸阅读: [JSON web tokens (JWT)](https://jwt.io/)
 * 用 GraphQL Playground 登录一个用户
   * 复制和粘贴 token 到 JWT 网站上的交互式 token 解密（总结：信息本身并没有被保护，这就是为什么你不能将你的密码放在你的 token 中）
 
