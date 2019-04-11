@@ -1754,7 +1754,7 @@ export default {
 
 > Now we'll shift to seeding the database with sample data when your applications starts with `npm start`. Once your database synchronizes before your server listens, you can create two user records manually with messages in your database. The following code for the *src/index.js* file shows how to perform these operations with async/await. Users will have a `username` with associated `messages`.
 
-现在我们将运行 `npm start` 在启动应用时，将一些示例数据作为种子数据录入到数据库中。在服务器侦听前数据库同步后，你可以在数据库中手动创建两条 user 记录。在下面的 *src/index.js* 文件中的代码显示了如何使用 async/await 来执行这些操作。User 将拥有一个 `username` 属性，还有一个关联的 `messages` 属性。
+现在我们将运行 `npm start` 在启动应用时，将一些示例数据作为种子数据录入到数据库中。当数据库在服务器侦听前同步好后，你可以在数据库中手动创建两条 user 记录。在下面的 *src/index.js* 文件中的代码显示了如何使用 async/await 来执行这些操作。User 将拥有一个 `username` 属性，还有一个关联的 `messages` 属性。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1814,7 +1814,7 @@ const createUsersWithMessages = async () => {
 
 > The `force` flag in your Sequelize `sync()` method can be used to seed the database on every application startup. You can either remove the flag or set it to `false` if you want to keep accumulated database changes over time. The flag should be removed for your production database at some point.
 
-在 Sequelize 的 `sync()` 方法中 `force` 标记可用于在每次应用启动时插入种子数据。如果要随时保持累积的数据库改动，可以删除该标记或将其设置为 `false`。当应用于生产数据时请记得删除这个标记。
+在 Sequelize 的 `sync()` 方法中 `force` 标记可用于在每次应用启动时插入种子数据。如果要随时保持累积的数据库改动，可以删除该标记或将其设置为 `false`。当应用于生产数据库时请记得删除这个标记。
 
 > Next, we have to handle the `me` user. Before, you used one of the users from the sample data; now, the user will come from a database. It's a good opportunity to write a custom method for your user model in the *src/models/user.js* file:
 
@@ -1857,7 +1857,7 @@ export default user;
 
 > The `findByLogin()` method on your user model retrieves a user by `username` or by `email` entry. You don't have an `email` entry on the user yet, but it will be added when the application has an authentication mechanism. The `login` argument is used for both `username` and `email`, for retrieving the user from the database, and you can see how it is used to sign in to an application with username or email.
 
-在 user 模型的 `findByLogin()` 方法中，我们通过 `username` 或 `email` 条目来检索 user。虽然现在还没有用户的 `email` 条目，但是当应用具有身份验证机制时，我们会添加上。`username` 和 `email` 都可以作为 `login` 方法的参数来从数据库中检索 user，你也可以看到这是如何使用 username 或 email 进行登录应用的。
+在 user 模型的 `findByLogin()` 方法中，我们通过 `username` 或 `email` 条目来检索 user。虽然现在还没有用户的 `email` 条目，但是当应用具有身份验证机制时，我们会添加上。`username` 和 `email` 都可以作为 `login` 方法的参数来从数据库中检索 user，你也可以了解到如何使用 username 或 email 进行登录应用。
 
 > You have introduced your first custom method on a database model. It is always worth considering where to put this business logic. When giving your model these access methods, you may end up with a concept called *fat models*. An alternative would be writing separate services like functions or classes for these data access layer functionalities.
 
@@ -1883,7 +1883,7 @@ const server = new ApolloServer({
 
 > However, this cannot work yet, because the user is read asynchronously from the database, so `me` would be a JavaScript promise rather than the actual user; and because you may want to retrieve the `me` user on a per-request basis from the database. Otherwise, the `me` user has to stay the same after the Apollo Server is created. Instead, use a function that returns the context object rather than an object for the context in Apollo Server. This function uses the async/await statements. The function is invoked every time a request hits your GraphQL API, so the `me` user is retrieved from the database with every request.
 
-但是这还不行，因为 user 是从数据库中异步读取的，因此 `me` 将是一个 promise 而不是实际的 user；而且你可能希望在每次请求中都从数据库中检索出 `me`。否则，一旦 Apollo Server 创建后 `me` 必须保持不变。相反，这里使用一个返回上下文对象的 async/await 异步函数而不是 Apollo Server 中一个直接的上下文对象。由于每次请求到 GraphQL API 时都会调用该函数，因此每次请求都会从数据库中检索出 `me`。
+但是这还不行，因为 user 是从数据库中异步读取的，因此 `me` 将是一个 promise 而不是实际的 user；而且你可能希望在每次请求中都从数据库中检索出 `me`。否则，一旦 Apollo Server 创建后 `me` 会保持不变。相反，这里使用一个返回上下文对象的 async/await 异步函数而不是 Apollo Server 中一个直接的上下文对象。由于每次请求到 GraphQL API 时都会调用该函数，因此每次请求都会从数据库中检索出 `me`。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1916,7 +1916,7 @@ psql mydatabasename
 
 > And second, try the following SQL statements. It's the perfect opportunity to learn more about SQL itself:
 
-然后，尝试执行下面的 SQL 语句。趁这个时候好好熟悉下 SQL 操作吧：
+然后，尝试执行下面的 SQL 语句。趁这个机会熟悉更多的 SQL 操作：
 
 {title="psql",lang="sql"}
 ~~~~~~~~
@@ -1948,7 +1948,7 @@ mydatabase=# SELECT text from messages;
 
 > Every time you perform GraphQL mutations, it is wise to check your database records with the `psql` command-line interface. It is a great way to learn about [SQL](https://en.wikipedia.org/wiki/SQL), which is normally abstracted away by using an ORM such as Sequelize.
 
-每次你运行完 GraphQL 操作后，最好使用 `psql` 命令行界面检查下数据库中记录。这是学习 [SQL](https://en.wikipedia.org/wiki/SQL) 的好方法，只是我们通常会使用像 Sequelize 这样的 ORM 来抽象。
+每次你执行完 GraphQL 变更后，最好使用 `psql` 命令行界面检查下数据库中记录。这是学习 [SQL](https://en.wikipedia.org/wiki/SQL) 的好方法，只是我们通常会使用像 Sequelize 这样的 ORM 来抽象。
 
 > In this section, you have used a PostgreSQL database as data source for your GraphQL server, using Sequelize as the glue between your database and your GraphQL resolvers. However, this was only one possible solution. Since GraphQL is data source agnostic, you can opt-in any data source to your resolvers. It could be another database (e.g. MongoDB, Neo4j, Redis), multiple databases, or a (third-party) REST/GraphQL API endpoint. GraphQL only ensures all fields are validated, executed, and resolved when there is an incoming query or mutation, regardless of the data source.
 
@@ -2017,7 +2017,7 @@ export default {
 
 > Let's start with the validation, which will lead to error handling. GraphQL isn't directly concerned about validation, but it operates between tech stacks that are: the client application (e.g. showing validation messages) and the database (e.g. validation of entities before writing to the database).
 
-我们先从校验开始，这将使得我们的程序产生错误。GraphQL 和校验并没有直接关系，但是它在客户端应用（例如显示校验信息）和数据库（例如在写到数据库之前对实体进行校验）之间发挥着作用。
+我们先从校验开始，这将使得我们需要对错误进行处理。GraphQL 和校验并没有直接关系，但是它在客户端应用（例如显示校验信息）和数据库（例如在写到数据库之前对实体进行校验）之间发挥着作用。
 
 > Let's add some basic validation rules to your database models. This section gives an introduction to the topic, as it would become too verbose to cover all uses cases in this application. First, add validation to your user model in the *src/models/user.js* file:
 
@@ -2104,7 +2104,7 @@ mutation {
 
 > It seems like Apollo Server's resolvers make sure to transform [JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) into valid GraphQL output. It is already possible to use this common error format in your client application without any additional error handling.
 
-似乎 Apollo Server 的解析器一定能将 [JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) 转换为有效的 GraphQL 输出。现在已经可以在客户端应用中使用这种常见错误格式，而无需任何其他错误处理。
+看起来 Apollo Server 的解析器一定能将 [JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) 转换为有效的 GraphQL 输出。现在已经可以在客户端应用中使用这种常见错误格式，而无需任何其他错误处理。
 
 > If you want to add custom error handling to your resolver, you always can add the commonly try/catch block statements for async/await:
 
