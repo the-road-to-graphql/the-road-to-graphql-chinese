@@ -2326,11 +2326,11 @@ export default gql`
 
 > Now we'll consider the return type of the `signUp` mutation. Since we are going to use a token-based authentication with GraphQL, it is sufficient to return a token that is nothing more than a string. However, to distinguish the token in the GraphQL schema, it has its own GraphQL type. You will learn more about tokens in the following, because the token is all about the authentication mechanism for this application.
 
-现在我们将会考虑`signUp`变更（操作）的返回值类型。由于我们准备使用 GraphQL 基于 token 的认证，因此仅仅返回一个字符串 token 就足够了。然而，为了在 GraphQL 模式中区分 token，它具有自己的 GraphQL 类型。你将会在接下来了学习到更多关于 token 的知识，因为这个应用所有关于认证机制的都跟 token 有关。
+现在我们将会考虑`signUp`变更（操作）的返回值类型。由于我们准备使用 GraphQL 基于 token 的认证，因此仅仅返回一个字符串 token 就足够了。然而，为了在 GraphQL 模式中区分 token，它具有自己的 GraphQL 类型。你将会在如下学习到更多关于 token 的知识，因为这个应用所有关于认证机制的都跟 token 有关。
 
 > First, add the counterpart for your new mutation in the GraphQL schema as a resolver function. In your _src/resolvers/user.js_ file, add the following resolver function that creates a user in the database and returns an object with the token value as string.
 
-首先，在 GraphQL 模式中添加一份新的变更（操作）做为一个解析函数。在你的_src/resolvers/user.js_ 文件中，添加以下解析函数用于在数据库中创建一个用户并且返回一个对象包含对应的字符串 token。
+首先，在 GraphQL 模式中添加一份新的变更（操作）做为一个解析函数。在你的_src/resolvers/user.js_ 文件中，添加如下解析函数用于在数据库中创建一个用户并且返回一个对象包含对应的字符串 token。
 
 {title="src/resolvers/user.js",lang="javascript"}
 
@@ -2471,7 +2471,7 @@ bcrypt 的`hash()`方法接受一个字符串--用户密码和一个叫salt roun
 
 > Next are the implementation details for the token-based authentication in GraphQL. Regardless of GraphQL, you are going to use a [JSON web token (JWT)](https://jwt.io/) to identify your user. The definition for a JWT from the official website says: _JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties._ In other words, a JWT is a secure way to handle the communication between two parties (e.g. a client and a server application). If you haven't worked on security related applications before, the following section will guide you through the process, and you'll see the token is just a secured JavaScript object with user information.
 
-接下来是在 GraphQL 中基于 token 认证的实现细节。与 GraphQL 无关，你将会用[JSON web token (JWT)](https://jwt.io/)去识别你的用户。JWT 官方网站给出的定义说：_JSON Web Tokens 是一种开放的，行业标准为RFC 7519的，为了在双方之间安全的表示请求的方法。_ 换句话说，JWT 是一种处理两端之间通信的安全方法（例如 客户端和服务端）。如果你之前没有在安全相关的应用上工作过，接下来的部分将会引导你完成整个过程，同时你也会明白 token 只是一种安全的带有用户信息的 JavaScript 对象。
+接下来是在 GraphQL 中基于 token 认证的实现细节。与 GraphQL 无关，你将会用[JSON web token (JWT)](https://jwt.io/)去识别你的用户。JWT 官方网站给出的定义说：_JSON Web Tokens 是一种开放的，行业标准为RFC 7519的，为了在双方之间安全的表示请求的方法。_ 换句话说，JWT 是一种处理两端之间通信的安全方法（例如 客户端和服务端）。如果你之前没有在安全相关的应用上工作过，如下部分将会引导你完成整个过程，同时你也会明白 token 只是一种安全的带有用户信息的 JavaScript 对象。
 
 > To create JWT in this application, we'll use the popular [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) node package. Install it on the command line:
 
