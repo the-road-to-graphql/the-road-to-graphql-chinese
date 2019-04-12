@@ -712,7 +712,7 @@ const client = new ApolloClient({
 
 > That's how two or multiple links can be composed for creating an Apollo Client instance. There are several links developed by the community and Apollo maintainers that extend the Apollo Client with advanced functionality. Remember, it's important to understand that links can be used to access and modify the GraphQL control flow. When doing so, be careful to chain the control flow in the correct order. The `apollo-link-http` is called a **terminating link** because it turns an operation into a result that usually occurs from a network request. On the other side, the `apollo-link-error` is a **non-terminating link**. It only enhances your terminating link with features, since a terminating link has to be the last entity in the control flow chain.
 
-这就是如何组合两个或者多个链接来创建一个 Apollo Client 实例。Apollo 社区和维护人员发了几个链接用以拓展 Apollo Client 的高级功能。请记住，链接可被用于访问和修改 GraphQL 控制流程。当我们使用链接时，要注意以正确的顺序链接控制流程。`apollo-link-http` 被叫做**终止链接**，因为它会将操作转换成一个网络请求。另一方面，`apollo-link-error` 是**非终止链接**，它仅仅是增强了终止链接的功能，因此终止链接必须是控制链中的最后一个实体。
+以上就是如何组合两个或者多个链接来创建一个 Apollo Client 实例。相关社区及Apollo 维护人员开发了几个链接用以拓展 Apollo Client 的高级功能。请记住，链接可被用于访问和修改 GraphQL 控制流程。当我们使用这些链接时，要注意以正确的顺序来链接控制流程。`apollo-link-http` 被叫做**终止链接**，因为它会将操作转换成一个通常发生在网络请求之后的返回结果。另一方面，`apollo-link-error` 是**非终止链接**，它仅仅是增强了终止链接的功能，因此终止链接必须是控制流链中的最后一个实体。
 
 > ### Exercises:
 ### 练习：
