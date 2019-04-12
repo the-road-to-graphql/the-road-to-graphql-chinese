@@ -633,7 +633,7 @@ npm install apollo-link-error --save
 
 > You can import it in your *src/index.js* file and create such an error link:
 
-你可以在 *src/index.js* 文件中导入这个包，并且创建一个如下所示的错误链接：
+你可以把该包导入进 *src/index.js*文件中，并且创建一个如下所示的错误链接：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
