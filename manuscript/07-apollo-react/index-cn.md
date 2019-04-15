@@ -721,7 +721,7 @@ const client = new ApolloClient({
 > * Read more about [different Apollo Error types and error policies](https://www.apollographql.com/docs/react/features/error-handling.html)
 * 延伸阅读：[不同的 Apollo 错误类型和错误策略](https://www.apollographql.com/docs/react/features/error-handling.html)
 > * Read more about [Apollo Links](https://www.apollographql.com/docs/link/)
-* 拓展阅读：[ Apollo 链接](https://www.apollographql.com/docs/link/)
+* 延伸阅读：[ Apollo 链接](https://www.apollographql.com/docs/link/)
 > * Read more about [composable Apollo Links](https://www.apollographql.com/docs/link/composition.html)
 * 拓展阅读：[可组合的 Apollo 链接](https://www.apollographql.com/docs/link/composition.html)
 >* Implement the [apollo-link-retry](https://www.apollographql.com/docs/link/links/retry.html) in case a network request fails
