@@ -730,7 +730,7 @@ const client = new ApolloClient({
 * 花3分钟来做一个[测试](https://www.surveymonkey.com/r/53HLLFX)
 
 >## GraphQL Mutation with Apollo Client in React
-## Apollo Client 在 React 使用变更
+## 在 React 中使用Apollo Client 变更操作
 >The previous sections have taught you how to query data with React Apollo and the Apollo Client. In this section, you will learn about mutations. As in other applications before, you will implement starring a repository with GitHub's exposed `addStar` mutation.
 
 上一节已经教你如何使用 React Apollo 和 Apollo Client 查询数据。在这一节中，你将学习到关于变更的知识。正如之前其他的应用程序一样，你将使用 Github 公开的 `addStar` 变更实现 star 一个仓库。
