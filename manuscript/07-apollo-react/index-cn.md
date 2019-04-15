@@ -719,7 +719,7 @@ const client = new ApolloClient({
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/fa06945db4a933fe4a29c41f46fdc7034bceeb6e)
 > * Read more about [different Apollo Error types and error policies](https://www.apollographql.com/docs/react/features/error-handling.html)
-* 拓展阅读：[不同的 Apollo 错误类型和错误策略](https://www.apollographql.com/docs/react/features/error-handling.html)
+* 延伸阅读：[不同的 Apollo 错误类型和错误策略](https://www.apollographql.com/docs/react/features/error-handling.html)
 > * Read more about [Apollo Links](https://www.apollographql.com/docs/link/)
 * 拓展阅读：[ Apollo 链接](https://www.apollographql.com/docs/link/)
 > * Read more about [composable Apollo Links](https://www.apollographql.com/docs/link/composition.html)
