@@ -723,7 +723,7 @@ const client = new ApolloClient({
 > * Read more about [Apollo Links](https://www.apollographql.com/docs/link/)
 * 延伸阅读：[ Apollo 链接](https://www.apollographql.com/docs/link/)
 > * Read more about [composable Apollo Links](https://www.apollographql.com/docs/link/composition.html)
-* 拓展阅读：[可组合的 Apollo 链接](https://www.apollographql.com/docs/link/composition.html)
+* 延伸阅读：[可组合的 Apollo 链接](https://www.apollographql.com/docs/link/composition.html)
 >* Implement the [apollo-link-retry](https://www.apollographql.com/docs/link/links/retry.html) in case a network request fails
 * 实现[ Apollo 链接重试](https://www.apollographql.com/docs/link/links/retry.html)功能来处理网络请求失败
 >* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53HLLFX)
