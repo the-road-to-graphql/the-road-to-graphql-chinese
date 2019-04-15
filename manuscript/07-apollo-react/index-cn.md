@@ -736,7 +736,7 @@ const client = new ApolloClient({
 上一节已经教你如何使用 React Apollo 和 Apollo Client 查询数据。在这一节中，你将学习到关于变更的知识。正如之前其他的应用程序一样，你将使用 Github 公开的 `addStar` 变更实现 star 一个仓库。
 >The mutation starts out with a variable to identify the repository to be starred. We haven't used a variable in Query component yet, but the following mutation works the same way, which can be defined in the *src/Repository/RepositoryItem/index.js* file.
 
-该变更以一个变量来标识 star 的 repository。我们还虽然还没有在 Query 组件里面使用过变量，但是以下的变更工作方式与之相同，它在 *src/Repository/RepositoryItem/index.js* 文件中如下定义。
+该变更以变量来标识要加星的仓库。我们虽然还没有在 Query 组件里面使用过变量，但是以下的变更工作方式与之相同，它在 *src/Repository/RepositoryItem/index.js* 文件中定义如下。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
