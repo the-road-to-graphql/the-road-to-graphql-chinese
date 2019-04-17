@@ -3,10 +3,10 @@
 # 在GraphQL 和 Apollo Server 中使用Node.js 
 > In this chapter, you will implement server-side architecture using GraphQL and Apollo Server. The GraphQL query language is implemented as a reference implementation in JavaScript by Facebook, while Apollo Server builds on it to simplify building GraphQL servers in JavaScript. Since GraphQL is a query language, its transport layer and data format is not set in stone. GraphQL isn't opinionated about it, but it is used as alternative to the popular REST architecture for client-server communication over HTTP with JSON.
 
-在本章你将会使用 GraphQL 和 Apollo Server 构建服务端。 GraphQL 是一个由 Facebook 提出，并用 JavaScript 实现了参考实现的查询语言，而 Apollo Server 在此基础上进行了简化，以便能用 JavaScript 简单地构建 GraphQL 服务。由于 GraphQL 是一种查询语言，所以它的翻译层和数据格式不是固定的。在通过 HTTP 与 JSON 的客户端-服务端传输中，它常常被视为流行的 REST 架构的替代品，虽然 GraphQL 没有刻意提到这一点。
+在本章你将会使用 GraphQL 和 Apollo Server 构建服务端。 FaceBook 用 JavaScript 实现了 GraphQL 查询语言的参考实现，而 Apollo Server 基于此实现，以便用 JavaScript 构建 GraphQL Server 变得更简单。由于 GraphQL 是一种查询语言，所以它的传输层和数据格式不是固定的。在通过 HTTP 与 JSON 的客户-服务端传输中，它常常被视为流行的 REST 架构的替代品，虽然 GraphQL 没有刻意提到这一点。
 > In the end, you should have a fully working GraphQL server boilerplate project that implements authentication, authorization, a data access layer with a database, domain specific entities such as users and messages, different pagination strategies, and real-time abilities due to subscriptions. You can find a working solution of it, as well as a working client-side application in React, in this GitHub repository: [Full-stack Apollo with React and Express Boilerplate Project](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate). I consider it an ideal starter project to realize your own idea.
 
-在章节的最后，你能拥有一个完全工作的  GraphQL 服务样板项目，这个项目包括身份验证，授权，连接着数据库的数据访问层，像用户、消息这样的具体的领域实体，不同的分页策略和实时生效的订阅功能。你可以在这个 GitHub 代码库： [使用 React 和 Express 的全栈 Apollo 示例项目](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate) 找到一个已经实现了这些功能的服务端解决方案和一个由 React 实现的客户端解决方案。我认为这是一个理想的实现自己想法的入门项目。
+在章节的最后，你能拥有一个完全工作的  GraphQL 服务样脚手架目，这个项目包括身份验证，授权，连接着数据库的数据访问层，像用户、消息这样的具体的领域实体，不同的分页策略和由订阅带来的实时推送功能。你可以在这个 GitHub 代码库： [使用 React 和 Express 的全栈 Apollo 脚手架项目](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate) 找到一个已经实现了这些功能的服务端解决方案和一个由 React 实现的客户端解决方案。我认为这是一个理想的实现自己想法的入门项目。
 > While building this application with me in the following sections, I recommend to verify your implementations with the built-in GraphQL client application (e.g. GraphQL Playground). Once you have your database setup done, you can verify your stored data over there as well. In addition, if you feel comfortable with it, you can implement a client application (in React or something else) which consumes the GraphQL API of this server. So let's get started!
 
 当你在和我一起构建这个应用程序时，推荐使用内置的 GraphQL 客户端应用程序（比如  GraphQL Playground ）来验证你的实现。完成数据库设置的话，也可以在那里验证存储数据。此外，如果你感觉还有余力的话，还可以实现一个使用这个服务提供的 GraphQL API 的客户端应用程序（使用 React 或者其他什么）。那让我们开始吧！
@@ -18,7 +18,7 @@
 有两种方法来开始这个应用程序。你可以按照我在这个 [手把手教你启动最小 Node.js 的指南](https://www.robinwieruch.de/minimal-node-js-babel-setup) 里的指导，或者在这个 [GitHub 代码库](https://github.com/rwieruch/node-babel-server) 里找到一个启动项目，并根据它的安装说明进行操作。
 > Apollo Server can be used with several popular libraries for Node.js like Express, Koa, Hapi. It is kept library agnostic, so it's possible to connect it with many different third-party libraries in client and server applications. In this application, you will use [Express](https://expressjs.com/), because it is the most popular and common middleware library for Node.js.
 
-Apollo Server 可以与 Express、Koa、Hapi 等常用的 Node.js 库一起使用。因为它与库无关，所以可以用许多不同的第三方库将客户端和服务器应用程序连接起来。在这个应用程序中，你将使用 [Express](https://expressjs.com/) ，因为它是 Node.js 最流行和最常见的中间件库。
+Apollo Server 可以与 Express、Koa、Hapi 等常用的 Node.js 库一起使用。因为它与库无关，所以可以将它与客户端和服务器应用程序的许多不同第三方库结合使用。在这个应用程序中，你将使用 [Express](https://expressjs.com/) ，因为它是 Node.js 最流行和最常见的中间件库。
 > Install these two dependencies to the *package.json* file and *node_modules* folder:
 
 将这两个依赖包安装到  *package.json* 文件和 *node_modules* 文件夹中
@@ -73,7 +73,7 @@ app.listen({ port: 8000 }, () => {
 ~~~~~~~~
 > Using Apollo Server's `applyMiddleware()` method, you can opt-in any middleware, which in this case is Express. Also, you can specify the path for your GraphQL API endpoint. Beyond this, you can see how the Express application gets initialized. The only missing items are the definition for the schema and resolvers for creating the Apollo Server instance. We'll implement them first and learn about them after:
 
-使用 Apollo Server 的 `applyMiddleware()` 方法，你可以添加任意中间件。此外，还可以指定 GraphQL API endpoint 的路径。而且，你还可以自定义初始化 Express 应用程序。现在惟一缺少的是用于创建 Apollo Server 实例的 schema 和 resolvers 的定义。我们将先实现它们，之后再来学习它们：
+使用 Apollo Server 的 `applyMiddleware()` 方法，你可以添加任意中间件，这里使用了 Express。此外，还可以指定 GraphQL API endpoint 的路径。而且，你还可以自定义初始化 Express 应用程序。现在惟一缺少的是用于创建 Apollo Server 实例的 schema 和 resolvers 的定义。我们将先实现它们，之后再来学习它们：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
