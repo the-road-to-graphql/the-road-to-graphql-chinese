@@ -815,7 +815,7 @@ const RepositoryItem = ({
 
 >Note: The div element surrounding the Mutation component is there for other mutations you will implement in this section.
 
-注意：div 元素所包裹的 Mutation 组件就是你将在本节实现的变更
+注意：div 元素所包裹的 Mutation 组件就是你将在本节实现的变更操作
 
 >The `id` for each repository should be available due to previous query result. It has to be used as a variable for the mutation to identify the repository. The Mutation component is used like the Query component, because it implements the render prop pattern as well. The first argument is different, though, as it is the mutation itself instead of the mutation result. Use this function to trigger the mutation before expecting a result. Later, you will see how to retrieve the mutation result; for now, the mutating function can be used in a button element. In this case, it is already in a Button component:
 
