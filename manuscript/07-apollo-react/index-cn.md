@@ -987,7 +987,7 @@ const RepositoryItem = ({ ... }) => (
 
 > ## GraphQL Query/Mutation with Higher-Order Components in React
 
-## GraphQL 高阶组件 Query 和 Mutation
+## GraphQL 查询/变更操作在React高阶组件中的运用
 >We've done Query and Mutation components from React Apollo to connect a data-layer (Apollo Client) with a view-layer (React). The Query component executes the query when it is rendered, whereas the Mutation component gives access to a function that triggers the mutation. Both components use the render props pattern to make the results accessible in their child functions.
 
 我们已经在 React Apollo 中使用 Query 和 Mutation 组件完成了数据层（ Apollo Client ）和视图层（ React ）的连接。Query 组件在渲染后就会执行查询操作，而 Mutation 组件允许访问一个函数来触发变更。两个组件都使用的是 render props 模式，以便可以在子函数中访问结果。
