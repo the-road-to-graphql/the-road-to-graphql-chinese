@@ -966,7 +966,7 @@ const RepositoryItem = ({ ... }) => (
 
 > When you star a repository as above, the "Star" button disappears. This is what we want, because it means the `viewerHasStarred` boolean has been updated in Apollo Client's cache for the identified repository. Apollo Client was able to match the mutation result with the repository identifier to the repository entity in Apollo Client's cache, the props were updated, and the UI re-rendered. Yet, on the other side, the count of stargazers who have starred the repository isn't updated because it cannot be retrieved from GitHub's API. The count must be updated in the Apollo Client's cache. You will find out more about this topic in one of the following sections.
 
-当你如上所诉的 star 一个 repository 时，"Star" 按钮将消失。这正是我们想要的，它意味着在 Apollo Client 的缓存中已经更新了所标识的仓库的 `viewerHasStarred` 布尔值。当 props 更新，UI 重新渲染时，Apollo Client 也能够将标识的 repository 的变更结果与 Apollo Client 缓存中 repository 实体相匹配。另一方面，stargazer 的数量并没有更新，这是因为它不能从 Github 的 API 中检索得到，它必须在 Apollo Client 的缓存中更新。你将会后续章节学习到更多关于此主题的知识。
+当你如上所诉地加星标注一个代码仓库时，"Star" 按钮将消失。这正是我们想要的，因为这意味着在 Apollo Client 的缓存中已经更新了所标识的仓库的 `viewerHasStarred` 布尔值。当 props 更新，UI 重新渲染时，Apollo Client 也能够将标识的代码仓库的变更结果与 Apollo Client 缓存中代码仓库实体相匹配。另一方面，stargazer 的数量并没有更新，这是因为它不能从 Github 的 API 中检索得到，stargazer 的数量必须在 Apollo Client 的缓存中更新。你将会后续章节学习到更多相关主题的知识。
 > ### Exercises:
 ### 练习：
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
