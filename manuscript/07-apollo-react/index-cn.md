@@ -765,7 +765,7 @@ const STAR_REPOSITORY = gql`
 
 > The mutation definition takes the `id` variable as input for the `addStar` mutation. As before, you can decide what should be returned in case of a successful mutation. Now, you can use a Mutation component that represents the previously used Query component, but this time for mutations. You have to pass the mutation prop, but also a variable prop for passing the identifier for the repository.
 
-`addStar` 变更使用变量 `id` 作为它的输入。和之前一样，你可以决定在变更操作成功后返回哪些数据。现在，你可以使用与之前 Query 组件类似的 Mutation 组件，但是在本次使用变更时，你必须传入相应变更 prop，并且也需要为 variable prop 传入 repository 的标识符。
+`addStar` 变更使用变量 `id` 作为它的输入。和之前一样，你可以决定在变更操作成功后返回什么内容。现在，你可以使用 Mutation 组件来替代之前用到的 Query 组件，不同的是这次是用来进行变更操作。另外你必须传入相应的变更 prop，并且也需要为 variable prop 传入代码仓库的标识符。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
