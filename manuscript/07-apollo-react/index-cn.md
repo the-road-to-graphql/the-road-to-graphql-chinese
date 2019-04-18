@@ -860,7 +860,7 @@ const RepositoryItem = ({ ... }) => (
 
 >The styled Button component could be implemented in the *src/Button/index.js* file. It's already extracted, because you will use it in this application later.
 
-这个包含样式的 Button 组件已经在 *src/Button/index.js* 文件中被实现。它已经被单独提取出来，所以你可以在此后的应用程序中使用它。
+这个包含样式的 Button 组件可以在 *src/Button/index.js* 文件中被实现，并且已经被单独提取出来，因为在之后的应用程序中你将会用到它。
 
 {title="src/Button/index.js",lang="javascript"}
 ~~~~~~~~
