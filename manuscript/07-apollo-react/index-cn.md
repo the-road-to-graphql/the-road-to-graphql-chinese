@@ -972,7 +972,7 @@ const RepositoryItem = ({ ... }) => (
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
 >* Read more about [mutations with Apollo Client in React](https://www.apollographql.com/docs/react/essentials/mutations.html)
-* 拓展阅读：[ Apollo Client 变更](https://www.apollographql.com/docs/react/essentials/mutations.html)
+* 延伸阅读：[ Apollo Client 变更](https://www.apollographql.com/docs/react/essentials/mutations.html)
 > * Implement other mutations in the RepositoryItem component
 >  * Implement the `removeStar` mutation when the `viewerHasStarred` boolean is true
 >  * Show a button with the watchers count which should be used to watch/unwatch a repository
