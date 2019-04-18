@@ -819,7 +819,7 @@ const RepositoryItem = ({
 
 >The `id` for each repository should be available due to previous query result. It has to be used as a variable for the mutation to identify the repository. The Mutation component is used like the Query component, because it implements the render prop pattern as well. The first argument is different, though, as it is the mutation itself instead of the mutation result. Use this function to trigger the mutation before expecting a result. Later, you will see how to retrieve the mutation result; for now, the mutating function can be used in a button element. In this case, it is already in a Button component:
 
-由于之前的查询结构，所以每一个 repository 的 `id` 应该都是可用的。它必须被用做变更的变量来标识每一个 repository。Mutatin 组件的使用方式和 Query 组件类似，因为它也实现 render prop 模式。但是第一个参数是不同的，它是变更本身，而不是变更的结果。在期望得到结果时，使用此函数可以触发变更操作。稍后，你将看到如何检索变更的结果；就目前而言，变更方法可以被用在 button 元素中。在下面这种情况，它已经被使用在 Button 组件中了：
+由于之前的查询结果，所以每一个代码仓库的 `id` 应该都是可用的。它必须当做变更操作的变量来标识每一个代码仓库。Mutation 组件的使用方式和 Query 组件类似，因为它也运用了 render prop 模式。但是第一个参数是不同的，它是变更操作本身，而不是变更的结果。在期望得到结果之前，可以使用此函数来触发变更操作。随后，你就可以看到如何获取变更的结果；就目前而言，变更方法可以被用在 button 元素中。在下面这种情况，它已经运用在 Button 组件中了：
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
