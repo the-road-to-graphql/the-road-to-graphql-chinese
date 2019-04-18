@@ -889,7 +889,7 @@ export default Button;
 
 >Let's get to the mutation result which was left out before. Access it as a second argument in your child function of the render prop.
 
-让我们来完成之前遗留的部分，去获取变更的结果，在 render prop 的子函数的第二个参数访问它。
+让我们来看看之前遗漏的变更结果的部分。可以把变更的结果作为 render prop 子函数的第二个参数来访问。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
