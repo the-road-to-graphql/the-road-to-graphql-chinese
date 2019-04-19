@@ -1304,7 +1304,7 @@ const updateAddStar = (
 让我们回顾一下这三个步骤。首先，你使用唯一标识和片段从 Apollo Client 中检索（读取）了代码仓库实体；第二步，你更新这个实体的数据信息；第三步，你将这个更新信息写回到缓存中，同时通过使用 JavaScript 的拓展运算符保证了所有其他信息的完整性。这就是一种手动更新机制，可以在变更操作缺失数据时使用。
 >It is a good practice to use an identical fragment for all three parts: the initial query, the `readFragment()`, and `writeFragment()` cache method. Your data structure for the entity stays consistent in your cache. For instance, if you forget to include a property defined by the fragment's fields in data object of the `writeFragment()` method, you get a warning: *Missing field __typename in ...*.
 
-对以下的三个部分都是用相同片段是一个好的实践：初始化的查询，`readFragment（）` 以及 `writeFragment（）` 方法。你的实体的数据结构在缓存中始终保持一致。例如，如果你忘了在 `writeFragment（）` 方法中的数据对象包含片段所定义的字段，你将会得到一个警告：*Missing field __typename in ...*。
+对以下的三个部分，使用相同片段是一个好的实践，这三个部分包括：初始化的查询，`readFragment（）` 以及 `writeFragment（）` 方法。这使得你的实体的数据结构在缓存中始终保持一致。例如，如果在 `writeFragment（）` 方法中的数据对象里，你忘了包含片段所定义的字段，你将会得到一个警告：*Missing field __typename in ...*。
 >On an implementation level, you learned about extracting fragments from a query or mutation. Fragments allow you to define your shared entities by GraphQL types. You can reuse those in your queries, mutations or local state management methods to update the cache. On a higher level, you learned that Apollo Client's cache normalizes your data, so you can retrieve entities that were fetched with a deeply nested query using their type and identifier as composite key. Without it, you'd have to perform normalizations for all the fetched data before putting it in your store/state.
 
 站在实践操作级别上看，你会学到从查询和变更中抽离片段，片段允许你定义你的 GraphQL 类型的共享实体。你可以在查询，变更或者本地状态管理方法中重用这些片段来更新缓存。站在更高的级别上来看，你学习到 Apollo Client 的缓存标准化了你的数据，因此你可以使用实体的类型和他们的组合键来从深层嵌套的查询结果中检索到你所期望的实体数据。没有它，你必须在将所有获取的数据存放到 store 或者 state 之前，将它们都进行标准化。
