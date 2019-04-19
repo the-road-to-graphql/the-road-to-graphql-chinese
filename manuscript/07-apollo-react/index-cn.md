@@ -1324,7 +1324,7 @@ const updateAddStar = (
 >* Read more about [Caching in Apollo Client and the composite key to identify entities](https://www.apollographql.com/docs/react/advanced/caching.html)
 >* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5BSDXF7)
 
-* 为之前练习中的所有其他的变更实现更新本地缓存
+* 为之前练习中的所有其他的变更操作实现更新本地缓存
   * 为 `removeStar` 变更实现相同的本地缓存更新，但是是去减少 stargazer 的数量
   * 为 `updateSubscription` 变更实现本地缓存更新
   * 你将会在下一节看到一个可行的解决方案
