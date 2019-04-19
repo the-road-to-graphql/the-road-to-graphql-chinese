@@ -1307,7 +1307,7 @@ const updateAddStar = (
 对以下的三个部分，使用相同片段是一个好的实践，这三个部分包括：初始化的查询，`readFragment（）` 以及 `writeFragment（）` 方法。这使得你的实体的数据结构在缓存中始终保持一致。例如，如果在 `writeFragment（）` 方法中的数据对象里，你忘了包含片段所定义的字段，你将会得到一个警告：*Missing field __typename in ...*。
 >On an implementation level, you learned about extracting fragments from a query or mutation. Fragments allow you to define your shared entities by GraphQL types. You can reuse those in your queries, mutations or local state management methods to update the cache. On a higher level, you learned that Apollo Client's cache normalizes your data, so you can retrieve entities that were fetched with a deeply nested query using their type and identifier as composite key. Without it, you'd have to perform normalizations for all the fetched data before putting it in your store/state.
 
-站在实践操作级别上看，你会学到从查询和变更中抽离片段，片段允许你定义你的 GraphQL 类型的共享实体。你可以在查询，变更或者本地状态管理方法中重用这些片段来更新缓存。站在更高的级别上来看，你学习到 Apollo Client 的缓存标准化了你的数据，因此你可以使用实体的类型和他们的组合键来从深层嵌套的查询结果中检索到你所期望的实体数据。没有它，你必须在将所有获取的数据存放到 store 或者 state 之前，将它们都进行标准化。
+在代码实现级别上，你学到了从查询和变更中提取片段，这些片段允许你通过GraphQL 类型来定义共享实体。你可以在查询，变更或者组件本地状态管理方法中重用这些片段来更新缓存。在更高的级别上，你学到了用Apollo Client 的缓存来标准化你的数据，从而你可以使用实体的类型和他们的组合键，来从深层嵌套的查询结果中，检索到你所期望的实体数据。如果没有这个缓存来标准化，在将所有获取的数据存放到 store 或者 state 之前，你必须对这些数据进行标准化。
 >### Exercises:
 ### 练习：
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
