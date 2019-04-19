@@ -1263,7 +1263,7 @@ const updateAddStar = (
 Apollo Client 会将所有的查询数据标准化储存到缓存中。否则，repository 数据将会是 Profile 组件中使用查询结构的 repository 列表中的深层嵌套的实体数据。标准化的数据结构使得可以通过它们的标识符和 GraphQL 的 `__typename` 元字段来检索实体数据。两者的组合是默认键，这个被称为[复合键](https://en.wikipedia.org/wiki/Compound_key)，用于从缓存中读取和写入实体。你将会在本节中找到更多关于更改默认复合键的信息。
 >Furthermore, the resulting entity has all properties specified in the fragment. If there is a field in the fragment not found on the entity in the cache, you may see the following error message: *Can't find field __typename on object ...*. That's why we use the identical fragment to read from the local cache to query the GraphQL API.
 
-此外，生成的实体具有这个片段所有的属性。如何在缓存中无法找到该实体上的某些字段，你会看到以下的错误：*Can't find field __typename on object ...*。这就是为什么我们用相同的片段作为查询 GraphQL API 来读取本地缓存。
+此外，生成的实体具有片段中涉及的所有属性。如何在缓存中无法找到该实体上的某些字段，你会看到以下的错误：*Can't find field __typename on object ...*。这就是为什么我们用相同的片段，来读取本地缓存用于查询 GraphQL API 。
 > After you have retrieved the repository entity with a fragment and its composite key, you can update the count of stargazers and write back the data to your cache. In this case, increment the number of stargazers.
 
 在你使用片段和它的复合键来检索 repository 实体之后，你可以更新 stargazer 数量，并把更新后的数据写入到缓存中。在这种情况下，就能够增加 stargazer 的数量。
