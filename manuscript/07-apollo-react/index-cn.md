@@ -1260,7 +1260,7 @@ const updateAddStar = (
 
 >The Apollo Client's cache that you set up to initialize the Apollo Client normalizes and stores queried data. Otherwise, the repository would be a deeply nested entity in a list of repositories for the query structure used in the Profile component. Normalization of a data structure makes it possible to retrieve entities by their identifier and their GraphQL `__typename` meta field. The combination of both is the default key, which is called a [composite key](https://en.wikipedia.org/wiki/Compound_key), to read or write an entity from or to the cache. You may find out more about changing this default composite key in the exercises of this section.
 
-Apollo Client 会将所有的查询数据标准化储存到缓存中。否则，repository 数据将会是 Profile 组件中使用查询结构的 repository 列表中的深层嵌套的实体数据。标准化的数据结构使得可以通过它们的标识符和 GraphQL 的 `__typename` 元字段来检索实体数据。两者的组合是默认键，这个被称为[复合键](https://en.wikipedia.org/wiki/Compound_key)，用于从缓存中读取和写入实体。你将会在本节中找到更多关于更改默认复合键的信息。
+你为初始化Apollo Client而创建的Apollo Client缓存，会规范化并存储查询到的数据。否则，对于Profile 组件中使用的查询结构而言，代码仓库将会是代码仓库列表中的一个深层嵌套的实体。数据结构的标准化使得可以通过它们的标识符和 GraphQL 的 `__typename` 元字段来检索实体。两者的组合是默认键，这个被称为[复合键](https://en.wikipedia.org/wiki/Compound_key)，它用于从缓存中读取和写入实体。你将会在本节的练习中找到更多关于更改默认复合键的信息。
 >Furthermore, the resulting entity has all properties specified in the fragment. If there is a field in the fragment not found on the entity in the cache, you may see the following error message: *Can't find field __typename on object ...*. That's why we use the identical fragment to read from the local cache to query the GraphQL API.
 
 此外，生成的实体具有片段中涉及的所有属性。如何在缓存中无法找到该实体上的某些字段，你会看到以下的错误：*Can't find field __typename on object ...*。这就是为什么我们用相同的片段，来读取本地缓存用于查询 GraphQL API 。
