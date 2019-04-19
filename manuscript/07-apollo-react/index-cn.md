@@ -1015,7 +1015,7 @@ const Profile = ({ data, loading, error }) => {
 
 >There is no GraphQL involved here, because all you see is the pure view-layer. Instead, the data-layer logic is extracted into a Higher-Order Component. We import the `graphql` HOC from the React Apollo package in order to apply it on the Profile component, which takes the query definition as argument.
 
-这里并没有涉及到 GraphQL，因为你所看到的只是纯视图层。而数据层的逻辑会被提取到一个高阶组件中。我们将 React Apollo 包中的 `graphql` 导入，以便在 Profile 组件中使用它。它将查询的定义作为一个参数。
+这里并没有涉及到 GraphQL，因为你所看到的只是纯视图层。而数据层的逻辑会被提取到一个高阶组件中。我们将 React Apollo 包中的 `graphql` 高阶组件导入，以便在 Profile 组件中使用它。这个组件会将查询的定义作为一个参数。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
