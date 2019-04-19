@@ -1164,7 +1164,7 @@ const GET_REPOSITORIES_OF_CURRENT_USER = gql`
 
 >The refactoring is done. Your query is now more concise, and the fragment in its natural repository module can be reused for other places and functionalities. Next, use Mutation component's `update` prop to pass a function which will update the local cache eventually.
 
-重构到此就已经完成了。你的查询现在更简洁了。位于 repository 模块中的片段可以被重用的其他的功能。下一步，使用 Mutation 组件的 `update` prop 传递一个函数来更改本地的缓存。
+重构到此就已经完成了。现在你的查询部分的代码更简洁了。位于代码仓库模块中的片段，也可以在其他的位置和功能重复使用。下一步，我们会使用 Mutation 组件中的 `update` prop 传递一个最终会更新本地缓存的函数。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
