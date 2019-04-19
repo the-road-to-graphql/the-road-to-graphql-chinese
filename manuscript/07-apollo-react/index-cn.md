@@ -1315,7 +1315,7 @@ const updateAddStar = (
 >* Read more about [Local State Management in Apollo Client](https://www.apollographql.com/docs/react/essentials/local-state.html)
 * 延伸阅读：[ Apollo Client 组件本地状态管理](https://www.apollographql.com/docs/react/essentials/local-state.html)
 >* Read more about [Fragments in Apollo Client](https://www.apollographql.com/docs/react/advanced/fragments.html)
-* 拓展阅读：[ Apollo Client 中片段](https://www.apollographql.com/docs/react/advanced/fragments.html)
+* 延伸阅读：[ Apollo Client 中片段](https://www.apollographql.com/docs/react/advanced/fragments.html)
 
 >* Implement local cache updates for all the other mutations from the previous exercises
 >  * Implement the identical local cache update, but with decreasing the count of stargazers, for your `removeStar` mutation
