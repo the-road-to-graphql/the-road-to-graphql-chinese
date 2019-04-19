@@ -1227,7 +1227,7 @@ const updateAddStar = (
 
 >Now comes the most exciting part of this section. You can use the Apollo Client to read data from the cache, but also to write data to it. The goal is to read the starred repository from the cache, which is why we need the `id` to increment its stargazers count by one and write the updated repository back to the cache. You got the repository by its `id` from the cache by extracting the repository fragment. You can use it along with the repository identifier to retrieve the actual repository from Apollo Client's cache without querying all the data with a naive query implementation.
 
-现在到了本节最激动人心的部分了。你可以使用 Apollo Client 从缓存中读取数据，也可以向其中写入数据。我们的目标是从缓存中读取已经 star 的 repository，这就是为什么我们需要 `id` 来找到相应的 repository，将它的 star 数量加1并写入缓存中。你可以通过提取出来的 repository 片段获得 repository 的缓存数据，你可以将该片段和 repository 的 id 标识符一起使用，从而在 Apollo Client 的缓存中检索期望的 repository 数据，而不是简单使用去查询所有的数据。
+现在到了本节最激动人心的部分了。你可以使用 Apollo Client 从缓存中读取数据，也可以向其中写入数据。我们的目标是从缓存中读取已经加星标注的代码仓库，这就是为什么我们需要 `id` 来找到相应的代码仓库，将它的 star 数量加1并写入到缓存中。你可以通过提取出来的代码仓库片段来获得它的缓存数据，你可以将该片段和代码仓库的唯一标识一起使用，从而在 Apollo Client 的缓存中，检索实际需要的代码仓库数据，而无需使用基本的查询来检索所有的数据。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
