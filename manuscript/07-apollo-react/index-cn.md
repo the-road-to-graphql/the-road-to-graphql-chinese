@@ -1124,7 +1124,7 @@ export default RepositoryList;
 
 >Finally, import the fragment in the Profile component's file to use it again.
 
-最后，在 Profile 组件中导入这个片段来使用。
+最后，在 Profile 组件中导入这个片段来重复使用。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
