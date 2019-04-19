@@ -1313,7 +1313,7 @@ const updateAddStar = (
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
 >* Read more about [Local State Management in Apollo Client](https://www.apollographql.com/docs/react/essentials/local-state.html)
-* 拓展阅读：[ Apollo Client 本地状态管理](https://www.apollographql.com/docs/react/essentials/local-state.html)
+* 延伸阅读：[ Apollo Client 组件本地状态管理](https://www.apollographql.com/docs/react/essentials/local-state.html)
 >* Read more about [Fragments in Apollo Client](https://www.apollographql.com/docs/react/advanced/fragments.html)
 * 拓展阅读：[ Apollo Client 中片段](https://www.apollographql.com/docs/react/advanced/fragments.html)
 
