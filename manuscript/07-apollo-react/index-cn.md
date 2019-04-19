@@ -1207,7 +1207,7 @@ export default RepositoryItem;
 
 >The function is extracted as its own JavaScript variable, otherwise ends up too verbose in the RepositoryItem component when keeping it inlined in the Mutation component. The function has access to the Apollo Client and the mutation result in its argument, and you need both to update data so you can destructure the mutation result in the function signature. If you don't know how the mutation result looks like, check the `STAR_REPOSITORY` mutation definition again, where you defined all fields that should appear in the mutation result. For now, the `id` of the repository to be updated is the important part.
 
-这个函数被单独抽离成一个变量，否则将它内联到 Mutation 组件中时，RepositoryItem 组件会变得十分亢长。该函数的参数包含了 Apollo Client 以及变更的结果，你可以在函数签名中解构变更的结果以便更新数据。如果你不知道变更结果的结构，请再次查看 `STAR_REPOSITORY` 变更的定义，定义中的所有字段都会出现的变更的结果中。目前，要更新的 repository 的 `id` 是重点部分。
+这个函数被单独提取成一个变量，否则当它内联到 Mutation 组件中时，RepositoryItem 组件会变得过于亢长。该函数可以访问到Apollo Client，及其参数中变更操作的结果，你需要更新数据，以便在函数签名中解构变更的结果。如果你不知道变更结果的结构，请再次查看 `STAR_REPOSITORY` 变更的定义，这里面有所有被定义的字段并且会出现在变更操作的结果中。目前，要更新的代码仓库的 `id` 是重要部分。
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
