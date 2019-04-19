@@ -1301,7 +1301,7 @@ const updateAddStar = (
 
 >Let's recap all three steps here. First, you have retrieved (read) the repository entity from the Apollo Client using an identifier and the fragment; second, you updated the information of the entity; and third, you wrote back the data with updated information, but kept all remaining information intact using the JavaScript spread operator. This is a manual update mechanism that can be used when a mutation is missing data.
 
-让我们回顾一下这三个步骤。首先，你使用标识符和片段从 Apollo Client 中检索（读取）了 repository 的实体；第二步，你更新这个实体的数据信息；第三步，你将这个更新信息写回到缓存中，但是使用 JavaScript 的拓展运算符保留了所有其他的信息。这就是一种手动更新机制，可以在变更缺失数据时使用。
+让我们回顾一下这三个步骤。首先，你使用唯一标识和片段从 Apollo Client 中检索（读取）了代码仓库实体；第二步，你更新这个实体的数据信息；第三步，你将这个更新信息写回到缓存中，同时通过使用 JavaScript 的拓展运算符保证了所有其他信息的完整性。这就是一种手动更新机制，可以在变更操作缺失数据时使用。
 >It is a good practice to use an identical fragment for all three parts: the initial query, the `readFragment()`, and `writeFragment()` cache method. Your data structure for the entity stays consistent in your cache. For instance, if you forget to include a property defined by the fragment's fields in data object of the `writeFragment()` method, you get a warning: *Missing field __typename in ...*.
 
 对以下的三个部分都是用相同片段是一个好的实践：初始化的查询，`readFragment（）` 以及 `writeFragment（）` 方法。你的实体的数据结构在缓存中始终保持一致。例如，如果你忘了在 `writeFragment（）` 方法中的数据对象包含片段所定义的字段，你将会得到一个警告：*Missing field __typename in ...*。
