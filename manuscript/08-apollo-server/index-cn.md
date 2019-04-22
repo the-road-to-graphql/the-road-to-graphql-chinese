@@ -1079,9 +1079,10 @@ But you can take this one step further: you may end up with microservices or thi
 
 In our case, let's start with a separation by technical concerns for the GraphQL schema and resolvers. Afterward, you will apply the separation by domains that are users and messages.
 
-### Technical Separation
-
-Let's take the GraphQL schema from the application where you have a User type and Message type. In the same step, split out the resolvers to a dedicated place. The *src/index.js* file, where the schema and resolvers are needed for the Apollo Server instantiation, should only import both things. It becomes three things when outsourcing data, which in this case is the sample data, now called models.
+> ### Technical Separation
+### 技术分离
+> Let's take the GraphQL schema from the application where you have a User type and Message type. In the same step, split out the resolvers to a dedicated place. The *src/index.js* file, where the schema and resolvers are needed for the Apollo Server instantiation, should only import both things. It becomes three things when outsourcing data, which in this case is the sample data, now called models.
+让我们从包含一种用 User 类型和 Message 类型的应用程序中获取 GraphQL schema。在同一步骤中，拆出解析器到特定位置。 在 *src/index.js* 中，应该只导入 Apollo Server 实例化所需要的 schema 和解析器。分发数据会变成三件事，在这种情况下是示例数据，现在称为模型。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1119,7 +1120,8 @@ app.listen({ port: 8000 }, () => {
 });
 ~~~~~~~~
 
-As an improvement, models are passed to the resolver function's as context. The models are your data access layer, which can be sample data, a database, or a third-party API. It's always good to pass those things from the outside to keep the resolver functions pure. Then, you don't need to import the models in each resolver file. In this case, the models are the sample data moved to the *src/models/index.js* file:
+> As an improvement, models are passed to the resolver function's as context. The models are your data access layer, which can be sample data, a database, or a third-party API. It's always good to pass those things from the outside to keep the resolver functions pure. Then, you don't need to import the models in each resolver file. In this case, the models are the sample data moved to the *src/models/index.js* file:
+作为改进，把模型当做上下文传递给解析器函数。模型是你的数据访问层，可以是示例数据，数据库或第三方API。从外部传递模型来保持解析器函数的纯净总是好的。然后，你不需要在每个解析器文件中导入模型。在这个例子中，模型是放到 *src/models/index.js* 中的示例数据。
 
 {title="src/models/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1155,7 +1157,8 @@ export default {
 };
 ~~~~~~~~
 
-Since you have passed the models to your Apollo Server context, they are accessible in each resolver. Next, move the resolvers to the *src/resolvers/index.js* file, and adjust the resolver's function signature by adding the models when they are needed to read/write users or messages.
+> Since you have passed the models to your Apollo Server context, they are accessible in each resolver. Next, move the resolvers to the *src/resolvers/index.js* file, and adjust the resolver's function signature by adding the models when they are needed to read/write users or messages.
+由于你已将模型传递到 Apollo Server 上下文，因此可在每个解析器中访问它们。接下来，将解析器移动到 *src/resolvers/index.js* 文件，同时，在需要读/写 users 或 messages 时，添加模型到解析器函数的签名。
 
 {title="src/resolvers/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1244,7 +1247,8 @@ export default {
 };
 ~~~~~~~~
 
-The resolvers receive all sample data as models in the context argument rather than operating directly on the sample data as before. As mentioned, it keeps the resolver functions pure. Later, you will have an easier time testing resolver functions in isolation. Next, move your schema's type definitions in the *src/schema/index.js* file:
+> The resolvers receive all sample data as models in the context argument rather than operating directly on the sample data as before. As mentioned, it keeps the resolver functions pure. Later, you will have an easier time testing resolver functions in isolation. Next, move your schema's type definitions in the *src/schema/index.js* file:
+解析器在上下文参数中接收所有示例数据作为模型，而不像之前直接操作示例数据。如上所述，它使解析器函数保持纯净。稍后，你可以更轻松地单独测试解析器函数。接下来，把 schema 的类型定义移动到 *src/schema/index.js* 文件中：
 
 {title="src/schema/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1279,11 +1283,13 @@ export default gql`
 `;
 ~~~~~~~~
 
-The technical separation is complete, but the separation by domains, where schema stitching is needed, isn't done yet. So far, you have only outsourced the schema, resolvers and data (models) from your Apollo Server instantiation file. Everything is separated by technical concerns now. You also made a small improvement for passing the models through the context, rather than importing them in resolver files.
+> The technical separation is complete, but the separation by domains, where schema stitching is needed, isn't done yet. So far, you have only outsourced the schema, resolvers and data (models) from your Apollo Server instantiation file. Everything is separated by technical concerns now. You also made a small improvement for passing the models through the context, rather than importing them in resolver files.
+技术分离已经完成，但是需要进行 schema 组合的域分离还没有完成。到目前为止，你只从 Apollo Server 实例化文件中拆分了 schema，解析器和数据（模型）。现在一切都被技术关注点分开。你也通过上下文传递模型做了一些改进，而不是在解析器文件中导入它们。
 
-### Domain Separation
-
-In the next step, modularize the GraphQL schema by domains (user and message). First, separate the user-related entity in its own schema definition file called *src/schema/user.js*:
+> ### Domain Separation
+### 域分离
+> In the next step, modularize the GraphQL schema by domains (user and message). First, separate the user-related entity in its own schema definition file called *src/schema/user.js*:
+在下一步，按域（user 和 message）模块化 GraphQL schema。首先，将用户相关实体 schema 分离到名为 *src/schema/user.js*的 schema 定义文件中：
 
 {title="src/schema/user.js",lang="javascript"}
 ~~~~~~~~
@@ -1306,7 +1312,8 @@ export default gql`
 `;
 ~~~~~~~~
 
-The same applies for the message schema definition in *src/schema/message.js*:
+> The same applies for the message schema definition in *src/schema/message.js*:
+这同样适用于 *src/schema/message.js* 中的消息 schema 定义：
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -1335,7 +1342,8 @@ export default gql`
 `;
 ~~~~~~~~
 
-Each file only describes its own entity, with a type and its relations. A relation can be a type from a different file, such as a Message type that still has the relation to a User type even though the User type is defined somewhere else. Note the `extend` statement on the Query and Mutation types. Since you have more than one of those types now, you need to extend the types. Next, define shared base types for them in the *src/schema/index.js*:
+> Each file only describes its own entity, with a type and its relations. A relation can be a type from a different file, such as a Message type that still has the relation to a User type even though the User type is defined somewhere else. Note the `extend` statement on the Query and Mutation types. Since you have more than one of those types now, you need to extend the types. Next, define shared base types for them in the *src/schema/index.js*:
+每个文件只描述自己的实体，具有类型及其关系。关系可以是来自不同文件的类型，例如一个 Message 类型与一个 User 类型存在关系，即使 User 类型是在其他位置定义的。请注意 Query 和 Mutation 类型的 `extend` 语句，由于你拥有多个这样类型，因此需要使用 extend 语句去扩展这些类型。接下来，在 *src / schema / index.js* 中为它们定义共享基类型。
 
 {title="src/schema/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1361,9 +1369,11 @@ const linkSchema = gql`
 export default [linkSchema, userSchema, messageSchema];
 ~~~~~~~~
 
-In this file, both schemas are merged with the help of a utility called `linkSchema`. The `linkSchema` defines all types shared within the schemas. It already defines a Subscription type for GraphQL subscriptions, which may be implemented later. As a workaround, there is an empty underscore field with a Boolean type in the merging utility schema, because there is no official way of completing this action yet. The utility schema defines the shared base types, extended with the `extend` statement in the other domain-specific schemas.
+> In this file, both schemas are merged with the help of a utility called `linkSchema`. The `linkSchema` defines all types shared within the schemas. It already defines a Subscription type for GraphQL subscriptions, which may be implemented later. As a workaround, there is an empty underscore field with a Boolean type in the merging utility schema, because there is no official way of completing this action yet. The utility schema defines the shared base types, extended with the `extend` statement in the other domain-specific schemas.
+在此文件中，两个 schemas 都在名为 `linkSchema` 的实用程序的帮助下合并。`linkSchema` 定义了 schemas 中共享的所有类型。它已经为 GraphQL 订阅集定义了一个 Subscription 类型，可以在之后实现。因为还没有正式的方法来完成此操作，作为一种变通方法，在合并通用 schema 中存在一个带有 Boolean 类型的空下划线字段。通用 schema 定义共享基类型，在其他特定域 schemas 中使用 extend 进行扩展。
 
-This time, the application runs with a stitched schema instead of one global schema. What's missing are the domain separated resolver maps. Let's start with the user domain again in file in the *src/resolvers/user.js* file, whereas I leave out the implementation details for saving space here:
+> This time, the application runs with a stitched schema instead of one global schema. What's missing are the domain separated resolver maps. Let's start with the user domain again in file in the *src/resolvers/user.js* file, whereas I leave out the implementation details for saving space here:
+这次，应用程序使用组合 schema 而不是一个全局 schema 运行。缺少的是域分离的解析器映射。让我们再次从 *src/resolvers/user.js* 文件中的用户域开始，而这里我为了节省空间省略了实现细节：
 
 {title="src/resolvers/user.js",lang="javascript"}
 ~~~~~~~~
@@ -1388,7 +1398,8 @@ export default {
 };
 ~~~~~~~~
 
-Next, add the message resolvers in the *src/resolvers/message.js* file:
+> Next, add the message resolvers in the *src/resolvers/message.js* file:
+接下来，在 *src/resolvers/message.js* 文件中添加消息解析器：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -1422,7 +1433,8 @@ export default {
 };
 ~~~~~~~~
 
-Since the Apollo Server accepts a list of resolver maps too, you can import all of your resolver maps in your *src/resolvers/index.js* file, and export them as a list of resolver maps again:
+> Since the Apollo Server accepts a list of resolver maps too, you can import all of your resolver maps in your *src/resolvers/index.js* file, and export them as a list of resolver maps again:
+由于 Apollo Server 也接受解析器映射列表，你可以在 *src/resolvers/index.js* 文件中导入所有解析器映射，并再次将它们导出为解析器映射列表。
 
 {title="src/resolvers/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1432,9 +1444,11 @@ import messageResolvers from './message';
 export default [userResolvers, messageResolvers];
 ~~~~~~~~
 
-Then, the Apollo Server can take the resolver list to be instantiated. Start your application again and verify that everything is working for you.
+> Then, the Apollo Server can take the resolver list to be instantiated. Start your application again and verify that everything is working for you.
+然后，Apollo Server 可以将解析器列表实例化。再次启动你的应用程序并确认一切正常。
 
-In the last section, you extracted schema and resolvers from your main file and separated both by domains. The sample data is placed in a *src/models* folder, where it can be migrated to a database-driven approach later. The folder structure should look similar to this:
+> In the last section, you extracted schema and resolvers from your main file and separated both by domains. The sample data is placed in a *src/models* folder, where it can be migrated to a database-driven approach later. The folder structure should look similar to this:
+在上一节中，你从主文件中提取了 schema 和解析器，并按域分隔。示例数据放在 *src/models* 文件夹中，以后可以将其迁移到数据库驱动的方式。文件夹结构应该与此类似：
 
 * src/
   * models/
@@ -1449,51 +1463,74 @@ In the last section, you extracted schema and resolvers from your main file and 
     * message.js
   * index.js
 
-You now have a good starting point for a GraphQL server application with Node.js. The last implementations gave you a universally usable GraphQL boilerplate project to serve as a foundation for your own software development projects. As we continue, the focus becomes connecting GraphQL server to databases, authentication and authorization, and using powerful features like pagination.
+> You now have a good starting point for a GraphQL server application with Node.js. The last implementations gave you a universally usable GraphQL boilerplate project to serve as a foundation for your own software development projects. As we continue, the focus becomes connecting GraphQL server to databases, authentication and authorization, and using powerful features like pagination.
+现在，你通过 Node.js 获取了 GraphQL 服务端应用的良好起点。最后的实现为你提供了一个通用的 GraphQL 样板项目作为你自己开发项目的基础。我们之后的内容，重点是放在 GraphQL 服务器的数据库连接，身份验证和授权，并使用像分页这样的强大功能。
 
-### Exercises:
+> ### Exercises:
+### 练习
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/953ef4b2ac8edc7c6338fb73ecdc1446e9cbdc4d)
-* Read more about [schema stitching with Apollo Server](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
-* Schema stitching is only a part of **schema delegation**
-  * Read more about [schema delegation](https://www.apollographql.com/docs/graphql-tools/schema-delegation.html)
-  * Familiarize yourself with the motivation behind **remote schemas** and **schema transforms**
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/953ef4b2ac8edc7c6338fb73ecdc1446e9cbdc4d)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/953ef4b2ac8edc7c6338fb73ecdc1446e9cbdc4d)
+> * Read more about [schema stitching with Apollo Server](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
+* 延伸阅读[使用 Apollo Server 进行 schema 组合](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
+> * Schema stitching is only a part of **schema delegation**
+* schema 组合只是 ** schema 委派** 的一部分
+  > * Read more about [schema delegation](https://www.apollographql.com/docs/graphql-tools/schema-delegation.html)
+  延伸阅读[schema 委派](https://www.apollographql.com/docs/graphql-tools/schema-delegation.html)
+  > * Familiarize yourself with the motivation behind **remote schemas** and **schema transforms**
+  * 熟悉 **远程 schema** 和 **schema 转换** 背后的动机
 
-## PostgreSQL with Sequelize for a GraphQL Server
+> ## PostgreSQL with Sequelize for a GraphQL Server
+## PostgreSQL 与 Sequelize 的 GraphQL 服务器
 
-To create a full-stack GraphQL application, you'll need to introduce a sophisticated data source. Sample data is fluctuant, while a database gives persistent data. In this section, you'll set up PostgreSQL with Sequelize ([ORM](https://en.wikipedia.org/wiki/Object-relational_mapping)) for Apollo Server. [PostgreSQL](https://www.postgresql.org/) is a SQL database whereas an alternative would be the popular NoSQL database called [MongoDB](https://www.mongodb.com/) (with Mongoose as ORM). The choice of tech is always opinionated. You could choose MongoDB or any other SQL/NoSQL solution over PostgreSQL, but for the sake of this application, let's stick to PostgreSQL.
+> To create a full-stack GraphQL application, you'll need to introduce a sophisticated data source. Sample data is fluctuant, while a database gives persistent data. In this section, you'll set up PostgreSQL with Sequelize ([ORM](https://en.wikipedia.org/wiki/Object-relational_mapping)) for Apollo Server. [PostgreSQL](https://www.postgresql.org/) is a SQL database whereas an alternative would be the popular NoSQL database called [MongoDB](https://www.mongodb.com/) (with Mongoose as ORM). The choice of tech is always opinionated. You could choose MongoDB or any other SQL/NoSQL solution over PostgreSQL, but for the sake of this application, let's stick to PostgreSQL.
+要创建一个全栈 GraphQL 应用程序，你需要引入一个持久化的数据源。样本数据是波动的，而数据库则提供持久数据。在本节中，你将使用 Sequelize（[ORM](https://en.wikipedia.org/wiki/Object-relational_mapping)）为 Apollo Server 设置 PostgreSQL。[PostgreSQL](https://www.postgresql.org/) 是一个 SQL 数据库，而另一种选择是流行的 NoSQL 数据库 [MongoDB](https://www.mongodb.com/) （用 Mongoose 作为 ORM）。技术选型始终是自由的。你可以选择 MongoDB 或任何其他 SQL/NoSQL 解决方案代替 PostgreSQL，但是为了这个应用程序，让我们坚持使用 PostgreSQL。
 
-This [setup guide](https://www.robinwieruch.de/postgres-express-setup-tutorial/) will walk you through the basic PostgreSQL setup, including installation, your first database, administrative database user setup, and essential commands. These are the things you should have accomplished after going through the instructions:
+>This [setup guide](https://www.robinwieruch.de/postgres-express-setup-tutorial/) will walk you through the basic PostgreSQL setup, including installation, your first database, administrative database user setup, and essential commands. These are the things you should have accomplished after going through the instructions:
+这个安装指南将引导你完成基本的 PostgreSQL 设置，包括安装，创建你的第一个数据库，管理数据库用户设置和必要命令。这些是你在阅读完说明后应该完成的事情：
 
-* A running installation of PostgreSQL
-* A database super user with username and password
-* A database created with `createdb` or `CREATE DATABASE`
+> * A running installation of PostgreSQL
+* PostgreSQL 的运行安装
+> * A database super user with username and password
+* 具有用户名和密码的数据库超级用户
+> * A database created with `createdb` or `CREATE DATABASE`
+* 使用`createdb`或`CREATE DATABASE`创建数据库
 
-You should be able to run and stop your database with the following commands:
+> You should be able to run and stop your database with the following commands:
+你应该能够使用如下命令运行和停止数据库：
 
 * pg_ctl -D /usr/local/var/postgres start
 * pg_ctl -D /usr/local/var/postgres stop
 
-Use the `psql` command to connect to your database in the command line, where you can list databases and execute SQL statements against them. You should find a couple of these operations in the PostgreSQL setup guide, but this section will also show some of them. Consider performing these in the same way you've been completing GraphQL operations with GraphQL Playground. The `psql` command line interface and GraphQL Playground are effective tools for testing applications manually.
+> Use the `psql` command to connect to your database in the command line, where you can list databases and execute SQL statements against them. You should find a couple of these operations in the PostgreSQL setup guide, but this section will also show some of them. Consider performing these in the same way you've been completing GraphQL operations with GraphQL Playground. The `psql` command line interface and GraphQL Playground are effective tools for testing applications manually.
+使用`psql`命令在命令行中连接到数据库，你可以查看到数据库并对其执行 SQL 语句。你应该在 PostgreSQL 设置指南中找到这些操作，但本节还会展示其中的一些。考虑以使用 GraphQL Playground 完成 GraphQL 操作相同的方式执行。`psql`命令行接口和 GraphQL Playground 是手动测试应用程序的有效工具。
 
-Once you have installed PostgreSQL on your local machine, you'll also want to acquire [PostgreSQL for Node.js](https://github.com/brianc/node-postgres) and [Sequelize (ORM)](https://github.com/sequelize/sequelize) for your project. I highly recommend you keep the Sequelize documentation open, as it will be useful for reference when you connect your GraphQL layer (resolvers) with your data access layer (Sequelize).
+> Once you have installed PostgreSQL on your local machine, you'll also want to acquire [PostgreSQL for Node.js](https://github.com/brianc/node-postgres) and [Sequelize (ORM)](https://github.com/sequelize/sequelize) for your project. I highly recommend you keep the Sequelize documentation open, as it will be useful for reference when you connect your GraphQL layer (resolvers) with your data access layer (Sequelize).
+在你本地计算机上安装 PostgreSQL 后，您还需要为你的项目安装 [PostgreSQL for Node.js](https://github.com/brianc/node-postgres) 和 [Sequelize (ORM)](https://github.com/sequelize/sequelize)。我强烈建议你打开 Sequelize 文档，因为当你将 GraphQL 层（解析器）与数据访问层（Sequelize）连接时，它将非常有用。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install pg sequelize --save
 ~~~~~~~~
 
-Now you can create models for the user and message domains. Models are usually the data access layer in applications. Then, set up your models with Sequelize to make read and write operations to your PostgreSQL database. The models can then be used in GraphQL resolvers by passing them through the context object to each resolver. These are the essential steps:
+> Now you can create models for the user and message domains. Models are usually the data access layer in applications. Then, set up your models with Sequelize to make read and write operations to your PostgreSQL database. The models can then be used in GraphQL resolvers by passing them through the context object to each resolver. These are the essential steps:
+现在，你可以为 user 和 message 域创建模型。模型通常是应用程序中的数据访问层。然后，使用 Sequelize 设置模型，对 PostgreSQL 数据库进行读写操作。然后通过上下文文传递模型到每个 GraphQL 解析器中来使用它们。这些是必不可少的步骤：
 
-* Creating a model for the user domain
-* Creating a model for the message domain
-* Connecting the application to a database
-  * Providing super user's username and password
-  * Combining models for database use
-* Synchronizing the database once application starts
+> * Creating a model for the user domain
+* 为用户域创建模型
+> * Creating a model for the message domain
+* 为消息域创建模型
+> * Connecting the application to a database
+* 连接应用程序到数据库
+  > * Providing super user's username and password
+  * 提供超级用户的用户名和密码
+  > * Combining models for database use
+  * 合并使用数据库的模型
+> * Synchronizing the database once application starts
+* 应用程序启动后同步数据库
 
-First, implement the *src/models/user.js* model:
-
+> First, implement the *src/models/user.js* model:
+首先，实现 *src/models/user.js* 模型：
 {title="src/models/user.js",lang="javascript"}
 ~~~~~~~~
 const user = (sequelize, DataTypes) => {
@@ -1513,7 +1550,8 @@ const user = (sequelize, DataTypes) => {
 export default user;
 ~~~~~~~~
 
-Next, implement the *src/models/message.js* model:
+> Next, implement the *src/models/message.js* model:
+下一步，实现 *src/models/message.js* 模型：
 
 {title="src/models/message.js",lang="javascript"}
 ~~~~~~~~
@@ -1534,9 +1572,11 @@ const message = (sequelize, DataTypes) => {
 export default message;
 ~~~~~~~~
 
-Both models define the shapes of their entities. The message model has a database column with the name text of type string. You can add multiple database columns horizontally to your model. All columns of a model make up a table row in the database, and each row reflects a database entry, such as a message or user. The database table name is defined by an argument in the Sequelize model definition. The message domain has the table "message". You can define relationships between entities with Sequelize using associations. In this case, a message entity belongs to one user, and that user has many messages. That's a minimal database setup with two domains, but since we're focusing on server-side GraphQL, you should consider reading more about databases subjects outside of these applications to fully grasp the concept.
+> Both models define the shapes of their entities. The message model has a database column with the name text of type string. You can add multiple database columns horizontally to your model. All columns of a model make up a table row in the database, and each row reflects a database entry, such as a message or user. The database table name is defined by an argument in the Sequelize model definition. The message domain has the table "message". You can define relationships between entities with Sequelize using associations. In this case, a message entity belongs to one user, and that user has many messages. That's a minimal database setup with two domains, but since we're focusing on server-side GraphQL, you should consider reading more about databases subjects outside of these applications to fully grasp the concept.
+两种模型都定义了它们的实体形式。message 模型有一个叫做 text 的字符串类型的数据库列。你可以将多个数据库列水平添加到模型中。一个模型的所有列组成数据库中的表行，每行反映数据库条目，例如 message 或 user。数据库表名称由 Sequelize 模型定义中的参数决定。消息域中有 "message" 表。你可以使用 Sequelize 和 association 定义实体之间的关系。在这个例子中，message 实体属于一个 user，并且该 user 具有许多 message。这是一个包含两个域的最简单的数据库设置，但是因为我们专注于 GraphQL 的服务器端实现 ，你应该考虑阅读更多本应用之外的关于数据库的信息，来完全掌握这些概念。
 
-Next, connect to your database from within your application in the *src/models/index.js* file. We'll need the database name, a database super user, and the user's password. You may also want to define a database dialect, because Sequelize supports other databases as well.
+> Next, connect to your database from within your application in the *src/models/index.js* file. We'll need the database name, a database super user, and the user's password. You may also want to define a database dialect, because Sequelize supports other databases as well.
+接下来，从应用程序中的 *src/models/index.js* 文件连接到你的数据库。我们需要数据库名称，数据库超级用户和用户密码。你可能还想定义数据库 dialect，因为 Sequelize 也支持其他数据库。
 
 {title="src/models/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1554,7 +1594,8 @@ const sequelize = new Sequelize(
 export { sequelize };
 ~~~~~~~~
 
-In the same file, you can physically associate all your models with each other to expose them to your application as data access layer (models) for the database.
+> In the same file, you can physically associate all your models with each other to expose them to your application as data access layer (models) for the database.
+在同一文件中，你可以将所有模型彼此物理关联，来将它们作为数据库的数据访问层（模型）公开给应用程序。
 
 {title="src/models/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1589,7 +1630,8 @@ export default models;
 # leanpub-end-insert
 ~~~~~~~~
 
-The database credentials--database name, database super user name, database super user password--can be stored as environment variables. In your *.env* file, add those credentials as key value pairs. My defaults for local development are:
+> The database credentials--database name, database super user name, database super user password--can be stored as environment variables. In your *.env* file, add those credentials as key value pairs. My defaults for local development are:
+数据库的凭据--数据库名，数据库超级用户名，数据库超级用户密码可以存储在环境变量中。在 *.env* 文件中将这些凭据添加为键值对。 我对本地开发的默认值是：
 
 {title=".env",lang="javascript"}
 ~~~~~~~~
@@ -1598,7 +1640,8 @@ DATABASE_USER=postgres
 DATABASE_PASSWORD=postgres
 ~~~~~~~~
 
-You set up environment variables when you started creating this application. If not, you can also leave credentials in the source code for now. Finally, the database needs to be migrated/synchronized once your Node.js application starts. To complete this operation in your *src/index.js* file:
+> You set up environment variables when you started creating this application. If not, you can also leave credentials in the source code for now. Finally, the database needs to be migrated/synchronized once your Node.js application starts. To complete this operation in your *src/index.js* file:
+你可以在创建此应用程序时设置环境变量。如果没有，你也可以在源代码中保留这些凭据。最后，一旦 Node.js 应用程序启动，就需要迁移/同步数据库。在 *src/index.js* 文件中完成这些操作：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1624,15 +1667,21 @@ sequelize.sync().then(async () => {
 # leanpub-end-insert
 ~~~~~~~~
 
-We've completed the database setup for a GraphQL server. Next, you'll replace the business logic in your resolvers, because that is where Sequelize is used to access the database instead the sample data. The application isn't quite complete, because the resolvers don't use the new data access layer.
+> We've completed the database setup for a GraphQL server. Next, you'll replace the business logic in your resolvers, because that is where Sequelize is used to access the database instead the sample data. The application isn't quite complete, because the resolvers don't use the new data access layer.
+我们已经完成了 GraphQL 服务器的数据库设置。接下来，你将替换解析器中的业务逻辑，因为这是使用 Sequelize 访问数据库而不是示例数据的地方。应用程序还不完整，因为解析器没有使用新的数据访问层。
 
-### Exercises:
-
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a1927fc375a62a9d7d8c514f8bf7f576587cca93)
-* Familiarize yourself with databases
-  * Try the `psql` command-line interface to access a database
-  * Check the Sequelize API by reading through their documentation
-  * Look up any unfamiliar database jargon mentioned here.
+> ### Exercises:
+### 练习
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a1927fc375a62a9d7d8c514f8bf7f576587cca93)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a1927fc375a62a9d7d8c514f8bf7f576587cca93)
+> * Familiarize yourself with databases
+* 熟悉数据库
+  > * Try the `psql` command-line interface to access a database
+  * 尝试使用 `psql` 命令行界面来访问数据库
+  > * Check the Sequelize API by reading through their documentation
+  * 通过阅读他们的文档来检查 Sequelize API
+  > * Look up any unfamiliar database jargon mentioned here.
+  * 查看此处提到的任何不熟悉的数据库术语。
 
 > ## Connecting Resolvers and Database
 
