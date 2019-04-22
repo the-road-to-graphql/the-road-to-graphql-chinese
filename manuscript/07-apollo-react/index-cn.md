@@ -1880,16 +1880,22 @@ That's it for the abstraction of the FetchMore button for paginated lists with A
 * Read more about [pagination with Apollo Client in React](https://www.apollographql.com/docs/react/features/pagination.html)
 * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5HYMGN7)
 
-## GraphQL Caching of Queries with Apollo Client in React
+> ## GraphQL Caching of Queries with Apollo Client in React
 
-In this section, you introduce [React Router](https://github.com/ReactTraining/react-router) to show two separate pages for your application. At the moment, you are only showing one page with a Profile component that displays all your repositories. We want to add another Organization component that shows repositories by an organization, and there could be a search field as well, to lookup individual organizations with their repositories on that page. Let's do this by introducing React Router to your application. If you haven't used React Router before, make sure to conduct the exercises of this section to learn more about it.
+## React 中通过 Apollo Client 实现 GraphQL 缓存查询
+
+> In this section, you introduce [React Router](https://github.com/ReactTraining/react-router) to show two separate pages for your application. At the moment, you are only showing one page with a Profile component that displays all your repositories. We want to add another Organization component that shows repositories by an organization, and there could be a search field as well, to lookup individual organizations with their repositories on that page. Let's do this by introducing React Router to your application. If you haven't used React Router before, make sure to conduct the exercises of this section to learn more about it.
+
+在这一小节中，为了在程序里展示两个页面，你需要引入[React Router](https://github.com/ReactTraining/react-router)来实现。到目前为止，你还只是在一个页面中用 Profile 组件展示你所有的代码库。 我们想要添加另一个 Organization 组件来按组织展示你的代码库，并且加上搜索框实现在这个页面上查找不同组织的代码库的功能。让我们通过在你的程序引入 React Router 中来实现它吧。如果你之前没有使用过 React Router，请务必进行此小节的练习来更好地了解它。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install react-router-dom --save
 ~~~~~~~~
 
-In your *src/constants/routes.js* file, you can specify both routes you want to make accessible by React Router. The `ORGANIZATION` route points to the base URL, while the `PROFILE` route points to a more specific URL.
+> In your *src/constants/routes.js* file, you can specify both routes you want to make accessible by React Router. The `ORGANIZATION` route points to the base URL, while the `PROFILE` route points to a more specific URL.
+
+在 *src/constants/routes.js* 文件中你可以指定要通过 React Router 访问的路由。`ORGANIZATION` 路由指向根URL，`PROFILE` 路由指向更具体的URL。
 
 {title="src/constants/routes.js",lang="javascript"}
 ~~~~~~~~
@@ -1897,7 +1903,9 @@ export const ORGANIZATION = '/';
 export const PROFILE = '/profile';
 ~~~~~~~~
 
-Next, map both routes to their components. The App component is the perfect place to do it because the two routes will exchange the Organization and Profile components based on the URL there.
+> Next, map both routes to their components. The App component is the perfect place to do it because the two routes will exchange the Organization and Profile components based on the URL there.
+
+接下来，将两个路由分别指向它们对应的组件。App 组件是做这个的最佳位置，因为这两个路由将会基于这里写的URL来切换 Organization 组件和 Profile 组件。
 
 {title="src/App/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1945,7 +1953,9 @@ class App extends Component {
 export default App;
 ~~~~~~~~
 
-The Organization component wasn't implemented yet, but you can start with a functional stateless component in the *src/Organization/index.js* file, that acts as a placeholder to keep the application working for now.
+> The Organization component wasn't implemented yet, but you can start with a functional stateless component in the *src/Organization/index.js* file, that acts as a placeholder to keep the application working for now.
+
+虽然 Organization 组件还没有实现，但你可以先在 *src/Organization/index.js* 文件中放一个无状态组件作为占位元素来保持程序可以正常运行。
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1956,7 +1966,9 @@ const Organization = () => <div>Organization</div>;
 export default Organization;
 ~~~~~~~~
 
-Since you mapped both routes to their respective components, so you want to implement navigation from one route to another. For this, introduce a **Navigation** component in the App component.
+> Since you mapped both routes to their respective components, so you want to implement navigation from one route to another. For this, introduce a **Navigation** component in the App component.
+
+既然你已经将两个路由指向了它们各自的组件，你一定想要实现一个从一个路由到另一个路由的导航吧。在 App 组件中引入 **Navigation** 组件来实现它。
 
 {title="src/App/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1991,7 +2003,9 @@ class App extends Component {
 export default App;
 ~~~~~~~~
 
-Next, we'll implement the Navigation component, which is responsible for displaying the two links to navigate between your routes using React Router's Link component.
+> Next, we'll implement the Navigation component, which is responsible for displaying the two links to navigate between your routes using React Router's Link component.
+
+接下来，我们将会实现 Navigation 组件，该组件通过使用 React Router 的 Link 组件来显示两个路由之间导航的链接。
 
 {title="src/App/Navigation/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2016,11 +2030,17 @@ const Navigation = () => (
 export default Navigation;
 ~~~~~~~~
 
-The Profile page works as before, but the Organization page is empty. In the last step, you defined the two routes as constants, used them in the App component to map to their respective components, and introduced Link components to navigate to them in the Navigation component.
+> The Profile page works as before, but the Organization page is empty. In the last step, you defined the two routes as constants, used them in the App component to map to their respective components, and introduced Link components to navigate to them in the Navigation component.
 
-Another great feature of the Apollo Client is that it caches query requests. When navigating from the Profile page to the Organization page and back to the Profile page, the results appear immediately because the Apollo Client checks its cache before making the query to the remote GraphQL API. It's a pretty powerful tool.
+Profile 页面与之前一样，只是 Organization 页面是空的。在最后一步中，你将两个路由定义为常量，在 App 组件中将它们指向它们各自的组件，并引入 Link 组件来在 Navigation 组件中导航到它们。
 
-The next part of this section is the Organization component. It is the same as the Profile component, except the query differs because it takes a variable for the organization name to identify the organization's repositories.
+> Another great feature of the Apollo Client is that it caches query requests. When navigating from the Profile page to the Organization page and back to the Profile page, the results appear immediately because the Apollo Client checks its cache before making the query to the remote GraphQL API. It's a pretty powerful tool.
+
+Apollo Client 的另一个重要功能就是它的缓存查询请求。当页面从 Profile 页面跳转到 Organization 页面再回到 Profile 页面时，结果会立即显示出来，因为 Apollo Client 会在查询远程 GraphQL API 之前检查缓存。这是个非常强大的功能。
+
+> The next part of this section is the Organization component. It is the same as the Profile component, except the query differs because it takes a variable for the organization name to identify the organization's repositories.
+
+本小节的下一部分是 Organization 组件。和 Profile 组件基本一样，除了使用不同的查询来将组织名作为变量标识各组织的代码库。
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2062,9 +2082,13 @@ const Organization = ({ organizationName }) => (
 export default Organization;
 ~~~~~~~~
 
-The Query component in the Organization component takes a query tailored to the organization being the top level field of the query. It takes a variable to identify the organization, and it uses the newly introduced `skip` prop to skip executing the query if no organization identifier is provided. Later, you will pass an organization identifier from the App component. You may have noticed that the repository fragment you introduced earlier to update the local state in the cache can be reused here. It saves lines of code, and more importantly, ensures the returned list of repositories have identical structures to the list of repositories in the Profile component.
+> The Query component in the Organization component takes a query tailored to the organization being the top level field of the query. It takes a variable to identify the organization, and it uses the newly introduced `skip` prop to skip executing the query if no organization identifier is provided. Later, you will pass an organization identifier from the App component. You may have noticed that the repository fragment you introduced earlier to update the local state in the cache can be reused here. It saves lines of code, and more importantly, ensures the returned list of repositories have identical structures to the list of repositories in the Profile component.
 
-Next, extend the query to fit the requirements of the pagination feature. It requires the `cursor` argument to identify the next page of repositories. The `notifyOnNetworkStatusChange` prop is used to update the `loading` boolean for paginated requests as well.
+Organization 组件中的 Query 组件实现对组织的定制查询作为查询的顶级字段。它通过一个变量来对组织进行标识，如果这个组织标识符没有被提供，则引入一个新的 `skip` prop 来跳过查询操作。然后，你会从 App 组件中传递组织标识符。你可能已经注意到，之前引入的更新本地状态的 fragment 可以在这里重用。这不仅仅是减少了代码冗余，更重要的是，这样确保了返回的代码库列表和和 Profile 组件中的代码库列表具有相同的结构。
+
+> Next, extend the query to fit the requirements of the pagination feature. It requires the `cursor` argument to identify the next page of repositories. The `notifyOnNetworkStatusChange` prop is used to update the `loading` boolean for paginated requests as well.
+
+接下来，对查询进行扩展以满足分页功能。这里需要 `cursor` 参数来标识代码库的下一页。`notifyOnNetworkStatusChange` prop 用来更新分页请求的 `loading` 状态(布尔值)。
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2115,7 +2139,9 @@ const Organization = ({ organizationName }) => (
 export default Organization;
 ~~~~~~~~
 
-Lastly, the render prop child function needs to be implemented. It doesn't differ much from the Query's content in the Profile component. Its purpose is to handle edge cases like loading and 'no data' errors, and eventually, to show a list of repositories. Because the RepositoryList component handles the pagination feature, this improvement is included in the newly implemented Organization component.
+> Lastly, the render prop child function needs to be implemented. It doesn't differ much from the Query's content in the Profile component. Its purpose is to handle edge cases like loading and 'no data' errors, and eventually, to show a list of repositories. Because the RepositoryList component handles the pagination feature, this improvement is included in the newly implemented Organization component.
+
+最后一步，实现 render prop 子函数。这和在 Profile 组件中渲染 Query 的内容基本一致。它主要是用于处理像“没有数据”这样的边界情况和错误，并最终显示出代码库列表。由于 RepositoryList 组件处理了分页功能，所以将这个改进放入新实现的 Organization 组件中。
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2158,7 +2184,9 @@ const Organization = ({ organizationName }) => (
 export default Organization;
 ~~~~~~~~
 
-Provide a `organizationName` as prop when using the Organization in the App component, and leave it inlined for now. Later, you will make it dynamic with a search field.
+> Provide a `organizationName` as prop when using the Organization in the App component, and leave it inlined for now. Later, you will make it dynamic with a search field.
+
+在 App 组件中提供一个 `organizationName` 作为 prop 传给 Organization 组件并暂时保留为内联传值，你会用它来动态化搜索字段。
 
 {title="src/App/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2192,9 +2220,13 @@ class App extends Component {
 }
 ~~~~~~~~
 
-The Organization component should almost work now, as the `More` button is the only incomplete part. The remaining issue is the resolving block for the pagination feature in the `updateQuery` function. It assumes that the nested data structure always starts with a `viewer` object. It does for the Profile page, but not for the Organization page. There the top level object is the `organization` followed by the list of `repositories`. Only the top level object changes from page to page, where the underlying structure stays identical.
+> The Organization component should almost work now, as the `More` button is the only incomplete part. The remaining issue is the resolving block for the pagination feature in the `updateQuery` function. It assumes that the nested data structure always starts with a `viewer` object. It does for the Profile page, but not for the Organization page. There the top level object is the `organization` followed by the list of `repositories`. Only the top level object changes from page to page, where the underlying structure stays identical.
 
- When the top level object changes from page to page, the ideal next step is to tell the RepositoryList component its top level object from the outside. With the Organization component, its the top-level object `organization`, which could be passed as a string and reused as a dynamic key later:
+现在就差一个 `More` 按钮 Organization 组件就可以完整地正常工作了。剩下的问题是在 `updateQuery` 函数中处理我们分页功能的各个块(页)。假设嵌套的数据结构始终以 `viewer` 对象开头。这样适用于 Profile 页面但不适用于 Organization 页面。所以这里顶层的对象是 `organization`，然后是 `repositories` 的列表。这样在页面切换的时候，只有顶层对象会发生改变，底层的结构保持相同。
+
+ > When the top level object changes from page to page, the ideal next step is to tell the RepositoryList component its top level object from the outside. With the Organization component, its the top-level object `organization`, which could be passed as a string and reused as a dynamic key later:
+
+当顶层对象在页面切换发生改变时，理想的下一步是从外部告诉 RepositoryList 组件它的顶层对象。对于Organization 组件，顶层对象是 `organization`，可以将它作为字符串传递并在后面作为 key 使用：
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2218,7 +2250,9 @@ const Organization = ({ organizationName }) => (
 );
 ~~~~~~~~
 
-With the Profile component, the `viewer` would be the top level object:
+> With the Profile component, the `viewer` would be the top level object:
+
+对于 Profile 组件，顶层对象则是 `viewer` ：
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2242,7 +2276,9 @@ const Profile = () => (
 );
 ~~~~~~~~
 
-Now you can handle the new case in the RepositoryList component by passing the entry as [computed property name](https://developer.mozilla.org/my/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names) to the `updateQuery` function. Instead of passing the `updateQuery` function directly to the FetchMore component, it can be derived from a higher-order function needed to pass the new `entry` property.
+> Now you can handle the new case in the RepositoryList component by passing the entry as [computed property name](https://developer.mozilla.org/my/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names) to the `updateQuery` function. Instead of passing the `updateQuery` function directly to the FetchMore component, it can be derived from a higher-order function needed to pass the new `entry` property.
+
+现在，你可以通过在 RepositoryList 组件中给 `updateQuery` 函数传入参数作为[计算属性名](https://developer.mozilla.org/my/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names) 来进行处理。它不是直接将 `updateQuery` 函数传递给 FetchMore 组件，而是从传递的新 `entry` 属性所需的高阶函数派生而来的。
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2274,7 +2310,9 @@ const RepositoryList = ({
 );
 ~~~~~~~~
 
-The higher-order function next to the RepositoryList component is completed as such:
+> The higher-order function next to the RepositoryList component is completed as such:
+
+RepositoryList 组件中的这个高阶函数实现如下：
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2311,9 +2349,13 @@ const getUpdateQuery = entry => (
 };
 ~~~~~~~~
 
-That's how a deeply-nested object is updated with the `fetchMoreResult`, even though the top level component from the query result is not static. The pagination feature should work on both pages now. Take a moment to recap the last implementations again and why these were necessary.
+> That's how a deeply-nested object is updated with the `fetchMoreResult`, even though the top level component from the query result is not static. The pagination feature should work on both pages now. Take a moment to recap the last implementations again and why these were necessary.
 
-Next, we'll implement the search function I mentioned earlier. The best place to add the search field would be the Navigation component, but only when the Organization page is active. React Router comes with a useful higher-order component to access to the current URL, which can be used to show a search field.
+这就是通过 `fetchMoreResult` 函数来更新深层嵌套对象的方式，即使查询结果中的顶层组件不是静态的。现在分页功能应该在两个页面上都生效了。让我们花一点时间再回顾一下最后的实现和它的必要性。
+
+> Next, we'll implement the search function I mentioned earlier. The best place to add the search field would be the Navigation component, but only when the Organization page is active. React Router comes with a useful higher-order component to access to the current URL, which can be used to show a search field.
+
+接下来，我们将会实现之前提到的搜索功能。最好的放置搜索框的地方是 Navigation 组件，但只是在 Organization 页面生效时显示。React Router 附带一个有用的高阶组件来访问当前的 URL ，可以用来显示搜索框。
 
 {title="src/App/Navigation/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2352,7 +2394,9 @@ export default withRouter(Navigation);
 # leanpub-end-insert
 ~~~~~~~~
 
-The OrganizationSearch component is implemented next to the Navigation component in the next steps. Before that can work, there needs to be some kind of initial state for the OrganizationSearch, as well as a callback function to update the initial state in the Navigation component. To accommodate this, the Navigation component becomes a class component.
+> The OrganizationSearch component is implemented next to the Navigation component in the next steps. Before that can work, there needs to be some kind of initial state for the OrganizationSearch, as well as a callback function to update the initial state in the Navigation component. To accommodate this, the Navigation component becomes a class component.
+
+后续步骤中， NavigationSearch 组件将紧接着 Navigation 组件实现。在此之前，我们需要在 Navigation 组件中设置 OrganizationSearch 的某种初始状态和更新初始状态的回调函数。Navigation 组件需要变成类组件来实现这个需求。
 
 {title="src/App/Navigation/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2399,7 +2443,9 @@ class Navigation extends React.Component {
 export default withRouter(Navigation);
 ~~~~~~~~
 
-The OrganizationSearch component implemented in the same file would also work with the following implementation. It handles its own local state, the value that shows up in the input field, but uses it as an initial value from the parent component. It also receives a callback handler, which can be used in the `onSubmit()` class method to propagate the search fields value on a submit interaction up the component tree.
+> The OrganizationSearch component implemented in the same file would also work with the following implementation. It handles its own local state, the value that shows up in the input field, but uses it as an initial value from the parent component. It also receives a callback handler, which can be used in the `onSubmit()` class method to propagate the search fields value on a submit interaction up the component tree.
+
+在同一文件中实现的 OrganizationSearch 组件也可以采用如下实现方式。它处理自己的本地状态 ，即输入框中显示的值，不过初始值来自于父组件。它还接受一个回调函数，该回调在 `onSubmit()` 中使用，用来在组件树中向上传递搜索的字段。
 
 {title="src/App/Navigation/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2455,7 +2501,9 @@ class OrganizationSearch extends React.Component {
 export default withRouter(Navigation);
 ~~~~~~~~
 
-The Input component is a slightly styled input element that is defined in *src/Input/index.js* as its own component.
+> The Input component is a slightly styled input element that is defined in *src/Input/index.js* as its own component.
+
+Input 组件是一个带有样式的 input 元素，在 *src/Input/index.js*  中定义为一个组件。
 
 {title="src/Input/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2472,7 +2520,9 @@ const Input = ({ children, color = 'black', ...props }) => (
 export default Input;
 ~~~~~~~~
 
-While the search field works in the Navigation component, it doesn't help the rest of the application. It only updates the state in the Navigation component when a search request is submitted. However, the value of the search request is needed in the Organization component as a GraphQL variable for the query, so the local state needs to be lifted up from the Navigation component to the App component. The Navigation component becomes a stateless functional component again.
+> While the search field works in the Navigation component, it doesn't help the rest of the application. It only updates the state in the Navigation component when a search request is submitted. However, the value of the search request is needed in the Organization component as a GraphQL variable for the query, so the local state needs to be lifted up from the Navigation component to the App component. The Navigation component becomes a stateless functional component again.
+
+虽然搜索框已经在 Navigation 组件中起生效了，但它对应用的其他部分还没有什么作用。它只是在提交搜索请求时更新 Navigation 组件中的状态。然而，搜索请求的值需要在 Organization 组件中作为查询 GraphQL 的变量，所以本地状态需要从 Navigation 组件传递到 App 组件。Navigation 组件就又变回了无状态组件。
 
 {title="src/App/Navigation/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2505,7 +2555,9 @@ const Navigation = ({
 # leanpub-end-insert
 ~~~~~~~~
 
-The App component takes over the responsibility from the Navigation component, managing the local state, passing the initial state and a callback function to update the state to the Navigation component, and passing the state itself to the Organization component to perform the query:
+> The App component takes over the responsibility from the Navigation component, managing the local state, passing the initial state and a callback function to update the state to the Navigation component, and passing the state itself to the Organization component to perform the query:
+
+App 组件接管 Navigation 组件的职责，来管理本地状态，传递初始状态和回调函数以更新状态传递给 Navigation 组件，并将自身的状态传递给 Organization 组件以执行查询：
 
 {title="src/App/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2562,13 +2614,20 @@ class App extends Component {
 export default App;
 ~~~~~~~~
 
-You have implemented a dynamic GraphQL query with a search field. Once a new `organizationName` is passed to the Organization component from a local state change, the Query component triggers another request due to a re-render. The request is not always made to the remote GraphQL API, though. The Apollo Client cache is used when an organization is searched twice. Also, you have used the well-known technique called lifting state in React to share the state across components.
+> You have implemented a dynamic GraphQL query with a search field. Once a new `organizationName` is passed to the Organization component from a local state change, the Query component triggers another request due to a re-render. The request is not always made to the remote GraphQL API, though. The Apollo Client cache is used when an organization is searched twice. Also, you have used the well-known technique called lifting state in React to share the state across components.
 
-### Exercises:
+你已实现了使用搜索字段进行动态的GraphQL查询。一旦将新的 `organizationName` 变化从本地状态传递给 Organization 组件，Query 组件就会因为重新渲染而触发另一个请求。但它并不会总是向远程 GraphQL API 发送请求。一个组织被搜索多次时，则是使用的 Apollo Client 缓存。此外，你也在 React 中使用了众所周知的被称之为状态提升的技巧，来使组件之间的状态共享。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
-* If you are not familiar with React Router, try it out in [this pragmatic tutorial](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
-* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5HFQ3TD)
+> ### Exercises:
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
+> * If you are not familiar with React Router, try it out in [this pragmatic tutorial](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
+> * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5HFQ3TD)
+
+### 练习：
+
+* 查看 [本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
+* 如果你还不熟悉 React Router ，请练习 [这个实用的教程](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
+* 花3分钟进行[测验](https://www.surveymonkey.com/r/5HFQ3TD)
 
 ## Implementing the Issues Feature: Setup
 
