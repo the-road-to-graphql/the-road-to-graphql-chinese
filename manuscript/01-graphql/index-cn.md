@@ -2,7 +2,7 @@
 
 > When it comes to network requests between client and server applications, [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) is one of the most popular choices to connect both worlds. In REST, everything evolves around the idea of having resources that are accessible by URLs. You can read a resource with a HTTP GET request, create a resource with a HTTP POST request, and update or delete it with HTTP PUT and DELETE requests. These are called CRUD (Create, Read, Update, Delete) operations. Resources can be anything from authors, articles, or users. The format for transferring data is not opinionated with REST, but most often people will use JSON for it. In the end, REST enables applications to communicate with each other by using plain HTTP with URLs and HTTP methods.
 
-对于客户端和服务器应用间的网络请求来说，[REST](https://en.wikipedia.org/wiki/Representational_state_transfer) 是用来连接两端最流行的选择。在 REST 的世界中，一切都围绕着“可被 URL 访问的资源”来发展。你可以通过 HTTP GET 请求来读取资源，也可以通过 HTTP POST 请求新建资源，亦或者通过 HTTP PUT 和 DELETE 请求更新或删除资源。这些操作被称为增删查改（CRUD  Create，Read，Update，Delete）。资源可以是来自 authors，articles 或者 users 的任何东西。REST 并不限制用于传输数据的格式，但多数情况下人们会用 JSON。总之，REST 使应用之间能通过用 URL 和 HTTP 方法进行交流。
+对于客户度和服务器应用间的网络请求来说，[REST](https://en.wikipedia.org/wiki/Representational_state_transfer) 是用来连接两端最流行的选择。在 REST 的世界中，一切都围绕着“可被 URL 访问的资源”来发展。你可以通过 HTTP GET 请求来读取资源，也可以通过 HTTP POST 请求新建资源，亦或者通过 HTTP PUT 和 DELETE 请求更新或删除资源。这些操作被称为增删查改（CRUD  Create，Read，Update，Delete）。资源可以是来自 authors，articles 或者 users 的任何东西。REST 并不限制用于传输数据的格式，但多数情况下人们会用 JSON。总之，REST 使应用之间能通过用 URL 和 HTTP 方法进行交流。
 
 {title="Code Playground",lang="json"}
 ~~~~~~~~
@@ -21,7 +21,7 @@ https://api.domain.com/authors/7
 
 > Though REST was the status quo for a long time, a Facebook technology called GraphQL has recently emerged as a potential successor. The following sections introduce GraphQL's advantages and disadvantages, as well as possible alternatives for developers who need options.
 
-尽管 REST 已经成为现状很长一段时间了， 但 Facebook 的一项名为 GraphQL 的技术最近成为了一种潜在的继承者。接下来的部分将介绍 GraphQL 的优劣势，以便为需要的开发人员提供可能的替代方案。
+尽管 REST 已经成为现状很长一段时间了，但最近出现了一个名为 GraphQL 的 Facebook 技术，它很可能成为其潜在的继任者。接下来的部分将介绍 GraphQL 的优劣势，以便需要 REST 替代方案的开发人员做选择。
 
 ## What is GraphQL? 什么是 GraphQL？
 
