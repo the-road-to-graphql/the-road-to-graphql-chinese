@@ -3365,7 +3365,7 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 
 > * Implement an AddComment component that shows a `textarea` and a `submit` button to enable user comments. Use the `addComment` mutation from GitHub's GraphQL API and the Mutation component from React Apollo to execute the mutation with the submit button.
 
-* 实现一个 AddComment 组件， 这个组件需要为用户提供一个 `textarea` 和 `submit` 按钮来留言。使用 GitHub 中 GraphQL API 的 `addComment` 变更和 React Apollo 中的 Mutation 组件来执行提交按钮的变更 。
+* 实现一个 AddComment 组件， 这个组件需要为用户提供一个 `textarea` 和 `submit` 按钮来留言。使用 GitHub 中 GraphQL API 的 `addComment` 变更和 React Apollo 中的 Mutation 组件来执行提交按钮的变更。
 
 > * Improve the AddComment component with the optimistic UI feature (perhaps read again the [Apollo documentation about the optimistic UI with a list of items](https://www.apollographql.com/docs/react/features/optimistic-ui.html)). A comment should show up in the list of comments, even if the request is pending.
 
@@ -3380,7 +3380,7 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 
 > This section has all the CSS files as well as their content and locations, to give your React with GraphQL and Apollo Client application a nice touch. It even makes it responsive for mobile and tablet devices. These are only recommendations, though; you can experiment with them, or come up with your own styles.
 
-这个部分涵盖了所有CSS文件的内容与文件存放路径，给你的集成了 GraphQL 和 Apollo Client 的 React 应用之旅带来一场绝妙体验。这些样式甚至可以在手机和平板设备上适配。当然了，这不过是些建议， 你也可以完全自己写样式来达到你想要的效果。
+这个部分涵盖了所有CSS文件的内容与文件存放路径，给你的集成了 GraphQL 和 Apollo Client 的 React 应用之旅带来一场绝妙体验。这些样式甚至可以在手机和平板设备上适配。当然了，这不过是些建议，你也可以完全自己写样式来达到你想要的效果。
 
 {title="src/style.css",lang="css"}
 ~~~~~~~~
@@ -3731,4 +3731,4 @@ pre {
 
 > You can find the final [repository on GitHub](https://github.com/rwieruch/react-graphql-github-apollo) that showcases most of the exercise tasks. The application is not feature-complete and it doesn't cover all edge cases, but it should give insight into using GraphQL with Apollo in React applications. If you want to dive more deeply into different topics like testing and state management with GraphQL on the client-side, you can start here: [A minimal Apollo Client in React Example](https://www.robinwieruch.de/react-apollo-client-example). Try to apply what you've learned in this application (e.g. testing, state management). Otherwise, I encourage you to try to build your own GraphQL client library, which helps you understand more of the GraphQL internals: [How to build a GraphQL client library for React](https://www.robinwieruch.de/react-graphql-client-library). Whichever you decide, keep tinkering on this application, or start with another GraphQL client application to fortify your skill set. You have finished all the GraphQL client chapters now.
 
-你可以在 [Github的代码库](https://github.com/rwieruch/react-graphql-github-apollo) 中发现，绝大部分的练习任务都已被陈列出来。尽管这些案例的功能并不完善，也没有覆盖到边界的所有情况，但它应该表达出了对 React 应用中与 Apollo 一起使用 GraphQL 的深刻理解。假如你想钻研更多类似于在客户端中使用 GraphQL 进行测试和状态管理等深层次主题的话，你可以从这里开始：[Apollo Client 在 React 中的小例子](https://www.robinwieruch.de/react-apollo-client-example)。试着在这个应用结合你所学到的东西(例如：测试、状态管理)，否则的话，我更支持你去尝试着构建一个自己的 GraphQL client 库，[如何为 React 构建一个 GraphQL client 库](https://www.robinwieruch.de/react-graphql-client-library) 可以让你了解到更多 GraphQL 的内部构件，不管你最后怎么决定，记住要对这个应用反复锤炼，或者再另启一个 GraphQL client 应用来加强你的综合技能，做到学以致用。至此，你已经完成了 GraphQL client 的所有章节。
+你可以在 [Github的代码库](https://github.com/rwieruch/react-graphql-github-apollo) 中发现，绝大部分的练习任务都已被陈列出来。尽管这些案例的功能并不完善，也没有覆盖到涉及边界的所有情况，但它应该表达出了对 React 应用中与 Apollo 一起使用 GraphQL 的深刻理解。假如你想钻研更多类似于在客户端中使用 GraphQL 进行测试和状态管理等深层次主题的话，你可以从这里开始：[Apollo Client 在 React 中的小例子](https://www.robinwieruch.de/react-apollo-client-example)。试着在这个应用结合你所学到的东西(例如：测试、状态管理)，否则的话，我更支持你去尝试着构建一个自己的 GraphQL client 库，[如何为 React 构建一个 GraphQL client 库](https://www.robinwieruch.de/react-graphql-client-library) 可以让你了解到更多 GraphQL 的内部构件，不管你最后怎么决定，记住要对这个应用反复锤炼，或者再另启一个 GraphQL client 应用来加强你的综合技能，做到学以致用。至此，你已经完成了 GraphQL client 的所有章节。
