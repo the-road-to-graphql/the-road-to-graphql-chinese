@@ -551,9 +551,14 @@ A couple of words about the resolver's return values: a resolver can return arra
 * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/5d8ebc22260455ac6803af20838cbc1f2636be8f)
 * Read more about [GraphQL resolvers in Apollo](https://www.apollographql.com/docs/apollo-server/v2/essentials/data.html)
 
-## Apollo Server: Type Relationships
+>## Apollo Server: Type Relationships
 
-You started to evolve your GraphQL schema by defining queries, mutations, and type definitions. In this section, let's add a second GraphQL type called Message and see how it behaves with your User type. In this application, a user can have messages. Basically, you could write a simple chat application with both types. First, add two new top level queries and the new Message type to your GraphQL schema:
+## Apollo Server: 关系类型
+
+>You started to evolve your GraphQL schema by defining queries, mutations, and type definitions. In this section, let's add a second GraphQL type called Message and see how it behaves with your User type. In this application, a user can have messages. Basically, you could write a simple chat application with both types. First, add two new top level queries and the new Message type to your GraphQL schema:
+
+你需要通过定义查询，变更和类型定义以开始逐步构建你的 GraphQL 模式。在本节中，让我们添加第二个名为 Message 的 GraphQL 类型，并查看它如何处理你的 User 类型。在这个应用里，一个用户可以拥有多个消息，基本上，你可以使用这两种类型编写一个简单的聊天应用。首先，向你的 GraphQL 模式添加两个新的顶级查询和新的 Message 类型：
+
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -583,7 +588,9 @@ const schema = gql`
 `;
 ~~~~~~~~
 
-Second, you have to add two resolvers for Apollo Server to match the two new top level queries:
+>Second, you have to add two resolvers for Apollo Server to match the two new top level queries:
+
+然后，你需要向 Apollo Server 添加两个解析器来匹配这两个新的顶级查询:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -623,7 +630,9 @@ const resolvers = {
 };
 ~~~~~~~~
 
-Once you run your application again, your new GraphQL queries should work in GraphQL playground. Now we'll add relationships to both GraphQL types. Historically, it was common with REST to add an identifier to each entity to resolve its relationship.
+>Once you run your application again, your new GraphQL queries should work in GraphQL playground. Now we'll add relationships to both GraphQL types. Historically, it was common with REST to add an identifier to each entity to resolve its relationship.
+
+再次运行你的应用，新的 GraphQL 查询应该可以在 GraphQL playground 中工作了。现在我们将为这两种 GraphQL 类型添加关系。过去 REST 通常为每一个实体添加一个标志符来解析它们的关系。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -652,7 +661,9 @@ const schema = gql`
 `;
 ~~~~~~~~
 
-With GraphQL, Instead of using an identifier and resolving the entities with multiple waterfall requests, you can use the User entity within the message entity directly:
+>With GraphQL, Instead of using an identifier and resolving the entities with multiple waterfall requests, you can use the User entity within the message entity directly:
+
+在 GraphQL 中，你可以直接在消息实体中使用用户实体，而不需要使用标志符和多个瀑布式请求解析实体:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -669,7 +680,9 @@ const schema = gql`
 `;
 ~~~~~~~~
 
-Since a message doesn't have a user entity in your model, the default resolver doesn't work. You need to set up an explicit resolver for it.
+>Since a message doesn't have a user entity in your model, the default resolver doesn't work. You need to set up an explicit resolver for it.
+
+因为在你的模型中一个消息没有用户实体，默认的解析器无法工作，你需要为它设置一个显式的解析器。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -702,7 +715,9 @@ const resolvers = {
 };
 ~~~~~~~~
 
-In this case, every message is written by the authenticated `me` user. If you query the following about messages, you will get this result:
+>In this case, every message is written by the authenticated `me` user. If you query the following about messages, you will get this result:
+
+在本例中，每条消息都是由经过身份验证的 `me` 用户编写。如果你查询以下关于消息的内容，将得到以下结果:
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -733,7 +748,9 @@ In this case, every message is written by the authenticated `me` user. If you qu
 }
 ~~~~~~~~
 
-Let's make the behavior more like in a real world application. Your sample data needs keys to reference entities to each other, so the message passes a `userId` property:
+>Let's make the behavior more like in a real world application. Your sample data needs keys to reference entities to each other, so the message passes a `userId` property:
+
+让我们使它的行为更像现实中的应用。你的示例数据需要键来让实体互相引用，所以消息传递了一个 `userId` 属性:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -755,7 +772,9 @@ let messages = {
 };
 ~~~~~~~~
 
-The parent argument in your resolver function can be used to get a message's `userId`, which can then be used to retrieve the appropriate user.
+>The parent argument in your resolver function can be used to get a message's `userId`, which can then be used to retrieve the appropriate user.
+
+解析器中的 parent 参数可用于获取消息的 `userId`，然后用于检索对应的用户。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -772,9 +791,13 @@ const resolvers = {
 };
 ~~~~~~~~
 
-Now every message has its own dedicated user. The last steps were crucial for understanding GraphQL. Even though you have default resolver functions or this fine-grained control over the fields by defining your own resolver functions, it is up to you to retrieve the data from a data source. The developer makes sure every field can be resolved. GraphQL lets you group those fields into one GraphQL query, regardless of the data source.
+>Now every message has its own dedicated user. The last steps were crucial for understanding GraphQL. Even though you have default resolver functions or this fine-grained control over the fields by defining your own resolver functions, it is up to you to retrieve the data from a data source. The developer makes sure every field can be resolved. GraphQL lets you group those fields into one GraphQL query, regardless of the data source.
 
-Let's recap this implementation detail again with another relationship that involves user messages. In this case, the relationships go in the other direction.
+现在每条消息都拥有自己独有的用户。最后一步对于理解 GraphQL 非常重要。即使你有默认的解析器函数，或者通过定义自己的解析器函数对字段进行细粒度控制，你也可以从数据源检索数据。开发者确保每一个字段都会被解析。GraphQL 允许你将这些字段组合到一个 GraphQL 查询中，而不在意数据源是什么。
+
+>Let's recap this implementation detail again with another relationship that involves user messages. In this case, the relationships go in the other direction.
+
+让我们再次回顾一下涉及用户消息的另一种关系的实现细节。 在本例中，关系将走向另一个方向。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -796,7 +819,9 @@ let users = {
 };
 ~~~~~~~~
 
-This sample data could come from any data source. The important part is that it has a key that defines a relationship to another entity. All of this is independent from GraphQL, so let's define the relationship from users to their messages in GraphQL.
+>This sample data could come from any data source. The important part is that it has a key that defines a relationship to another entity. All of this is independent from GraphQL, so let's define the relationship from users to their messages in GraphQL.
+
+这个示例数据可以来源于任何数据源。重要的部分是它通过一个键来定义与另一个实体的关系。所有这些都独立于 GraphQL ，因此让我们在 GraphQL 中定义用户与他们的消息之间的关系。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -826,7 +851,9 @@ const schema = gql`
 `;
 ~~~~~~~~
 
-Since a user entity doesn't have messages, but message identifiers, you can write a custom resolver for the messages of a user again. In this case, the resolver retrieves all messages from the user from the list of sample messages.
+>Since a user entity doesn't have messages, but message identifiers, you can write a custom resolver for the messages of a user again. In this case, the resolver retrieves all messages from the user from the list of sample messages.
+
+由于用户实体没有消息，只有消息标识符，因此可以再次为用户的消息编写自定义解析器。在本例中，解析器从示例消息列表中检索用户的所有消息。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -851,18 +878,31 @@ const resolvers = {
 };
 ~~~~~~~~
 
-This section has shown you how to expose relationships in your GraphQL schema. If the default resolvers don't work, you have to define your own custom resolvers on a per field level for resolving the data from different data sources.
+>This section has shown you how to expose relationships in your GraphQL schema. If the default resolvers don't work, you have to define your own custom resolvers on a per field level for resolving the data from different data sources.
 
-### Exercises:
+本节向你展示了如何在 GraphQL 模式中公开关系。如果默认解析器不起作用，则必须在每个字段级别上定义自己的自定义解析器，以便解析来自不同数据源的数据。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/491d93a90f4ee3413d9226e0a18c10b7407949ef)
-* Query a list of users with their messages
-* Query a list of messages with their user
-* Read more about [the GraphQL schema](https://graphql.github.io/learn/schema/)
+>### Exercises:
 
-## Apollo Server: Queries and Mutations
+>* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/491d93a90f4ee3413d9226e0a18c10b7407949ef)
+>* Query a list of users with their messages
+>* Query a list of messages with their user
+>* Read more about [the GraphQL schema](https://graphql.github.io/learn/schema/)
 
-So far, you have only defined queries in your GraphQL schema using two related GraphQL types for reading data. These should work in GraphQL Playground, because you have given them equivalent resolvers. Now we'll cover GraphQL mutations for writing data. In the following, you create two mutations: one to create a message, and one to delete it. Let's start with creating a message as the currently signed in user (the `me` user).
+### 练习:
+
+* 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/491d93a90f4ee3413d9226e0a18c10b7407949ef)
+* 查询用户列表及其消息
+* 查询消息列表及其用户
+* 阅读更多关于 [ GraphQL 模式](https://graphql.github.io/learn/schema/)
+
+>## Apollo Server: Queries and Mutations
+
+## Apollo Server: 查询与变更
+
+>So far, you have only defined queries in your GraphQL schema using two related GraphQL types for reading data. These should work in GraphQL Playground, because you have given them equivalent resolvers. Now we'll cover GraphQL mutations for writing data. In the following, you create two mutations: one to create a message, and one to delete it. Let's start with creating a message as the currently signed in user (the `me` user).
+
+到目前为止，你只使用两个 GraphQL 相关的类型在 GraphQL 模式中定义了查询来读取数据。这些应该可以在 GraphQL Playground 中使用，因为你已经为它们提供了对应的解析器。现在我们将介绍用于编写数据的 GraphQL 变更。接下来，你将创建两个变更：一个用于创建消息，另一个用于删除消息。让我们从创建当前登录用户( `me` 用户)的消息开始 。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -886,7 +926,9 @@ const schema = gql`
 `;
 ~~~~~~~~
 
-Apart from the Query type, there are also Mutation and Subscription types. There, you can group all your GraphQL operations for writing data instead of reading it. In this case, the `createMessage` mutation accepts a non-nullable `text` input as an argument, and returns the created message. Again, you have to implement the resolver as counterpart for the mutation the same as with the previous queries, which happens in the mutation part of the resolver map:
+>Apart from the Query type, there are also Mutation and Subscription types. There, you can group all your GraphQL operations for writing data instead of reading it. In this case, the `createMessage` mutation accepts a non-nullable `text` input as an argument, and returns the created message. Again, you have to implement the resolver as counterpart for the mutation the same as with the previous queries, which happens in the mutation part of the resolver map:
+
+除了查询类型之外，还有变更和订阅类型。现在，你可以对所有 GraphQL 操作进行分组，以便编写数据而不是读取数据。在本例中，`createMessage` 变更接受一个不可空的 `text` 输入作为参数，并返回创建的消息。同样，你必须为变更实现与前面查询相同的对应的解析器，这发生在解析器映射的变更部分:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -912,7 +954,9 @@ const resolvers = {
 };
 ~~~~~~~~
 
-The mutation's resolver has access to the text in its second argument. It also has access to the signed-in user in the third argument, used to associate the created message with the user. The parent argument isn't used. The one thing missing to make the message complete is an identifier. To make sure a unique identifier is used, install this neat library in the command line:
+>The mutation's resolver has access to the text in its second argument. It also has access to the signed-in user in the third argument, used to associate the created message with the user. The parent argument isn't used. The one thing missing to make the message complete is an identifier. To make sure a unique identifier is used, install this neat library in the command line:
+
+变更的解析器可以从第二个参数中获取 text 。 它还可以从第三个参数中获取已登录用户，用于将创建的消息与用户相关联。parent 参数未被使用。要使消息完整还缺少一个标志符。要使标志符唯一的话，请确保在命令行中安装这个整洁的库:
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -926,7 +970,9 @@ And import it to your file:
 import uuidv4 from 'uuid/v4';
 ~~~~~~~~
 
-Now you can give your message a unique identifier:
+>Now you can give your message a unique identifier:
+
+现在你可以为你的消息提供一个唯一标志符:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -956,7 +1002,9 @@ const resolvers = {
 };
 ~~~~~~~~
 
-So far, the mutation creates a message object and returns it to the API. However, most mutations have side-effects, because they are writing data to your data source or performing another action. Most often, it will be a write operation to your database, but in this case, you only need to update your `users` and `messages` variables. The list of available messages needs to be updated, and the user's reference list of `messageIds` needs to have the new message `id`.
+>So far, the mutation creates a message object and returns it to the API. However, most mutations have side-effects, because they are writing data to your data source or performing another action. Most often, it will be a write operation to your database, but in this case, you only need to update your `users` and `messages` variables. The list of available messages needs to be updated, and the user's reference list of `messageIds` needs to have the new message `id`.
+
+截至目前，变更会创建一个消息对象并返回给API。但是，大多数变更都有副作用，因为它们正在将数据写入数据源或执行其他操作。通常，这是对数据库的写入操作，但在这种情况下，你只需要更新 `users` 和 `messages` 变量。需要更新可用消息列表，并且用户的 `messageIds` 参考列表应当包含新消息的 `id` 。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -987,7 +1035,9 @@ const resolvers = {
 };
 ~~~~~~~~
 
-That's it for the first mutation. You can try it right now in GraphQL Playground:
+>That's it for the first mutation. You can try it right now in GraphQL Playground:
+
+这是第一次变更。你可以立即在 GraphQL Playground 中尝试：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -999,7 +1049,9 @@ mutation {
 }
 ~~~~~~~~
 
-The last part is essentially your writing operation to a data source. In this case, you have only updated the sample data, but it would most likely be a database in practical use. Next, implement the mutation for deleting messages:
+>The last part is essentially your writing operation to a data source. In this case, you have only updated the sample data, but it would most likely be a database in practical use. Next, implement the mutation for deleting messages:
+
+最后一部分实际上是对数据源的写入操作。在本例中，你只更新了示例数据，但在实际中，它很可能是使用的数据库。接下来，让我们实现删除消息的变更:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1024,7 +1076,9 @@ const schema = gql`
 `;
 ~~~~~~~~
 
-The mutation returns a boolean that tells if the deletion was successful or not, and it takes an identifier as input to identify the message. The counterpart of the GraphQL schema implementation is a resolver:
+>The mutation returns a boolean that tells if the deletion was successful or not, and it takes an identifier as input to identify the message. The counterpart of the GraphQL schema implementation is a resolver:
+
+这个变更返回一个布尔值告诉我们是否删除成功，并接受一个标识符作为输入来标识消息。这在GraphQL 模式的实现中对应着一个解析器:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1055,29 +1109,54 @@ const resolvers = {
 };
 ~~~~~~~~
 
-The resolver finds the message by id from the messages object using destructuring. If there is no message, the resolver returns false. If there is a message, the remaining messages without the deleted message are the updated versions of the messages object. Then, the resolver returns true. Otherwise, if no message is found, the resolver returns false. Mutations in GraphQL and Apollo Server aren't much different from GraphQL queries, except they write data.
+>The resolver finds the message by id from the messages object using destructuring. If there is no message, the resolver returns false. If there is a message, the remaining messages without the deleted message are the updated versions of the messages object. Then, the resolver returns true. Otherwise, if no message is found, the resolver returns false. Mutations in GraphQL and Apollo Server aren't much different from GraphQL queries, except they write data.
 
-There is only one GraphQL operation missing for making the messages features complete. It is possible to read, create, and delete messages, so the only operation left is updating them as an exercise.
+解析器使用从消息对象中解构的 id 查找消息。如果没有消息，解析器将返回 false 。如果有消息，解析器返回 true ，消息对象更新为不包含删除内容的消息。否则，如果没有找到消息，解析器返回 false 。除了写入数据，GraphQL 和 Apollo Server 中的变更与 GraphQL 查询没有太大区别。
 
-### Exercises:
+>There is only one GraphQL operation missing for making the messages features complete. It is possible to read, create, and delete messages, so the only operation left is updating them as an exercise.
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
-* Create a message in GraphQL Playground with a mutation
-  * Query all messages
-  * Query the `me` user with messages
-* Delete a message in GraphQL Playground with a mutation
-  * Query all messages
-  * Query the me user with messages
-* Implement an `updateMessage` mutation for completing all CRUD operations for a message in GraphQL
-* Read more about [GraphQL queries and mutations](https://graphql.github.io/learn/queries/)
+要使消息功能完整只缺少一个 GraphQL 操作。可以读取、创建和删除消息，因此剩下的就是将它们作为练习。
 
-## GraphQL Schema Stitching with Apollo Server
+>### Exercises:
 
-Schema stitching is a powerful feature in GraphQL. It's about merging multiple GraphQL schemas into one schema, which may be consumed in a GraphQL client application. For now, you only have one schema in your application, but there may come a need for more complicated operations that use multiple schemas and schema stitching. For instance, assume you have a GraphQL schema you want to modularize based on domains (e.g. user, message). You may end up with two schemas, where each schema matches one type (e.g. User type, Message type). The operation requires merging both GraphQL schemas to make the entire GraphQL schema accessible with your GraphQL server's API. That's one of the basic motivations behind schema stitching.
+### 练习:
 
-But you can take this one step further: you may end up with microservices or third-party platforms that expose their dedicated GraphQL APIs, which then can be used to merge them into one GraphQL schema, where schema stitching becomes a single source of truth. Then again, a client can consume the entire schema, which is composed out of multiple domain-driven microservices.
+>* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
+>* Create a message in GraphQL Playground with a mutation
+>  * Query all messages
+>  * Query the `me` user with messages
+>* Delete a message in GraphQL Playground with a mutation
+>  * Query all messages
+>  * Query the me user with messages
+>* Implement an `updateMessage` mutation for completing all CRUD operations for a message in GraphQL
+>* Read more about [GraphQL queries and mutations](https://graphql.github.io/learn/queries/)
 
-In our case, let's start with a separation by technical concerns for the GraphQL schema and resolvers. Afterward, you will apply the separation by domains that are users and messages.
+* 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
+* 使用一个变更在 GraphQL Playground 中创建消息
+  * 查询所有消息
+  * 通过消息查询 `me` 用户
+* 使用一个变更在 GraphQL Playground 中删除消息
+  * 查询所有消息
+  * 通过消息查询 `me` 用户
+* 实现一个 `updateMessage` 变更，用于在 GraphQL 中完成消息的所有 CRUD 操作
+* 阅读更多关于 [GraphQL 查询与变更](https://graphql.github.io/learn/queries/)
+
+>## GraphQL Schema Stitching with Apollo Server
+
+Apollo Server 中的 GraphQL 模式拼接
+
+>Schema stitching is a powerful feature in GraphQL. It's about merging multiple GraphQL schemas into one schema, which may be consumed in a GraphQL client application. For now, you only have one schema in your application, but there may come a need for more complicated operations that use multiple schemas and schema stitching. For instance, assume you have a GraphQL schema you want to modularize based on domains (e.g. user, message). You may end up with two schemas, where each schema matches one type (e.g. User type, Message type). The operation requires merging both GraphQL schemas to make the entire GraphQL schema accessible with your GraphQL server's API. That's one of the basic motivations behind schema stitching.
+
+模式拼接是 GraphQL 中的一个强大的功能。它可以将多个 GraphQL 模式合并到一个模式中，以便可以在 GraphQL 客户端应用中使用。目前，你的应用程序中只有一个模式，但是可能需要使用多个模式和模式拼接进行更复杂的操作。例如，假设你有一个需要基于域 (例如用户、消息) 模块化的 GraphQL 模式。
+最终可能会有两个模式，其中每个模式都匹配一种类型（例如用户类型，消息类型）。 该操作需要合并两个 GraphQL 模式，使整个 GraphQL 模式可以通过 GraphQL 服务器的 API 访问。 这是模式拼接的基本理念之一。
+
+>But you can take this one step further: you may end up with microservices or third-party platforms that expose their dedicated GraphQL APIs, which then can be used to merge them into one GraphQL schema, where schema stitching becomes a single source of truth. Then again, a client can consume the entire schema, which is composed out of multiple domain-driven microservices.
+
+但是你可以更进一步: 你可能最终会使用微服务或第三方平台，这些平台会公开其专用的 GraphQL API 将它们合并到一个 GraphQL 模式中，其中模式拼接成为一个单一的数据来源。同样，客户端可以使用由多个域驱动的微服务组成的整个模式。
+
+>In our case, let's start with a separation by technical concerns for the GraphQL schema and resolvers. Afterward, you will apply the separation by domains that are users and messages.
+
+在我们的例子中，让我们从 GraphQL 模式和解析器的技术关注点开始分离。之后，你需要按用户和消息的域分隔。
 
 > ### Technical Separation
 ### 技术分离
