@@ -29,7 +29,7 @@ npm install apollo-server apollo-server-express --save
 ~~~~~~~~
 > As you can see by the library names, you can use any other middleware solution (e.g. Koa, Hapi) to complement your standalone Apollo Server. Apart from these libraries for Apollo Server, you need the core libraries for Express and GraphQL:
 
-从库名可以看出，你可以使用任何其他中间件解决方案（例如 Koa、Hapi ）来填充你自己的 Apollo Server。除了用于 Apollo Server 的这些库之外，你还需要 Express 和 GraphQL 的核心库:
+从库名可以看出，你可以使用任何其他中间件解决方案（例如 Koa、Hapi ）来填充你自己的 Apollo Server。除了用于 Apollo Server 的这些库之外，你还需要 Express 和 GraphQL:
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -46,7 +46,7 @@ import { ApolloServer } from 'apollo-server-express';
 ~~~~~~~~
 > Second, use both imports for initializing your Apollo Server with Express:
 
-然后，使用这两个导入的模块来初始化你的使用 Express 的 Apollo Server。
+然后，使用这两个导入的模块通过 Express 来初始化 Apollo Server。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -122,10 +122,10 @@ const data = {
 ~~~~~~~~
 > In the GraphQL schema for setting up an Apollo Server, **resolvers** are used to return data for fields from the schema. The data source doesn't matter, because the data can be hardcoded, can come from a database, or from another (RESTful) API endpoint. You will learn more about potential data sources later. For now, it only matters that the resolvers are agnostic according to where the data comes from, which separates GraphQL from your typical database query language. Resolvers are functions that resolve data for your GraphQL fields in the schema. In the previous example, only a user object with the username "Robin Wieruch" gets resolved from the `me` field.
 
-在这个为了设置 Apollo Server 而准备的 GraphQL 的 schema 中， **resolvers** 可以设定返回 schema 的字段组成的数据。数据源并不重要，数据可以是硬编码的，可以是来自数据库的，也可以是来自其他 （RESTful） API endpoint 的。你将会在之后学习这些潜在的数据来源。现在只需要知道 resolvers 的数据来源是不确定的，这是 GraphQL 和典型的数据库查询语言不同的地方。 Resolvers 是 schema 中解析 GraphQL 字段的函数。上面的例子中，只有一个 User 对象的 `me` 字段，它的 username 为 "Robin Wieruch"。
+在这个为了设置 Apollo Server 而准备的 GraphQL 的 schema 中， **resolvers** 可以设定返回 schema 的字段组成的数据。数据源并不重要，数据可以是硬编码的，可以是来自数据库的，也可以是来自其他 （RESTful） API endpoint 的。你将会在之后学习这些潜在的数据来源。现在只需要知道 resolvers 的数据与数据源无关，这是 GraphQL 和典型的数据库查询语言不同的地方。 Resolvers 是 schema 中解析 GraphQL 字段的函数。上面的例子中，只有一个 me 字段含有一个 username 为 "Robin Wieruch" 的 User 对象 。
 > Your GraphQL API with Apollo Server and Express should be working now. On the command line, you can always start your application with the `npm start` script to verify it works after you make changes. To verify it without a client application, Apollo Server comes with GraphQL Playground, a built-in client for consuming GraphQL APIs. It is found by using a GraphQL API endpoint in a browser at `http://localhost:8000/graphql`. In the application, define your first GraphQL query to see its result:
 
-现在，你通过使用 Express 设置的 Apollo Server 实现的 GraphQL API 应该已经可以运行了。在命令行中，你可以使用 “npm start” 脚本启动应用程序，以便在你进行更改后验证它是否工作。为了在没有客户端应用程序的情况下验证它，Apollo Server 附带了 GraphQL Playground，这是一个用于消费 GraphQL api 的内置客户端。可以通过在浏览器的 `http://localhost:8000/graphql` 中找到这个使用 GraphQL API 的 endpoint。
+现在，你通过使用 Express 设置的 Apollo Server 实现的 GraphQL API 应该已经可以运行了。在命令行中，你可以使用 “npm start” 脚本启动应用程序，以便在你进行更改后验证它是否工作。为了在没有客户端应用程序的情况下验证它，Apollo Server 附带了 GraphQL Playground，这是一个用于消费 GraphQL api 的内置客户端。可以通过在浏览器访问 http://localhost:8000/graphql 使用 GraphQL API endpoint。在应用中定义你的一个 GraphQL 的 query 然后查看结果：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
