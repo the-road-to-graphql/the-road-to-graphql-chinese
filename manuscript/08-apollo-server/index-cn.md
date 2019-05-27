@@ -4912,8 +4912,8 @@ users
 * 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/d11e0487085e014170146ec7479d0154c4a6fce4)
 * 为消息领域实现与用户领域类似的测试
 * 为这两个领域编写更精细的单元/集成测试
-* 阅读更多关于 [GraphQL and HTTP](https://graphql.github.io/learn/serving-over-http/)
-* 阅读更多关于 [Mocking with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/mocking.html)
+* 延伸阅读： [GraphQL and HTTP](https://graphql.github.io/learn/serving-over-http/)
+* 延伸阅读： [Mocking with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/mocking.html)
 
 ## Batching and Caching in GraphQL with Data Loader
 
