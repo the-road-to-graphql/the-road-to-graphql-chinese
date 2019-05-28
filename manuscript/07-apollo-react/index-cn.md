@@ -1241,7 +1241,7 @@ On an implementation level, you learned about extracting fragments from a query 
 
 > We've covered the basics, so now it's time for the advanced topics. One of those topics is the optimistic UI with React Apollo, which makes everything onscreen more synchronous. For instance, when liking a post on Twitter, the like appears immediately. As developers, we know there is a request that sends the information for the like to the Twitter backend. This request is asynchronous and doesn't resolve immediately with a result. The optimistic UI immediately assumes a successful request and mimics the result of such request for the frontend so it can update its UI immediately, before the real response arrives later. With a failed request, the optimistic UI performs a rollback and updates itself accordingly. Optimistic UI improves the user experience by omitting inconvenient feedback (e.g. loading indicators) for the user. The good thing is that React Apollo comes with this feature out of the box.
 
-我们已经介绍了基础知识，现在是进阶主题的时候了。其中一个主题使用 React Apollo 的乐观 UI，它会让屏幕上的所有内容更加同步。举个例子，当在 Twitter 给一条推文点赞时，这个赞立刻就显示出来了。作为开发者，我们知道这里会有一个请求把点赞的信息发送给后端。这个请求是异步的并且不会立刻决议结果。乐观 UI 立即假定一个成功的请求并模拟前端请求的结果，因此在真实的响应返回之前，它可以立刻更新其 UI。如果请求失败，乐观 UI 会执行回滚并相应地更新自身。乐观 UI 通过省略用户的不方便反馈（例如加载指示符）来提高用户体验。好消息是 React Apollo 提供了这个功能并且开箱即用。
+我们已经介绍了基础知识，现在是学习进阶主题的时候了。其中一个主题是 React Apollo 的乐观 UI，它会让屏幕上的所有内容更加同步。举个例子，当在 Twitter 给一条推文点赞时，这个赞立刻就显示出来了。作为开发者，我们知道这里会有一个请求把点赞的信息发送给后端。这个请求是异步的并且不会立刻决议结果。乐观 UI 立即假定一个成功的请求并模拟前端请求的结果，因此在真实的响应返回之前，它可以立刻更新其 UI。如果请求失败，乐观 UI 会执行回滚并相应地更新自身。乐观 UI 通过省略用户的不方便反馈（例如加载指示符）来提高用户体验。好消息是 React Apollo 提供了这个功能并且开箱即用。
 
 > In this section, you will implement an optimistic UI for when a user clicks the watch/unwatch mutation you implemented in a previous exercise. If you haven't, it's time to implement it now, or you can substitute it with the star or unstar mutation. Either way, completing the optimistic UI behavior for all three mutations is the next exercise. For completeness, this is a possible implementation of the watch mutation as a button next to the "Star"/"Unstar" buttons. First, the mutation:
 
@@ -1425,11 +1425,11 @@ const RepositoryItem = ({ ... }) => (
 
 > When you start your application and watch a repository, the "Watch" and "Unwatch" label of the button changes immediately after clicking it. This is because the optimistic response arrives synchronously, while the real response is pending and resolves later. Since the `__typename ` meta field comes with every Apollo request, include those as well.
 
-当你启动应用程序并 watch 一个代码时，按钮的 "Watch" 和 "Unwatch" 标签在会在点击之后立刻修改。这是因为乐观响应是同步到达的，而真正的响应还在等待并且稍后才决议。由于 `__typename ` 元字段会随每一次 Apollo 请求一起提供，因此也包括这些。  
+当你启动应用程序并 watch 一个代码库时，按钮的 "Watch" 和 "Unwatch" 标签在会在点击之后立刻修改。这是因为乐观响应是同步到达的，而真正的响应还在等待并且稍后才决议。由于 `__typename ` 元字段会随每一次 Apollo 请求一起提供，因此也包括这些。  
 
 > An additional benefit of the optimistic response is that it makes the count of watchers updates optimistic, too. The function used in the `update` prop is called twice now, the first time with the optimistic response, and the second with a response from GitHub's GraphQL API. It makes sense to capture identical information in the optimistic response expected as a mutation result in the function passed to the `update` prop of the Mutation component. For instance, if you don't pass the `id` property in the `optimisticResponse` object, the function passed to the `update` prop throws an error, because it can't retrieve the repository from the cache without an identifier.
 
-乐观响应的另一个好处是让观察者的更新计数更变得乐观。在 `update` 属性中使用的函数现在被调用了两次：第一次调用乐观响应，第二次调用 GitHub 的 GraphQL API。在乐观响应中捕获相同的信息是有意义的，作为变更结果传递给 Mutation 组件的 `update` 属性 的函数。例如，如果你没有在 `optimisticResponse` 对象中传递 `id` 属性，那么传递给 `update` 属性的函数会抛出一个错误，因为它无法在没有标识符的情况下从缓存中检索代码库。
+乐观响应的另一个好处是让观察者的更新计数更变得乐观。在 `update` 属性中使用的函数现在被调用了两次：第一次调用乐观响应，第二次调用 GitHub 的 GraphQL API。在乐观响应中捕获相同的信息作为变更结果传递给 Mutation 组件的 `update` 属性的函数是有意义的。例如，如果你没有在 `optimisticResponse` 对象中传递 `id` 属性，那么传递给 `update` 属性的函数会抛出一个错误，因为它无法在没有标识符的情况下从缓存中检索代码库。
 
 > At this point, it becomes debatable whether or not the Mutation component becomes too verbose. Using the Render Props pattern co-locates the data layer even more to the view-layer than Higher-Order Components. One could argue it doesn't co-locate the data-layer, but inserts it into the view-layer. When optimizations like the `update` and `optimisticResponse` props are put into the Render Prop Component, it can become too verbose for a scaling application. I advise using techniques you've learned as well as your own strategies to keep your source code concise. I see four different ways to solve this issue:
 
@@ -1461,7 +1461,7 @@ const RepositoryItem = ({ ... }) => (
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/2fd3f5bad7668655feebe876db7bc9247905c475)
 
-* 确认你的[最后一节的源代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/2fd3f5bad7668655feebe876db7bc9247905c475)
+* [查看本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/2fd3f5bad7668655feebe876db7bc9247905c475)
 
 > * Throttle your internet connection (often browsers offers such functionality) and experience how the `optimisticResponse` takes the `update` function into account even though the request is slow
 
@@ -1477,7 +1477,7 @@ const RepositoryItem = ({ ... }) => (
 
 > * Read more about [Apollo Optimistic UI in React with GraphQL](https://www.apollographql.com/docs/react/features/optimistic-ui.html)
 
-阅读有关 [React 中使用 GraphQL 的 Apollo 乐观 UI](https://www.apollographql.com/docs/react/features/optimistic-ui.html) 的更多信息
+延伸阅读：[React 中使用 GraphQL 的 Apollo 乐观 UI](https://www.apollographql.com/docs/react/features/optimistic-ui.html) 的更多信息
 
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5B6D8BX)
 
@@ -1631,7 +1631,7 @@ const RepositoryList = ({ repositories, fetchMore }) => (
 
 > If you attempt to click the button, you should get the following error message: *Error: updateQuery option is required.*. The `updateQuery` function is needed to tell Apollo Client how to merge the previous result with a new one. Define the function outside of the button, because it would become too verbose otherwise.
 
-如果你企图点击这个按钮，你应该得到如下的错误信息：*错误：updateQuery 是必填的。* `updateQuery` 函数需要告诉 Apollo Client 如何合并上一个结果和新的结果。在按钮的外部定义这个函数，否则它会变得过于冗长。
+如果你尝试点击这个按钮，你应该得到如下的信息：*错误：updateQuery 是必填的。* `updateQuery` 函数需要告诉 Apollo Client 如何合并上一个结果和新的结果。在按钮的外部定义这个函数，否则它会变得过于冗长。
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1668,7 +1668,7 @@ const RepositoryList = ({ repositories, fetchMore }) => (
 
 > The function has access to the previous query result, and to the next result that resolves after the button click:
 
-该函数可以访问上一个查询结果，以及点击按钮后决议的下一个结果：
+该函数可以访问上一个查询结果，以及点击按钮后解析的下一个结果：
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1722,7 +1722,7 @@ const Profile = () => (
 
 > When you run your application again and try the "More" button, you should see odd behavior. Every time you load another page of repositories, the loading indicator is shown, but the list of repositories disappears entirely, and the merged list is rendered as assumed. Since the `loading` boolean becomes true with the initial and successive requests, the conditional rendering in the Profile component will always show the loading indicator. It returns from the Profile function early, never reaching the code to render the RepositoryList. A quick change from `||` to `&&` of the condition will allow it to show the loading indicator for the initial request only. Every request after that, where the `viewer` object is available, is beyond this condition, so it renders the RepositoryList component.
 
-当你再次运行你的应用并尝试点击 "More" 按钮时，你应该会看到奇怪的行为。每次加载另一页代码库时，loading 指示符就会显示，但是 代码库列表完全消失，而合并后的列表按照假定的方式渲染。由于`loading` 布尔值随着初始请求和后续请求变为了 true，因此在 Profile 组件中的条件渲染会始终显示加载指示符。它很早就从 Profile 函数返回，从未到达用于渲染 RepositoryList 的代码。条件从 `||` 到 `&&` 的快速修改将允许它只显示初始请求的加载指示符。此后的每个请求（在  `viewer` 对象可用的情况下）都超出了这个条件，因此它渲染了 RepositoryList 组件。
+当你再次运行你的应用并尝试点击 "More" 按钮时，你应该会看到奇怪的行为。每次加载另一页代码库时，loading 指示符就会显示，但是 代码库列表完全消失，而合并后的列表按照假定的方式渲染。由于`loading` 布尔值随着初始请求和后续请求变为了 true，因此在 Profile 组件中的条件渲染会始终显示加载指示符。它过早地从 Profile 函数返回，从未到达用于渲染 RepositoryList 的代码。条件从 `||` 到 `&&` 的快速修改将允许它只显示初始请求的加载指示符。此后的每个请求（在  `viewer` 对象可用的情况下）都超出了这个条件，因此它渲染了 RepositoryList 组件。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1798,7 +1798,7 @@ const RepositoryList = ({ repositories, loading, fetchMore }) => (
 
 > The pagination feature is complete now, and you are fetching successive pages of an initial page, then merging the results in Apollo Client's cache. In addition, you show your user feedback about pending requests for either the initial request or further page requests.
 
-分页功能现在已经完成，你将获取初始页面的连续页面，然后将结果合并到 Apollo Client 的缓存中。此外，你还可以显示用户对于挂起请求的反馈，不管是初始请求还是后续页面请求。 
+分页功能现在已经完成，你将获取初始页面的后续页面，然后将结果合并到 Apollo Client 的缓存中。此外，你还可以向用户展示有关挂起请求的反馈，不管是初始请求还是后续页面请求。 
 
 > Now we'll take it a step further, making the button used to fetch more repositories reusable. Let me explain why this would be a neat abstraction. In an upcoming section, you have another list field that could potentially implement the pagination feature. There, you have to introduce the `More` button, which could be nearly identical to the `More` button you have in the RepositoryList component. Having only one button in a UI would be a satisfying abstraction, but this abstraction wouldn't work in a real-world coding scenario. You would have to introduce a second list field first, implement the pagination feature for it, and then consider an abstraction for the `More` button. For the sake of the tutorial, we implement this abstraction for the pagination feature only in this section, though you should be aware this is a premature optimization put in place for you to learn it.
 
@@ -1806,7 +1806,7 @@ const RepositoryList = ({ repositories, loading, fetchMore }) => (
 
 > For another way, imagine you wanted to extract the functionality of the `More` button into a FetchMore component. The most important thing you would need is the `fetchMore()` function from the query result. The `fetchMore()` function takes an object to pass in the necessary `variables` and `updateQuery` information as a configuration. While the former is used to define the next page by its cursor, the latter is used to define how the results should be merged in the local state. These are the three essential parts: fetchMore, variables, and updateQuery. You may also want to shield away the conditional renderings in the FetchMore component, which happens because of the `loading` or `hasNextPage` booleans. Et voilà! That's how you get the interface to your FetchMore abstraction component.
 
-另一方面，假设你需要将 `More` 按钮的功能提取到 FetchMore 组件中。你需要的最重要的东西就是查询结果中的 `fetchMore()` 函数。`fetchMore()` 函数将对象作为配置传递给必须的 `variables` 和 `updateQuery` 信息。前者用于通过 cursor 定义下一页，后者用于定义如何将结果合并到本地状态。这是三个基本的部分：fetchMore, variables 和 updateQuery。你可能想屏蔽 FetchMore 组件中的条件渲染，这是由于 `loading` 或 `hasNextPage` 布尔值造成的。我说得没错吧！这就是你如何获得 FetchMore 抽象组件接口的！
+另一方面，假设你需要将 `More` 按钮的功能提取到 FetchMore 组件中。你需要的最重要的东西就是查询结果中的 `fetchMore()` 函数。`fetchMore()` 函数将对象作为配置传递给必须的 `variables` 和 `updateQuery` 信息。前者用于通过 cursor 定义下一页，后者用于定义如何将结果合并到本地状态。这是三个基本的部分：fetchMore, variables 和 updateQuery。你可能还想屏蔽 FetchMore 组件中的条件渲染，这是由于 `loading` 或 `hasNextPage` 布尔值造成的。我说得没错吧！这就是你如何获得 FetchMore 抽象组件接口的！
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1848,7 +1848,7 @@ export default RepositoryList;
 
 > Now this FetchMore component can be used by other paginated lists as well, because every part that can be dynamic is passed as props to it. Implementing a FetchMore component in the *src/FetchMore/index.js* is the next step. First, the main part of the component:
 
-现在 FetchMore 组件也可以被其他分页列表使用，因为每个动态的部分都作为 prop 传递给它的。下一步就是在 *src/FetchMore/index.js* 中实现 FetchMore 组件。首先，组件的主要部分： 
+现在 FetchMore 组件也可以被其他分页列表使用，因为每个可以被动态化的部分都作为 prop 传递给它了。下一步就是在 *src/FetchMore/index.js* 中实现 FetchMore 组件。首先，组件的主要部分： 
 
 {title="src/FetchMore/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1878,7 +1878,7 @@ export default FetchMore;
 
 > Here, you can see how the `variables` and `updateQuery` are taken as configuration object for the `fetchMore()` function when it's invoked. The button can be made cleaner using the Button component you defined in a previous section. To add a different style, let's define a specialized ButtonUnobtrusive component next to the Button component in the *src/Button/index.js* file:
 
-这里，你可以看到当 `fetchMore()` 函数被调用时， `variables` 和 `updateQuery` 如何作为它的配置对象。使用你在上一节中定义的 Button 组件可以让按钮更干净。为了添加不同的样式，让我们在 *src/Button/index.js* 文件中的 Button 组件旁定义一个专门的 ButtonUnobtrusive 组件：
+这里，你可以看到当 `fetchMore()` 函数被调用时， `variables` 和 `updateQuery` 如何作为它的配置对象。使用你在上一节中定义的 Button 组件可以让按钮更整洁。为了添加不同的样式，让我们在 *src/Button/index.js* 文件中的 Button 组件旁定义一个专门的 ButtonUnobtrusive 组件：
 
 {title="src/Button/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1914,7 +1914,7 @@ export default Button;
 
 > Now the ButtonUnobtrusive component is used as button instead of the button element in the FetchMore component. In addition, the two booleans `loading` and `hasNextPage` can be used for the conditional rendering, to show the Loading component or nothing, because there is no next page which can be fetched.
 
-现在，ButtonUnobtrusive 组件被用作按钮，而不是 FetchMore 组件中的 button 元素。另外，`loading` 和 `hasNextPage` 这两个布尔值可以用于条件渲染，以显示 Loading 组件或者不显示任何内容，因为没有可获取的下一页。
+现在，ButtonUnobtrusive 组件在 FetchMore 组件中代替 button 元素被用作按钮。另外，`loading` 和 `hasNextPage` 这两个布尔值可以用于条件渲染，以显示 Loading 组件或者在没有可获取的下一页时不显示任何内容。
 
 {title="src/FetchMore/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1969,11 +1969,11 @@ export default FetchMore;
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/65cb143d605b1c7e9c080f36b5f64805f02aba29)
 
-* 确认你的[最后一节的源代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/65cb143d605b1c7e9c080f36b5f64805f02aba29)
+* [查看本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/65cb143d605b1c7e9c080f36b5f64805f02aba29)
 
 > * Read more about [pagination with Apollo Client in React](https://www.apollographql.com/docs/react/features/pagination.html)
 
-* 阅读有关 [React 中使用 GraphQL 的 Apollo 乐观 UI](https://www.apollographql.com/docs/react/features/pagination.html) 的更多信息
+* 延伸阅读：[React 中的 Apollo 客户端分页](https://www.apollographql.com/docs/react/features/pagination.html) 的更多信息
 
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5HYMGN7)
 
