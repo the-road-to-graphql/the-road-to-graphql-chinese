@@ -479,7 +479,7 @@ You performed your first GraphQL query in a React application, a plain HTTP POST
 React 中 GraphQL 嵌套对象的使用
 
 Next, we'll request a nested object for the organization. Since the application will eventually show the issues in a repository, you should fetch a repository of an organization as the next step. Remember, a query reaches into the GraphQL graph, so we can nest the `repository` field in the `organization` when the schema defined the relationship between these two entities.
-接下来，我们将为组织请求嵌套对象。由于应用程序最终会在代码库中显示 issue ，因此下一步你应该获取组织的代码库。请记住，查询（操作）会进入 GraphQL 图，因此我们可以在架构定义这两个实体之间的关系时将 `repository` 字段嵌套在 `organization` 中。
+接下来，我们需要为组织添加一个嵌套对象。由于应用程序最终会在代码库中显示 issue，因此下一步你应该获取组织的代码库。请记住，查询（操作）会进入 GraphQL 图，因此我们可以在架构定义这两个实体之间的关系时将 `repository` 字段嵌套在 `organization` 中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -518,7 +518,7 @@ class App extends Component {
 ~~~~~~~~
 
 In this case, the repository name is identical to the organization. That's okay for now. Later on, you can define an organization and repository on your own dynamically. In the second step, you can extend the Organization component with another Repository component as child component. The result for the query should now have a nested repository object in the organization object.
-在这种情况下，代码库名称与组织相同。现在这样做没关系。稍后，你可以动态地定义组织和代码库。在第二步，你可以使用另一个代码库组件作为子组件扩展组织组件。现在，查询（操作）的结果应该在架构对象中具有一个嵌套的代码库对象。
+虽然现在代码库与组织的名称相同，但是没关系，因为稍后你可以动态地定义组织和代码库。接下来，你可以使用另一个代码库组件作为子组件扩展组织组件。现在，查询（操作）的结果应该在组织对象中具有一个嵌套的代码库对象。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -553,13 +553,13 @@ const Repository = ({ repository }) => (
 ~~~~~~~~
 
 The GraphQL query structure aligns perfectly with your component tree. It forms a natural fit to continue extending the query structure like this, by nesting other objects into the query, and extending the component tree along the structure of the GraphQL query. Since the application is an issue tracker, we need to add a list field of issues to the query.
-GraphQL 查询结构与组件树完全一致。它通过将其他对象嵌套到查询中，并沿着 GraphQL 查询的结构扩展组件树，这样就可以继续扩展这样的查询结构。由于应用程序是问题跟踪程序，我们需要向查询添加 issue 列表字段。
+GraphQL 查询结构与组件树完全一致。它通过将其他对象嵌套到查询中，并沿着 GraphQL 查询的结构扩展组件树，这样就可以继续拓展查询结构。由于应用程序是一个问题跟踪器，我们需要向查询添加 issue 列表字段。
 
 If you want to follow the query structure more thoughtfully, open the "Docs" sidebar in GraphiQL to learn out about the types `Organization`, `Repository`, `Issue`. The paginated issues list field can be found there as well. It's always good to have an overview of the graph structure.
-如果你想更详细地了解查询结构，请打开 GraphiQL 中的“文档”侧栏以了解`Organization`, `Repository`, `Issue`。也可以在那里找到分页 issue 列表字段。那里对图形结构的概述是非常详尽的。
+如果你想更详细地了解查询结构，请打开 GraphiQL 中的“文档”侧栏以了解`Organization`, `Repository`, `Issue`，也可以在那里找到分页 issue 列表字段。对图表结构有一个大概的了解总是好的。
 
 Now let's extend the query with the list field for the issues. These issues are a paginated list in the end. We will cover these more later; for now, nest it in the `repository` field with a `last` argument to fetch the last items of the list.
-现在让我们用 issue 列表字段扩展查询（操作）。这些 issue 最终是一个分页列表。我们稍后会介绍这些内容；现在，将它嵌套在`repository`字段中，并使用`last`参数来获取列表的最后一项。
+现在让我们用 issue 列表字段扩展查询（操作）。这些 issue 最终是一个分页列表，我们稍后会介绍这些内容；现在，将它嵌套在`repository`字段中，并使用`last`参数来获取列表的最后一项。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -591,7 +591,7 @@ const GET_ISSUES_OF_REPOSITORY = `
 ~~~~~~~~
 
 You can also request an id for each issue using the `id` field on the issue's `node` field, to use a `key` attribute for your list of rendered items in the component, which is considered [best practice in React](https://reactjs.org/docs/lists-and-keys.html). Remember to adjust the name of the query variable when its used to perform the request.
-你还可以使用问题的`node` 字段上的`id`字段为每个问题请求一个id，以便于在组件中使用在列表中呈现的`key`属性，这是在React中的最佳实践。记得要在执行请求时调整查询变量的名称。
+你还可以使用问题的`node` 字段上的`id`字段为每个 issue 请求一个id，以便于在组件中使用在列表中呈现的`key`属性，这是在React中的最佳实践。记得要在执行请求时调整查询变量的名称。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -638,16 +638,16 @@ const Repository = ({ repository }) => (
 ~~~~~~~~
 
 That's it for the nested objects, fields, and list fields in a query. Once you run your application again, you should see the last issues of the specified repository rendered in your browser.
-这就是查询（操作）中的嵌套对象，字段和列表字段。当你再次运行你的应用程序，你会在浏览器中看到指定代码库的最后提的 issue 
+这就是查询（操作）中的嵌套对象，字段和列表字段。当你再次运行你的应用程序，你会在浏览器中看到指定代码库的最后提的 issue 。
 
 ### GraphQL Variables and Arguments in React
-React-GraphQL 变量和参数
+React-GraphQL 变量和参数的使用
 
 Next we'll make use of the form and input elements. They should be used to request the data from GitHub's GraphQL API when a user fills in content and submits it. The content is also used for the initial request in `componentDidMount()` of the App component. So far, the organization `login` and repository `name` were inlined arguments in the query. Now, you should be able to pass in the `path` from the local state to the query to define dynamically an organization and repository. That's where variables in a GraphQL query came into play, do you remember?
-接下来我们将使用表单和 input 元素。当用户填写内容并提交内容时，它们应该用于从 Github GraphQL APl请求数据。该内容还用于App组件的 `componentDidMount()` 中的初始请求。目前，组织登录名和代码库名应该是查询（操作）中的内联参数。现在，你应该能够通过从本地状态到查询的路径来动态定义组织和代码库。这就是 GraphQL 查询中的变量发挥作用的地方，还记得吗？
+接下来我们将使用表单和输入元素。当用户填写内容并提交内容时，它们应该用于从 Github GraphQL API 请求数据。该内容还用于 App 组件的 `componentDidMount()` 中的初始请求。目前，组织 login 和代码库 name 应该是查询（操作）中的内联参数。现在，你应该能够通过从本地状态到查询的 path 来动态定义组织和代码库。这就是 GraphQL 查询中的变量发挥作用的地方，还记得吗？
 
 First, let's use a naive approach by performing string interpolation with JavaScript rather than using GraphQL variables. To do this, refactor the query from a template literal variable to a function that returns a template literal variable. By using the function, you should be able to pass in an organization and repository.
-首先，我们先使用一种简单的方法，通过 JavaScript 来执行字符串插值，注意不是 GraphQL 变量。为此，请将查询（操作）从模板文字变量重构为返回模板文字变量的函数。通过使用该函数，你应该能够传入组织和代码库。
+首先，我们先使用一种简单的方法，通过 JavaScript 来执行字符串插值，注意不是 GraphQL 变量。为此，请将查询（操作）从模板文字变量重构为返回模板文字变量的函数。通过使用该函数，你可以动态地传入组织和代码库。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -681,7 +681,7 @@ const getIssuesOfRepositoryQuery = (organization, repository) => `
 ~~~~~~~~
 
 Next, call the `onFetchFromGitHub()` class method in the submit handle, but also when the component mounts in `componentDidMount()` with the initial local state of the `path` property. These are the two essential places to fetch the data from the GraphQL API on initial render, and on every other manual submission from a button click.
-接下来，当组件在 `componentDidMount()` 中安装具有 `path` 属性的初始本地状态时，在提交句柄中调用 `onFetchFromGitHub()` 这个类方法。这些是在初始渲染时从 GraphQL API 获取数据的两个基本位置，以及从按钮单击获取每个手动提交的数据。
+接下来，可以在提交句柄中调用 `onFetchFromGitHub()` 这个方法，也可以在组件挂载 `componentDidMount()` 时， `path` 属性的本地状态初始化后调用。这些是在初始渲染时从 GraphQL API 获取数据的两个基本位置，以及从按钮单击获取每个手动提交的数据。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
