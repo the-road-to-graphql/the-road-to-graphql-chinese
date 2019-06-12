@@ -4,7 +4,7 @@
 
 > In this last section about pagination in GraphQL, we advance the cursor-based pagination with a few improvements. Currently, you have to query all creation dates of the messages to use the creation date of the last message for the next page as a cursor. GraphQL connections add only a structural change to your list fields in GraphQL that allow you to pass meta information. Let's add a GraphQL connection in the *src/schema/message.js* file:
 
-在关于GraphQL分页的最后一节中，我们对基于游标的分页进行一些改进。目前，你必须查询所有消息的创建日期，以便将最后一条消息的创建日期用作查询下一页的游标。GraphQL连接只向GraphQL中的列表字段添加结构更改，以便允许传递元信息。让我们在*src/schema/message.js*文件中添加一个GraphQL链接:
+在 GraphQL 分页的上一章节中，我们对基于游标的分页进行一些改进。目前，你必须查询所有消息的创建时间，以便将最后一条消息的创建时间用作查询下一页的游标。GraphQL 连接只修改列表字段结构，就能支持传递元信息。让我们在 *src/schema/message.js* 文件中添加一个GraphQL链接:
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -45,9 +45,9 @@ export default gql`
 `;
 ~~~~~~~~
 
-> You introduced an intermediate layer that holds meta information with the PageInfo type with the list of items in an edges field. In the intermediate layer, you can introduce the new information such as an `endCursor` (`createdAt` of the last message in the list). Then, you won't need to query every `createdAt` date of every message, only the `endCursor`. Place these changes in the *src/resolvers/message.js* file:
+> You introduced an intermediate layer that holds meta information with the PageInfo type with the list of items in an edges field. In the intermediate layer, you can introduce the new information such as an  `endCursor`( `createdAt` of the last message in the list). Then, you won't need to query every `createdAt` date of every message, only the `endCursor`. Place these changes in the *src/resolvers/message.js* file:
 
-你引入了一个拥有元信息的中间层，其中包含PageInfo类型，以及代表列项的edges字段。在中间层，你可以引入新的信息，比如`endCursor`(列表中最后一条消息的`createdAt`)。然后，你将不需要查询每条消息的`createdAt`日期，只需要查询`endCursor`。在*src/resolvers/message.js *文件中进行以下调整:
+你引入了一个拥有元信息的中间层，其中包含 PageInfo 类型，以及代表列项的 edges 字段。在中间层，你可以引入新的信息，比如 `endCursor` (列表中最后一条消息的 `createdAt`)。然后，你将不需要查询每条消息的 `createdAt` 时间，只需要查询 `endCursor`。在 *src/resolvers/message.js* 文件中进行以下调整:
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -98,7 +98,7 @@ export default {
 
 > You gave the result a new structure with the intermediate `edges` and `pageInfo` fields. The `pageInfo` field now has the cursor of the last message in the list, and you should be able to query the first page the following way:
 
-你为结果提供了一个带有中间介质`edges`和`pageInfo`字段的新结构。`pageInfo`字段现在拥有列表中最后一条消息的游标，你应该能够通过以下方式查询第一页:
+你返回了一个带有 `edges` 和 `pageInfo` 中间字段的新结构。`pageInfo` 字段现在拥有列表中最后一条消息的游标，你应该能够通过以下方式查询第一页:
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -159,11 +159,11 @@ query {
 
 > Again, this will only return the remaining last message in the list. You are no longer required to query the creation date of every message, only to query the cursor for the last message. The client application doesn't need the details for the cursor of the last message, as it just needs `endCursor` now.:
 
-同样，这将返回列表中剩余的最后一条消息。你不再需要查询每条消息的创建日期，只需要查询最后一条消息的游标。客户端应用程序不需要最后一条消息的游标的详细信息，因为它现在只需要`endCursor`。
+同样，这将返回列表中剩余的最后一条消息。你不再需要查询每条消息的创建时间，只需要查询最后一条消息的游标。客户端应用程序不需要最后一条消息的游标的详细信息，因为它现在只需要 `endCursor`。
 
 > You can add relevant information in the intermediate GraphQL connection layer. Sometimes, a GraphQL client needs to know whether there are more pages of a list to query, because every list is finite. Let's add this information to the schema for the message's connection in the *src/schema/message.js* file
 
-你可以在GraphQL连接层中添加相关信息。由于每个列表数目都是有限的，有时，GraphQL客户端需要知道列表中是否还有更多可以查询的页面。让我们在*src/schema/message.js*文件中把这个信息添加到schema以作为message的链接:
+你可以在GraphQL连接层中添加相关信息。由于每个列表数目都是有限的，有时，GraphQL客户端需要知道列表中是否还有更多可以查询的页面。让我们在 *src/schema/message.js* 文件中将这个信息添加到消息连接的 schema 中:
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -198,7 +198,7 @@ export default gql`
 
 > In the resolver in the *src/resolvers/message.js* file, you can find this information with the following:
 
-在*src/resolvers/message.js*文件的解析器中，你可以看到以下信息
+在 *src/resolvers/message.js* 文件的解析器中，你可以看到以下信息
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -249,11 +249,11 @@ export default {
 
 > You only retrieve one more message than defined in the limit. If the list of messages is longer than the limit, there is a next page; otherwise, there is no next page. You return the limited messages, or all messages if there is no next page. Now you can include the `hasNextPage` field in the `pageInfo` field. If you query messages with a limit of 2 and no cursor, you get true for the `hasNextPage` field. If query messages with a limit of more than 2 and no cursor, the `hasNextPage` field becomes false. Then, your GraphQL client application knows that the list has reached its end.
 
-你只比定义的limit多检索一条消息。如果消息列表数量大于limit，则有下一页;否则，就没有下一页。要么返回限定的limit数量的消息，要么没有下一页时，返回所有消息。现在，你可以在`pageInfo`类型中添加`hasNextPage`字段。如果查询消息的条件为limit=2,且没有游标，返回结果中，`hasNextPage`为true。如果查询消息的条件为limit>2且没有游标，返回结果中，`hasNextPage`为false。据此，GraphQL客户端应用程序知道列表已经查询到最后了。
+你只比定义的limit多检索一条消息。如果消息列表数量大于limit，则有下一页;否则，就没有下一页。要么返回限定的limit数量的消息，要么没有下一页时，返回所有消息。现在，你可以在 `pageInfo` 类型中添加 `hasNextPage` 字段。如果查询消息的条件为limit=2,且没有游标，返回结果中，`hasNextPage` 为true。如果查询消息的条件为limit>2且没有游标，返回结果中，`hasNextPage` 为false。据此，GraphQL 客户端应用程序知道列表已经查询到最后了。
 
 > The last improvements gave your GraphQL client application a more straightforward GraphQL API. The client doesn't need to know about the cursor being the last creation date of a message in a list. It only uses the `endCursor` as a `cursor` argument for the next page. However, the cursor is still a creation date property, which may lead to confusion on the GraphQL client side. The client shouldn't care about the format or the actual value of the cursor, so we'll ask the cursor with a hash function that uses a base64 encoding:
 
-最后的改进是给GraphQL客户端应用程序提供一个更加直观的GraphQL API。客户端不需要知道游标代表列表中最后一条消息的创建日期。它仅使用`endCursor`作为下一页的`cursor`参数。但是，游标仍然具备创建日期属性，这可能会在GraphQL客户端导致混淆。客户端不应该关心游标的格式或实际值，所以我们将用一个使用base64编码的哈希函数来处理游标:
+最后的改进是给 GraphQL 客户端应用程序提供一个更加直观的 GraphQL API。客户端不需要知道游标代表列表中最后一条消息的创建时间。它仅使用 `endCursor` 作为下一页的 `cursor` 参数。但是，游标仍然是一个创建时间属性，这可能会引起 GraphQL 客户端的困惑。客户端不应该关心游标的格式或实际值，所以我们将用一个使用 base64编码的哈希函数来处理游标:
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -312,7 +312,7 @@ export default {
 
 > The returned cursor as meta information is hashed by the new utility function. Remember to stringify the date before hashing it. In addition, the `endCursor` in the *src/schema/message.js* file isn't a Date anymore, but a String scalar again.
 
-作为元信息返回的游标被这个新的通用函数哈希化。记住，在哈希化之前要把日期转化为字符串格式。此外，在*src/schema/message.js*文件中`endCursor`不再是一个日期，而是一个字符串标量。
+作为元信息返回的游标被这个新的通用函数哈希化。记住，在哈希化之前要把时间转化为字符串格式。此外，在 *src/schema/message.js* 文件中 `endCursor` 不再是一个时间，而是一个字符串标量。
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -339,7 +339,7 @@ export default gql`
 
 > The GraphQL client receives a hashed `endCursor` field. The hashed value can be used as a cursor to query the next page. In the resolver, the incoming cursor is reverse hashed to the actual date, which is used for the database query.
 
-GraphQL客户端接收哈希化的`endCursor`字段。这个哈希值可以用作查询下一页的游标。在解析器中，用于数据库查询时，需要把传入的游标反哈希化成实际日期。
+GraphQL 客户端接收哈希化的 `endCursor` 字段。这个哈希值可以用作查询下一页的游标。在解析器中，用于数据库查询时，需要把传入的游标反哈希化成实际时间。
 
 > Hashing the cursor is a common approach for cursor-based pagination because it hides the details from the client. The (GraphQL) client application only needs to use the hash value as a cursor to query the next paginated page.
 
@@ -362,11 +362,11 @@ GraphQL客户端接收哈希化的`endCursor`字段。这个哈希值可以用�
 
 > So far, you used GraphQL to read and write data with queries and mutations. These are the two essential GraphQL operations to get a GraphQL server ready for CRUD operations. Next, you will learn about GraphQL Subscriptions for real-time communication between GraphQL client and server.
 
-到目前为止，你使用GraphQL的查询(Query)和变更(Mutation)来读写数据。这是使GraphQL服务端为CRUD（增删改查）操作做好准备的两个基本GraphQL操作。接下来，你将了解GraphQL订阅，以便在GraphQL客户端和服务端之间进行实时通信。
+到目前为止，你使用 GraphQL 的查询(Query)和变更(Mutation)来读写数据。这是使 GraphQL 服务端为 CRUD（增删改查）操作做好准备的两个基本 GraphQL 操作。接下来，你将了解 GraphQL 订阅，以便在 GraphQL 客户端和服务端之间进行实时通信。
 
 > Next, you will implement real-time communication for created messages. If a user creates a message, another user should get this message in a GraphQL client application as a real-time update. To start, we add the Subscription root level type to the *src/schema/message.js* schema:
 
-接下来，你将为创建的消息实现实时通信。如果一个用户创建了一条消息，那么在GraphQL客户端应用程序中，另一个用户应当实时获得这条新消息。首先，我们在*src/schema/message.js*文件中，添加根级别的订阅类型:
+接下来，你将为创建的消息实现实时通信。如果一个用户创建了一条消息，那么在 GraphQL 客户端应用程序中，另一个用户应当实时获得这条新消息。首先，我们在 *src/schema/message.js* 文件中，添加根级别的订阅类型:
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -406,7 +406,7 @@ export default gql`
 
 > As a naive GraphQL consumer, a subscription works like a GraphQL query. The difference is that the subscription emits changes (events) over time. Every time a message is created, the subscribed GraphQL client receives the created message as payload. A subscription from a GraphQL client for the schema would look like this:
 
-作为一个简单的GraphQL用户，订阅的工作方式类似于GraphQL查询(query)。不同之处在于订阅会实时触发变更(事件)。每次创建消息时，订阅的GraphQL客户端都会将创建的消息作为有效负载接收。来自GraphQL客户端的订阅模式将如下所示:
+作为一个简单的 GraphQL 用户，订阅的工作方式类似于 GraphQL 查询(query)。不同之处在于订阅会实时触发变更(事件)。每次创建消息时，订阅的 GraphQL 客户端都会将创建的消息作为有效负载接收。来自 GraphQL 客户端的订阅模式将如下所示:
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -427,7 +427,7 @@ subscription {
 
 > In the first part, you'll set up the subscription architecture for your application; then, you'll add the implementation details for the created message subscription. The first step need only be completed once, but the latter will be a recurring when more GraphQL subscriptions are added to your application.
 
-在第一部分中，你将为应用程序设置订阅结构;然后，你将为创建的消息订阅添加实现细节。第一步只需要做一次，但是当向应用程序添加更多的GraphQL订阅时，这一步将需要再次设置。
+在第一部分中，你将为应用程序设置订阅结构;然后，你将为创建的消息订阅添加实现细节。第一步只需要做一次，但是当向应用程序添加更多的 GraphQL 订阅时，这一步将需要再次设置。
 
 > ### Apollo Server Subscription Setup
 
@@ -435,7 +435,7 @@ subscription {
 
 > Because we are using Express as middleware, expose the subscriptions with an advanced HTTP server setup in the *src/index.js* file:
 
-由于我们使用Express作为中间件，所以在*src/index.js*文件中可以使用高级HTTP服务设置公开订阅:
+由于我们使用 Express 作为中间件，所以在 *src/index.js* 文件中可以使用高级 HTTP 服务设置公开订阅:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -471,7 +471,7 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
 
 > For the context passed to the resolvers, you can distinguish between HTTP requests (GraphQL mutations and queries) and subscriptions in the same file. HTTP requests come with a req and res object, but the subscription comes with a connection object, so you can pass the models as a data access layer for the subscription's context.
 
-根据传递给解析器的上下文，你可以在同一个文件中区分HTTP请求(GraphQL变更和查询)和订阅。HTTP请求附带一个req和res对象，但是订阅附带一个连接对象，因此可以将模型(models)作为订阅上下文的数据访问层。
+根据传递给解析器的上下文，你可以在同一个文件中区分 HTTP 请求(GraphQL 变更和查询)和订阅。HTTP 请求附带一个 req 和 res 对象，但是订阅附带一个连接对象，因此可以将模型(models)作为订阅上下文的数据访问层。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -511,7 +511,7 @@ const server = new ApolloServer({
 
 > To complete the subscription setup, you'll need to use one of the available [PubSub engines](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html#PubSub-Implementations) for publishing and subscribing to events. Apollo Server comes with its own by default, but there are links for other options should you find it lacking. In a new *src/subscription/index.js* file, add the following:
 
-要完成订阅设置，你需要使用一个可用的[PubSub引擎](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html#PubSub-Implementations)来发布和订阅事件。默认情况下，Apollo Server自带PubSub引擎，但如果你发现缺少其他选项，也可以链接到其他选项。新建一个*src/subscription/index.js*文件，配置以下内容:
+要完成订阅设置，你需要使用一个可用的[PubSub引擎](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html#PubSub-Implementations)来发布和订阅事件。默认情况下，Apollo Server 自带 PubSub 引擎，但是你可能会发现它缺少一些其他的配置。新建一个 *src/subscription/index.js* 文件，配置以下内容:
 
 {title="src/subscription/index.js",lang="javascript"}
 ~~~~~~~~
@@ -522,4 +522,4 @@ export default new PubSub();
 
 > This PubSub instance is your API which enables subscriptions in your application. The overarching setup for subscriptions is done now.
 
-这个PubSub实例是你的API，它支持应用程序中的订阅。现在我们完成了订阅的总体设置。
+这个 PubSub 实例是你的 API，它支持应用程序中的订阅。现在我们完成了订阅的总体设置。
