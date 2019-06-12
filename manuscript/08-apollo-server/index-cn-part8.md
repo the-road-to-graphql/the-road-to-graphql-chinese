@@ -4,7 +4,7 @@
 
 > In this last section about pagination in GraphQL, we advance the cursor-based pagination with a few improvements. Currently, you have to query all creation dates of the messages to use the creation date of the last message for the next page as a cursor. GraphQL connections add only a structural change to your list fields in GraphQL that allow you to pass meta information. Let's add a GraphQL connection in the *src/schema/message.js* file:
 
-在 GraphQL 分页的上一章节中，我们对基于游标的分页进行一些改进。目前，你必须查询所有消息的创建时间，以便将最后一条消息的创建时间用作查询下一页的游标。GraphQL 连接只修改列表字段结构，就能支持传递元信息。让我们在 *src/schema/message.js* 文件中添加一个GraphQL链接:
+在 GraphQL 分页的上一章节中，我们对基于游标的分页进行一些改进。目前，你必须查询所有消息的创建时间，以便将最后一条消息的创建时间用作查询下一页的游标。GraphQL 连接只修改列表字段结构，就能支持传递元信息。让我们在 *src/schema/message.js* 文件中添加一个 GraphQL 链接:
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -163,7 +163,7 @@ query {
 
 > You can add relevant information in the intermediate GraphQL connection layer. Sometimes, a GraphQL client needs to know whether there are more pages of a list to query, because every list is finite. Let's add this information to the schema for the message's connection in the *src/schema/message.js* file
 
-你可以在GraphQL连接层中添加相关信息。由于每个列表数目都是有限的，有时，GraphQL客户端需要知道列表中是否还有更多可以查询的页面。让我们在 *src/schema/message.js* 文件中将这个信息添加到消息连接的 schema 中:
+你可以在 GraphQL 连接层中添加相关信息。由于每个列表数目都是有限的，有时，GraphQL 客户端需要知道列表中是否还有更多可以查询的页面。让我们在 *src/schema/message.js* 文件中将这个信息添加到消息连接的 schema 中:
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -249,11 +249,11 @@ export default {
 
 > You only retrieve one more message than defined in the limit. If the list of messages is longer than the limit, there is a next page; otherwise, there is no next page. You return the limited messages, or all messages if there is no next page. Now you can include the `hasNextPage` field in the `pageInfo` field. If you query messages with a limit of 2 and no cursor, you get true for the `hasNextPage` field. If query messages with a limit of more than 2 and no cursor, the `hasNextPage` field becomes false. Then, your GraphQL client application knows that the list has reached its end.
 
-你只比定义的limit多检索一条消息。如果消息列表数量大于limit，则有下一页;否则，就没有下一页。要么返回限定的limit数量的消息，要么没有下一页时，返回所有消息。现在，你可以在 `pageInfo` 类型中添加 `hasNextPage` 字段。如果查询消息的条件为limit=2,且没有游标，返回结果中，`hasNextPage` 为true。如果查询消息的条件为limit>2且没有游标，返回结果中，`hasNextPage` 为false。据此，GraphQL 客户端应用程序知道列表已经查询到最后了。
+你只比定义的 limit 多检索一条消息。如果消息列表数量大于 limit，则有下一页;否则，就没有下一页。要么返回限定的 limit 数量的消息，要么没有下一页时，返回所有消息。现在，你可以在 `pageInfo` 类型中添加 `hasNextPage` 字段。如果查询消息的条件为 limit=2,且没有游标，返回结果中，`hasNextPage` 为 true。如果查询消息的条件为 limit>2且没有游标，返回结果中，`hasNextPage` 为 false。据此，GraphQL 客户端应用程序知道列表已经查询到最后了。
 
 > The last improvements gave your GraphQL client application a more straightforward GraphQL API. The client doesn't need to know about the cursor being the last creation date of a message in a list. It only uses the `endCursor` as a `cursor` argument for the next page. However, the cursor is still a creation date property, which may lead to confusion on the GraphQL client side. The client shouldn't care about the format or the actual value of the cursor, so we'll ask the cursor with a hash function that uses a base64 encoding:
 
-最后的改进是给 GraphQL 客户端应用程序提供一个更加直观的 GraphQL API。客户端不需要知道游标代表列表中最后一条消息的创建时间。它仅使用 `endCursor` 作为下一页的 `cursor` 参数。但是，游标仍然是一个创建时间属性，这可能会引起 GraphQL 客户端的困惑。客户端不应该关心游标的格式或实际值，所以我们将用一个使用 base64编码的哈希函数来处理游标:
+最后的改进是给 GraphQL 客户端应用程序提供一个更加直观的 GraphQL API。客户端不需要知道游标代表列表中最后一条消息的创建时间。它仅使用 `endCursor` 作为下一页的 `cursor` 参数。但是，游标仍然是一个创建时间属性，这可能会引起 GraphQL 客户端的困惑。客户端不应该关心游标的格式或实际值，所以我们将用一个使用 base64 编码的哈希函数来处理游标:
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -511,7 +511,7 @@ const server = new ApolloServer({
 
 > To complete the subscription setup, you'll need to use one of the available [PubSub engines](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html#PubSub-Implementations) for publishing and subscribing to events. Apollo Server comes with its own by default, but there are links for other options should you find it lacking. In a new *src/subscription/index.js* file, add the following:
 
-要完成订阅设置，你需要使用一个可用的[PubSub引擎](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html#PubSub-Implementations)来发布和订阅事件。默认情况下，Apollo Server 自带 PubSub 引擎，但是你可能会发现它缺少一些其他的配置。新建一个 *src/subscription/index.js* 文件，配置以下内容:
+要完成订阅设置，你需要使用一个可用的 [PubSub 引擎](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html#PubSub-Implementations)来发布和订阅事件。默认情况下，Apollo Server 自带 PubSub 引擎，但是你可能会发现它缺少一些其他的配置。新建一个 *src/subscription/index.js* 文件，配置以下内容:
 
 {title="src/subscription/index.js",lang="javascript"}
 ~~~~~~~~
