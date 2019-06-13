@@ -3368,7 +3368,7 @@ query {
 
 > You may have noticed something odd: While the date returned from a GraphQL Playground has a unix timestamp (e.g. 1540978531448), the date the database for a message (and other entities) has another format (e.g. 2018-10-31 17:35:31.448+08). Check it yourself with psql. That's the internal working of GraphQL which uses its internal formatting rules for dates. You can change this behavior by adding a custom scalar. First, install a popular GraphQL node package for custom date scalars.
 
-你可能已经注意到了这里的奇怪之处：从 GraphQL Playground 返回的数据中，时间一个时间戳（例如：1540978531448）；而在数据库中，消息（以及其他实体）的时间有另外一个格式（例如：2018-10-31 17:35:31.448+08）。你可以自己用 psql 查看。这是 GraphQL 的内部机制，使用它自己内部的格式化日期的规则。你可以通过增加自定义标量来改变这种行为。首先，我们需要安装一个主流的 GraphQL 自定义时间标量的 node 依赖包。
+你可能已经注意到了这里的奇怪之处：从 GraphQL Playground 返回的数据中，有一个 unix 时间戳（例如：1540978531448）；而在数据库中，消息（以及其他实体）的时间有另外一个格式（例如：2018-10-31 17:35:31.448+08）。你可以自己用 psql 查看。这是 GraphQL 的内部机制，使用它自己内部的格式化日期的规则。你可以通过增加自定义标量来改变这种行为。首先，我们需要安装一个主流的 GraphQL 自定义时间标量的 node 依赖包。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -3502,7 +3502,7 @@ export default gql`
 
 > You will implement pagination in GraphQL with two different approaches in the following sections. The first approach will be the most naive approach, called **offset/limit-based pagination**. The advanced approach is **cursor-based pagination**, one of many sophisticated ways to allow pagination in an application.
 
-接下来，你将会通过两种方式在 GraphQL 中实现分页。第一种方法是最原始的方法，叫做**偏移/限制分页**。更高级的方式是**指针分页**，这是在应用中允许分页的众多经典实践的中一种。
+接下来，你将会通过两种方式在 GraphQL 中实现分页。第一种方法是最原始的方法，叫做**偏移/限制分页**。更复杂的方式是**指针分页**，这是在应用中允许分页的众多经典实践的中一种。
 
 > ### Offset/Limit Pagination with Apollo Server and GraphQL
 
@@ -3675,7 +3675,7 @@ export default {
 
 > Instead of the offset, the cursor is the `createdAt` property of a message. With Sequelize and other ORMs it is possible to add a clause to find all items in a list by a starting property (`createdAt`) with less than (`lt`) or greater than (`gt`, which is not used here) values for this property. Using a date as a cursor, the where clause finds all messages **before** this date, because there is an `lt` Sequelize operator. There are two more things to make it work:
 
-与偏移量不同，指针是消息的 `createdAt` 属性。通过 Sequelize 或其他 ORM 框架，我们可以添加一个查询子句来查找从开始值（`createdAt`）开始列表中所有小于（`lt`）或者大于（`gt`，并没有再此处使用）这个值的所有数据。将日期当做指针，配合 `lt` Sequelize 操作符，where 子句将查找所有在这个日前**之前**的消息。
+与偏移量不同，指针是消息的 `createdAt` 属性。通过 Sequelize 或其他 ORM 框架，我们可以添加一个查询子句来查找从开始值（`createdAt`）开始列表中所有小于（`lt`）或者大于（`gt`，并没有再此处使用）这个值的所有数据。将日期当做指针，配合 `lt` Sequelize 操作符，where 子句将查找所有在这个日前**之前**的消息。为了让它可以工作，这里有两件额外的事情需要做。
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3717,7 +3717,7 @@ export default {
 
 > First, the list should be ordered by `createdAt` date, otherwise the cursor won't help. However, you can be sure that requesting the first page of messages without a cursor will lead to the most recent messages when the list is ordered. When you request the next page with a cursor based on the previous page's final creation date, you get the next page of messages ordered by creation date. That's how you can move page by page through the list of messages.
 
-首先，这个列表必须是通过 `createdAt` 排序的，否则指针是无用的。无论如何，当列表是有序时，都可以确保不带指针请求消息列表的第一页也可以返回最近的消息。当你将前一页的最后一个创建时间当做指针用于请求下一页时，你可以获得通过创建时间排序的下一页消息。这就是你怎么通过一页一页访问整个消息列表的。
+首先，这个列表必须是通过 `createdAt` 排序的，否则指针是无用的。无论如何，当列表是有序时，都可以确保不带指针请求消息列表的第一页也可以返回最近的消息。当你将前一页的最后一个创建时间当做指针用于请求下一页时，你可以获得通过创建时间排序的下一页消息。这就是你怎么一页一页访问整个消息列表的。
 
 > Second, the ternary operator for the cursor makes sure the cursor isn't needed for the first page request. As mentioned, the first page only retrieves the most recent messages in the list, so you can use the creation date of the last message as a cursor for the next page of messages.
 
@@ -3725,7 +3725,7 @@ export default {
 
 > You can also extract the where clause from the database query:
 
-你也可以将数据库查询中的where语句抽出来：
+你也可以将数据库查询中的 where 语句抽出来：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
