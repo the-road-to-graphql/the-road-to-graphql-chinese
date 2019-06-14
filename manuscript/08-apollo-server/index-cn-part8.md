@@ -4,7 +4,7 @@
 
 > In this last section about pagination in GraphQL, we advance the cursor-based pagination with a few improvements. Currently, you have to query all creation dates of the messages to use the creation date of the last message for the next page as a cursor. GraphQL connections add only a structural change to your list fields in GraphQL that allow you to pass meta information. Let's add a GraphQL connection in the *src/schema/message.js* file:
 
-在 GraphQL 分页的上一章节中，我们对基于游标的分页进行一些改进。目前，你必须查询所有消息的创建时间，以便将最后一条消息的创建时间用作查询下一页的游标。GraphQL 连接只修改列表字段结构，就能支持传递元信息。让我们在 *src/schema/message.js* 文件中添加一个 GraphQL 链接:
+在这 GraphQL 分页的最后一节中，我们对基于游标的分页进行一些改进。目前，你必须查询所有消息的创建时间，以便将最后一条消息的创建时间用作查询下一页的游标。GraphQL 连接只修改列表字段结构，就能支持传递元信息。让我们在 *src/schema/message.js* 文件中添加一个 GraphQL 链接:
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -253,7 +253,7 @@ export default {
 
 > The last improvements gave your GraphQL client application a more straightforward GraphQL API. The client doesn't need to know about the cursor being the last creation date of a message in a list. It only uses the `endCursor` as a `cursor` argument for the next page. However, the cursor is still a creation date property, which may lead to confusion on the GraphQL client side. The client shouldn't care about the format or the actual value of the cursor, so we'll ask the cursor with a hash function that uses a base64 encoding:
 
-最后的改进是给 GraphQL 客户端应用程序提供一个更加直观的 GraphQL API。客户端不需要知道游标代表列表中最后一条消息的创建时间。它仅使用 `endCursor` 作为下一页的 `cursor` 参数。但是，游标仍然是一个创建时间属性，这可能会引起 GraphQL 客户端的困惑。客户端不应该关心游标的格式或实际值，所以我们将用一个使用 base64 编码的哈希函数来处理游标:
+最后的改进是给 GraphQL 客户端应用程序提供一个更加直观的 GraphQL API。客户端不需要知道游标代表列表中最后一条消息的创建时间。它仅使用 `endCursor` 作为下一页的 `cursor` 参数。但是，游标仍然是一个创建时间属性，这可能会引起 GraphQL 客户端的困惑。客户端不应该关心游标的格式或真实值，所以我们将用一个使用 base64 编码的哈希函数来处理游标:
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -339,7 +339,7 @@ export default gql`
 
 > The GraphQL client receives a hashed `endCursor` field. The hashed value can be used as a cursor to query the next page. In the resolver, the incoming cursor is reverse hashed to the actual date, which is used for the database query.
 
-GraphQL 客户端接收哈希化的 `endCursor` 字段。这个哈希值可以用作查询下一页的游标。在解析器中，用于数据库查询时，需要把传入的游标反哈希化成实际时间。
+GraphQL 客户端接收哈希化的 `endCursor` 字段。这个哈希值可以用作查询下一页的游标。在解析器中，用于数据库查询时，需要把传入的游标反哈希化成真实时间。
 
 > Hashing the cursor is a common approach for cursor-based pagination because it hides the details from the client. The (GraphQL) client application only needs to use the hash value as a cursor to query the next paginated page.
 
