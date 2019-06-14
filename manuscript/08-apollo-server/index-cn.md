@@ -3502,7 +3502,7 @@ export default gql`
 
 > You will implement pagination in GraphQL with two different approaches in the following sections. The first approach will be the most naive approach, called **offset/limit-based pagination**. The advanced approach is **cursor-based pagination**, one of many sophisticated ways to allow pagination in an application.
 
-接下来，你将会通过两种方式在 GraphQL 中实现分页。第一种方法是最原始的方法，叫做**偏移/限制分页**。更复杂的方式是**指针分页**，这是在应用中允许分页的众多经典实践的中一种。
+接下来，你将会通过两种方式在 GraphQL 中实现分页。第一种方法是最原始的方法，叫做**偏移/限制分页**。更复杂的方式是**游标分页**，这是在应用中允许分页的众多经典实践的中一种。
 
 > ### Offset/Limit Pagination with Apollo Server and GraphQL
 
@@ -3592,19 +3592,19 @@ query {
 
 > Even though this approach is simpler, it comes with a few disadvantages. When your offset becomes very long, the database query takes longer, which  can lead to a poor client-side performance while the UI waits for the next page of data. Also, offset/limit pagination cannot handle deleted items in between queries. For instance, if you query the first page and someone deletes an item, the offset would be wrong on the next page because the item count is off by one. You cannot easily overcome this problem with offset/limit pagination, which is why cursor-based pagination might be necessary.
 
-虽然这个方法很简单，但是它也有缺点。当偏移量变得非常长时，数据库查询时间会变长，客户端在等待下一页数据时的性能会比较差。同时，偏移/限制分页不能处理在查询之前删除一个数据的情况。例如，你查询了第一页，同时有人删除了第一页中的一条数据，下一页的偏移量就会出错，因为数据已经减少一个了。在偏移/限制分页中，这个问题并不容易解决，所以指针分页就有必要了。
+虽然这个方法很简单，但是它也有缺点。当偏移量变得非常长时，数据库查询时间会变长，客户端在等待下一页数据时的性能会比较差。同时，偏移/限制分页不能处理在查询之前删除一个数据的情况。例如，你查询了第一页，同时有人删除了第一页中的一条数据，下一页的偏移量就会出错，因为数据已经减少一个了。在偏移/限制分页中，这个问题并不容易解决，所以游标分页就有必要了。
 
 > ### Cursor-based Pagination with Apollo Server and GraphQL
 
-### Apollo 服务器中 GraphQL 的指针分页
+### Apollo 服务器中 GraphQL 的游标分页
 
 > In cursor-based pagination, the offset is given an identifier called a **cursor** rather counting items like offset/limit pagination. The cursor can be used to express "give me a limit of X items from cursor Y". A common approach to use dates (e.g. creation date of an entity in the database) to identify an item in the list. In our case, each message already has a `createdAt` date that is assigned to the entity when it is written to the database and we expose it already in the schema of the message entity. That's the creation date of each message that will be the cursor.
 
-与偏移/限制分页中用数据量的个数标记偏移量不同，在指针分页中，我们用**指针**标记偏移量。指针可用于表达：”给我从指针 Y 开始的 X 个数据”。一个常用的方法是用时间（例如：一个实体在数据库中的创建时间）来标识一个列表中的某条数据。在我们的例子中，每条消息已经有一个 `createdAt` 时间，即这个实体被写入数据库的时间，而且我们已经在消息实体的 schema 中暴露了这个字段。这个消息的创建时间就是指针。
+与偏移/限制分页中用数据量的个数标记偏移量不同，在游标分页中，我们用**游标**标记偏移量。游标可用于表达：”给我从游标 Y 开始的 X 个数据”。一个常用的方法是用时间（例如：一个实体在数据库中的创建时间）来标识一个列表中的某条数据。在我们的例子中，每条消息已经有一个 `createdAt` 时间，即这个实体被写入数据库的时间，而且我们已经在消息实体的 schema 中暴露了这个字段。这个消息的创建时间就是游标。
 
 > Now we have to change the original pagination to cursor-based in the *src/schema/message.js* file. You only need to exchange the offset with the cursor. Instead of an offset that can only be matched implicitly to an item in a list and changes once an item is deleted from the list, the cursor has a stable position within, because the message creation dates won't change.
 
-现在，我们在 *src/schema/message.js* 中将之前的分页改为指针分页。你只需要修改将偏移量变为指针（将 `offset` 变为 `cursor`）。与偏移量只能明确指向列表中的一条数据，而且一旦从列表中删除一条数据，偏移量就会发生变化这种现象不同，指针指向的位置是固定不变的，因为消息创建的时间不会改变。
+现在，我们在 *src/schema/message.js* 中将之前的分页改为游标分页。你只需要修改将偏移量变为游标（将 `offset` 变为 `cursor`）。与偏移量只能明确指向列表中的一条数据，而且一旦从列表中删除一条数据，偏移量就会发生变化这种现象不同，游标指向的位置是固定不变的，因为消息创建的时间不会改变。
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3675,7 +3675,7 @@ export default {
 
 > Instead of the offset, the cursor is the `createdAt` property of a message. With Sequelize and other ORMs it is possible to add a clause to find all items in a list by a starting property (`createdAt`) with less than (`lt`) or greater than (`gt`, which is not used here) values for this property. Using a date as a cursor, the where clause finds all messages **before** this date, because there is an `lt` Sequelize operator. There are two more things to make it work:
 
-与偏移量不同，指针是消息的 `createdAt` 属性。通过 Sequelize 或其他 ORM 框架，我们可以添加一个查询子句来查找从开始值（`createdAt`）开始列表中所有小于（`lt`）或者大于（`gt`，并没有再此处使用）这个值的所有数据。将日期当做指针，配合 `lt` Sequelize 操作符，where 子句将查找所有在这个日前**之前**的消息。为了让它可以工作，这里有两件额外的事情需要做。
+与偏移量不同，游标是消息的 `createdAt` 属性。通过 Sequelize 或其他 ORM 框架，我们可以添加一个查询子句来查找从开始值（`createdAt`）开始列表中所有小于（`lt`）或者大于（`gt`，并没有再此处使用）这个值的所有数据。将日期当做游标，配合 `lt` Sequelize 操作符，where 子句将查找所有在这个日前**之前**的消息。为了让它可以工作，这里有两件额外的事情需要做。
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3717,11 +3717,11 @@ export default {
 
 > First, the list should be ordered by `createdAt` date, otherwise the cursor won't help. However, you can be sure that requesting the first page of messages without a cursor will lead to the most recent messages when the list is ordered. When you request the next page with a cursor based on the previous page's final creation date, you get the next page of messages ordered by creation date. That's how you can move page by page through the list of messages.
 
-首先，这个列表必须是通过 `createdAt` 排序的，否则指针是无用的。无论如何，当列表是有序时，都可以确保不带指针请求消息列表的第一页也可以返回最近的消息。当你将前一页的最后一个创建时间当做指针用于请求下一页时，你可以获得通过创建时间排序的下一页消息。这就是你怎么一页一页访问整个消息列表的。
+首先，这个列表必须是通过 `createdAt` 排序的，否则游标是无用的。无论如何，当列表是有序时，都可以确保不带游标请求消息列表的第一页也可以返回最近的消息。当你将前一页的最后一个创建时间当做游标用于请求下一页时，你可以获得通过创建时间排序的下一页消息。这就是你怎么一页一页访问整个消息列表的。
 
 > Second, the ternary operator for the cursor makes sure the cursor isn't needed for the first page request. As mentioned, the first page only retrieves the most recent messages in the list, so you can use the creation date of the last message as a cursor for the next page of messages.
 
-其次，指针的三元操作符确保了第一页请求不需要指针。之前提到过，第一页只获取列表中最近的消息，所以你可以利用最后一条消息的创建时间当做指针来请求下一页消息。
+其次，游标的三元操作符确保了第一页请求不需要游标。之前提到过，第一页只获取列表中最近的消息，所以你可以利用最后一条消息的创建时间当做游标来请求下一页消息。
 
 > You can also extract the where clause from the database query:
 
@@ -3805,7 +3805,7 @@ query {
 
 > Now you can use the `createdAt` date from the last page to request the next page of messages with a cursor:
 
-现在，你可以将最近一页的 `createdAt` 时间当做指针去请求下一页消息：
+现在，你可以将最近一页的 `createdAt` 时间当做游标去请求下一页消息：
 
 
 {title="GraphQL Playground",lang="json"}
@@ -3838,7 +3838,7 @@ query {
 
 > That's a basic implementation of a cursor-based pagination using the creation date of an item as a stable identifier. The creation date is a common approach, but there are alternatives you should explore as well.
 
-这就是使用创建时间作为一条数据的稳定标识符的指针分页的一个基础的应用。创建时间是一个通用的方法，然而这里还有另外的值得探索的方法。
+这就是使用创建时间作为一条数据的稳定标识符的游标分页的一个基础的应用。创建时间是一个通用的方法，然而这里还有另外的值得探索的方法。
 
 ### Cursor-based Pagination: Page Info, Connections and Hashes
 
