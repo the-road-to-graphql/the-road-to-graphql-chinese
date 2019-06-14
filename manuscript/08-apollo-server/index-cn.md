@@ -3488,8 +3488,8 @@ export default gql`
 > * Read more about [custom scalars in GraphQL](https://www.apollographql.com/docs/apollo-server/features/scalars-enums.html)
 
 ### 练习：
-* 验证你的 [此章的源码](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate/tree/709a406a8a94e15779d2e93cfb847d49de5aa6ca)
-* 查看更多关于 [GraphQL 中的自定义标量](https://www.apollographql.com/docs/apollo-server/features/scalars-enums.html)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate/tree/709a406a8a94e15779d2e93cfb847d49de5aa6ca)
+* 延伸阅读：[GraphQL 中的自定义标量](https://www.apollographql.com/docs/apollo-server/features/scalars-enums.html)
 
 
 > ## Pagination in GraphQL with Apollo Server
