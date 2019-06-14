@@ -406,7 +406,7 @@ export default gql`
 
 > As a naive GraphQL consumer, a subscription works like a GraphQL query. The difference is that the subscription emits changes (events) over time. Every time a message is created, the subscribed GraphQL client receives the created message as payload. A subscription from a GraphQL client for the schema would look like this:
 
-作为一个简单的 GraphQL 用户，订阅的工作方式类似于 GraphQL 查询(query)。不同之处在于订阅会实时触发变更(事件)。每次创建消息时，订阅的 GraphQL 客户端都会将创建的消息作为有效负载接收。来自 GraphQL 客户端的订阅模式将如下所示:
+作为一个简单的 GraphQL 用户，订阅的工作方式类似于 GraphQL 查询(query)。不同之处在于订阅会实时触发变更(事件)。每次创建消息时，订阅的 GraphQL 客户端都会将创建的消息作为有效负载接收。来自 GraphQL 客户端的订阅 schema 将如下所示:
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -471,7 +471,7 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
 
 > For the context passed to the resolvers, you can distinguish between HTTP requests (GraphQL mutations and queries) and subscriptions in the same file. HTTP requests come with a req and res object, but the subscription comes with a connection object, so you can pass the models as a data access layer for the subscription's context.
 
-根据传递给解析器的上下文，你可以在同一个文件中区分 HTTP 请求(GraphQL 变更和查询)和订阅。HTTP 请求附带一个 req 和 res 对象，但是订阅附带一个连接对象，因此可以将模型(models)作为订阅上下文的数据访问层。
+根据传递给解析器的上下文，你可以在同一个文件中区分 HTTP 请求(GraphQL 变更和查询）和订阅。HTTP 请求附带一个 req 和 res 对象，但是订阅附带一个连接对象，因此可以将模型(models)作为订阅上下文的数据访问层。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
