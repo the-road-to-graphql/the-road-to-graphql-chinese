@@ -3234,7 +3234,7 @@ If you want to be even more exact than resolver level authorization, check out *
 * Find out more about data access level authorization with Apollo Server and GraphQL
 
 > ## GraphQL Custom Scalars in Apollo Server
-## Apollo 服务器中的 GraphQL 自定义标量
+## Apollo Server 中的 GraphQL 自定义标量
 
 > So far, you have used a couple of scalars in your GraphQL application, because each field resolves eventually to a scalar type. Let's add a String scalar for the date when a message got created. First, we'll extend the *src/schema/message.js* which uses this field for a message:
 
@@ -3494,7 +3494,7 @@ export default gql`
 
 > ## Pagination in GraphQL with Apollo Server
 
-## Apollo 服务器中 GrapgQL 的分页
+## Apollo Server 中 GrapgQL 的分页
 
 > Using GraphQL, you will almost certainly encounter a feature called **pagination** for applications with lists of items. Stored user messages in a chat application become long lists, and when the client application request messages for the display, retrieving all messages from the database at once can lead to severe performance bottlenecks. Pagination allows you to split up a list of items into multiple lists, called pages. A page is usually defined with a limit and an offset. That way, you can request one page of items, and when a user wants to see more, request another page of items.
 
@@ -3506,7 +3506,7 @@ export default gql`
 
 > ### Offset/Limit Pagination with Apollo Server and GraphQL
 
-### Apollo 服务器中 GrapgQL 的偏移/限制分页
+### Apollo Server 中 GrapgQL 的偏移/限制分页
 
 > Offset/limit-based pagination isn't too difficult to implement. The limit states how many items you want to retrieve from the entire list, and the offset states where to begin in the whole list. Using different offsets, you can shift through the entire list of items and retrieve a sublist (page) of it with the limit.
 
@@ -3596,7 +3596,7 @@ query {
 
 > ### Cursor-based Pagination with Apollo Server and GraphQL
 
-### Apollo 服务器中 GraphQL 的游标分页
+### Apollo Server 中 GraphQL 的游标分页
 
 > In cursor-based pagination, the offset is given an identifier called a **cursor** rather counting items like offset/limit pagination. The cursor can be used to express "give me a limit of X items from cursor Y". A common approach to use dates (e.g. creation date of an entity in the database) to identify an item in the list. In our case, each message already has a `createdAt` date that is assigned to the entity when it is written to the database and we expose it already in the schema of the message entity. That's the creation date of each message that will be the cursor.
 
