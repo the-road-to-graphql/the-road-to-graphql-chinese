@@ -3083,15 +3083,15 @@ export default user;
 
 > In the last section, you set up GraphQL mutations to enable authentication with the server. You can register a new user with bcrypt hashed passwords and you can login with your user's credentials. Both GraphQL mutations related to authentication return a token (JWT) that secures non-sensitive user information with a secret.
 
-在上一节中，你已经设置了 GraphQL 变更（操作）以启用服务器的身份验证。你可以使用 bcrypt 哈希密码注册新用户，并且用你的用户凭证进行登录。这两个与身份验证相关的 GraphQL 变更（操作）都返回一个token（JWT），它使用密钥来保护非敏感用户信息。
+在上一节中，你已经设置了 GraphQL 变更（操作）以启用服务器的身份验证。你可以使用 bcrypt 哈希密码注册新用户，并且用你的用户凭证进行登录。这两个涉及身份认证的 GraphQL 变更（mutations）都返回了一个使用密钥来保护非敏感用户信息的 token（JWT）
 
 > The token, whether its obtained on registration or login, is returned to the client application after a successful GraphQL `signIn` or `signUp` mutation. The client application must store the token somewhere like [the browser's session storage](https://www.robinwieruch.de/local-storage-react). Every time a request is made to the GraphQL server, the token has to be attached to the HTTP header of the HTTP request. The GraphQL server can then validate the HTTP header, verify its authenticity, and perform a request like a GraphQL operation. If the token is invalid, the GraphQL server must return an error for the GraphQL client. If the client still has a token locally stored, it should remove the token and redirect the user to the login page.
 
-无论是在注册还是登录时获得的 token，在 GraphQL 成功变更（操作） signIn 或 signUp 后都会返回给客户端。客户端必须将 token 存储在某个位置，例如浏览器的[会话存储](https://www.robinwieruch.de/local-storage-react)。每次向 GraphQL server 发起请求时，必须将 token 附加到 HTTP 请求头里面。GraphQL server 接收到请求后，可以校验 HTTP 请求头，并执行类似 GraphQL 操作的请求。如果 token 无效，则 GraphQL server 必须向客户端返回一个错误。如果客户端仍然本地存储着 token，则应删除 token 并将用户重定向到登录页面。
+无论是在注册还是登录时获得的 token，在 GraphQL signIn 或 signUp 变更（操作）成功后都会被返回给客户端。客户端必须存储 token，例如浏览器的[会话存储](https://www.robinwieruch.de/local-storage-react)。每次向 GraphQL server 发起请求时，必须将 token 附加到 HTTP 请求头里面。GraphQL server 接收到请求后，可以校验 HTTP 请求头，验证其真实性，并执行类似 GraphQL 操作的请求。如果 token 无效，则 GraphQL server 必须向客户端返回一个错误。如果客户端仍然本地存储着 token，则应删除 token 并重定向到登录页面。
 
 > Now we just need to perform the server part of the equation. Let's do it in the *src/index.js* file by adding a global authorization that verifies the incoming token before the request hits the GraphQL resolvers.
 
-现在我们只需要执行服务器的部分。让我们在 *src/index.js* 文件中添加一个全局授权，在请求命中 GraphQL 解析器之前校验传入的 token。
+现在我们只需要执行方法的服务器部分。让我们在 *src/index.js* 文件中添加一个全局授权，在请求到达 GraphQL 解析器之前先验证传入的 token。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3152,22 +3152,22 @@ const server = new ApolloServer({
 
 > The function returns an error when the client application sends an HTTP header with an invalid or expired token. Otherwise, the function waves the request through, because users must be checked at the resolver level to see if they're allowed to perform certain actions. A non-authenticated user--where the `me` user is undefined--might be able to retrieve messages but not create new ones. The application is now protected against invalid and expired tokens.
 
-当 GraphQL client 发送带有无效或过期 token 的 HTTP 请求时，该函数返回错误。否则，该函数会通过请求，因为必须在解析程序级别校验是否允许用户执行某些操作。未经身份验证的用户 -- 比如未定义的用户 `me` -- 也许能够查看消息，但不能创建新消息。现在，我们的 GraphQL server 可以防止无效和过期的 token 了。
+当 GraphQL client 发送带有无效或过期 token 的 HTTP 请求时，该函数返回错误。否则，该函数会通过请求，因为必须在解析器层校验是否允许用户执行某些操作。一个未经身份验证的用户 -- 此处用户 `me` 是未定义的 -- 也许能够查看消息，但不能创建新消息。现在，我们的 GraphQL server 可以防止无效和过期的 token 了。
 
 > That's the most high-level authentication for your GraphQL server application. You are able to authenticate with your GraphQL server from a GraphQL client application with the `signUp` and `signIn` GraphQL mutations, and the GraphQL server only allows valid, non-expired tokens from the GraphQL client application.
 
-这是 GraphQL server 的最高级别身份验证。你可以使用 GraphQL server 对具有 `signUp` 和 `signIn` 变更（操作）的 GraphQL client 进行身份验证，并且 GraphQL server 仅允许来自 GraphQL client 的有效的，未过期的 token 通过验证。
+这是 GraphQL server 应用的最高级别身份验证。你可以使用 GraphQL server 对具有 `signUp` 和 `signIn` 变更（操作）的 GraphQL client 进行身份验证，并且 GraphQL server 仅允许来自 GraphQL client 的有效的，未过期的 token 通过验证。
 
 > ### GraphQL Authorization on a Resolver Level
-### 解析器级别的 GraphQL 授权
+### 解析器层的 GraphQL 授权
 
 > A GraphQL HTTP request comes through the `getMe()` function, even if it has no HTTP header for a token. This is good default behavior, because you want to register new users and login to the application without a token for now. You might want to query messages or users without being authenticated with the application. It is acceptable and sometimes necessary to wave through some requests without authorization token, to grant different levels of access to different user types. There will be an error only when the token becomes invalid or expires.
 
-一个 GraphQL HTTP 请求，即使它的请求头里没有 token，也会经过 getMe（）函数。这是一个很好的默认行为，因为你现在想要注册新用户并在没有 token 的情况下登录应用程序。你可能希望在未经授权验证的情况下查看消息或用户。在没有授权 token 的情况下允许用户的某些请求是可接受的，有时甚至是必要的，这样可以对不同用户类型授予不同级别的访问权限，仅当 token 失效或过期时getMe()函数才会返回错误。
+一个 GraphQL HTTP 请求，即使它的请求头里没有 token，也会经过 getMe（）函数。这是一个很好的默认行为，因为你现在想要注册新用户并在没有 token 的情况下登录应用程序。你可能希望在未经授权验证的情况下查询消息或用户。在没有授权 token 的情况下允许用户的某些请求是可接受的，有时甚至是必要的，这样可以对不同用户类型授予不同级别的访问权限，仅当 token 失效或过期时getMe()函数才会返回错误。
 
 > However, certain GraphQL operations should have more specific authorizations. Creating a message should only be possible for authorized users. Otherwise, or there would be no way to track the messages' authors. The `createMessage` GraphQL mutation can be protected, or "guarded", on a GraphQL resolver level. The naive approach of protecting the GraphQL operation is to guard it with an if-else statement in the *src/resolvers/message.js* file:
 
-但是，某些 GraphQL 操作应具有更多特定授权，比如，只有授权用户才能创建消息。否则无法追踪消息的创建者。我们可以在 GraphQL 解析器级别保护 `createMessage` GraphQL 变更（操作），最简单的方法是在 *src/resolvers/message.js* 文件中的使用 if-else 语句：
+但是，某些 GraphQL 操作应具有更多特定授权，比如，只有授权用户才能创建消息。否则无法追踪消息的创建者。我们可以在 GraphQL 解析器层保护 `createMessage` GraphQL 变更（操作），最简单的方法是在 *src/resolvers/message.js* 文件中的使用 if-else 语句：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -3212,7 +3212,7 @@ npm install graphql-resolvers --save
 
 > Let's implement a protecting resolver function with this package in a new *src/resolvers/authorization.js* file. It should only check whether there is a `me` user or not.
 
-让我们在新建的 *src/resolvers/authorization.js* 文件中，使用这个包来实现一个保护解析函数。它应该只检验是否是用户 `me`。
+让我们在新建的 *src/resolvers/authorization.js* 文件中，使用这个包来实现一个保护解析函数。它只用来检验是否是当前用户 `me`。
 
 {title="src/resolvers/authorization.js",lang="javascript"}
 ~~~~~~~~
@@ -3264,14 +3264,14 @@ export default {
 
 > Now the `isAuthenticated()` resolver function always runs before the resolver that creates the message associated with the authenticated user in the database. The resolvers get chained to each other, and you can reuse the protecting resolver function wherever you need it. It only adds a small footprint to your actual resolvers, which can be changed in the *src/resolvers/authorization.js* file.
 
-现在，`isAuthenticated()` 解析函数始终在创建消息的解析器之前运行。这些解析器相互链接，你可以在任何需要的地方重用保护解析器功能。而所需要做的仅仅是在 *src/resolvers/authorization.js* 文件中，在真正执行任务的解析器前做了一点小小的改动。
+现在，`isAuthenticated()` 解析函数始终在创建消息的解析器之前运行。这些解析器相互链接，你可以在任何需要的地方重用这个保护性质的解析器函数。而所需要做的仅仅是在 *src/resolvers/authorization.js* 文件中，在真正执行任务的解析器前做了一点小小的改动。
 
 > ### Permission-based GraphQL Authorization
 ### 基于权限的 GraphQL 授权
 
 > The previous resolver only checks if a user is authenticated or not, so it is only applicable to the higher level. Cases like permissions require another protecting resolver that is more specific than the one in the *src/resolvers/authorization.js* file:
 
-之前的解析程序仅检查用户是否已通过身份验证，因此它适用于更高级别的的授权。像权限这样的情况需要另一个保护解析器，它比 *src/resolvers/authorization.js* 文件中的解析器更具体：
+之前的解析器仅用于检查用户是否通过身份验证，因此它只适用于更高级别的的授权。像权限这样的情况需要另一个保护解析器，它比 *src/resolvers/authorization.js* 文件中的解析器更具体：
 
 {title="src/resolvers/authorization.js",lang="javascript"}
 ~~~~~~~~
@@ -3296,7 +3296,7 @@ export const isMessageOwner = async (
 
 > This resolver checks whether the authenticated user is the message owner. It's a useful check before deleting a message, since you only want the message creator to be able to delete it. The guarding resolver retrieves the message by id, checks the message's associated user with the authenticated user, and either throws an error or continues with the next resolver.
 
-这个解析程序检查经过身份验证的用户是否为邮件所有者。在删除邮件之前，这是一个有用的检查，因为你只希望邮件创建者能够删除它。保护解析器通过 id 检索消息，并检查经过身份验证的与消息关联的用户，然后抛出错误或继续执行下一个解析程序。
+这个解析器用于检查已认证用户是否为当前消息的创建者。鉴于当前信息只能被它的创建者删除，所以在删除信息之前，这是一个必要的检查。保护解析器通过 id 检索消息，并检查与消息关联的已认证用户信息，之后抛出错误或继续执行下一个解析程序。
 
 Let's protect a resolver with this fine-tuned authorization permission resolver in the *src/resolvers/message.js* file:
 
@@ -3367,11 +3367,11 @@ export default {
 
 > As an alternate tactic, you can also use the `isAuthenticated` resolver directly in the `isMessageOwner` resolver; then, you can avoid handling it in the actual resolver for deleting a message. I find being explicit to be more practical than hiding knowledge within the authorization resolver. The alternative route is still explained in the role-based authorization section, however.
 
-作为替代策略，你还可以直接在 `isMessageOwner` 解析器中使用 `isAuthenticated` 解析器；你可以避免在实际的解析器中处理它才能删除邮件。我发现在授权解析器中，显式调用比隐式调用更实际。不过, 另一种路线仍在基于角色的授权部分进行了解释。
+作为替代策略，你还可以直接在 `isMessageOwner` 解析器中使用 `isAuthenticated` 解析器；你可以避免在当前的解析器中处理它。我发现在授权解析器中，显式调用比隐式调用更实际。不过, 另一种路线仍在基于角色的授权部分进行了解释。
 
 > The second combined resolver is for permission checks, because it decides whether or not the user has permission to delete the message. This is just one way of doing it, though. In other cases, the message could carry a boolean flag that decides if the active user has certain permissions.
 
-第二个组合解析器用于权限检查，因为它决定用户是否有权删除该消息。不过，这只是一种方法。在其他情况下，消息可以携带布尔标志，该标志决定当前用户是否具有某些权限。
+第二个组合解析器用于权限检查，因为它决定用户是否有删除消息的权限。不过，这只是一种方法。在其他情况下，消息可以携带布尔标志，该标志决定当前用户是否具有某些权限。
 
 > ### Role-based GraphQL Authorization
 ### 基于角色的 GraphQL 授权
@@ -3441,7 +3441,7 @@ export default gql`
 
 > Before you can implement role-based protections for it, you must introduce the actual roles for the user entities. Add a `role` entry to your user's entity in the *src/models/user.js* file:
 
-在实现基于角色的保护之前，你必须引入用户实体的真实角色。你需要在 *src/models/user.js* 文件中为用户的实体添加一个 `角色`：
+在实现基于角色的保护之前，你必须为用户实体引入实际的角色。你需要在 *src/models/user.js* 文件中为用户的实体添加一个 `角色` 入口：
 
 {title="src/models/user.js",lang="javascript"}
 ~~~~~~~~
@@ -3498,7 +3498,7 @@ export default gql`
 
 > Since you already have seed data in your *src/index.js* file for two users, you can give one of them a role. The admin role used in this case will be checked if the user attempts a delete operation:
 
-*src/index.js* 文件中现在已经有两个用户的种子数据了，因此你可以为其中一个用户提供一个角色。如果用户尝试进行删除，将会校验他是否具有管理员角色：
+*src/index.js* 文件中，已经设置了两个用户数据，你可以为其中一个用户提供一个角色。如果用户尝试进行删除，将会校验他是否具有管理员角色：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3627,17 +3627,17 @@ export default {
 
 > That's the basics of role-based authorization in GraphQL with Apollo Server. In this example, the role is only a string that needs to be checked. In a more elaborate role-based architecture, the role might change from a string to an array that contains many roles. It eliminates the need for an equal check, since you can check to see if the array includes a targeted role. Using arrays with roles is the foundation for a sophisticated role-based authorization setup.
 
-以上就是使用 GraphQL Apollo Server 基于角色授权的基础知识。在示例中，角色只是需要检查的字符串。在更复杂的基于角色的体系结构中，角色可能会从字符串更改为包含许多角色的数组。它消除了进行同等检查的需要，因为您可以检查数组里面是否包含目标角色。使用具有角色的数组是基于角色的复杂授权设置的基础。
+以上就是使用 GraphQL Apollo Server 基于角色授权的基础知识。在示例中，角色只是需要检查的字符串。在更复杂的基于角色的体系结构中，角色可能会从字符串更改为包含许多角色的数组。这样就不用进行同等检查，而是需要检查数组里面是否包含目标角色。把角色设置为数组，便于处理复杂的基于角色的授权配置。
 
 ### Setting Headers in GraphQL Playground
 
 > You set up authorization for your GraphQL application, and now you just need to verify that it works. The simplest way to test this type of application is to use GraphQL Playground to run through different scenarios. The user deletion scenario will be used as an example, but you should test all the remaining scenarios for practice.
 
-你已经为 GraphQL 应用设置好了授权，现在您只需要验证它能否工作。测试 GraphQL 应用最简单的方法是使用 GraphQL Playground 来测试不同的场景。这里我们将删除用户作示范，但你应该亲自测试所有剩余的实际场景。
+你已经为 GraphQL 应用设置好了授权，现在您只需要验证它能否工作。测试 GraphQL 应用最简单的方法是使用 GraphQL Playground 来运行不同的场景。这里我们将删除用户作示范，但你应该亲自练习运行所有剩余的实际场景。
 
 > Before a user can perform a delete action, there must be a sign-in, so we execute a `signIn` mutation in GraphQL Playground with a non admin user. Consider trying this tutorial with an admin user later to see how it performs differently.
 
-在用户执行删除操作之前，必须先登录，因此我们先用非管理员用户在 GraphQL Playground 中执行 `signIn` 变更（操作），稍后我们再用管理员用户进行操作，以区分它们的不同。
+在用户执行删除操作之前，必须先登录，因此我们先用非管理员用户在 GraphQL Playground 中执行 `signIn` 变更（操作），稍后我们再用管理员用户进行操作一遍，以区分它们的不同。
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -3704,11 +3704,11 @@ mutation {
 
 > We've added basic authorization for this application. It has the global authorization before every request hits the GraphQL resolvers; and authorization at the resolver level with protecting resolvers. They check whether a user is authenticated, whether the user is able to delete a message (permission-based authorization), and whether a user is able to delete a user (role-based authorization).
 
-我们已为此应用程序添加了基本授权。在每个请求到达 GraphQL 解析器之前，它具有全局授权；并在解析器级别进行权限保护。它们会检查用户是否已通过身份验证，用户是否能够删除消息（基于权限的授权），以及一个用户是否能够删除另外一个用户（基于角色的授权）。
+我们已为此应用程序添加了基本授权。在每个请求到达 GraphQL 解析器之前，它具有全局授权；并在解析器层进行权限保护。它们会检查用户是否已通过身份验证，用户是否能够删除消息（基于权限的授权），以及一个用户是否能够删除另外一个用户（基于角色的授权）。
 
 > If you want to be even more exact than resolver level authorization, check out **directive-based authorization** or **field level authorization** in GraphQL. You can apply authorization at the data-access level with an ORM like Sequelize, too. Your application's requirements decide which level is most effective for authorization.
 
-如果你想要比解析器级别授权更精确，请在 GraphQL 中查看 **基于指令的授权（directive-based authorization）**或 **字段级别的授权（field level authorization）**。你也可以使用像 Sequelize 这样的 ORM，在数据访问级别进行权限验证。你可以基于应用程序的需求决定使用哪种级别的授权策略。
+如果你想要比解析器层授权更精确，请在 GraphQL 中查看 **基于指令的授权（directive-based authorization）**或 **字段级别的授权（field level authorization）**。你也可以使用像 Sequelize 这样的 ORM，在数据访问级别进行权限验证。你可以基于应用程序的需求决定使用哪种级别的授权策略。
 
 > ### Exercises:
 ### 练习
