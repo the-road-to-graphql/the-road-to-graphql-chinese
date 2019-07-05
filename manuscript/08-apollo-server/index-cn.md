@@ -5414,7 +5414,7 @@ export default {
 
 > While the `load()` function takes each identifier individually, it will batch all these identifiers into one set and request all users at the same time. Try it by executing the same GraphQL query in GraphQL Playground. The result should stay the same, but you should only see 2 instead of 4 requests to the database in your command-line output for the GraphQL server:
 
-在 `load()` 单独的拿取每个 id 时，它会在同时把这些 id 批处理到一个 set 里面，然后一次性请求所有数据。你可以在 GraphQL 里使用同样的查询语句来进行尝试。查询结果应该是相同的，但是你应该在 GraphQL 服务器的命令行输出里看到 2 个而不是 4 个数据库请求：
+当  `load()` 函数每次调用，获取 id 时，它会在同时把这些 id 批处理到一个 set 里面，然后一次性请求所有数据。你可以在 GraphQL Playground 里使用同样的查询语句来进行尝试。查询结果应该是相同的，但是你应该在 GraphQL 服务器的命令行输出里看到 2 个而不是 4 个数据库请求：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5425,11 +5425,11 @@ Executing (default): SELECT "id", "username", "email", "password", "role", "crea
 
 > That's the benefit of the batching improvement: instead of fetching each (duplicated) user on its own, you fetch them all at once in one batched request with the dataloader package.
 
-这就是批处理能改善的地方： 使用 dataloader 包，一次性地请求所有需要的数据而不是循环单独请求重复的数据。
+这就是使用批处理带来的好处： 使用 dataloader 这个三方库，一次性地请求所有需要的数据而不是单独请求重复的数据。
 
 > Now let's get into caching. The dataloader package we installed before also gives the option to cache requests. It doesn't work yet, though; try to execute the same GraphQL query twice and you should see the database accesses twice on your command line.
 
-下面介绍缓存原理。我们刚刚安装的 dataloader 包同时也提供了缓存请求的选项，虽然目前它还没有作用。尝试执行两次相同的 GraphQL 查询，你可以在命令行里看到两次数据库请求。
+下面介绍缓存原理。我们刚刚安装的 dataloader 包同时也提供了缓存请求的选项，虽然它目前还没有生效。尝试执行两次相同的 GraphQL 查询，你可以在命令行里看到两次数据库请求。
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5483,7 +5483,7 @@ const server = new ApolloServer({
 
 > Try to execute the same GraphQL query twice again. This time you should see only a single database access, for the places where the loader is used; the second time, it should be cached.
 
-再次使用相同的 GraphQL 查询两遍，这次你应该可以看到，在两次使用 loader 的地方只有一个数据库请求，因为它被缓存起来了。
+再次使用相同的 GraphQL 查询两遍，这次你可以观察到，对于使用 loader 的地方，只会有一次数据库请求，因为它被缓存起来了。
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5500,7 +5500,7 @@ Executing (default): SELECT "id", "text", "createdAt", "updatedAt", "userId" FRO
 > It's difficult to find the right timing for invalidating the cache, so I recommended performing the dataloader instantiation with every incoming GraphQL request. You lose the benefit of caching over multiple GraphQL requests, but still use the cache for every database access with one incoming GraphQL request. The dataloader package expresses it like this: *"DataLoader caching does not replace Redis, Memcache, or any other shared application-level cache. DataLoader is first and foremost a data loading mechanism, and its cache only serves the purpose of not repeatedly loading the same data in the context of a single request to your Application."* If you want to get into real caching on the database level, give [Redis](https://redis.io/) a shot.
 
 
-选择合适的时机清除缓存比较困难，所以我建议在每个 GraphQL 请求的时候重新初始化 dataloader。你将会失去在多个请求之间缓存数据的能力，但是还是可以在一个 GraphQL 请求里缓存所有的数据库请求。在 dataloader 包里这样陈述： *“Dataloader 缓存不是为了替代 Redis，Memcache，或者是别的任何应用层缓存组件。Dataloader 首先是一中数据加载机制，它的目的在于免于重复地在应用的同一个请求里查询相同的数据。”*  假如你需要真正的数据库级别缓存，可以试试[Redis](https://redis.io/) 。
+选择合适的时机清除缓存比较困难，所以我建议在每个 GraphQL 请求的时候重新初始化 dataloader。你将会失去在多个请求之间缓存数据的能力，但是还是可以在一个 GraphQL 请求里缓存所有的数据库请求。在 dataloader 包里这样描述： *“Dataloader 缓存不是为了替代 Redis，Memcache，或者是别的任何应用层缓存组件。Dataloader 首先是一种数据加载机制，它的缓存目的在于同一个请求上下文中，避免重复请求相同的数据。”*  假如你需要真正的数据库级别缓存，可以试试[Redis](https://redis.io/) 。
 
 > Outsource the loaders into a different folder/file structure. Put the batching for the individual users into a new *src/loaders/user.js* file:
 
@@ -5616,19 +5616,19 @@ const server = new ApolloServer({
 
 > Feel free to add more loaders on your own, maybe for the message domain. The practice can provide useful abstraction on top of your models to allow batching and request-based caching.
 
-请随意添加你自己的 loader，也可以是不同域的。这个实践提供有用的 model 上层抽象，用来支持批处理和基于请求的缓存。
+请随意在 message 域添加你自己的 loader。这个实践提供有用的 model 上层抽象，用来支持批处理和基于请求的缓存。
 
 > ### Exercises:
 
-### Exercises:
+### 练习:
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9ff0542f620a0d9939c1adcbd21951f8fc1693f4)
 > * Read more about [GraphQL and Dataloader](https://www.apollographql.com/docs/graphql-tools/connectors.html#dataloader)
 > * Read more about [GraphQL Best Practices](https://graphql.github.io/learn/best-practices/)
 
 * 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9ff0542f620a0d9939c1adcbd21951f8fc1693f4)
-* 阅读更多关于[GraphQL and Dataloader](https://www.apollographql.com/docs/graphql-tools/connectors.html#dataloader)
-* 阅读更多关于[GraphQL Best Practices](https://graphql.github.io/learn/best-practices/)
+* 阅读更多关于[GraphQL 和 Dataloader](https://www.apollographql.com/docs/graphql-tools/connectors.html#dataloader)
+* 阅读更多关于[GraphQL 最佳实践](https://graphql.github.io/learn/best-practices/)
 
 > ## GraphQL Server + PostgreSQL Deployment to Heroku
 
@@ -5636,11 +5636,11 @@ const server = new ApolloServer({
 
 > Eventually you want to deploy the GraphQL server online, so it can be used in production. In this section, you learn how to deploy a GraphQL server to Heroku, a platform as a service for hosting applications. Heroku allows PostgreSQL as well.
 
-最后你想要把 GraphQL 部署到线上环境，用以满足生产环境需求。在这一章节你将学到如何把 GraphQL 服务器部署到 Heroku，一个用来承载应用的平台即服务应用。Heroku 同时也支持 PostgreSQL。
+最后你想要把 GraphQL 部署到线上环境，用以满足生产环境需求。在这一章节你将学到如何把 GraphQL 服务器部署到 Heroku，一个用来托管应用的平台即服务应用。Heroku 同时也支持 PostgreSQL。
 
 > This section guides you through the process in the command line. For the visual approach check this [GraphQL server on Heroku deployment tutorial](https://www.apollographql.com/docs/apollo-server/deployment/heroku.html) which, however, doesn't include the PostgreSQL database deployment.
 
-这一章节提供基于命令行工具的快速上手教程。这里可以查看教程 [Heroku 部署 GraphQL 服务器教程](https://www.apollographql.com/docs/apollo-server/deployment/heroku.html)。视频里没有包含 PostgreSQL 数据库有关内容。
+这一章节提供基于命令行工具的快速上手教程。这里可以查看视频教程[Heroku 部署 GraphQL 服务器教程](https://www.apollographql.com/docs/apollo-server/deployment/heroku.html)。视频里没有包含 PostgreSQL 数据库有关内容。
 
 > Initially you need to complete three requirements to use Heroku:
 
@@ -5650,14 +5650,14 @@ const server = new ApolloServer({
 > * Create an account for [Heroku](https://www.heroku.com/)
 > * Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) for accessing Heroku's features on the command line
 
-* [Install git for your command line and push your project to GitHub](https://www.robinwieruch.de/git-essential-commands/)
+* [安装 git 命令行工具并把项目上传到 GitHub](https://www.robinwieruch.de/git-essential-commands/)
 * 在 [Heroku](https://www.heroku.com/) 上创建帐号
-* 安装 [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) 在命令行里使用 Heroku 功能
+* 安装 [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) 从而在命令行里使用 Heroku 功能
 
 
 > In the command line, verify your Heroku installation with `heroku version`. If there is a valid installation, sign in to your Heroku account with `heroku login`. That's it for the general Heroku setup. In your project's folder, create a new Heroku application and give it a name:
 
-在命令行里使用 `heroku version` 来检测 Heroku 是否安装成功。如果成功安装，使用 `heroku login` 来登入你的帐号。这就完成了基本的 Heroku 设置。在你的项目文件夹下，创建 Heroku 应用并命名：
+在命令行里使用 `heroku version` 来检测 Heroku 是否安装成功。如果成功安装，使用 `heroku login` 来登入你的帐号。这就完成了基本的 Heroku 设置。在你的项目文件夹下，创建新的 Heroku 应用并命名：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5675,7 +5675,7 @@ heroku addons:create heroku-postgresql:hobby-dev
 
 > It uses the [hobby tier](https://devcenter.heroku.com/articles/heroku-postgres-plans#hobby-tier), a free application that can be upgraded as needed. Output for the PostgreSQL add-on installation should be similar to:
 
-它使用 [hobby tier](https://devcenter.heroku.com/articles/heroku-postgres-plans#hobby-tier)，一个可以随意升级的免费软件。PostgreSQL 插件的安装输出应该是像这样：
+它使用 [hobby tier](https://devcenter.heroku.com/articles/heroku-postgres-plans#hobby-tier)，一个可以按需升级的免费软件。PostgreSQL 插件的安装输出应该是像这样：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5689,11 +5689,11 @@ Use heroku addons:docs heroku-postgresql to view documentation
 
 > Check the [Heroku PostgreSQL documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for more in depth instructions for your database setup.
 
-查看 [Heroku PostgreSQL documentation](https://devcenter.heroku.com/articles/heroku-postgresql) 以获得关于数据库安装的更多信息。
+查看 [Heroku PostgreSQL 文档](https://devcenter.heroku.com/articles/heroku-postgresql) 以获得关于数据库安装的更多信息。
 
 > You are ready to take your application online. With the PostgreSQL add-on, you received a database URL as well. You can find it with `heroku config`. Now, let's step into your GraphQL server's code to make a couple of adjustments for production. In your *src/models/index.js*, you need to decide between development (coding, testing) and production (live) build. Because you have a new environment variable for your database URL, you can use this to make the decision:
 
-你已经准备好将自己的应用部署上线了。使用 PostgreSQL，你应该也有个数据库 URL。可以用 `heroku config` 找到它。现在需要检查 GraphQL 服务器的代码，为生产环境做一些改动。在 *src/models/index.js* 文件里，你需要在 development(coding, testing) 和 production(live) 构建中选择一个。由于你有一个新的环境变量来保存数据库 URL，可以这样来修改环境：
+你已经准备好将自己的应用部署上线了。使用 PostgreSQL 插件，你应该也有个数据库 URL。可以通过 `heroku config` 找到它。现在需要检查 GraphQL 服务器的代码，为生产环境做一些改动。在 *src/models/index.js* 文件里，你需要在 development(coding, testing) 和 production(live) 构建中选择一个。由于你有一个新的环境变量来保存数据库 URL，可以这样来修改环境：
 
 {title="src/models/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5788,11 +5788,11 @@ sequelize.sync({ force: isTest || isProduction }).then(async () => {
 
 > Remember to remove the flag after, or the database will be purged and seeded with every deployment. Depending on development or production, you are choosing a database, seeding it (or not), and selecting a port for your GraphQL server. Before pushing your application to Heroku, push all recent changes to your GitHub repository. After that, push all the changes to your Heroku remote repository as well, since you created a Heroku application before: `git push heroku master`. Open the application with `heroku open`, and add the `/graphql` suffix to your URL in the browser to open up GraphQL Playground. If it doesn't work, check the troubleshoot area below.
 
-记得之后删除 flag，否者每次部署数据库都会被清空然后用种子数据填充。根据应用处在 development 或者 production 环境，你都要选择一个数据库，使用数据填充 (也可以用空数据库)，并且为 GraphQL 选择一个端口。在推送到 Heroku 之前，把所有的改动 push 到 github 仓库。然后，由于之前已经创建了 Heroku 应用，使用 `git push heroku master` 把所有改动也推送到 Heroku 远程仓库。使用 `heroku open` 打开 Heroku 应用，添加 `/graphql` 后缀到浏览器中的 URL 来打开 GraphQL Playground。如果打开失败，请阅读下面的故障排除部分。
+记得之后删除 flag，否者每次部署数据库都会被清空然后用种子数据填充。根据应用处在 development 或者 production 环境，你都要选择一个数据库，使用数据填充 (也可以用空数据库)，并且为 GraphQL 选择一个端口。在推送到 Heroku 之前，把所有的改动 push 到 github 仓库。然后，由于之前已经创建了 Heroku 应用，使用 `git push heroku master` 把所有改动也推送到 Heroku 远程仓库。使用 `heroku open` 打开 Heroku 应用，添加 `/graphql` 后缀到浏览器的 URL 中来打开 GraphQL Playground。如果打开失败，请阅读下面的故障排除部分。
 
 > Depending on your seeding strategy, your database will either be empty or contain seeded data. If its empty, register a user and create messages via GraphQL mutations. If its seeded, request a list of messages with a GraphQL query.
 
-根据你选择的数据填充策略，您的数据库将为空或包含种子数据。如果为空，则使用 GraphQL mutation 注册用户并且创建消息。如果有种子数据，则使用 GraphQL 查询请求消息列表。
+根据你选择的数据填充策略，你的数据库将为空或包含种子数据。如果为空，则使用 GraphQL mutation 注册用户并且创建消息。如果有种子数据，则使用 GraphQL 查询请求消息列表。
 
 > Congratulations, your application should be live now. Not only is your GraphQL server running on Heroku, but your PostgreSQL database. Follow the exercises to learn more about Heroku.
 
@@ -5821,7 +5821,7 @@ const server = new ApolloServer({
 
 > Another issue may be that Heroku doesn't install the dev dependencies for production. Although it does install the dev dependencies for building the application on Heroku, it purges the dev dependencies afterward. However, in our case, in order to start the application (npm start script), we rely on a few dev dependencies that need to be available in production. [You can tell Heroku to keep the dev dependencies:](https://devcenter.heroku.com/articles/nodejs-support#package-installation)
 
-另一个问题可能是 Heroku 没有为生产环境安装 dev 依赖库。虽然在 Heroku 上构建应用时确实安装了 dev 依赖库，但在之后会被自动清除。但是在我们的示例中，为了启动应用程序 (npm start script)，在生产环境中需要的几个dev依赖库。参考：[You can tell Heroku to keep the dev dependencies:](https://devcenter.heroku.com/articles/nodejs-support#package-installation)
+另一个问题可能是 Heroku 没有为生产环境安装 dev 依赖库。虽然在 Heroku 上构建应用时确实安装了 dev 依赖库，但在之后会被自动清除。但是在我们的示例中，为了启动应用程序 (npm start script)，在生产环境中需要的几个dev依赖库。参考：[配置 Heroku 保存 dev 依赖库:](https://devcenter.heroku.com/articles/nodejs-support#package-installation)
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5845,10 +5845,10 @@ heroku config:set NPM_CONFIG_PRODUCTION=false YARN_PRODUCTION=false
 >   * Find your application's environment variables
 > * access your PostgreSQL database on Heroku with `heroku pg:psql`
 
-* 查看 [本章源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9dbfb30226cdc4843adbcc09d16871b2a902a4d3)
-* 如果能给 Heroku 的故障排除区域是否有用的反馈的话非常感谢
+* 查看[本章源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9dbfb30226cdc4843adbcc09d16871b2a902a4d3)
+* 欢迎给我们关于 Heroku 的故障排除区域是否有用的反馈
 * 使用 GraphQL Playground 创建生产环境测试数据
-* 熟悉 [Heroku Dashboard](https://dashboard.heroku.com/apps)
+* 熟悉[Heroku Dashboard](https://dashboard.heroku.com/apps)
   * 找到应用日志
   * 找到应用环境变量
 * 使用`heroku pg:psql` 访问 PostgreSQL 数据库
@@ -5857,4 +5857,4 @@ heroku config:set NPM_CONFIG_PRODUCTION=false YARN_PRODUCTION=false
 
 > You built a sophisticated GraphQL server boilerplate project with Express and Apollo Server. You should have learned that GraphQL isn't opinionated about various things, and about authentication, authorization, database access, and pagination. Most of the operations we learned were more straightforward because of Apollo Server over the GraphQL reference implementation in JavaScript. That's okay, because many people are using Apollo Server to build GraphQL servers. Use this application as a starter project to realize your own ideas, or find my starter project with a GraphQL client built in React in [this GitHub repository](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate).
 
-你已经使用 Express 和 Apollo Server 构建了一个复杂的 GraphQL 服务器示例项目。也应该已经了解到 GraphQL 不会关心身份验证，授权，数据库访问和分页等等。由于 Apollo Server 使用了基于 JavaScript 实现的 GraphQL，因此我们学到的大多数操作都更直接。没关系，因为很多人都在使用 Apollo Server 来构建 GraphQL 服务器。使用此应用作为入门项目来实现你自己的想法，或者使用我的入门项目，也就是 [这个 GitHub 仓库](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate) 中用 React 实现的 GraphQL 客户端。
+你已经使用 Express 和 Apollo Server 构建了一个复杂的 GraphQL 服务器示例项目。也应该已经了解到 GraphQL 不会强制要求身份验证，授权，数据库访问和分页等等。由于 Apollo Server 使用了基于 JavaScript 实现的 GraphQL，因此我们学到的大多数操作都更直接。没关系，因为很多人都在使用 Apollo Server 来构建 GraphQL 服务器。使用此应用作为入门项目来实现你自己的想法，或者使用我的入门项目，也就是 [这个 GitHub 仓库](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate) 中用 React 实现的 GraphQL 客户端。
