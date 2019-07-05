@@ -5227,11 +5227,11 @@ This section only covered E2E tests. With Chai and Mocha at your disposal, you c
 
 > ## Batching and Caching in GraphQL with Data Loader
 
-## 在GraphQL中使用批处理和缓存
+## 在 GraphQL 中使用批处理和缓存
 
 > The section is about improving the requests to your database. While only one request (e.g. a GraphQL query) hits your GraphQL API, you may end up with multiple database reads and writes to resolve all fields in the resolvers. Let's see this problem in action using the following query in GraphQL Playground:
 
-这一部分内容介绍了如何优化数据库请求。每当有请求 (比如一个 GraphQL 查询) 调用 GraphQL API，可能在 resolver 层需要有多数据库执行读和写操作。我们在 GraphQL Playground 中使用已下的查询来看看有什么问题：
+这一部分内容介绍了如何优化数据库请求。每当有请求 (比如一个 GraphQL 查询) 调用 GraphQL API，可能在 resolver 层需要有多数据库执行读和写操作。我们在 GraphQL Playground 中使用以下的查询来看看有什么问题：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -5279,7 +5279,7 @@ query {
 
 > In the command line for the running GraphQL server, four requests were made to the database:
 
-在 GraphQL server 的命令行里，数据库接收到了四个请求：
+在启动 GraphQL 服务的命令行里，数据库接收到了四个请求：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5294,19 +5294,19 @@ Executing (default): SELECT "id", "username", "email", "password", "role", "crea
 
 > There is one request made for the list of messages, and three requests for each individual user. That's the nature of GraphQL. Even though you can nest your GraphQL relationships and query structure, there will still be database requests. Check the resolvers for the message user in your *src/resolvers/message.js* file to see where this is happening. At some point, you may run into performance bottlenecks when nesting GraphQL queries or mutations too deeply, because a lot of items need to be retrieved from your database.
 
-messages 表有一个请求，users 表有三个请求。GraphQL 本质上就是这样。即使可以内嵌 GraphQL 关系和查询结构, 数据库请求还是会存在. 在 *src/resolvers/message.js* 文件中查看消息作者的 resolever 可以找到这些请求。在使用深层内嵌查询或者更改的时候，你可能会遇到性能瓶颈，那是因为有特别多的数据需要从数据库读取。
+有一个请求来获取 message 列表，三个请求分别获取每个用户信息。这是 GraphQL 的特性。尽管可以嵌套地使用 GraphQL 关系和 query 结构, 数据库请求还是会存在. 在 *src/resolvers/message.js* 文件中查看 resolever 可以找到这些请求。在使用深层内嵌查询或者更改的时候，你可能会遇到性能瓶颈，那是因为有特别多的数据需要从数据库读取。
 
 > In the following, you will optimize these database accesses with batching. It's a strategy used for a GraphQL server and its database, but also for other programming environments. Compare the query result in GraphQL Playground and your database output in the command line.
 
-下面这个示例演示了如何用批处理来优化数据库操作。这是个用于优化 GraphQL 服务器和数据库的策略，也可优化编程环境。在命令行里可以对比 GraqhQL Playground 和数据库的查询结果。
+下面这个示例演示了如何用批处理来优化数据库操作。这是个用于优化 GraphQL 服务器和数据库的策略，同时也适用于其他编程环境。在命令行里可以对比 GraqhQL Playground 和数据库的查询结果。
 
 > There are two improvements that can be made with batching. First, one author of a message is retrieved twice from the database, which is redundant. Even though there are multiple messages, the author of some of these messages can be the same person. Imagine this problem on a larger scale for 100 messages between two authors in a chat application. There would be one request for the 100 messages and 100 requests for the 100 authors of each message, which would lead to 101 database accesses. If duplicated authors are retrieved only once, it would only need one request for the 100 messages and 2 requests for the authors, which reduces the 101 database hits to just 3. Since you know all the identifiers of the authors, these identifiers can be batched to a set where none are repeated. In this case, the two authors a list of [2, 2, 1] identifiers become a set of [2, 1] identifiers.
 
-使用批处理会有两点可以得到改善。首先，有一个 message 的用一个 user 数据被拉取了两次，这就是多余的操作。即使是有多条 message，但是有一些可能来自于相同作者。扩大点说，设想一个聊天应用场景，假如现在有100条消息，那么就需要 1 个请求来查询 100 条消息和 100 个请求来为每条消息查询作者，一共就需要 101 个数据库查询。假如重复的作者只查询一次，那就只需要 1 条查询来查找消息和 2 条查询来查找作者，这样一来总查询就只有 3 条。由于每个作者的 id 是可知的，这些 id 就可以批处理到没有重复数据的 Set 中存放。在当前的这个示例中，作者的 id 就从 [2, 2, 1] 简化为 [2, 1]。
+使用批处理会有两点可以得到改善。首先，有一个 message 的 user 数据从数据库中获取了两次，这就是多余的操作。即使是有多条 message，但是有一些可能来自于相同作者。设想一个更大数据的聊天应用场景，假如现在有在两个用户之间有 100 条消息，那么就需要 1 个请求来查询 100 条消息和 100 个请求来为每条消息查询作者，一共就需要 101 个数据库查询。假如重复的作者只查询一次，那就只需要 1 条查询来查找消息和 2 条查询来查找作者，这样一来总查询就只有 3 条。由于每个作者的 id 是可知的，这些 id 就可以批处理到没有重复数据的集合中存放。在当前的这个示例中，作者的 id 就从 [2, 2, 1] 简化为 [2, 1]。
 
 > Second, every author is read from the database individually, even though the list is purged from its duplications. Reading all authors with only one database request should be possible, because at the time of the GraphQL API request with all messages at your disposal, you know all the identifiers of the authors. This decreases your database accesses from 3 to 2, because now you only request the list of 100 messages and its 2 authors in two requests.
 
-另外，即使我们现在消除了重复的读取，每一个作者都是单独从数据库中读取的。因为提交 GraphQL 的时候携带了所有信息，包括所有作者的 id，那么只用一个数据库请求读取所有的作者信息是可能的。这样就可以把 3 个数据库请求缩减到 2 个，其中一个请求用来拉取 100 条消息，另一个请求用来拉取所有的作者信息。
+另外，即使我们现在消除了重复的读取，每一个作者都是单独从数据库中读取的。因为提交 GraphQL 的时候携带了所有信息，包括所有作者的 id，那么只用一个数据库请求读取所有的作者信息是可行的。这样就可以把 3 个数据库请求缩减到 2 个，其中一个请求用来拉取 100 条消息，另一个请求用来拉取所有的作者信息。
 
 > The same two principals can be applied to the 4 database accesses which should be decreased to 2. On a smaller scale, it might not have much of a performance impact, but for 100 messages with the 2 authors, it reduces your database accesses significantly. That's where Facebook's open source [dataloader](https://github.com/facebook/dataloader) becomes a vital tool. You can install it via npm on the command line:
 
@@ -5374,16 +5374,16 @@ const server = new ApolloServer({
 
 > The loaders act as abstraction on top of the models, and can be passed as context to the resolvers. The user loader in the following example is used instead of the models directly.
 
-loaders 实际上是 models 的上层抽象，可以作为上下文传递给 resolver，下列示例中直接用 user loader 代替了 models。
+loaders 实际上是 models 的上层抽象，可以作为上下文传递给 resolver，下列示例中直接用 user loader 代替了 model。
 
 > Now we'll consider the function as argument for the DataLoader instantiation. The function gives you access to a list of keys in its arguments. These keys are your set of identifiers, purged of duplication, which can be used to retrieve items from a database. That's why keys (identifiers) and models (data access layer) are passed to the `batchUser()` function. The function then takes the keys to retrieve the entities via the model from the database. By the end of the function, the keys are mapped in the same order as the retrieved entities. Otherwise, it's possible to return users right after their retrieval from the database, though they have a different order than the incoming keys. As a result, users need to be returned in the same order as their incoming identifiers (keys).
 
-现在我们将该函数视为 DataLoader 实例化的参数。该函数使你可以访问其参数中的键列表。这些键就是标识符集，已清除重复，可用于从数据库中拉取数据。这就是将标识符（id）和模型（数据访问层）传递给 `batchUser()` 函数的原因。然后，该函数使用 id 列表在数据库中的模型拉取实体。在函数结束时，id 列表的映射顺序与拉取到的实体的顺序相同。否则，如果在从数据库中拉取数据实体之后立即返回，就会导致它们的顺序与传入 id 列表不同。因此，数据实体需要以传入的 id(标识符) 列表的相同顺序返回。
+现在我们将该函数视为 DataLoader 实例化的参数。该函数使你可以访问其参数中的 keys 数组。这些键就是已清除重复的标识符集合，可用于从数据库中拉取数据。这就是将标识符（id）和模型（数据访问层）传递给 `batchUser()` 函数的原因。然后，该函数使用 keys 在数据库中的模型拉取实体。在函数结束时，keys 数组会按顺序映射成获得的数据实体。否则，如果在从数据库中拉取数据实体之后立即返回，就会导致它们的顺序与传入 keys 列表不同。因此，数据实体需要以传入的 keys 列表的相同顺序返回。
 
 > That's the setup for the loader, an improved abstraction on top of the model. Now, since you are passing the loader for the batched user retrieval as context to the resolvers, you can make use of it in the *src/resolvers/message.js* file:
  Now, s you can make use of it in the *src/resolvers/message.js* file:
 
-以上就是 loader 的设置方法。由于把 loader 作为上下文传递给了 resolver，现在可以在 *src/resolvers/message.js* 中这样使用它：
+以上就是 loader 的设置方法，一种在模型上层有效的抽象。由于把 loader 作为上下文传递给了 resolver，现在可以在 *src/resolvers/message.js* 中这样使用它：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
