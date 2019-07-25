@@ -5473,9 +5473,13 @@ users
 * 延伸阅读： [GraphQL and HTTP](https://graphql.github.io/learn/serving-over-http/)
 * 延伸阅读： [Mocking with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/mocking.html)
 
-## Batching and Caching in GraphQL with Data Loader
+> ## Batching and Caching in GraphQL with Data Loader
 
-The section is about improving the requests to your database. While only one request (e.g. a GraphQL query) hits your GraphQL API, you may end up with multiple database reads and writes to resolve all fields in the resolvers. Let's see this problem in action using the following query in GraphQL Playground:
+## 在 GraphQL 中使用批处理和缓存
+
+> The section is about improving the requests to your database. While only one request (e.g. a GraphQL query) hits your GraphQL API, you may end up with multiple database reads and writes to resolve all fields in the resolvers. Let's see this problem in action using the following query in GraphQL Playground:
+
+这一部分内容介绍了如何优化数据库请求。每当有请求 (比如一个 GraphQL 查询) 调用 GraphQL API，可能在 resolver 层需要有多数据库执行读和写操作。我们在 GraphQL Playground 中使用以下的查询来看看有什么问题：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -5490,7 +5494,9 @@ query {
 }
 ~~~~~~~~
 
-Keep the query open, because you use it as a case study to make improvements. Your query result should be similar to the following:
+> Keep the query open, because you use it as a case study to make improvements. Your query result should be similar to the following:
+
+为了把这个实例用于学习优化，请保持这个查询是打开的状态。查询的返回结果如下:
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -5519,7 +5525,9 @@ Keep the query open, because you use it as a case study to make improvements. Yo
 }
 ~~~~~~~~
 
-In the command line for the running GraphQL server, four requests were made to the database:
+> In the command line for the running GraphQL server, four requests were made to the database:
+
+在启动 GraphQL 服务的命令行里，数据库接收到了四个请求：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5532,22 +5540,34 @@ Executing (default): SELECT "id", "username", "email", "password", "role", "crea
 Executing (default): SELECT "id", "username", "email", "password", "role", "createdAt", "updatedAt" FROM "users" AS "user" WHERE "user"."id" = 1;
 ~~~~~~~~
 
-There is one request made for the list of messages, and three requests for each individual user. That's the nature of GraphQL. Even though you can nest your GraphQL relationships and query structure, there will still be database requests. Check the resolvers for the message user in your *src/resolvers/message.js* file to see where this is happening. At some point, you may run into performance bottlenecks when nesting GraphQL queries or mutations too deeply, because a lot of items need to be retrieved from your database.
+> There is one request made for the list of messages, and three requests for each individual user. That's the nature of GraphQL. Even though you can nest your GraphQL relationships and query structure, there will still be database requests. Check the resolvers for the message user in your *src/resolvers/message.js* file to see where this is happening. At some point, you may run into performance bottlenecks when nesting GraphQL queries or mutations too deeply, because a lot of items need to be retrieved from your database.
 
-In the following, you will optimize these database accesses with batching. It's a strategy used for a GraphQL server and its database, but also for other programming environments. Compare the query result in GraphQL Playground and your database output in the command line.
+有一个请求来获取 message 列表，三个请求分别获取每个用户信息。这是 GraphQL 的特性。尽管可以嵌套地使用 GraphQL 关系和 query 结构, 数据库请求还是会存在. 在 *src/resolvers/message.js* 文件中查看 resolever 可以找到这些请求。在使用深层内嵌查询或者更改的时候，你可能会遇到性能瓶颈，那是因为有特别多的数据需要从数据库读取。
 
-There are two improvements that can be made with batching. First, one author of a message is retrieved twice from the database, which is redundant. Even though there are multiple messages, the author of some of these messages can be the same person. Imagine this problem on a larger scale for 100 messages between two authors in a chat application. There would be one request for the 100 messages and 100 requests for the 100 authors of each message, which would lead to 101 database accesses. If duplicated authors are retrieved only once, it would only need one request for the 100 messages and 2 requests for the authors, which reduces the 101 database hits to just 3. Since you know all the identifiers of the authors, these identifiers can be batched to a set where none are repeated. In this case, the two authors a list of [2, 2, 1] identifiers become a set of [2, 1] identifiers.
+> In the following, you will optimize these database accesses with batching. It's a strategy used for a GraphQL server and its database, but also for other programming environments. Compare the query result in GraphQL Playground and your database output in the command line.
 
-Second, every author is read from the database individually, even though the list is purged from its duplications. Reading all authors with only one database request should be possible, because at the time of the GraphQL API request with all messages at your disposal, you know all the identifiers of the authors. This decreases your database accesses from 3 to 2, because now you only request the list of 100 messages and its 2 authors in two requests.
+下面这个示例演示了如何用批处理来优化数据库操作。这是个用于优化 GraphQL 服务器和数据库的策略，同时也适用于其他编程环境。在命令行里可以对比 GraqhQL Playground 和数据库的查询结果。
 
-The same two principals can be applied to the 4 database accesses which should be decreased to 2. On a smaller scale, it might not have much of a performance impact, but for 100 messages with the 2 authors, it reduces your database accesses significantly. That's where Facebook's open source [dataloader](https://github.com/facebook/dataloader) becomes a vital tool. You can install it via npm on the command line:
+> There are two improvements that can be made with batching. First, one author of a message is retrieved twice from the database, which is redundant. Even though there are multiple messages, the author of some of these messages can be the same person. Imagine this problem on a larger scale for 100 messages between two authors in a chat application. There would be one request for the 100 messages and 100 requests for the 100 authors of each message, which would lead to 101 database accesses. If duplicated authors are retrieved only once, it would only need one request for the 100 messages and 2 requests for the authors, which reduces the 101 database hits to just 3. Since you know all the identifiers of the authors, these identifiers can be batched to a set where none are repeated. In this case, the two authors a list of [2, 2, 1] identifiers become a set of [2, 1] identifiers.
+
+使用批处理会有两点可以得到改善。首先，有一个 message 的 user 数据从数据库中获取了两次，这就是多余的操作。即使是有多条 message，但是有一些可能来自于相同作者。设想一个更大数据的聊天应用场景，假如现在有在两个用户之间有 100 条消息，那么就需要 1 个请求来查询 100 条消息和 100 个请求来为每条消息查询作者，一共就需要 101 个数据库查询。假如重复的作者只查询一次，那就只需要 1 条查询来查找消息和 2 条查询来查找作者，这样一来总查询就只有 3 条。由于每个作者的 id 是可知的，这些 id 就可以批处理到没有重复数据的集合中存放。在当前的这个示例中，作者的 id 就从 [2, 2, 1] 简化为 [2, 1]。
+
+> Second, every author is read from the database individually, even though the list is purged from its duplications. Reading all authors with only one database request should be possible, because at the time of the GraphQL API request with all messages at your disposal, you know all the identifiers of the authors. This decreases your database accesses from 3 to 2, because now you only request the list of 100 messages and its 2 authors in two requests.
+
+另外，即使我们现在消除了重复的读取，每一个作者都是单独从数据库中读取的。因为提交 GraphQL 的时候携带了所有信息，包括所有作者的 id，那么只用一个数据库请求读取所有的作者信息是可行的。这样就可以把 3 个数据库请求缩减到 2 个，其中一个请求用来拉取 100 条消息，另一个请求用来拉取所有的作者信息。
+
+> The same two principals can be applied to the 4 database accesses which should be decreased to 2. On a smaller scale, it might not have much of a performance impact, but for 100 messages with the 2 authors, it reduces your database accesses significantly. That's where Facebook's open source [dataloader](https://github.com/facebook/dataloader) becomes a vital tool. You can install it via npm on the command line:
+
+这两个准则可以应用在示例的 4 个数据库请求上，这样就可以缩减到 2 个数据库请求。在小规模请求上，影响可能比较小，但是在有 100 条消息和 2 个作者的情况下，性能提升就很明显了。这就是 Facebook 的开源工具 [dataloader](https://github.com/facebook/dataloader) 成为重要工具的原因。可以使用 npm 借助如下的命令安装：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install dataloader --save
 ~~~~~~~~
 
-Now, in your *src/index.js* file you can import and make use of it:
+> Now, in your *src/index.js* file you can import and make use of it:
+
+然后在 *src/index.js* 里这样导入并使用：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5600,11 +5620,18 @@ const server = new ApolloServer({
 ...
 ~~~~~~~~
 
-The loaders act as abstraction on top of the models, and can be passed as context to the resolvers. The user loader in the following example is used instead of the models directly.
+> The loaders act as abstraction on top of the models, and can be passed as context to the resolvers. The user loader in the following example is used instead of the models directly.
 
-Now we'll consider the function as argument for the DataLoader instantiation. The function gives you access to a list of keys in its arguments. These keys are your set of identifiers, purged of duplication, which can be used to retrieve items from a database. That's why keys (identifiers) and models (data access layer) are passed to the `batchUser()` function. The function then takes the keys to retrieve the entities via the model from the database. By the end of the function, the keys are mapped in the same order as the retrieved entities. Otherwise, it's possible to return users right after their retrieval from the database, though they have a different order than the incoming keys. As a result, users need to be returned in the same order as their incoming identifiers (keys).
+loaders 实际上是 models 的上层抽象，可以作为上下文传递给 resolver，下列示例中直接用 user loader 代替了 model。
 
-That's the setup for the loader, an improved abstraction on top of the model. Now, since you are passing the loader for the batched user retrieval as context to the resolvers, you can make use of it in the *src/resolvers/message.js* file:
+> Now we'll consider the function as argument for the DataLoader instantiation. The function gives you access to a list of keys in its arguments. These keys are your set of identifiers, purged of duplication, which can be used to retrieve items from a database. That's why keys (identifiers) and models (data access layer) are passed to the `batchUser()` function. The function then takes the keys to retrieve the entities via the model from the database. By the end of the function, the keys are mapped in the same order as the retrieved entities. Otherwise, it's possible to return users right after their retrieval from the database, though they have a different order than the incoming keys. As a result, users need to be returned in the same order as their incoming identifiers (keys).
+
+现在我们将该函数视为 DataLoader 实例化的参数。该函数使你可以访问其参数中的 keys 数组。这些键就是已清除重复的标识符集合，可用于从数据库中拉取数据。这就是将标识符（id）和模型（数据访问层）传递给 `batchUser()` 函数的原因。然后，该函数使用 keys 在数据库中的模型拉取实体。在函数结束时，keys 数组会按顺序映射成获得的数据实体。否则，如果在从数据库中拉取数据实体之后立即返回，就会导致它们的顺序与传入 keys 列表不同。因此，数据实体需要以传入的 keys 列表的相同顺序返回。
+
+> That's the setup for the loader, an improved abstraction on top of the model. Now, since you are passing the loader for the batched user retrieval as context to the resolvers, you can make use of it in the *src/resolvers/message.js* file:
+ Now, s you can make use of it in the *src/resolvers/message.js* file:
+
+以上就是 loader 的设置方法，一种在模型上层有效的抽象。由于把 loader 作为上下文传递给了 resolver，现在可以在 *src/resolvers/message.js* 中这样使用它：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -5633,7 +5660,9 @@ export default {
 };
 ~~~~~~~~
 
-While the `load()` function takes each identifier individually, it will batch all these identifiers into one set and request all users at the same time. Try it by executing the same GraphQL query in GraphQL Playground. The result should stay the same, but you should only see 2 instead of 4 requests to the database in your command-line output for the GraphQL server:
+> While the `load()` function takes each identifier individually, it will batch all these identifiers into one set and request all users at the same time. Try it by executing the same GraphQL query in GraphQL Playground. The result should stay the same, but you should only see 2 instead of 4 requests to the database in your command-line output for the GraphQL server:
+
+当  `load()` 函数每次调用，获取 id 时，它会在同时把这些 id 批处理到一个 set 里面，然后一次性请求所有数据。你可以在 GraphQL Playground 里使用同样的查询语句来进行尝试。查询结果应该是相同的，但是你应该在 GraphQL 服务器的命令行输出里看到 2 个而不是 4 个数据库请求：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5642,9 +5671,13 @@ Executing (default): SELECT "id", "text", "createdAt", "updatedAt", "userId" FRO
 Executing (default): SELECT "id", "username", "email", "password", "role", "createdAt", "updatedAt" FROM "users" AS "user" WHERE "user"."id" IN (2, 1);
 ~~~~~~~~
 
-That's the benefit of the batching improvement: instead of fetching each (duplicated) user on its own, you fetch them all at once in one batched request with the dataloader package.
+> That's the benefit of the batching improvement: instead of fetching each (duplicated) user on its own, you fetch them all at once in one batched request with the dataloader package.
 
-Now let's get into caching. The dataloader package we installed before also gives the option to cache requests. It doesn't work yet, though; try to execute the same GraphQL query twice and you should see the database accesses twice on your command line.
+这就是使用批处理带来的好处： 使用 dataloader 这个三方库，一次性地请求所有需要的数据而不是单独请求重复的数据。
+
+> Now let's get into caching. The dataloader package we installed before also gives the option to cache requests. It doesn't work yet, though; try to execute the same GraphQL query twice and you should see the database accesses twice on your command line.
+
+下面介绍缓存原理。我们刚刚安装的 dataloader 包同时也提供了缓存请求的选项，虽然它目前还没有生效。尝试执行两次相同的 GraphQL 查询，你可以在命令行里看到两次数据库请求。
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5655,7 +5688,9 @@ Executing (default): SELECT "id", "text", "createdAt", "updatedAt", "userId" FRO
 Executing (default): SELECT "id", "username", "email", "password", "role", "createdAt", "updatedAt" FROM "users" AS "user" WHERE "user"."id" IN (2, 1);
 ~~~~~~~~
 
-That's happening because a new instance of the dataloader is created within the GraphQL context for every request. If you move the dataloader instantiation outside, you get the caching benefit of dataloader for free:
+> That's happening because a new instance of the dataloader is created within the GraphQL context for every request. If you move the dataloader instantiation outside, you get the caching benefit of dataloader for free:
+
+这是因为每次请求都会用 GraqhQL 上下文创建新的 loader 实例，但是如果把 dataloader 初始化语句移到外面，你就可以体验到缓存带来的好处了：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5694,7 +5729,9 @@ const server = new ApolloServer({
 ...
 ~~~~~~~~
 
-Try to execute the same GraphQL query twice again. This time you should see only a single database access, for the places where the loader is used; the second time, it should be cached.
+> Try to execute the same GraphQL query twice again. This time you should see only a single database access, for the places where the loader is used; the second time, it should be cached.
+
+再次使用相同的 GraphQL 查询两遍，这次你可以观察到，对于使用 loader 的地方，只会有一次数据库请求，因为它被缓存起来了。
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5704,11 +5741,18 @@ Executing (default): SELECT "id", "username", "email", "password", "role", "crea
 Executing (default): SELECT "id", "text", "createdAt", "updatedAt", "userId" FROM "messages" AS "message" ORDER BY "message"."createdAt" DESC LIMIT 101;
 ~~~~~~~~
 
-In this case, the users are not read from the database twice, only the messages, because they are not using a dataloader yet. That's how you can achieve caching in GraphQL with dataloaders. Choosing a caching strategy isn't quite as simple. For example, if a cached user is updated in between actions, the GraphQL client application still queries the cached user.
+> In this case, the users are not read from the database twice, only the messages, because they are not using a dataloader yet. That's how you can achieve caching in GraphQL with dataloaders. Choosing a caching strategy isn't quite as simple. For example, if a cached user is updated in between actions, the GraphQL client application still queries the cached user.
 
-It's difficult to find the right timing for invalidating the cache, so I recommended performing the dataloader instantiation with every incoming GraphQL request. You lose the benefit of caching over multiple GraphQL requests, but still use the cache for every database access with one incoming GraphQL request. The dataloader package expresses it like this: *"DataLoader caching does not replace Redis, Memcache, or any other shared application-level cache. DataLoader is first and foremost a data loading mechanism, and its cache only serves the purpose of not repeatedly loading the same data in the context of a single request to your Application."* If you want to get into real caching on the database level, give [Redis](https://redis.io/) a shot.
+在这个示例中，user 并没有分两次从数据库读取，只有 message 是的，因为它没有使用 dataloader。这就是如何在 GraphQL 中使用缓存的方法了。选择缓存策略不是一件简单的事情，比如说，如果两次查询中间 user 得到了更新，那么客户端应用依然会得到被缓存的 user。
 
-Outsource the loaders into a different folder/file structure. Put the batching for the individual users into a new *src/loaders/user.js* file:
+> It's difficult to find the right timing for invalidating the cache, so I recommended performing the dataloader instantiation with every incoming GraphQL request. You lose the benefit of caching over multiple GraphQL requests, but still use the cache for every database access with one incoming GraphQL request. The dataloader package expresses it like this: *"DataLoader caching does not replace Redis, Memcache, or any other shared application-level cache. DataLoader is first and foremost a data loading mechanism, and its cache only serves the purpose of not repeatedly loading the same data in the context of a single request to your Application."* If you want to get into real caching on the database level, give [Redis](https://redis.io/) a shot.
+
+
+选择合适的时机清除缓存比较困难，所以我建议在每个 GraphQL 请求的时候重新初始化 dataloader。你将会失去在多个请求之间缓存数据的能力，但是还是可以在一个 GraphQL 请求里缓存所有的数据库请求。在 dataloader 包里这样描述： *“Dataloader 缓存不是为了替代 Redis，Memcache，或者是别的任何应用层缓存组件。Dataloader 首先是一种数据加载机制，它的缓存目的在于同一个请求上下文中，避免重复请求相同的数据。”*  假如你需要真正的数据库级别缓存，可以试试[Redis](https://redis.io/) 。
+
+> Outsource the loaders into a different folder/file structure. Put the batching for the individual users into a new *src/loaders/user.js* file:
+
+将 loader 封装到不同的文件夹/文件结构里。把各个用户的批处理放入新建的 *src/loaders/user.js* file: 文件中：
 
 {title="src/loaders/user.js",lang="javascript"}
 ~~~~~~~~
@@ -5725,7 +5769,9 @@ export const batchUsers = async (keys, models) => {
 };
 ~~~~~~~~
 
-And in a new *src/loaders/index.js* file export all the functions:
+> And in a new *src/loaders/index.js* file export all the functions:
+
+创建新的 *src/loaders/index.js* 文件导出所有函数：
 
 {title="src/loaders/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5734,7 +5780,9 @@ import * as user from './user';
 export default { user };
 ~~~~~~~~
 
-Finally, import it in your *src/index.js* file and use it:
+> Finally, import it in your *src/index.js* file and use it:
+
+最后导入 *src/index.js* 使用：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5779,7 +5827,9 @@ const server = new ApolloServer({
 ...
 ~~~~~~~~
 
-Remember to add the loader to your subscriptions, in case you use them there:
+> Remember to add the loader to your subscriptions, in case you use them there:
+
+别忘了把 loader 添加到订阅，那里可能会用到：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5812,41 +5862,68 @@ const server = new ApolloServer({
 ...
 ~~~~~~~~
 
-Feel free to add more loaders on your own, maybe for the message domain. The practice can provide useful abstraction on top of your models to allow batching and request-based caching.
+> Feel free to add more loaders on your own, maybe for the message domain. The practice can provide useful abstraction on top of your models to allow batching and request-based caching.
 
-### Exercises:
+请随意在 message 域添加你自己的 loader。这个实践提供有用的 model 上层抽象，用来支持批处理和基于请求的缓存。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9ff0542f620a0d9939c1adcbd21951f8fc1693f4)
-* Read more about [GraphQL and Dataloader](https://www.apollographql.com/docs/graphql-tools/connectors.html#dataloader)
-* Read more about [GraphQL Best Practices](https://graphql.github.io/learn/best-practices/)
+> ### Exercises:
 
-## GraphQL Server + PostgreSQL Deployment to Heroku
+### 练习:
 
-Eventually you want to deploy the GraphQL server online, so it can be used in production. In this section, you learn how to deploy a GraphQL server to Heroku, a platform as a service for hosting applications. Heroku allows PostgreSQL as well.
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9ff0542f620a0d9939c1adcbd21951f8fc1693f4)
+> * Read more about [GraphQL and Dataloader](https://www.apollographql.com/docs/graphql-tools/connectors.html#dataloader)
+> * Read more about [GraphQL Best Practices](https://graphql.github.io/learn/best-practices/)
 
-This section guides you through the process in the command line. For the visual approach check this [GraphQL server on Heroku deployment tutorial](https://www.apollographql.com/docs/apollo-server/deployment/heroku.html) which, however, doesn't include the PostgreSQL database deployment.
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9ff0542f620a0d9939c1adcbd21951f8fc1693f4)
+* 阅读更多关于[GraphQL 和 Dataloader](https://www.apollographql.com/docs/graphql-tools/connectors.html#dataloader)
+* 阅读更多关于[GraphQL 最佳实践](https://graphql.github.io/learn/best-practices/)
 
-Initially you need to complete three requirements to use Heroku:
+> ## GraphQL Server + PostgreSQL Deployment to Heroku
 
-* [Install git for your command line and push your project to GitHub](https://www.robinwieruch.de/git-essential-commands/)
-* Create an account for [Heroku](https://www.heroku.com/)
-* Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) for accessing Heroku's features on the command line
+## GraphQL 服务器 + PostgreSQL 部署到 Heroku
 
-In the command line, verify your Heroku installation with `heroku version`. If there is a valid installation, sign in to your Heroku account with `heroku login`. That's it for the general Heroku setup. In your project's folder, create a new Heroku application and give it a name:
+> Eventually you want to deploy the GraphQL server online, so it can be used in production. In this section, you learn how to deploy a GraphQL server to Heroku, a platform as a service for hosting applications. Heroku allows PostgreSQL as well.
+
+最后你想要把 GraphQL 部署到线上环境，用以满足生产环境需求。在这一章节你将学到如何把 GraphQL 服务器部署到 Heroku，一个用来托管应用的平台即服务应用。Heroku 同时也支持 PostgreSQL。
+
+> This section guides you through the process in the command line. For the visual approach check this [GraphQL server on Heroku deployment tutorial](https://www.apollographql.com/docs/apollo-server/deployment/heroku.html) which, however, doesn't include the PostgreSQL database deployment.
+
+这一章节提供基于命令行工具的快速上手教程。这里可以查看视频教程[Heroku 部署 GraphQL 服务器教程](https://www.apollographql.com/docs/apollo-server/deployment/heroku.html)。视频里没有包含 PostgreSQL 数据库有关内容。
+
+> Initially you need to complete three requirements to use Heroku:
+
+使用 Heroku 之前请确保满足三个条件：
+
+> * [Install git for your command line and push your project to GitHub](https://www.robinwieruch.de/git-essential-commands/)
+> * Create an account for [Heroku](https://www.heroku.com/)
+> * Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) for accessing Heroku's features on the command line
+
+* [安装 git 命令行工具并把项目上传到 GitHub](https://www.robinwieruch.de/git-essential-commands/)
+* 在 [Heroku](https://www.heroku.com/) 上创建帐号
+* 安装 [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) 从而在命令行里使用 Heroku 功能
+
+
+> In the command line, verify your Heroku installation with `heroku version`. If there is a valid installation, sign in to your Heroku account with `heroku login`. That's it for the general Heroku setup. In your project's folder, create a new Heroku application and give it a name:
+
+在命令行里使用 `heroku version` 来检测 Heroku 是否安装成功。如果成功安装，使用 `heroku login` 来登入你的帐号。这就完成了基本的 Heroku 设置。在你的项目文件夹下，创建新的 Heroku 应用并命名：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
 heroku create graphql-server-node-js
 ~~~~~~~~
 
-Afterward, you can also install the PostgreSQL add-on for Heroku on the command line for your project:
+> Afterward, you can also install the PostgreSQL add-on for Heroku on the command line for your project:
+
+然后你也可以为你的项目在 Heroku 上安装 PostgreSQL 插件：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
 heroku addons:create heroku-postgresql:hobby-dev
 ~~~~~~~~
 
-It uses the [hobby tier](https://devcenter.heroku.com/articles/heroku-postgres-plans#hobby-tier), a free application that can be upgraded as needed. Output for the PostgreSQL add-on installation should be similar to:
+> It uses the [hobby tier](https://devcenter.heroku.com/articles/heroku-postgres-plans#hobby-tier), a free application that can be upgraded as needed. Output for the PostgreSQL add-on installation should be similar to:
+
+它使用 [hobby tier](https://devcenter.heroku.com/articles/heroku-postgres-plans#hobby-tier)，一个可以按需升级的免费软件。PostgreSQL 插件的安装输出应该是像这样：
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5858,9 +5935,13 @@ Created postgresql-perpendicular-34121 as DATABASE_URL
 Use heroku addons:docs heroku-postgresql to view documentation
 ~~~~~~~~
 
-Check the [Heroku PostgreSQL documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for more in depth instructions for your database setup.
+> Check the [Heroku PostgreSQL documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for more in depth instructions for your database setup.
 
-You are ready to take your application online. With the PostgreSQL add-on, you received a database URL as well. You can find it with `heroku config`. Now, let's step into your GraphQL server's code to make a couple of adjustments for production. In your *src/models/index.js*, you need to decide between development (coding, testing) and production (live) build. Because you have a new environment variable for your database URL, you can use this to make the decision:
+查看 [Heroku PostgreSQL 文档](https://devcenter.heroku.com/articles/heroku-postgresql) 以获得关于数据库安装的更多信息。
+
+> You are ready to take your application online. With the PostgreSQL add-on, you received a database URL as well. You can find it with `heroku config`. Now, let's step into your GraphQL server's code to make a couple of adjustments for production. In your *src/models/index.js*, you need to decide between development (coding, testing) and production (live) build. Because you have a new environment variable for your database URL, you can use this to make the decision:
+
+你已经准备好将自己的应用部署上线了。使用 PostgreSQL 插件，你应该也有个数据库 URL。可以通过 `heroku config` 找到它。现在需要检查 GraphQL 服务器的代码，为生产环境做一些改动。在 *src/models/index.js* 文件里，你需要在 development(coding, testing) 和 production(live) 构建中选择一个。由于你有一个新的环境变量来保存数据库 URL，可以这样来修改环境：
 
 {title="src/models/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5889,11 +5970,17 @@ if (process.env.DATABASE_URL) {
 ...
 ~~~~~~~~
 
-If you check your *.env* file, you will see the `DATABASE_URL` environment variable isn't there. But you should see that it is set as Heroku environment variable with `heroku config:get DATABASE_URL`. Once your application is live on Heroku, your environment variables are merged with Heroku's environment variables, which is why the `DATABASE_URL` isn't applied for your local development environment.
+> If you check your *.env* file, you will see the `DATABASE_URL` environment variable isn't there. But you should see that it is set as Heroku environment variable with `heroku config:get DATABASE_URL`. Once your application is live on Heroku, your environment variables are merged with Heroku's environment variables, which is why the `DATABASE_URL` isn't applied for your local development environment.
 
-Another environment variable used in the *src/index.js* file is called *SECRET* for your authentication strategy. If you haven't included an *.env* file in your project's version control (see .gitignore), you need to set the `SECRET` for your production code in Heroku using `heroku config:set SECRET=wr3r23fwfwefwekwself.2456342.dawqdq`. The secret is just made up and you can choose your own custom string for it.
+查看 *.env* 文件，你可以看到 `DATABASE_URL` 环境变量是不存在的。但是使用 `heroku config:get DATABASE_URL` 可以看到它被设置为 Heroku 环境变量了。一旦你的项目在 Heroku 上运行，你的环境变量是和 Heroku 的环境变量整合到一起的。这就是 `DATABASE_URL` 在你的本地开发环境不可见的原因。
 
-Also, consider the application's port in the *src/index.js* file. Heroku adds its own `PORT` environment variable, and you should use the port from an environment variable as a fallback.
+> Another environment variable used in the *src/index.js* file is called *SECRET* for your authentication strategy. If you haven't included an *.env* file in your project's version control (see .gitignore), you need to set the `SECRET` for your production code in Heroku using `heroku config:set SECRET=wr3r23fwfwefwekwself.2456342.dawqdq`. The secret is just made up and you can choose your own custom string for it.
+
+另一个在 *src/index.js* 文件中使用的环境变量是用于授权策略的 *SECRET*。如果你还没有在版本控制中添加 *.env* 文件(查看 .gitignore)，你就需要在 Heroku 的项目中使用 `heroku config:set SECRET=wr3r23fwfwefwekwself.2456342.dawqdq` 来设置 `SECRET`。这里的密钥是胡编的，你可以用自己的密钥代替。
+
+> Also, consider the application's port in the *src/index.js* file. Heroku adds its own `PORT` environment variable, and you should use the port from an environment variable as a fallback.
+
+另外需要在 *src/index.js* 里配置应用的端口。Heroku 有自己的 `PORT` 环境变量，并且你应该使用环境变量中的端口作为默认值。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5918,7 +6005,9 @@ sequelize.sync({ force: isTest }).then(async () => {
 ...
 ~~~~~~~~
 
-Finally, decide whether you want to start with a seeded database or an empty database on Heroku PostgreSQL. If it is to be seeded, add an extra flag to the seeding:
+> Finally, decide whether you want to start with a seeded database or an empty database on Heroku PostgreSQL. If it is to be seeded, add an extra flag to the seeding:
+
+最后，决定是否要在 Heroku PostgreSQL 上使用种子数据库或空数据库。如果使用种子数据库，需要添加额外的标记：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5945,15 +6034,25 @@ sequelize.sync({ force: isTest || isProduction }).then(async () => {
 ...
 ~~~~~~~~
 
-Remember to remove the flag after, or the database will be purged and seeded with every deployment. Depending on development or production, you are choosing a database, seeding it (or not), and selecting a port for your GraphQL server. Before pushing your application to Heroku, push all recent changes to your GitHub repository. After that, push all the changes to your Heroku remote repository as well, since you created a Heroku application before: `git push heroku master`. Open the application with `heroku open`, and add the `/graphql` suffix to your URL in the browser to open up GraphQL Playground. If it doesn't work, check the troubleshoot area below.
+> Remember to remove the flag after, or the database will be purged and seeded with every deployment. Depending on development or production, you are choosing a database, seeding it (or not), and selecting a port for your GraphQL server. Before pushing your application to Heroku, push all recent changes to your GitHub repository. After that, push all the changes to your Heroku remote repository as well, since you created a Heroku application before: `git push heroku master`. Open the application with `heroku open`, and add the `/graphql` suffix to your URL in the browser to open up GraphQL Playground. If it doesn't work, check the troubleshoot area below.
 
-Depending on your seeding strategy, your database will either be empty or contain seeded data. If its empty, register a user and create messages via GraphQL mutations. If its seeded, request a list of messages with a GraphQL query.
+记得之后删除 flag，否者每次部署数据库都会被清空然后用种子数据填充。根据应用处在 development 或者 production 环境，你都要选择一个数据库，使用数据填充 (也可以用空数据库)，并且为 GraphQL 选择一个端口。在推送到 Heroku 之前，把所有的改动 push 到 github 仓库。然后，由于之前已经创建了 Heroku 应用，使用 `git push heroku master` 把所有改动也推送到 Heroku 远程仓库。使用 `heroku open` 打开 Heroku 应用，添加 `/graphql` 后缀到浏览器的 URL 中来打开 GraphQL Playground。如果打开失败，请阅读下面的故障排除部分。
 
-Congratulations, your application should be live now. Not only is your GraphQL server running on Heroku, but your PostgreSQL database. Follow the exercises to learn more about Heroku.
+> Depending on your seeding strategy, your database will either be empty or contain seeded data. If its empty, register a user and create messages via GraphQL mutations. If its seeded, request a list of messages with a GraphQL query.
 
-### Heroku Troubleshoot
+根据你选择的数据填充策略，你的数据库将为空或包含种子数据。如果为空，则使用 GraphQL mutation 注册用户并且创建消息。如果有种子数据，则使用 GraphQL 查询请求消息列表。
 
-It can happen that the GraphQL schema is not available in GraphQL Playground for application in production. It's because the `introspection` flag for Apollo Server is disabled. In order to fix it, you can set it to true. Another improvement to add may be the `playground` flag to enable GraphQL Playground for Heroku:
+> Congratulations, your application should be live now. Not only is your GraphQL server running on Heroku, but your PostgreSQL database. Follow the exercises to learn more about Heroku.
+
+恭喜，你的应用已经正常上线了。现在 GraphQL 服务器和 PostgreSQL 都已经在Heroku上成功运行。按照下面的练习了解有关 Heroku 的更多信息。
+
+> ### Heroku Troubleshoot
+
+### Heroku 故障筛查
+
+> It can happen that the GraphQL schema is not available in GraphQL Playground for application in production. It's because the `introspection` flag for Apollo Server is disabled. In order to fix it, you can set it to true. Another improvement to add may be the `playground` flag to enable GraphQL Playground for Heroku:
+
+生产环境下可能会发生 GraphQL schema 在 GraphQL Playground 中不可用的情况，这是因为禁用了 Apollo Serve 的 `introspection` 标志。你可以将其设置为 true 来修复。另一个改进是添加 `playground` 标志来为 Heroku 启用 GraphQL Playground：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -5968,25 +6067,42 @@ const server = new ApolloServer({
 });
 ~~~~~~~~
 
-Another issue may be that Heroku doesn't install the dev dependencies for production. Although it does install the dev dependencies for building the application on Heroku, it purges the dev dependencies afterward. However, in our case, in order to start the application (npm start script), we rely on a few dev dependencies that need to be available in production. [You can tell Heroku to keep the dev dependencies:](https://devcenter.heroku.com/articles/nodejs-support#package-installation)
+> Another issue may be that Heroku doesn't install the dev dependencies for production. Although it does install the dev dependencies for building the application on Heroku, it purges the dev dependencies afterward. However, in our case, in order to start the application (npm start script), we rely on a few dev dependencies that need to be available in production. [You can tell Heroku to keep the dev dependencies:](https://devcenter.heroku.com/articles/nodejs-support#package-installation)
+
+另一个问题可能是 Heroku 没有为生产环境安装 dev 依赖库。虽然在 Heroku 上构建应用时确实安装了 dev 依赖库，但在之后会被自动清除。但是在我们的示例中，为了启动应用程序 (npm start script)，在生产环境中需要的几个dev依赖库。参考：[配置 Heroku 保存 dev 依赖库:](https://devcenter.heroku.com/articles/nodejs-support#package-installation)
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
 heroku config:set NPM_CONFIG_PRODUCTION=false YARN_PRODUCTION=false
 ~~~~~~~~
 
-In a real world scenario, you would want to use something else to start your application and not rely on any dev dependencies.
+> In a real world scenario, you would want to use something else to start your application and not rely on any dev dependencies.
 
-### Exercises:
+在现实环境下，一般使用其他东西来启动应用程序，而是不依赖于任何 dev 依赖库。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9dbfb30226cdc4843adbcc09d16871b2a902a4d3)
-* Feedback whether the troubleshooting area for Heroku was useful is very appreciated
-* Create sample data in your production database with GraphQL Playground
-* Get familiar with the [Heroku Dashboard](https://dashboard.heroku.com/apps)
-  * Find your application's logs
-  * Find your application's environment variables
-* access your PostgreSQL database on Heroku with `heroku pg:psql`
+> ### Exercises:
+
+### 练习:
+
+
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9dbfb30226cdc4843adbcc09d16871b2a902a4d3)
+> * Feedback whether the troubleshooting area for Heroku was useful is very appreciated
+> * Create sample data in your production database with GraphQL Playground
+> * Get familiar with the [Heroku Dashboard](https://dashboard.heroku.com/apps)
+>   * Find your application's logs
+>   * Find your application's environment variables
+> * access your PostgreSQL database on Heroku with `heroku pg:psql`
+
+* 查看[本章源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9dbfb30226cdc4843adbcc09d16871b2a902a4d3)
+* 欢迎给我们关于 Heroku 的故障排除区域是否有用的反馈
+* 使用 GraphQL Playground 创建生产环境测试数据
+* 熟悉[Heroku Dashboard](https://dashboard.heroku.com/apps)
+  * 找到应用日志
+  * 找到应用环境变量
+* 使用`heroku pg:psql` 访问 PostgreSQL 数据库
 
 <hr class="section-divider">
 
-You built a sophisticated GraphQL server boilerplate project with Express and Apollo Server. You should have learned that GraphQL isn't opinionated about various things, and about authentication, authorization, database access, and pagination. Most of the operations we learned were more straightforward because of Apollo Server over the GraphQL reference implementation in JavaScript. That's okay, because many people are using Apollo Server to build GraphQL servers. Use this application as a starter project to realize your own ideas, or find my starter project with a GraphQL client built in React in [this GitHub repository](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate).
+> You built a sophisticated GraphQL server boilerplate project with Express and Apollo Server. You should have learned that GraphQL isn't opinionated about various things, and about authentication, authorization, database access, and pagination. Most of the operations we learned were more straightforward because of Apollo Server over the GraphQL reference implementation in JavaScript. That's okay, because many people are using Apollo Server to build GraphQL servers. Use this application as a starter project to realize your own ideas, or find my starter project with a GraphQL client built in React in [this GitHub repository](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate).
+
+你已经使用 Express 和 Apollo Server 构建了一个复杂的 GraphQL 服务器示例项目。也应该已经了解到 GraphQL 不会强制要求身份验证，授权，数据库访问和分页等等。由于 Apollo Server 使用了基于 JavaScript 实现的 GraphQL，因此我们学到的大多数操作都更直接。没关系，因为很多人都在使用 Apollo Server 来构建 GraphQL 服务器。使用此应用作为入门项目来实现你自己的想法，或者使用我的入门项目，也就是 [这个 GitHub 仓库](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate) 中用 React 实现的 GraphQL 客户端。
