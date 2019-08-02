@@ -1,8 +1,8 @@
-# 《GraphQL 学习之道》 The Road to GraphQL  (简体中文版)
+# 《GraphQL 学习之道》 The Road to GraphQL  (简体中文版) （正在翻译中……）
 
 [![Slack](https://slack-the-road-to-learn-react.wieruch.com/badge.svg)](https://slack-the-road-to-learn-react.wieruch.com/)
 
-这是 [The Road to GraphQL](https://roadtoreact.com/) 的官方仓库。如果你愿意的话，请到[亚马逊](https://www.amazon.com/dp/1730853935)或者 [Goodreads](https://www.goodreads.com/book/show/42641103-the-road-to-graphql) 上留下你的评论。
+这是 [The Road to GraphQL](https://roadtoreact.com/) 的官方仓库（简体中文版）。如果你愿意的话，请到[亚马逊](https://www.amazon.com/dp/1730853935)或者 [Goodreads](https://www.goodreads.com/book/show/42641103-the-road-to-graphql) 上留下你的评论。
 
 ## 更新、帮助和支持
 
