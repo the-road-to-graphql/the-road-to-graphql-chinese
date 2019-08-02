@@ -1,4 +1,6 @@
-## About the Author 关于作者
+> ## About the Author 
+
+## 关于作者
 
 > I am a German software and web engineer dedicated to learning and teaching programming in JavaScript. After obtaining my Master's Degree in computer science, I continued learning on my own. I gained experience from the startup world, where I used JavaScript intensively during both my professional life and spare time, which eventually led to a desire to teach others about these topics.
 

@@ -1,10 +1,14 @@
-## Requirements 基本要求
+> ## Requirements 
+
+## 基本要求
 
 > To get the most out of this book, you should be familiar with the basics of web development, which includes some knowledge of HTML, CSS and JavaScript. You will also need to be familiar with the term [API](https://www.robinwieruch.de/what-is-an-api-javascript/), because it is discussed frequently. I encourage you to join the official [Slack Group](https://slack-the-road-to-learn-react.wieruch.com/) for the book, to help or get help from others.
 
 要想充分理解本书的内容，你应该熟悉基本的 Web 开发知识，其中包括 HTML，CSS 和 JavaScript。同时你也需要熟悉 [API](https://www.robinwieruch.de/what-is-an-api-javascript/) 这个术语，因为它会经常被提到。同时，我建议你加入本书的官方 [Slack 讨论组](https://slack-the-road-to-learn-react.wieruch.com/)，在那里你可以帮助他人或者寻求帮助。
 
-### Editor and Terminal 编辑器和终端
+> ### Editor and Terminal 
+
+### 编辑器和终端
 
 > For the development environment, use a running editor or IDE and terminal (command line tool), and [follow my setup guide](https://www.robinwieruch.de/developer-setup/). It is adjusted for MacOS users, but you can find a Windows setup guide, too. There are lots of articles about setting up a web development environment for your OS.
 
@@ -14,7 +18,7 @@
 
 > On the client-side, this book uses React to teach about GraphQL in JavaScript. My other book called The Road to learn React teaches you all the fundamentals about React. It also teaches you to make the transition from JavaScript ES5 to JavaScript ES6. The book is available for free and after having read The Road to learn React, you should possess all the knowledge to implement the GraphQL client-side application with this book.
 
-在客户端上，本书使用了 React 来讲授 JavaScript 中的 GraphQL。我的另一本书《The Road to learn React》(中文版《React 学习之道》)讲授了所有关于 React 的基础知识。它同时还讲了如何从 JavaScript ES5 迁移到 JavaScript ES6。那本书可以免费阅读，在看完它之后，你应该就掌握了所有本书所需的在客户端实现 GraphQL 的知识。
+在客户端上，本书使用了 React 来讲授 JavaScript 中的 GraphQL。我的另一本书《The Road to learn React》(《React 学习之道》)讲授了所有关于 React 的基础知识。它同时还讲了如何从 JavaScript ES5 迁移到 JavaScript ES6。那本书可以免费阅读，在看完它之后，你应该就掌握了所有本书所需的在客户端实现 GraphQL 的知识。
 
 ### Node
 
