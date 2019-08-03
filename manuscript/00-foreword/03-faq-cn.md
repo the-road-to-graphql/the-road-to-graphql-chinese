@@ -56,7 +56,7 @@
 
 > If you run into problems, please join the Slack Group. Also, check the [open issues on GitHub](https://github.com/the-road-to-graphql/the-road-to-graphql/issues) or in the GitHub repositories of the applications you will build along the way to see if any solutions are listed for a specific issue. If your problem wasn't mentioned, open a new issue where you can explain your problem, provide a screenshot, and offer more details (e.g. book page, node version).
 
-如果你发现问题，请加入 Slack 聊天组。同时，检查本书在 GitHub 上的 [issues](https://github.com/the-road-to-graphql/the-road-to-graphql/issues) 或者你将要构建的应用的仓库，看看针对你的问题是否已经有了解决方案。如果找不到同样的问题，请新建一个 issue 来解释你遇到的问题，比如提供一个截图和一些细节信息（比如页数、Nodejs的版本等）。
+如果你发现问题，请加入 Slack 聊天组。同时，检查本书在 GitHub 上的 [issues](https://github.com/the-road-to-graphql/the-road-to-graphql/issues) （[中文翻译版的 issues](https://github.com/the-road-to-graphql/the-road-to-graphql-chinese/issues)）或者你将要构建的应用的仓库，看看针对你的问题是否已经有了解决方案。如果找不到同样的问题，请新建一个 issue 来解释你遇到的问题，比如提供一个截图和一些细节信息（比如页数、node 的版本等）。
 
 > **What if I cannot afford the complete course?**
 
@@ -72,7 +72,7 @@
 
 > Yes, I would love to hear your feedback. You can open an issue on [GitHub](http://github.com/rwieruch/the-road-to-graphql) and express improvements to the technical aspects or the text content. You can also open pull requests on GitHub for documents or repositories.
 
-是的，我非常乐意收到你的反馈。你可以在 [GitHub](http://github.com/rwieruch/the-road-to-graphql) 上提一个 issue 来表述在技术方面或者文本内容方面可以改进的地方。你也可以在 GitHub 上针文件或者仓库提 pull request。
+是的，我非常乐意收到你的反馈。你可以在 [GitHub](https://github.com/the-road-to-graphql/the-road-to-graphql) （[中文翻译版](https://github.com/the-road-to-graphql/the-road-to-graphql-chinese)）上提一个 issue 来表述在技术方面或者文本内容方面可以改进的地方。你也可以在 GitHub 上针对文件或者仓库提 pull request。
 
 > **How do I support the project?**
 
@@ -88,7 +88,7 @@
 
 > Yes, there is 100% money back guarantee for two months if you don't think it's a good fit. Please contact me directly to seek a refund.
 
-有的，两个月之内，如果你觉得本书物无所值我将100%的退款。退款时请直接联系我。
+有的，两个月之内，如果你觉得本书货次价高我将100%的退款。退款时请直接联系我。
 
 > **What's your motivation behind the book?**
 

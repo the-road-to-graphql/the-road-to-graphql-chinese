@@ -1,4 +1,6 @@
-## How to read this book 如何使用本书
+> ## How to read this book 
+
+## 如何使用本书
 
 > No one has ever learned programming from reading a book. Programming is about practical experiences, and conquering challenges to strengthen your skills as a developer long-term. Paradigms like functional programming and object-oriented programming require more extensive practice to use practically. Complex concepts like state management in modern web applications and libraries like React and Express will take more than a weekend to master. You will only learn these concepts by practicing them consistently.
 
@@ -8,7 +10,9 @@
 
 我希望这本书能够为你提供更多的实战经验和挑战来帮助你成为一名程序员。这些挑战旨在创造一个循序渐进的学习体验，每个挑战都契合你当前的学习进度。如果本书能够将挑战与你的技能水平控制在一个良好的平衡点上，那么你的学习体验应该是一个[循序渐进](https://www.robinwieruch.de/lessons-learned-deep-work-flow/)的过程。我是从《Deep Work》这本书中了解到的这种方式*（这句话是我加入的，不然没有上下文确定很明白作者在说什么）*，当我阅读那它时，它的洞察令我赞叹，所以我希望把这种循序渐进的学习方式引进到这本书当中。
 
-### Tips & Tricks 提示 & 技巧
+> ### Tips & Tricks
+
+### 提示 & 技巧
 
 > As mentioned, there are practical tasks in the book, where you will be guided to solve problems using the techniques you learned in previous sections. It should let you experience practical uses for the lessons you've learned in these chapters, and provide deeper understanding of the more abstract content for your own projects.
 
