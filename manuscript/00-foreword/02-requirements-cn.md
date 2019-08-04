@@ -4,7 +4,7 @@
 
 > To get the most out of this book, you should be familiar with the basics of web development, which includes some knowledge of HTML, CSS and JavaScript. You will also need to be familiar with the term [API](https://www.robinwieruch.de/what-is-an-api-javascript/), because it is discussed frequently. I encourage you to join the official [Slack Group](https://slack-the-road-to-learn-react.wieruch.com/) for the book, to help or get help from others.
 
-要想充分理解本书的内容，你应该熟悉基本的 Web 开发知识，其中包括 HTML，CSS 和 JavaScript。同时你也需要熟悉 [API](https://www.robinwieruch.de/what-is-an-api-javascript/) 这个术语，因为它会经常被提到。同时，我建议你加入本书的官方 [Slack 讨论组](https://slack-the-road-to-learn-react.wieruch.com/)，在那里你可以帮助他人或者寻求帮助。
+要想充分理解本书的内容，你应该熟悉基本的 Web 开发知识，其中包括 HTML，CSS 和 JavaScript。除此之外你也需要熟悉 [API](https://www.robinwieruch.de/what-is-an-api-javascript/) 这个术语，因为它会经常被提到。同时，我建议你加入本书的官方 [Slack 讨论组](https://slack-the-road-to-learn-react.wieruch.com/)，在那里你可以帮助他人或者寻求帮助。
 
 > ### Editor and Terminal 
 
