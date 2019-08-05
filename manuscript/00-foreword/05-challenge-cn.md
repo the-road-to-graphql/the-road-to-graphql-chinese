@@ -3,11 +3,11 @@
 
 > I write a lot about lessons I've learned. That's how I got where I am. Since teaching has helped me a lot in my career, I want you to experience the same effects. First, you have to teach yourself. For this book, my challenge is for you to teach others while you are learning. Here are a couple of tips on how to achieve it:
 
-我将很多我学过的东西写成了课程，它们成就了现在的我。在我的职业生涯中，教学帮了我很多，所以我希望你用同样地方式来学习。当然，首先你需要自学。然后，我给你的挑战是在学习的过程当中教会他人。以下是一些如何完成这个挑战的提示：
+我将很多我学过的东西写成了课程，它们成就了现在的我。在我的职业生涯中，在教授别人的同时我也有很大的收获，所以我希望你用同样地方式来学习。当然，首先你需要自学。然后，我给你的挑战是在学习的过程当中教会他人。以下是一些如何完成这个挑战的提示：
 
 > * Write a blog post about a specific topic from this book. It's not about copying and pasting the material, but teaching the topic your own way. Find your own words to explain the concepts, solve a problem, and dive even further into every detail of the topic. You will see how it fills your own knowledge gaps, and how it can open doors for your career in the long term.
 
-* 从本书中挑一个主题写一篇博客。这个博客不是让你复制粘贴学习材料，而是用你自己的方式讲授这个主题。博客中，你要用你自己的语言去解释概念、解决问题，甚至在每个细节上讨论得更加深入。之后，你将看到它是如何填补你的知识空缺，并且如何为你的职业生涯打开长远大门的。
+* 从本书中挑一个主题写一篇博客。这个博客不是让你复制粘贴学习材料，而是用你自己的方式讲授这个主题。博客中，你可以用你自己的语言去解释概念、解决问题，甚至在每个细节上讨论得更加深入。之后，你将看到它是如何填补你的知识空缺，并且如何为你的职业生涯打开长远大门的。
 
 > * If you are active on social media, consider sharing some tricks you've learned from this book with your friends. You can tweet hot tips about your latest experiment from the book which may be interesting, or show off your skills in web development Facebook groups. Take quality screenshots of your progress so viewers can follow along.
 

@@ -18,7 +18,7 @@
 
 > On the client-side, this book uses React to teach about GraphQL in JavaScript. My other book called The Road to learn React teaches you all the fundamentals about React. It also teaches you to make the transition from JavaScript ES5 to JavaScript ES6. The book is available for free and after having read The Road to learn React, you should possess all the knowledge to implement the GraphQL client-side application with this book.
 
-在客户端上，本书使用了 React 来讲授 JavaScript 中的 GraphQL。我的另一本书《The Road to learn React》(《React 学习之道》)讲授了所有关于 React 的基础知识。它同时还讲了如何从 JavaScript ES5 迁移到 JavaScript ES6。那本书可以免费阅读，在看完它之后，你应该就掌握了所有本书所需的在客户端实现 GraphQL 的知识。
+在客户端上，本书使用了 React 来讲授 JavaScript 中的 GraphQL。我的另一本书《The Road to learn React》(《React 学习之道》)讲授了所有关于 React 的基础知识。它同时还讲了如何从 JavaScript ES5 迁移到 JavaScript ES6。那本书可以免费阅读，在看完它之后，你应该就能掌握本书中实现 GraphQL 客户端应用程序的所有基础知识。
 
 ### Node
 

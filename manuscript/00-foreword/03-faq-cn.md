@@ -88,7 +88,7 @@
 
 > Yes, there is 100% money back guarantee for two months if you don't think it's a good fit. Please contact me directly to seek a refund.
 
-有的，两个月之内，如果你觉得本书货次价高我将100%的退款。退款时请直接联系我。
+有的，两个月之内，如果你觉得本书货次价高我将 100% 的退款。退款时请直接联系我。
 
 > **What's your motivation behind the book?**
 
