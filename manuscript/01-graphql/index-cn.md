@@ -104,7 +104,7 @@ author(id: "7") {
 
 > ### No Overfetching with GraphQL         
 
-###没有数据冗余
+### 没有数据冗余
 
 > There is no overfetching in GraphQL. A mobile client usually overfetches data when there is an identical API as the web client with a RESTful API. With GraphQL, the mobile client can choose a different set of fields, so it can fetch only the information needed for what's onscreen.
 

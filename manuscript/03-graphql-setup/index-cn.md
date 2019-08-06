@@ -14,18 +14,18 @@
 
 ### 练习：
 
-* 创建一个 GitHub 账号，如果你没有的话
-* 提供 GitHub 账号的其他信息
+* 如果没有 GitHub 账号的话，创建一个
+* 完善你的 GitHub 账号的其他信息
 
 ### GitHub 代码库
 
-你还可以在 GitHub 上创建代码库。用他们的官方词汇来说：*“代码库是 GitHub 的基本元素。它们最容易被想象为项目的文件夹。代码库包含项目的所有文件（包括文档），并存储每个文件的修订历史。代码库可以有多个协作者，可以是公有仓库也可以是私有仓库。”*[GitHub的术语表](https://help.github.com/articles/github-glossary/)解释了关键术语——repository，issue，clone，fork，push——在接下来了解 GraphQL 的章节中会使用到这些术语。基本上来说代码库是一个可以和他人分享应用程序源码的地方。我鼓励你将一些项目放在 GitHub 代码库中，以便以后可以使用 GraphQL API 来访问它们。
+你还可以在 GitHub 上创建代码库。用他们的官方词汇来说：*“代码库是 GitHub 的基本元素。它们最容易被想象为项目的文件夹。代码库包含项目的所有文件（包括文档），并存储每个文件的修订历史。代码库可以有多个协作者，可以是公有仓库也可以是私有仓库。”*[GitHub 的术语表](https://help.github.com/articles/github-glossary/)解释了关键术语—— repository，issue，clone，fork，push ——在接下来了解 GraphQL 的章节中会使用到这些术语。基本上来说代码库是一个可以和他人分享应用程序源码的地方。我鼓励你将一些项目放在 GitHub 代码库中，以便以后可以使用 GraphQL API 来访问它们。
 
-如果你没有上传任何项目，你可以随时从其他 GitHub 用户“fork”代码库，并在其副本上进行操作。fork 大体来说是其他代码库的克隆，可以让你在不改变原始仓库的基础上进行添加修改。GitHub 上有很多开放的代码库，可以克隆到本地或者 fork 到你的代码库列表中，这样你就可以通过实验来了解它们的机制。例如，如果你访问[我的 GitHub 主页](https://github.com/rwieruch)，你可以看到我所有的代码库，但并非所有的代码库都是我的，因为有些是从别人那儿 fork 来的。如果你想使用它们来进行练习，或者通过 GitHub 的 GraphQL API 来访问，请随意 fork 这些仓库。
+如果你没有上传任何项目，你可以随时 “fork” 其他 GitHub 用户的代码库，并在其副本上进行操作。fork 大体来说是其他代码库的克隆，可以让你在不改变原始仓库的基础上进行添加修改。GitHub 上有很多开放的代码库，可以克隆到本地或者 fork 到你的代码库列表中，这样你就可以通过实验来了解它们的机制。例如，如果你访问[我的 GitHub 主页](https://github.com/rwieruch)，你可以看到我所有的代码库，但并非所有的代码库都是我的，因为有些是从别人那儿 fork 来的。如果你想使用它们来进行练习，或者通过 GitHub 的 GraphQL API 来访问，请随意 fork 这些仓库。
 
 ### 练习：
 
-* create 或 fork 几个 GitHub 代码库，并验证它们是否以副本的形式存在于你的账户中。副本通过用户名标识，后面跟着代码库的名称，共同组成了该代码库的全称。例如，一个名为*原作者名字/TestRepo*的代码库，在你 fork 之后，会被命名为*你的名字/TestRepo*。
+* 创建或者 fork 几个 GitHub 代码库，并验证它们是否以副本的形式存在于你的账户中。副本通过用户名标识，后面跟着代码库的名称，共同组成了该代码库的全称。例如，一个名为 *原作者名字/TestRepo* 的代码库，在你 fork 之后，会被命名为 *你的名字/TestRepo*。
 
 ### 分页数据
 
@@ -35,11 +35,11 @@ GitHub 的 GraphQL API 允许一次请求多个代码库，这对于分页来说
 
 ### Issue 和 Pull Request
 
-一旦你深入了解了 GitHub 的 GraphQL API 并开始请求一些嵌套关系的数据（例如代码库的 issue，pull request等），请确保代码库中存在一些 issue 和 pull request，这样在实现获取代码库 issue 的功能时才能够看到结果。请求一个组织的代码库可能会更好，因为其一般都有较多的 issue 和 pull request。
+一旦你深入了解了 GitHub 的 GraphQL API 并开始请求一些嵌套关系的数据（例如代码库的 issue，pull request 等），请确保代码库中存在一些 issue 和 pull request，这样在实现获取代码库 issue 的功能时才能够看到结果。请求一个组织的代码库可能会更好，因为其一般都有较多的 issue 和 pull request。
 
 ### 练习：
 
-* 在[GitHub的词汇表](https://help.github.com/articles/github-glossary/)中查阅更多信息。 思考以下问题：
+* 在[GitHub 的词汇表](https://help.github.com/articles/github-glossary/)中查阅更多信息。 思考以下问题：
   * 什么是 GitHub 的组织账号和个人账号？
   * 什么是 GitHub 的组织用户和个人用户？
   * 什么是代码库，issue 和 pull request？
@@ -63,11 +63,11 @@ Access token 随后会用于与 GitHub GraphQL API 进行交互。请注意不�
 
 ![](images/graphiql-headers_1024.jpg)
 
-在下一步中，我们在 GraphiQL 配置中添加一个键值对。为了与 GitHub GraphQL API 通信，在头部加上「Authorization」，值为「bearer [你的 access token]」。为 GraphiQL 应用程序保存此设定。 这样，你就准备好使用 GraphiQL 应用程序向 GitHub GraphQL API 发送请求了。
+在下一步中，我们在 GraphiQL 配置中添加一个键值对。为了与 GitHub GraphQL API 通信，在头部加上 “Authorization”，值为 “bearer [你的 access token]”。为 GraphiQL 应用程序保存此设定。 这样，你就准备好使用 GraphiQL 应用程序向 GitHub GraphQL API 发送请求了。
 
 ![](images/graphiql-authorization_1024.jpg)
 
-如果你使用自己的 GraphiQL 应用程序，则需要为 GitHub 的 GraphQL API 提供 GraphQL 端点：`https://api.github.com/graphql`。 对于 GitHub GraphQL API，使用[POST HTTP方法](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods)进行查询和变更，并将数据作为负载进行传输。
+如果你使用自己的 GraphiQL 应用程序，则需要为 GitHub 的 GraphQL API 提供 GraphQL 端点：`https://api.github.com/graphql`。 对于 GitHub GraphQL API，使用[POST HTTP 方法](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods)进行查询和变更，并将数据作为负载进行传输。
 
 本节提供了两种与 GitHub GraphQL API交互的方法。GitHub 的 GraphQL Explorer 只能用于 GitHub API，集成到应用程序或独立的 GraphiQL 可用于任何的 GraphQL API。不同点在于后者需要一些额外的配置。GitHub GraphQL Explorer 实际上只是为使用 GitHub GraphQL API 而定制的独立 GraphiQL 应用程序。
 

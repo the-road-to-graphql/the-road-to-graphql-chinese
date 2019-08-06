@@ -23,7 +23,7 @@
 
 > * Verbalize your thoughts, actions, and the problems you are running into. A visual video is only part of the challenge; the other part is narrating through implementation. The production values don't need to be perfect, and the result should include all the ups and downs of your process. If you run into bugs, embrace the trouble. Try to fix the problem yourself and search online for help. Speak about the problem, and your plan to solve it. This helps others to follow your thought process.
 
-* 说出你的想法，行为以及你正在解决的问题。可视化只是这个挑战的一部分，而另一部分是在开发中不断的叙述你的想法和行为。视频中的开发结果不需要完美，反而它应该涵盖整个过程的跌宕起伏。如果你遇到 bug，请微笑面对，然后尝试自己修复问题并在网上寻找解决办法。与此同时，要注意说出你遇到的问题，并且打算如何解决它，这样才能帮助观众在整个观看过程中更好地跟随你的想法。
+* 说出你的想法，行动以及你正在解决的问题。可视化只是这个挑战的一部分，而另一部分是在开发中不断的叙述你的想法和行为。视频中的开发结果不需要完美，反而它应该涵盖整个过程的跌宕起伏。如果你遇到 bug，请微笑面对，然后尝试自己修复问题并在网上寻找解决办法。与此同时，要注意说出你遇到的问题，并且打算如何解决它，这样才能帮助观众在整个观看过程中更好地跟随你的想法。
 
 > * Check your audio before you record a long video to make sure it records clearly, and make sure the environment has acoustics that won't hinder vocal clarity. Make sure to increase the font size in your IDE or command line terminal so viewers can see any text you'd like to be featured.
 
