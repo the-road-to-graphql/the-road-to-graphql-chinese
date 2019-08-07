@@ -178,7 +178,7 @@ fragment sharedOrganizationFields on Organization {
 > As you can see, you have to specify on which **type** of object the fragment should be used. In this case, it is the type `Organization`, which is a custom type defined by GitHub's GraphQL API. This is how you use fragments to extract and reuse parts of your queries. At this point, you might want to open "Docs" on the right side of your GraphiQL application. The documentation gives you access to the GraphQL **schema**. A schema exposes the GraphQL API used by your GraphiQL application, which is Github's GraphQL API in this case. It defines the GraphQL **graph** that is accessible via the GraphQL API using queries and mutations. Since it is a graph, objects and fields can be deeply nested in it, which we'll certainly encounter as we move along.
 
 
-如你所见，你必须指定该片段用在哪种**类型**的对象上。在这个例子中，应该是 `Organization` 类型，它是由 GitHub 的 GraphQL API 定义的自定义类型。这是你使用片段和重用部分构建查询时需要注意的。关于这点，如果你在 GraphiQL 应用程序的右侧打开 “Docs” 面板。你可以看到 GraphQL 定义的 **模式**。模式定义了 GraphiQL 如何使用某个 GraphQL API，在这个例子中，它是 Github 提供的 GraphQL API。它定义了 GraphQL **graph**，可以使用查询和变更对 GraphQL API 进行调用。由于它是一个图形结构，因此对象和字段可以深深地嵌套在其中，随着学习的深入，我们会对此有更深入的体会。
+如你所见，你必须指定该片段用在哪种**类型**的对象上。在这个例子中，应该是 `Organization` 类型，它是由 GitHub 的 GraphQL API 定义的自定义类型。这是你使用片段和重用部分构建查询时需要注意的。关于这点，如果你在 GraphiQL 应用程序的右侧打开 “Docs” 面板。你可以看到 GraphQL 定义的 **schema**。模式定义了 GraphiQL 如何使用某个 GraphQL API，在这个例子中，它是 Github 提供的 GraphQL API。它定义了 GraphQL **graph**，可以使用查询和变更对 GraphQL API 进行调用。由于它是一个图形结构，因此对象和字段可以深深地嵌套在其中，随着学习的深入，我们会对此有更深入的体会。
 
 
 > Since we're exploring queries and not mutations at the moment, select "Query" in the "Docs" sidebar. Afterward, traverse the objects and fields of the graph, explore their optional arguments. By clicking them, you can see the accessible fields within those objects in the graph. Some fields are common GraphQL types such as `String`, `Int` and `Boolean`, while some other types are **custom types** like the `Organization` type we used. In addition, you can see whether arguments are required when requesting fields on an object. It can be identified by the exclamation point. For instance, a field with a `String!` argument requires that you pass in a `String` argument whereas a field with a `String` argument doesn't require you to pass it.
@@ -263,7 +263,7 @@ query {
 
 > While it's not the shorthand version of the query, it still returns the same data as before, which is the desired outcome. The query statement is also called **operation type** in GraphQL lingua. For instance, it can also be a `mutation` statement. In addition to the operation type, you can also define an **operation name**.
 
-虽然使用了非简写版本，但仍然返回了与之前相同的数据，和我们设想的结果一样。查询语句在 GraphQL 语言中也称为**操作类型**。例如，它也可以是`mutation` 语句。除了操作类型，你还可以定义**操作名称**。
+虽然使用了非简写版本，但仍然返回了与之前相同的数据，和我们设想的结果一样。查询语句在 GraphQL 语言中也称为**操作类型**。例如，它也可以是 `mutation` 语句。除了操作类型，你还可以定义**操作名称**。
 
 
 {title="GitHub GraphQL Explorer",lang="json"}
@@ -295,7 +295,7 @@ query OrganizationForLearningReact($organization: String!) {
 
 > So far you've only accessed one object, an organization with a couple of its fields. The GraphQL schema implements a whole graph, so let's see how to access a **nested object** from within the graph with a query. It's not much different from before:
 
-到目前为止，你只请求了一个对象，只有几个字段的组织对象。 GraphQL 模式能实现一个完整的图形结构，所以让我们看看如何使用查询实现**嵌套对象**的获取。写法和之前基本一样：
+到目前为止，你只请求了一个对象，只有几个字段的组织对象。 GraphQL schema 能实现一个完整的图形结构，所以让我们看看如何使用查询实现**嵌套对象**的获取。写法和之前基本一样：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -340,7 +340,7 @@ query OrganizationForLearningReact(
 > A **directive** can be used to query data from your GraphQL API in a more powerful way, and they can be applied to fields and objects. Below, we use two types of directives: an **include directive**, which includes the field when the Boolean type is set to true; and the **skip directive**, which excludes it instead. With these directives, you can apply conditional structures to your shape of query. The following query showcases the include directive, but you can substitute it with the skip directive to achieve the opposite effect:
 
 
-**指令**可用于以更强大的方式查询 GraphQL API 中的数据，并且它们可以应用于字段和对象。下面，我们来尝试使用两种指令：**include 指令**，用来包含布尔类型设置为 true 的字段; 和 **skip 指令**，与之相反排除那些为 true 的字段。使用这些指令，你可以将条件结构应用于查询。以下查询展示了include 指令，你也可以使用 skip 指令替换它实现相反的效果：
+**指令**可用于以更强大的方式查询 GraphQL API 中的数据，并且它们可以应用于字段和对象。下面，我们来尝试使用两种指令：**include 指令**，用来包含布尔类型设置为 true 的字段; 和 **skip 指令**，与之相反排除那些为 true 的字段。使用这些指令，你可以将条件结构应用于查询。以下查询展示了 include 指令，你也可以使用 skip 指令替换它实现相反的效果：
 
 
 {title="GitHub GraphQL Explorer",lang="json"}
