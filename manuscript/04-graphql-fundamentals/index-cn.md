@@ -504,7 +504,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > * Read more about [the Mutation in GraphQL](http://graphql.org/learn/queries/#mutations)
 
-* 阅读更多关于[ GraphQL 中的变更](http://graphql.org/learn/queries/#mutations)
+* 延伸阅读：[ GraphQL 中的变更](http://graphql.org/learn/queries/#mutations)
 
 > * Explore GitHub's mutations by using the "Docs" sidebar in GraphiQL
 
@@ -717,7 +717,7 @@ query OrganizationForLearningReact {
 
 > * Exchange the `first` argument with a `last` argument.
 
-* 把`first` 参数替换为 `last` 参数。
+* 把 `first` 参数替换为 `last` 参数。
 
 > * Search for the `repositories` field in the GraphiQL "Docs" sidebar which says: "A list of repositories that the ... owns."
 >   * Explore the other arguments that can be passed to this list field.
