@@ -418,7 +418,7 @@ GraphQL中的查询为你提供了从 GraphQL API 读取数据时的全部功能
 
 > In this section, you will star a repository on GitHub, the same one you used a query to request before, using a mutation [from GitHub's API](https://developer.github.com/v4/mutation/addstar). You can find the `addStar` mutation in the "Docs" sidebar. The repository is a project for teaching developers about the fundamentals of React, so starring it should prove useful.
 
-接下来你将会 star 一个 GitHub 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 GitHub API ](https://developer.github.com/v4/mutation/addstar)的一个变更请求。你可以在 "Docs" 侧边栏中找到 `addStar` 这种变更操作。这是一个存放为开发者讲解 React 基础课程的代码库，所以 star 这个代码库能够证明它有用。
+接下来你将会 star 一个 GitHub 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 GitHub API](https://developer.github.com/v4/mutation/addstar) 的一个变更请求。你可以在 "Docs" 侧边栏中找到 `addStar` 这种变更操作。这是一个存放为开发者讲解 React 基础课程的代码库，所以 star 这个代码库能够证明它有用。
 
 > You can visit [the repository](https://github.com/the-road-to-learn-react/the-road-to-learn-react) to see if you've given a star to the repository already. We want an unstarred repository so we can star it using a mutation. Before you can star a repository, you need to know its identifier, which can be retrieved by a query:
 
@@ -496,7 +496,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > The repository is starred now. It's visible in the result, but you can verify it in the [repository on GitHub](https://github.com/the-road-to-learn-react/the-road-to-learn-react). Congratulations, you made your first mutation.
 
-这个代码库现在已经被 star 了。在返回的结果中能够看到，但你也可以通过查看[ GitHub 上的代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来确认。恭喜，你完成了你的第一个变更操作。
+这个代码库现在已经被 star 了。在返回的结果中能够看到，但你也可以通过查看 [GitHub 上的代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来确认。恭喜，你完成了你的第一个变更操作。
 
 > ### Exercises:
 
@@ -504,7 +504,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > * Read more about [the Mutation in GraphQL](http://graphql.org/learn/queries/#mutations)
 
-* 延伸阅读：[ GraphQL 中的变更](http://graphql.org/learn/queries/#mutations)
+* 延伸阅读：[GraphQL 中的变更](http://graphql.org/learn/queries/#mutations)
 
 > * Explore GitHub's mutations by using the "Docs" sidebar in GraphiQL
 

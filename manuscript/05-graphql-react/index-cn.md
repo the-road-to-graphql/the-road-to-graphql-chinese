@@ -1,13 +1,12 @@
-
 # React 和 GraphQL 的结合
 
-我们将一起开发一个 GraphQL 的客户端程序，从中你将了解如何将 React 与 GraphQL 结合起来。目前我们不会使用 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay) 这样强大的工具来帮助你快速上手，而是使用基本的 HTTP 请求执行 GraphQL 查询和修改。在之后的下一个应用程序中，我们将引入 Apollo 作为你的 React.js 应用的 GraphQL 客户端。现阶段开发的应用只展示如何在 React 中基于 HTTP 使用 GraphQL。
+我们将一起开发一个 GraphQL 的客户端程序，从中你将了解如何将 React 与 GraphQL 结合起来。目前我们不会使用 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay) 这样强大的工具来帮助你快速上手，而是使用基本的 HTTP 请求执行 GraphQL 查询和变更。在之后的下一个应用程序中，我们将引入 Apollo 作为你的 React.js 应用的 GraphQL 客户端。现阶段开发的应用只展示如何在 React 中基于 HTTP 使用 GraphQL。
 
-在此过程中，你将构建一个类似 GitHub 的问题跟踪器，通过执行 GraphQL 的查询和修改来读写数据，基于 [GitHub's GraphQL API](https://developer.github.com/v4/) 的简单 GitHub 客户端。最终实现一个能够在 React 示例中展示 GraphQL的案例，也可以将其作为其他开发人员的学习工具，最终实现的应用程序可以参考 [GitHub 的代码库](https://github.com/rwieruch/react-graphql-github-vanilla)。
+在此过程中，你将构建一个类似 GitHub 的问题跟踪器，通过执行 GraphQL 的查询和变更来读写数据，基于 [GitHub's GraphQL API](https://developer.github.com/v4/) 的简单 GitHub 客户端。最终实现一个能够在 React 示例中展示 GraphQL的案例，也可以将其作为其他开发人员的学习工具，最终实现的应用程序可以参考 [GitHub 的代码库](https://github.com/rwieruch/react-graphql-github-vanilla)。
 
 ## 编写你的第一个 React GraphQL 客户端
 
-在上一节之后，你应该准备好了如何在 React 应用程序中使用查询和修改。在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。它是一个简单的问题跟踪器，需要显示在 GitHub 代码库中的一些 open issues，如果你对 React 缺乏经验，可以阅读 [React 学习之道](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识，为接下来的部分做好充分的准备。
+在上一节之后，你应该准备好了如何在 React 应用程序中使用查询和变更。在本节中，你将创建一个使用 GitHub GraphQL API 的 React 应用程序。它是一个简单的问题跟踪器，需要显示在 GitHub 代码库中的一些 open issues，如果你对 React 缺乏经验，可以阅读 [React 学习之道](https://www.robinwieruch.de/the-road-to-learn-react)，了解更多相关知识，为接下来的部分做好充分的准备。
 
 现阶段的应用程序，不需要复杂的 React 配置。你只需使用 [create-react-app](https://github.com/facebook/create-react-app) 就可以创建无需额外配置的 React 应用程序。在命令行中输入以下指令，用npm安装它：`npm install -g create-react-app`。如果你想学习详细的 React 设置，请参考 [React 的 Webpack 设置指南](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。
 
@@ -42,7 +41,7 @@ class App extends Component {
 export default App;
 ~~~~~~~~
 
-现阶段组件只会渲染一个 `title` 作为标题。在实现其他的 React 组件之前，我们先安装一个使用 HTTP POST 方法执行查询和修改的第三方库来处理 GraphQL 请求。推荐使用 [axios](https://github.com/axios/axios)。在命令行中，输入如下命令在项目文件夹中安装 axios：
+现阶段组件只会渲染一个 `title` 作为标题。在实现其他的 React 组件之前，我们先安装一个使用 HTTP POST 方法执行查询和变更的第三方库来处理 GraphQL 请求。推荐使用 [axios](https://github.com/axios/axios)。在命令行中，输入如下命令在项目文件夹中安装 axios：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -51,7 +50,7 @@ npm install axios --save
 
 接下来，可以在你的 App 组件中导入并配置它。它可以简化后续的开发步骤，因为在某种程度上，你只需要用你的 access token 和 GitHub 的 GraphQL API 配置它一次。
 
-首先，在从 axios 创建配置实例时，为它定义一个基本的 URL。如前所述，你不需要在每次发出请求时都定义 GitHub 的 URL 端点，因为所有查询和修改都指向 GraphQL 中的相同 URL 端点。你可以使用对象和字段灵活地进行查询和修改结构。
+首先，在从 axios 创建配置实例时，为它定义一个基本的 URL。如前所述，你不需要在每次发出请求时都定义 GitHub 的 URL 端点，因为所有查询和变更都指向 GraphQL 中的相同 URL 端点。你可以使用对象和字段灵活地进行查询和变更结构。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -87,21 +86,21 @@ const axiosGitHubGraphQL = axios.create({
 ...
 ~~~~~~~~
 
-用你的 access token 替换 `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` 字符串。为了避免将访问令牌直接剪切和粘贴到源代码中，你可以创建一个 *.env* 文件来保存项目文件夹中命令行上的所有环境变量。如果不想在公开的GitHub代码库中共享个人令牌，可以将该文件添加到.gitignore。
+用你的 access token 替换 `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` 字符串。为了避免将访问令牌直接剪切和粘贴到源代码中，你可以创建一个 *.env* 文件来保存项目文件夹中命令行上的所有环境变量。如果不想在公开的 GitHub 代码库中共享个人令牌，可以将该文件添加到 .gitignore。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 touch .env
 ~~~~~~~~
 
-将环境变量定义在这个 *.env* 文件中。在使用 create-react-app 时，确保遵循正确的命名约束，它使用 `REACT_APP` 作为每个 key 的前缀。将下面的键值对粘贴在你的 *.env* 文件中。密钥必须有 `REACT_APP` 前缀，并且值必须是你 GitHub 的 access token 。
+将环境变量定义在这个 *.env* 文件中。在使用 create-react-app 时，确保遵循正确的命名约束，它使用 `REACT_APP` 作为每个 key 的前缀。将下面的键值对粘贴在你的 *.env* 文件中。密钥必须有 `REACT_APP` 前缀，并且值必须是你 GitHub 的 access token。
 
 {title=".env",lang="javascript"}
 ~~~~~~~~
 REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN=xxxXXX
 ~~~~~~~~
 
-现在，你可以将 access token 作为环境变量传递给 axios 配置，并使用字符串插值（ [模板字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) ）创建一个配置好的axios实例。
+现在，你可以将 access token 作为环境变量传递给 axios 配置，并使用字符串插值（[模板字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)创建一个配置好的axios实例。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -125,7 +124,7 @@ axios 的初始设置基本上与我们之前使用 GraphiQL 应用程序访问 
 
 接下来需要添加一个表单，用于从用户处获得关于 GitHub 组织和代码库的详细信息。这个表单包含一个输入栏，可以为特定的 GitHub 代码库请求一个可以分页的 issues 列表。首先，需要一个带有输入栏的表单来输入组织和代码库。其次，表单需要一个提交按钮来请求用户在输入字段中提供的组织和代码库的数据，并且将这些数据存放在于组件的本地状态中。接下来，当组件第一次挂载时，组织和代码库有一个初始的本地状态来请求初始数据。
 
-我们可以分两步来实现这个场景。render方法需要渲染一个带有输入栏的表单。表单必须有一个 `onSubmit` 处理方法，而输入栏需要一个 `onChange` 处理方法。输入栏使用组件中 state 的 `path` 作为值成为一个受控组件。
+我们可以分两步来实现这个场景。render 方法需要渲染一个带有输入栏的表单。表单必须有一个 `onSubmit` 处理方法，而输入栏需要一个 `onChange` 处理方法。输入栏使用组件中 state 的 `path` 作为值成为一个受控组件。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -186,9 +185,9 @@ class App extends Component {
 }
 ~~~~~~~~
 
-你可能在前面的实现中使用了以前未使用过的 React 类组件语法。如果你不熟悉它，请查看这个 [GitHub 代码库](https://github.com/the-road-to-learn-react/react-alternative-class-component-syntax) 以获得更多的理解。使用**类字段声明**可以省略初始化本地状态的构造函数语句，而且不需要绑定类方法。相反，箭头函数将处理所有绑定行为。
+你可能在前面的实现中使用了以前未使用过的 React 类组件语法。如果你不熟悉它，请查看这个 [GitHub 代码库](https://github.com/the-road-to-learn-react/react-alternative-class-component-syntax)以获得更多的理解。使用**类字段声明**可以省略初始化本地状态的构造函数语句，而且不需要绑定类方法。相反，箭头函数将处理所有绑定行为。
 
-依照 React 的最佳实践，将输入栏设置为受控组件。输入元素不应使用原生的 HTML 行为处理其内部状态；而应该是自然反应。（译者注：原文为：The input element shouldn't be used to handle its internal state using native HTML behavior; it should be React.）
+依照 React 的最佳实践，将输入栏设置为受控组件。输入元素不应使用原生的 HTML 行为处理其内部状态；而应该是自然反应。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -229,7 +228,7 @@ class App extends Component {
 }
 ~~~~~~~~
 
-为表单提前设置——可使用的输入栏、一个提交按钮、`onChange()` 和 `onSubmit()` 类方法——是React中实现表单的一种常见方法。唯一增加的是 `componentDidMount()` 生命周期方法中的初始数据获取，通过为查询提供一个初始状态来从后端请求数据，从而改进用户体验。它是 [React 获取第三方API数据](https://www.robinwieruch.de/react-fetching-data/) 的基础。
+为表单提前设置——可使用的输入栏、一个提交按钮、`onChange()` 和 `onSubmit()` 类方法——是 React 中实现表单的一种常见方法。唯一增加的是 `componentDidMount()` 生命周期方法中的初始数据获取，通过为查询提供一个初始状态来从后端请求数据，从而改进用户体验。它是 [React 获取第三方 API 数据](https://www.robinwieruch.de/react-fetching-data/)的基础。
 
 When you start the application on the command line, you should see the initial state for the `path` in the input field. You should be able to change the state by entering something else in the input field, but nothing happens with `componentDidMount()` and submitting the form yet.
 
@@ -237,17 +236,17 @@ When you start the application on the command line, you should see the initial s
 
 You might wonder why there is only one input field to grab the information about the organization and repository. When opening up a repository on GitHub, you can see that the organization and repository are encoded in the URL, so it becomes a convenient way to show the same URL pattern for the input field. You can also split the `organization/repository` later at the `/` to get these values and perform the GraphQL query request.
 
-你可能想知道为什么只需要一个输入字段来获取关于组织和仓库的信息。在 GitHub 上打开代码库时，你可以看到组织和代码库都是在 URL 中编码的，因此可以方便地用输入的字段来匹配相似的 URL模式。你之后也可以以 `/` 分割 `organization/repository`，以获取这些值并执行 GraphQL 查询请求。
+你可能想知道为什么只需要一个输入字段来获取关于组织和仓库的信息。在 GitHub 上打开代码库时，你可以看到组织和代码库都是在 URL 中编码的，因此可以方便地用输入的字段来匹配相似的 URL 模式。你之后也可以以 `/` 分割 `organization/repository`，以获取这些值并执行 GraphQL 查询请求。
 
 ### 练习：
 
 * 查看 [本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
 
-* 如果你不熟悉React，可以阅读 *React 学习之道*
+* 如果你不熟悉 React，可以阅读 *React 学习之道*
 
 ## 在 React 中执行 GraphQL 查询
 
-在本章节中，你将在 React 中实现第一个 GraphQL 查询，从组织的代码库中获取 issues，但不是一次获取所有问题，先获取一个组织。我们先将查询定义为 App 组件上面的一个变量。
+在本章节中，你将在 React 中实现第一个 GraphQL 查询，从组织的一个代码库中获取 issues，但不是一次获取所有问题，先获取一个组织。我们先将查询定义为 App 组件上面的一个变量。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -261,7 +260,7 @@ const GET_ORGANIZATION = `
 `;
 ~~~~~~~~
 
-使用 JavaScript 中的模板字符串将查询语句定义为多行的字符串。与之前在 GraphiQL 或 GitHub Explorer 中使用的查询相同。现在你就可以使用 axios 向 GitHub 的 GraphiQL API 发出 POST 请求。axios 的配置已经指向正确的 API 端点，并使用的是你的 access token 。唯一剩下的事情是在 POST 请求期间将查询作为有效负载传递给它。端点的参数可以是空字符串，因为你在配置中定义了端点。当 App 组件生命周期执行到 `componentDidMount()` 时，就会执行请求。在 axios 的 promise 被解析之后，结果将会保留在控制台日志中。
+使用 JavaScript 中的模板字符串将查询语句定义为多行的字符串。与之前在 GraphiQL 或 GitHub Explorer 中使用的查询相同。现在你就可以使用 axios 向 GitHub 的 GraphiQL API 发出 POST 请求。axios 的配置已经指向正确的 API 端点，并使用的是你的 access token。唯一剩下的事情是在 POST 请求期间将查询作为有效负载传递给它。端点的参数可以是空字符串，因为你在配置中定义了端点。当 App 组件生命周期执行到 `componentDidMount()` 时，就会执行请求。在 axios 的 promise 被解析之后，结果将会保留在控制台日志中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -314,7 +313,7 @@ class App extends Component {
 
 你只需要使用 axios 执行一个 HTTP POST 请求，并将 GraphQL 查询作为有效负载。因为 axios 使用 promises，promise 最终会被解析后，你就掌握了 GraphQL API 的结果。这没什么惊讶的。它只是使用普通 JavaScript 实现的，用 axios 作为 HTTP 客户端，使用普通的 HTTP 执行 GraphQL 请求。
 
-再次启动你的应用程序，并确认你已经在开发者模式下的控制台日志中得到了结果。如果得到了  [401 HTTP 状态码](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)，说明你没有正确设置你的 access token 。否则，你应该会在开发人员控制台日志中看到类似的结果。
+再次启动你的应用程序，并确认你已经在开发者模式下的控制台日志中得到了结果。如果得到了  [401 HTTP 状态码](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)，说明你没有正确设置你的 access token。否则，你应该会在开发人员控制台日志中看到类似的结果。
 
 {title="Developer Tools",lang="json"}
 ~~~~~~~~
@@ -335,9 +334,9 @@ class App extends Component {
 }
 ~~~~~~~~
 
-最外层信息是 axios 的元信息返回给你所发请求的所有内容。它都是 axios，与 GraphQL 还没有任何关系，这就是为什么它的大部分被占位符所替代。Axios 有一个 `data` 属性，代表 Axios 请求的结果。里面包裹了一个反映GraphQL结果的 `data` 属性。首先，`data` 属性在第一个结果中看起来是冗余的，但是一旦理解了它，你就会知道一个 `data` 属性来自 axios，而另一个来自GraphQL数据结构。最后，在第二个 `data` 属性中找到GraphQL查询的结果。在里面也可以找到包含已解析的名称和 url 字段作为字符串属性的组织。
+最外层信息是 axios 的元信息返回给你所发请求的所有内容。它都是 axios，与 GraphQL 还没有任何关系，这就是为什么它的大部分被占位符所替代。Axios 有一个 `data` 属性，代表 Axios 请求的结果。里面包裹了一个反映 GraphQL 结果的 `data` 属性。首先，`data` 属性在第一个结果中看起来是冗余的，但是一旦理解了它，你就会知道一个 `data` 属性来自 axios，而另一个来自 GraphQL 数据结构。最后，在第二个 `data` 属性中找到 GraphQL 查询的结果。在里面也可以找到包含已解析的名称和 url 字段作为字符串属性的组织。
 
-下一步，你将把包含组织信息的结果存储在 React的本地状态中。如果发生任何错误，还需要将潜在的错误存储在状态中。
+下一步，你将把包含组织信息的结果存储在 React 的本地状态中。如果发生任何错误，还需要将潜在的错误存储在状态中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -370,7 +369,7 @@ class App extends Component {
 }
 ~~~~~~~~
 
-接下来，你可以在App组件的 `render()` 方法中展示组织信息:
+接下来，你可以在 App 组件的 `render()` 方法中展示 Organization 的信息:
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -401,7 +400,7 @@ class App extends Component {
 }
 ~~~~~~~~
 
-将组织组件作为一个新的功能无状态组件引入，保持App组件的渲染方法简洁。因为这个应用程序只是一个简单的GitHub 问题跟踪器，你已经可以在一小段话里提到它了（译者注：原文为 Because this application is going to be a simple GitHub issue tracker, you can already mention it in a short paragraph.）。
+将组织组件作为一个新的功能无状态组件引入，保持 App 组件的渲染方法简洁。因为这个应用程序只是一个简单的 GitHub 问题跟踪器，你已经可以在一小段话里提到它了。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -421,7 +420,7 @@ const Organization = ({ organization }) => (
 # leanpub-end-insert
 ~~~~~~~~
 
-在最后一步中，你需要决定在还没有获取任何东西时界面应该渲染什么，以及在发生错误时应该渲染什么。可以在 React 中使用 [条件呈现](https://www.robinwieruch.de/conditional-rendering-react/) 解决这些边界情况。对于第一个边缘情况，只需检查 `organization` 是否存在。
+在最后一步中，你需要决定在还没有获取任何东西时界面应该渲染什么，以及在发生错误时应该渲染什么。可以在 React 中使用[条件呈现](https://www.robinwieruch.de/conditional-rendering-react/)解决这些边界情况。对于第一个边缘情况，只需检查 `organization` 是否存在。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -452,7 +451,7 @@ class App extends Component {
 }
 ~~~~~~~~
 
-对于第二种边缘情况，你已经将错误传递给了组织组件。如果出现了错误，它应该简单地将每个错误的错误消息渲染出来。否则，它应该渲染组织信息。对于 GraphQL 中的不同字段和环境，可能会有多个错误。
+对于第二种边缘情况，你已经将错误传递给了 Organization 组件。如果出现了错误，它应该简单地将每个错误的错误消息渲染出来。否则，它应该渲染组织信息。对于 GraphQL 中的不同字段和环境，可能会有多个错误。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -481,11 +480,13 @@ const Organization = ({ organization, errors }) => {
 
 你已经在 React 应用程序中执行了第一个 GraphQL 查询，虽然这只是一个以查询语句作为有效负载的普通 HTTP POST 请求。使用了配置好的 axios client 实例。之后，你可以将结果存储在 React 的本地状态中，以便稍后显示。
 
-### GraphQL Nested Objects in React
-React 中 GraphQL 嵌套对象的使用
+> ### GraphQL Nested Objects in React
 
-Next, we'll request a nested object for the organization. Since the application will eventually show the issues in a repository, you should fetch a repository of an organization as the next step. Remember, a query reaches into the GraphQL graph, so we can nest the `repository` field in the `organization` when the schema defined the relationship between these two entities.
-接下来，我们需要为组织添加一个嵌套对象。由于应用程序最终会在代码库中显示 issue，因此下一步你应该获取组织的代码库。请记住，查询（操作）会进入 GraphQL 图，因此我们可以在架构定义这两个实体之间的关系时将 `repository` 字段嵌套在 `organization` 中。
+### React 中 GraphQL 嵌套对象的使用
+
+> Next, we'll request a nested object for the organization. Since the application will eventually show the issues in a repository, you should fetch a repository of an organization as the next step. Remember, a query reaches into the GraphQL graph, so we can nest the `repository` field in the `organization` when the schema defined the relationship between these two entities.
+
+接下来，我们需要为组织添加一个嵌套对象。由于应用程序最终会在代码库中显示 issue，因此下一步你应该获取组织的代码库。请记住，查询操作会进入 GraphQL 图，因此我们可以在架构定义这两个实体之间的关系时将 `repository` 字段嵌套在 `organization` 中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -523,8 +524,9 @@ class App extends Component {
 }
 ~~~~~~~~
 
-In this case, the repository name is identical to the organization. That's okay for now. Later on, you can define an organization and repository on your own dynamically. In the second step, you can extend the Organization component with another Repository component as child component. The result for the query should now have a nested repository object in the organization object.
-虽然现在代码库与组织的名称相同，但是没关系，因为稍后你可以动态地定义组织和代码库。接下来，你可以使用另一个代码库组件作为子组件扩展组织组件。现在，查询（操作）的结果应该在组织对象中具有一个嵌套的代码库对象。
+> In this case, the repository name is identical to the organization. That's okay for now. Later on, you can define an organization and repository on your own dynamically. In the second step, you can extend the Organization component with another Repository component as child component. The result for the query should now have a nested repository object in the organization object.
+
+虽然现在代码库与组织的名称相同，但是没关系，因为稍后你可以动态地定义组织和代码库。接下来，你可以使用另一个代码库组件作为子组件扩展组织组件。现在，查询操作的结果应该在组织对象中具有一个嵌套的代码库对象。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -558,14 +560,17 @@ const Repository = ({ repository }) => (
 # leanpub-end-insert
 ~~~~~~~~
 
-The GraphQL query structure aligns perfectly with your component tree. It forms a natural fit to continue extending the query structure like this, by nesting other objects into the query, and extending the component tree along the structure of the GraphQL query. Since the application is an issue tracker, we need to add a list field of issues to the query.
+> The GraphQL query structure aligns perfectly with your component tree. It forms a natural fit to continue extending the query structure like this, by nesting other objects into the query, and extending the component tree along the structure of the GraphQL query. Since the application is an issue tracker, we need to add a list field of issues to the query.
+
 GraphQL 查询结构与组件树完全一致。它通过将其他对象嵌套到查询中，并沿着 GraphQL 查询的结构扩展组件树，这样就可以继续拓展查询结构。由于应用程序是一个问题跟踪器，我们需要向查询添加 issue 列表字段。
 
-If you want to follow the query structure more thoughtfully, open the "Docs" sidebar in GraphiQL to learn out about the types `Organization`, `Repository`, `Issue`. The paginated issues list field can be found there as well. It's always good to have an overview of the graph structure.
-如果你想更详细地了解查询结构，请打开 GraphiQL 中的“文档”侧栏以了解`Organization`, `Repository`, `Issue`，也可以在那里找到分页 issue 列表字段。对图表结构有一个大概的了解总是好的。
+> If you want to follow the query structure more thoughtfully, open the "Docs" sidebar in GraphiQL to learn out about the types `Organization`, `Repository`, `Issue`. The paginated issues list field can be found there as well. It's always good to have an overview of the graph structure.
 
-Now let's extend the query with the list field for the issues. These issues are a paginated list in the end. We will cover these more later; for now, nest it in the `repository` field with a `last` argument to fetch the last items of the list.
-现在让我们用 issue 列表字段扩展查询（操作）。这些 issue 最终是一个分页列表，我们稍后会介绍这些内容；现在，将它嵌套在`repository`字段中，并使用`last`参数来获取列表的最后一项。
+如果你想更详细地了解查询结构，请打开 GraphiQL 中的 "Docs" 侧栏以了解 `Organization`, `Repository`, `Issue`，也可以在那里找到分页 issue 列表字段。对图表结构有一个大概的了解总是好的。
+
+> Now let's extend the query with the list field for the issues. These issues are a paginated list in the end. We will cover these more later; for now, nest it in the `repository` field with a `last` argument to fetch the last items of the list.
+
+现在让我们用 issue 列表字段扩展查询操作。这些 issue 最终是一个分页列表，我们稍后会介绍这些内容；现在，将它嵌套在 `repository` 字段中，并使用 `last` 参数来获取列表的最后一项。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -596,8 +601,9 @@ const GET_ISSUES_OF_REPOSITORY = `
 `;
 ~~~~~~~~
 
-You can also request an id for each issue using the `id` field on the issue's `node` field, to use a `key` attribute for your list of rendered items in the component, which is considered [best practice in React](https://reactjs.org/docs/lists-and-keys.html). Remember to adjust the name of the query variable when its used to perform the request.
-你还可以使用问题的`node` 字段上的`id`字段为每个 issue 请求一个id，以便于在组件中使用在列表中呈现的`key`属性，这是在React中的最佳实践。记得要在执行请求时调整查询变量的名称。
+> You can also request an id for each issue using the `id` field on the issue's `node` field, to use a `key` attribute for your list of rendered items in the component, which is considered [best practice in React](https://reactjs.org/docs/lists-and-keys.html). Remember to adjust the name of the query variable when its used to perform the request.
+
+你还可以使用问题的 `node` 字段上的 `id` 字段为每个 issue 请求一个 id，以便于在组件中使用在列表中呈现的 `key` 属性，这是在 React 中的最佳实践。记得要在执行请求时调整查询变量的名称。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -618,7 +624,8 @@ class App extends Component {
 }
 ~~~~~~~~
 
-The component structure follows the query structure quite naturally again. You can add a list of rendered issues to the Repository component. It is up to you to extract it to its own component as a refactoring to keep your components concise, readable, and maintainable.
+> The component structure follows the query structure quite naturally again. You can add a list of rendered issues to the Repository component. It is up to you to extract it to its own component as a refactoring to keep your components concise, readable, and maintainable.
+
 组件结构非常自然地遵循了查询结构。你可以向代码库组件中添加已呈现的 issue 列表。你也可以将其作为重构提取到自己的组件中，让你的组件变得更加简洁，增加可读性和可维护性。
 
 {title="src/App.js",lang="javascript"}
@@ -643,8 +650,9 @@ const Repository = ({ repository }) => (
 );
 ~~~~~~~~
 
-That's it for the nested objects, fields, and list fields in a query. Once you run your application again, you should see the last issues of the specified repository rendered in your browser.
-这就是查询（操作）中的嵌套对象，字段和列表字段。当你再次运行你的应用程序，你会在浏览器中看到指定代码库的最后提的 issue 。
+> That's it for the nested objects, fields, and list fields in a query. Once you run your application again, you should see the last issues of the specified repository rendered in your browser.
+
+这就是查询操作中的嵌套对象，字段和列表字段。当你再次运行你的应用程序，你会在浏览器中看到指定代码库的最后提的 issue。
 
 ### GraphQL Variables and Arguments in React
 React-GraphQL 变量和参数的使用
