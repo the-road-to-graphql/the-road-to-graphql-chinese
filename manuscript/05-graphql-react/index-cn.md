@@ -654,14 +654,17 @@ const Repository = ({ repository }) => (
 
 这就是查询操作中的嵌套对象，字段和列表字段。当你再次运行你的应用程序，你会在浏览器中看到指定代码库的最后提的 issue。
 
-### GraphQL Variables and Arguments in React
-React-GraphQL 变量和参数的使用
+> ### GraphQL Variables and Arguments in React
 
-Next we'll make use of the form and input elements. They should be used to request the data from GitHub's GraphQL API when a user fills in content and submits it. The content is also used for the initial request in `componentDidMount()` of the App component. So far, the organization `login` and repository `name` were inlined arguments in the query. Now, you should be able to pass in the `path` from the local state to the query to define dynamically an organization and repository. That's where variables in a GraphQL query came into play, do you remember?
-接下来我们将使用表单和输入元素。当用户填写内容并提交内容时，它们应该用于从 Github GraphQL API 请求数据。该内容还用于 App 组件的 `componentDidMount()` 中的初始请求。目前，组织 login 和代码库 name 应该是查询（操作）中的内联参数。现在，你应该能够通过从本地状态到查询的 path 来动态定义组织和代码库。这就是 GraphQL 查询中的变量发挥作用的地方，还记得吗？
+### React-GraphQL 变量和参数的使用
 
-First, let's use a naive approach by performing string interpolation with JavaScript rather than using GraphQL variables. To do this, refactor the query from a template literal variable to a function that returns a template literal variable. By using the function, you should be able to pass in an organization and repository.
-首先，我们先使用一种简单的方法，通过 JavaScript 来执行字符串插值，注意不是 GraphQL 变量。为此，请将查询（操作）从模板文字变量重构为返回模板文字变量的函数。通过使用该函数，你可以动态地传入组织和代码库。
+> Next we'll make use of the form and input elements. They should be used to request the data from GitHub's GraphQL API when a user fills in content and submits it. The content is also used for the initial request in `componentDidMount()` of the App component. So far, the organization `login` and repository `name` were inlined arguments in the query. Now, you should be able to pass in the `path` from the local state to the query to define dynamically an organization and repository. That's where variables in a GraphQL query came into play, do you remember?
+
+接下来我们将使用表单和输入元素。当用户填写内容并提交内容时，它们应该用于从 Github GraphQL API 请求数据。该内容还用于 App 组件的 `componentDidMount()` 中的初始请求。目前，组织 login 和代码库 name 应该是查询操作中的内联参数。现在，你应该能够通过从本地状态到查询的 path 来动态定义组织和代码库。这就是 GraphQL 查询中的变量发挥作用的地方，还记得吗？
+
+> First, let's use a naive approach by performing string interpolation with JavaScript rather than using GraphQL variables. To do this, refactor the query from a template literal variable to a function that returns a template literal variable. By using the function, you should be able to pass in an organization and repository.
+
+首先，我们先使用一种简单的方法，通过 JavaScript 来执行字符串插值，注意不是 GraphQL 变量。为此，请将查询操作从模板文字变量重构为返回模板文字变量的函数。通过使用该函数，你可以动态地传入组织和代码库。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -694,7 +697,8 @@ const getIssuesOfRepositoryQuery = (organization, repository) => `
 `;
 ~~~~~~~~
 
-Next, call the `onFetchFromGitHub()` class method in the submit handle, but also when the component mounts in `componentDidMount()` with the initial local state of the `path` property. These are the two essential places to fetch the data from the GraphQL API on initial render, and on every other manual submission from a button click.
+> Next, call the `onFetchFromGitHub()` class method in the submit handle, but also when the component mounts in `componentDidMount()` with the initial local state of the `path` property. These are the two essential places to fetch the data from the GraphQL API on initial render, and on every other manual submission from a button click.
+
 接下来，可以在提交句柄中调用 `onFetchFromGitHub()` 这个方法，也可以在组件挂载 `componentDidMount()` 时， `path` 属性的本地状态初始化后调用。这些是在初始渲染时从 GraphQL API 获取数据的两个基本位置，以及从按钮单击获取每个手动提交的数据。
 
 {title="src/App.js",lang="javascript"}
@@ -734,8 +738,9 @@ class App extends Component {
 }
 ~~~~~~~~
 
-Lastly, call the function that returns the query instead of passing the query string directly as payload. Use the [JavaScript's split method on a string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split) to retrieve the prefix and suffix of the `/` character from the path variable where the prefix is the organization and the suffix is the repository.
-最后，调用返回查询的函数，而不是直接将查询字符串作为有效负载传递。对字符串使用 JavaScript 的 [split](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split) 方法从路径变量中检索/字符的前缀和后缀，其中前缀是组织，后缀是代码库。
+> Lastly, call the function that returns the query instead of passing the query string directly as payload. Use the [JavaScript's split method on a string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split) to retrieve the prefix and suffix of the `/` character from the path variable where the prefix is the organization and the suffix is the repository.
+
+最后，调用返回查询的函数，而不是直接将查询字符串作为有效负载传递。对字符串使用 JavaScript 的 [split](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split) 方法从路径变量中检索 `/` 字符的前缀和后缀，其中前缀是组织，后缀是代码库。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -765,13 +770,16 @@ class App extends Component {
 }
 ~~~~~~~~
 
-Since the split returns an array of values and it is assumed that there is only one slash in the path, the array should consist of two values: the organization and the repository. That's why it is convenient to use a JavaScript array destructuring to pull out both values from an array in the same line.
+> Since the split returns an array of values and it is assumed that there is only one slash in the path, the array should consist of two values: the organization and the repository. That's why it is convenient to use a JavaScript array destructuring to pull out both values from an array in the same line.
+
 由于 split 方法的返回值是一个数组，假设路径中只有一个斜杠，那么该数组应包含两个值:组织和代码库。所以，使用 JavaScript 数组解构从同一行中的数组中提取两个值很方便。
 
-Note that the application is not built for to be robust, but is intended only as a learning experience. It is unlikely anyone will ask a user to input the organization and repository with a different pattern than *organization/repository*, so there is no validation included yet. Still, it is a good foundation for you to gain experience with the concepts.
-注意，此程序仅作为学习体验，未考虑其健壮性。任何人都不可能要求用户使用与组织/代码库不同的模式输入组织和代码库，所以这里没有包含任何验证。尽管如此，这也能为你学习概念打好良好的基础。
+> Note that the application is not built for to be robust, but is intended only as a learning experience. It is unlikely anyone will ask a user to input the organization and repository with a different pattern than *organization/repository*, so there is no validation included yet. Still, it is a good foundation for you to gain experience with the concepts.
 
-If you want to go further, you can extract the first part of the class method to its own function, which uses axios to send a request with the query and return a promise. The promise can be used to resolve the result into the local state, using `this.setState()` in the `then()` resolver block of the promise.
+注意，此程序仅作为学习体验，未考虑其健壮性。任何人都不可能要求用户使用与 组织/代码库 不同的模式输入组织和代码库，所以这里没有包含任何验证。尽管如此，这也能为你学习概念打好良好的基础。
+
+> If you want to go further, you can extract the first part of the class method to its own function, which uses axios to send a request with the query and return a promise. The promise can be used to resolve the result into the local state, using `this.setState()` in the `then()` resolver block of the promise.
+
 如果你想更进一步，可以将类方法的第一部分提取到它自己的函数中，该函数使用 axios 发送带有查询的请求并返回一个 promise，可用于将结果解析为本地状态，然后你可以在 `then()` 函数中使用 `this.setState()` 方法来解析程序块中的 promise.
 
 {title="src/App.js",lang="javascript"}
@@ -804,7 +812,8 @@ class App extends Component {
 }
 ~~~~~~~~
 
-You can always split your applications into parts, be they functions or components, to make them concise, readable, reusable and [testable](https://www.robinwieruch.de/react-testing-tutorial/). The function that is passed to `this.setState()` can be extracted as higher-order function. It has to be a higher-order function, because you need to pass the result of the promise, but also provide a function for the `this.setState()` method.
+> You can always split your applications into parts, be they functions or components, to make them concise, readable, reusable and [testable](https://www.robinwieruch.de/react-testing-tutorial/). The function that is passed to `this.setState()` can be extracted as higher-order function. It has to be a higher-order function, because you need to pass the result of the promise, but also provide a function for the `this.setState()` method.
+
 你也可以将应用程序的功能或者组件拆分为多个部分，使它们简洁，可读，可重用和[可测试](https://www.robinwieruch.de/react-testing-tutorial/)。传递给 `this.setState()` 的函数可以作为高阶函数提取。它必须是高阶函数，因为你需要传递 promise 的结果，但也为 `this.setState()` 方法提供函数。
 
 {title="src/App.js",lang="javascript"}
@@ -831,11 +840,13 @@ class App extends Component {
 }
 ~~~~~~~~
 
-Now you've made your query flexible by providing dynamic arguments to your query. Try it by starting your application on the command line and by filling in a different organization with a specific repository (e.g. *facebook/create-react-app*).
-现在，你已经通过在查询中提供动态参数灵活的进行查询（操作）。在终端尝试启动你的程序，在特定代码库（例如 facebook/create-react-app ）中填充不同的组织。
+> Now you've made your query flexible by providing dynamic arguments to your query. Try it by starting your application on the command line and by filling in a different organization with a specific repository (e.g. *facebook/create-react-app*).
 
-It's a decent setup, but there was nothing to see about variables yet. You simply passed the arguments to the query using a function and string interpolation with template literals. Now we'll use GraphQL variables instead, to refactor the query variable again to a template literal that defines inline variables.
-这是一个很好的设置，但还没有什么可见的变量。你只需使用一个函数和带有模板文字的字符串插值将参数传递给查询（操作）。现在我们将使用 GraphQL 变量，将查询变量重新调整到定义内联变量的模板文本中。
+现在，你已经通过在查询中提供动态参数灵活的进行查询操作。在终端尝试启动你的程序，在特定代码库（例如 facebook/create-react-app）中填充不同的组织。
+
+> It's a decent setup, but there was nothing to see about variables yet. You simply passed the arguments to the query using a function and string interpolation with template literals. Now we'll use GraphQL variables instead, to refactor the query variable again to a template literal that defines inline variables.
+
+这是一个很好的设置，但还没有什么可见的变量。你只需使用一个函数和带有模板文字的字符串插值将参数传递给查询操作。现在我们将使用 GraphQL 变量，将查询变量重新调整到定义内联变量的模板文本中。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -866,7 +877,8 @@ const GET_ISSUES_OF_REPOSITORY = `
 `;
 ~~~~~~~~
 
-Now you can pass those variables as arguments next to the query for the HTTP POST request:
+> Now you can pass those variables as arguments next to the query for the HTTP POST request:
+
 现在，你可以将这些变量作为 HTTP POST 请求的查询参数：
 
 {title="src/App.js",lang="javascript"}
@@ -883,33 +895,36 @@ const getIssuesOfRepository = path => {
 };
 ~~~~~~~~
 
-Finally, the query takes variables into account without detouring into a function with string interpolation. I strongly suggest practicing with the exercises below before continuing to the next section. We've yet to discuss features like fragments or operation names, but we'll soon cover them using Apollo instead of plain HTTP with axios.
-最后，查询（操作）将变量纳入考虑，而不用字符串插值的方法去检测函数。我强烈建议在继续下一节之前先练习下面的练习。我们还没有讨论像碎片或操作名称这样的特性，但是我们很快就会使用 Apollo 代替普通的带 axios 的 HTTP 来覆盖它们。
+> Finally, the query takes variables into account without detouring into a function with string interpolation. I strongly suggest practicing with the exercises below before continuing to the next section. We've yet to discuss features like fragments or operation names, but we'll soon cover them using Apollo instead of plain HTTP with axios.
 
-### Exercises:
-练习：
+最后，查询操作将变量纳入考虑，而不用字符串插值的方法去检测函数。我强烈建议在继续下一节之前先练习下面的练习。我们还没有讨论像碎片或操作名称这样的特性，但是我们很快就会使用 Apollo 代替普通的带 axios 的 HTTP 来覆盖它们。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
+> ### Exercises:
+
+### 练习：
+
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
-* Explore and add fields to your organization, repository and issues
-* 在你的组织、代码库和问题中探索和添加字段
-  * Extend your components to display the additional information
+> * Explore and add fields to your organization, repository and issues
+* 探索你的组织、代码库和 issues 中并尝试添加字段
+>   * Extend your components to display the additional information
   * 扩展你的组件以显示附加信息
-* Read more about [serving a GraphQL API over HTTP](http://graphql.org/learn/serving-over-http/)
-* 延伸阅读：[通过HTTP 提供GraphQL API服务](http://graphql.org/learn/serving-over-http/)
-## GraphQL Pagination in React
+> * Read more about [serving a GraphQL API over HTTP](http://graphql.org/learn/serving-over-http/)
+* 延伸阅读：[通过 HTTP 提供 GraphQL API 服务](http://graphql.org/learn/serving-over-http/)
+
+> ## GraphQL Pagination in React
 
 ## React 中的 GraphQL 分页
 
-Last section you implemented a list field in your GraphQL query, which fit into the flow of structuring the query with nested objects and a list responsible for showing partial results of the query in React.
+> Last section you implemented a list field in your GraphQL query, which fit into the flow of structuring the query with nested objects and a list responsible for showing partial results of the query in React.
 
 上一节中，你在 React 应用上实现了一个用于 GraphQL 查询的列表字段，它能得到一个包含部分查询结果的列表，其中的元素满足指定的嵌套结构。
 
-In this section, you will explore pagination with list fields with GraphQL in React in more detail. Initially, you will learn more about the arguments of list fields. Further, you will add one more nested list field to your query. Finally, you will fetch another page of the paginated `issues` list with your query.
+> In this section, you will explore pagination with list fields with GraphQL in React in more detail. Initially, you will learn more about the arguments of list fields. Further, you will add one more nested list field to your query. Finally, you will fetch another page of the paginated `issues` list with your query.
 
 本节将继续在使用 React 的基础上，更为深入地探索基于 GraphQL 列表字段实现的分页功能。你将首先了解列表字段的参数使用，而后在查询中添加另一个嵌套列表字段，从而能够在查询中实现获取下一页 `issues` 的功能。
 
-Let's start by extending the `issues` list field in your query with one more argument:
+> Let's start by extending the `issues` list field in your query with one more argument:
 
 我们首先为这个 `issues` 列表字段添加一个额外参数：
 
@@ -940,11 +955,11 @@ const GET_ISSUES_OF_REPOSITORY = `
 `;
 ~~~~~~~~
 
-If you read the arguments for the `issues` list field using the "Docs" sidebar in GraphiQL, you can explore which arguments you can pass to the field. One of these is the `states` argument, which defines whether or not to fetch open or closed issues. The previous implementation of the query has shown you how to refine the list field, in case you only want to show open issues. You can explore more arguments for the `issues` list field, but also for other list fields, using the documentation from Github's API.
+> If you read the arguments for the `issues` list field using the "Docs" sidebar in GraphiQL, you can explore which arguments you can pass to the field. One of these is the `states` argument, which defines whether or not to fetch open or closed issues. The previous implementation of the query has shown you how to refine the list field, in case you only want to show open issues. You can explore more arguments for the `issues` list field, but also for other list fields, using the documentation from Github's API.
 
 如果你在 GraphiQL 工具中通过 "Docs" 边栏查看过这个 `issues` 列表字段的参数信息，就能找到可供使用的参数信息。其中的一个参数便是 `states`，用于决定获取处在开启状态或关闭状态的 issues，亦或两者同时。如果仅需要展示处于开启状态的 issues，那么可以进一步提炼这个列表字段，方法如上述代码所示。通过 GitHub 的 API 文档，你能够查看关于这个 `issues` 列表字段的更多参数信息，其它的列表字段也是一样。
 
-Now we'll implement another nested list field that could be used for pagination. Each issue in a repository can have reactions, essentially emoticons like a smiley or a thumbs up. Reactions can be seen as another list of paginated items. First, extend the query with the nested list field for reactions:
+> Now we'll implement another nested list field that could be used for pagination. Each issue in a repository can have reactions, essentially emoticons like a smiley or a thumbs up. Reactions can be seen as another list of paginated items. First, extend the query with the nested list field for reactions:
 
 现在我们将实现另一个列表字段，以便用于完善分页功能。我们知道，仓库中的每个 issue 都可能具有 reactions，也就是像笑脸或者大拇指之类的表情。这些 reactions 可以被视作另一项分页内容，为了展示它们，首先在查询中添加一个嵌套的 reactions 列表字段：
 
@@ -983,7 +998,7 @@ const GET_ISSUES_OF_REPOSITORY = `
 `;
 ~~~~~~~~
 
-Second, render the list of reactions in one of your React components again. Implement dedicated List and Item components, such as ReactionsList and ReactionItem for it. As an exercise, try keeping the code for this application readable and maintainable.
+> Second, render the list of reactions in one of your React components again. Implement dedicated List and Item components, such as ReactionsList and ReactionItem for it. As an exercise, try keeping the code for this application readable and maintainable.
 
 之后，我们继续通过 React 组件来渲染 reactions 列表。这里本应当为列表和条目定义专门的组件，例如叫做 ReactionsList 和 ReactionItem，可以将此当作课后练习，从而提升应用代码的可读性和可维护性。
 
@@ -1012,11 +1027,11 @@ const Repository = ({ repository }) => (
 );
 ~~~~~~~~
 
-You extended the query and React's component structure to render the result. It's a straightforward implementation when you are using a GraphQL API as your data source which has a well defined underlying schema for these field relationships.
+> You extended the query and React's component structure to render the result. It's a straightforward implementation when you are using a GraphQL API as your data source which has a well defined underlying schema for these field relationships.
 
 通过扩展查询结构以及 React 组件内容，你已经成功渲染出相应结果。由于作为数据源的 GraphQL API 为其字段定义了清晰的结构和关联性，这里的实现方式直截了当。
 
-Lastly, you will implement real pagination with the `issues` list field, as there should be a button to fetch more issues from the GraphQL API to make it a function of a completed application. Here is how to implement a button:
+> Lastly, you will implement real pagination with the `issues` list field, as there should be a button to fetch more issues from the GraphQL API to make it a function of a completed application. Here is how to implement a button:
 
 最后，为了做出完整的应用，你需要实现一个对 `issues` 列表字段的实际分页功能，通过点击一个按钮从 GraphQL API 获取更多的 issues。以下是按钮部分的实现代码：
 
@@ -1046,7 +1061,7 @@ const Repository = ({
 );
 ~~~~~~~~
 
-The handler for the button passes through all the components to reach the Repository component:
+> The handler for the button passes through all the components to reach the Repository component:
 
 该按钮的处理函数经由更外层传入 Repository 组件：
 
@@ -1078,7 +1093,7 @@ const Organization = ({
 };
 ~~~~~~~~
 
-Logic for the function is implemented in the App component as class method. It passes to the Organization component as well.
+> Logic for the function is implemented in the App component as class method. It passes to the Organization component as well.
 
 该函数在 App 组件中作为类方法实现，同样也作为属性传入 Organization 组件。
 
@@ -1117,7 +1132,7 @@ class App extends Component {
 }
 ~~~~~~~~
 
-Before implementing the logic for it, there needs to be a way to identify the next page of the paginated list. To extend the inner fields of a list field with fields for meta information such as the `pageInfo` or the `totalCount` information, use `pageInfo` to define the next page on button-click. Also, the `totalCount` is only a nice way to see how many items are in the next list:
+> Before implementing the logic for it, there needs to be a way to identify the next page of the paginated list. To extend the inner fields of a list field with fields for meta information such as the `pageInfo` or the `totalCount` information, use `pageInfo` to define the next page on button-click. Also, the `totalCount` is only a nice way to see how many items are in the next list:
 
 开始实现功能之前，首先需要考虑如何标明这个分页列表中的下一页。在列表字段中，可以通过添加额外的内部字段来获取相关元信息，例如 `pageInfo` 和 `totalCount`，前者可用于按钮点击的事件处理中定义下一页的相关信息。此外，`totalCount` 可辅助判断下一页中的条目数量：
 
@@ -1148,9 +1163,9 @@ const GET_ISSUES_OF_REPOSITORY = `
 `;
 ~~~~~~~~
 
-Now, you can use this information to fetch the next page of issues by providing the cursor as a variable to your query. The cursor, or the `after` argument, defines the starting point to fetch more items from the paginated list.
+> Now, you can use this information to fetch the next page of issues by providing the cursor as a variable to your query. The cursor, or the `after` argument, defines the starting point to fetch more items from the paginated list.
 
-通过这些信息，现在你能将这个游标（Cursor）作为变量传入查询中，从而获取下一页的 issues 内容。这个游标，也就是 `after` 参数，在分页列表中定义了获取更多条目所需的起始位置。
+通过这些信息，现在你能将这个游标（cursor）作为变量传入查询中，从而获取下一页的 issues 内容。这个游标，也就是 `after` 参数，在分页列表中定义了获取更多条目所需的起始位置。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -1173,7 +1188,7 @@ class App extends Component {
 }
 ~~~~~~~~
 
-The second argument wasn't introduced  to the `onFetchFromGitHub()` class method yet. Let's see how that turns out.
+> The second argument wasn't introduced  to the `onFetchFromGitHub()` class method yet. Let's see how that turns out.
 
 名为 `onFetchFromGitHub` 的类方法尚未定义第二个参数，现在让我们来定义它。
 
@@ -1207,7 +1222,7 @@ class App extends Component {
 }
 ~~~~~~~~
 
-The argument is simply passed to the `getIssuesOfRepository()` function, which makes the GraphQL API request, and returns the promise with the query result. Check the other functions that call the `onFetchFromGitHub()` class method, and notice how they don't make use of the second argument, so the cursor parameter will be `undefined` when it's passed to the GraphQL API call. Either the query uses the cursor as argument to fetch the next page of a list, or it fetches the initial page of a list by having the cursor not defined at all:
+> The argument is simply passed to the `getIssuesOfRepository()` function, which makes the GraphQL API request, and returns the promise with the query result. Check the other functions that call the `onFetchFromGitHub()` class method, and notice how they don't make use of the second argument, so the cursor parameter will be `undefined` when it's passed to the GraphQL API call. Either the query uses the cursor as argument to fetch the next page of a list, or it fetches the initial page of a list by having the cursor not defined at all:
 
 新的参数被直接传入 `getIssuesOfRepository()` 函数，后者用于构造 GraphQL 的 API 请求，并返回对应查询结果的 Promise。通过观察其它对 `onFetchFromGitHub()` 类方法的调用，能够注意到它们并未使用第二个参数，因此实际传入 GraphQL API 调用中的参数是 `undefined`。最终，这个查询要么使用了传入的游标信息作为参数来获取下一页的列表，要么由于游标未定义获取到第一页的列表。
 
@@ -1244,11 +1259,11 @@ const GET_ISSUES_OF_REPOSITORY = `
 `;
 ~~~~~~~~
 
-In the previous template string, the `cursor` is passed as variable to the query and used as `after` argument for the list field. The variable is not enforced though, because there is no exclamation mark next to it, so it can be `undefined`. This happens for the initial page request for a paginated list, when you only want to fetch the first page. Further, the argument `last` has been changed to `first` for the `issues` list field, because there won't be another page after you fetched the last item in the initial request. Thus, you have to start with the first items of the list to fetch more items until you reach the end of the list.
+> In the previous template string, the `cursor` is passed as variable to the query and used as `after` argument for the list field. The variable is not enforced though, because there is no exclamation mark next to it, so it can be `undefined`. This happens for the initial page request for a paginated list, when you only want to fetch the first page. Further, the argument `last` has been changed to `first` for the `issues` list field, because there won't be another page after you fetched the last item in the initial request. Thus, you have to start with the first items of the list to fetch more items until you reach the end of the list.
 
 上面的模板字符串中，`cursor` 作为变量传入到该列表字段的 `after` 参数中。因为没有后置的的感叹号声明强制要求，所以可以是 `undefined`，这种场景出现在分页列表中获取第一页的情况下。此外，`issues` 列表字段中的 `last` 参数改成了 `first`，因为获取到最后一个条目之后就不存在下一页了，因此必须从第一个条目开始不断获取更多内容，直到到达列表中的最后一个条目为止。
 
-That's it for fetching the next page of a paginated list with GraphQL in React, except one final step. Nothing updates the local state of the App component about a page of issues yet, so there are still only the issues from the initial request. You want to merge the old pages of issues with the new page of issues in the local state of the App component, while keeping the organization and repository information in the deeply nested state object intact. The perfect time for doing this is when the promise for the query resolves. You already extracted it as a function outside of the App component, so you can use this place to handle the incoming result and return a result with your own structure and information. Keep in mind that the incoming result can be an initial request when the App component mounts for the first time, or after a request to fetch more issues happens, such as when the "More" button is clicked.
+> That's it for fetching the next page of a paginated list with GraphQL in React, except one final step. Nothing updates the local state of the App component about a page of issues yet, so there are still only the issues from the initial request. You want to merge the old pages of issues with the new page of issues in the local state of the App component, while keeping the organization and repository information in the deeply nested state object intact. The perfect time for doing this is when the promise for the query resolves. You already extracted it as a function outside of the App component, so you can use this place to handle the incoming result and return a result with your own structure and information. Keep in mind that the incoming result can be an initial request when the App component mounts for the first time, or after a request to fetch more issues happens, such as when the "More" button is clicked.
 
 以上就基本是在 React 应用中使用 GraphQL 获取分页列表所需的过程，不过还差最后一步。目前为止，App 组件中关于 issues 的状态并未得到更新，因此仅显示第一个请求中的结果。为了在保持组织和仓库基本信息不变的情况下合并 issues 的分页列表，最佳的操作时间就是查询得到的 Promise 完成时。由于这个过程已经被提取为 App 组件之外的独立函数，因此可以在该函数中对输入数据进行必要的数据处理。需要注意的是，这里的输入数据既可以是应用挂载时的第一次请求结果，也可以是点击 "More" 按钮时获取的后续结果。
 
@@ -1286,11 +1301,11 @@ const resolveIssuesQuery = (queryResult, cursor) => state => {
 # leanpub-end-insert
 ~~~~~~~~
 
-The function is a complete rewrite, because the update mechanism is more complex now. First, you passed the `cursor` as an argument to the function, which determines whether it was an initial query or a query to fetch another page of issues. Second, if the `cursor` is `undefined`, the function can return early with the state object that encapsulates the plain query result, same as before. There is nothing to keep intact in the state object from before, because it is an initial request that happens when the App component mounts or when a user submits another request which should overwrite the old state anyway. Third, if it is a fetch more query and the cursor is there, the old and new issues from the state and the query result get merged in an updated list of issues. In this case, a JavaScript destructuring alias is used to make naming both issue lists more obvious. Finally, the function returns the updated state object. Since it is a deeply nested object with multiple levels to update, use the JavaScript spread operator syntax to update each level with a new query result. Only the `edges` property should be updated with the merged list of issues.
+> The function is a complete rewrite, because the update mechanism is more complex now. First, you passed the `cursor` as an argument to the function, which determines whether it was an initial query or a query to fetch another page of issues. Second, if the `cursor` is `undefined`, the function can return early with the state object that encapsulates the plain query result, same as before. There is nothing to keep intact in the state object from before, because it is an initial request that happens when the App component mounts or when a user submits another request which should overwrite the old state anyway. Third, if it is a fetch more query and the cursor is there, the old and new issues from the state and the query result get merged in an updated list of issues. In this case, a JavaScript destructuring alias is used to make naming both issue lists more obvious. Finally, the function returns the updated state object. Since it is a deeply nested object with multiple levels to update, use the JavaScript spread operator syntax to update each level with a new query result. Only the `edges` property should be updated with the merged list of issues.
 
 由于更新机制变得更复杂，该函数也经历了全面重写。首先，`cursor` 被作为函数参数传入，用于确定是首次查询还是获取下一页内容的查询；随后，当 `cursor` 是 `undefined` 时函数会提前结束并将查询结果简单包装后直接返回，与原先的逻辑相同，这里对应于 App 组件挂载或者用户提交新的输入的场景，应当覆盖之前的状态；其次，当 `cursor` 存在也就是加载更多的查询时，查询结果中的 issues 列表会与已有的列表进行合并，为了显得更为直观而使用了 JavaScript 解构别名语法；最后，该函数返回了更新后的对象，由于存在多层嵌套而使用了 JavaScript 扩展（Spread）语法逐层更新，不过只有 `edges` 属性需要更新为合并后的 issues 列表。
 
-Next, use the `hasNextPage` property from the `pageInfo` that you requested to show a "More" button (or not). If there are no more issues in the list, the button should disappear.
+> Next, use the `hasNextPage` property from the `pageInfo` that you requested to show a "More" button (or not). If there are no more issues in the list, the button should disappear.
 
 之后，根据 `pageInfo` 对象中的 `hasNextPage` 来决定是否显示 "More" 按钮，当没有更多页面时按钮消失。
 
@@ -1313,18 +1328,18 @@ const Repository = ({ repository, onFetchMoreIssues }) => (
 );
 ~~~~~~~~
 
-Now you've implemented pagination with GraphQL in React. For practice, try more arguments for your issues and reactions list fields on your own. Check the "Docs" sidebar in GraphiQL to find out about arguments you can pass to list fields. Some arguments are generic, but have arguments that are specific to lists. These arguments should show you how finely-tuned requests can be with a GraphQL query.
+> Now you've implemented pagination with GraphQL in React. For practice, try more arguments for your issues and reactions list fields on your own. Check the "Docs" sidebar in GraphiQL to find out about arguments you can pass to list fields. Some arguments are generic, but have arguments that are specific to lists. These arguments should show you how finely-tuned requests can be with a GraphQL query.
 
 至此你已经成功地在 React 应用中实现了基于 GraphQL 的分页功能，如果需要，可以自行练习更多关于 issues 和 reactions 的参数使用。通过 GraphiQL 中地 "Docs" 边栏可以查看列表字段的参数信息，有些参数是公共的，而有些是部分列表所特有的，这些参数将帮助你实现精致的 GraphQL 查询。
 
-### Exercises:
+> ### Exercises:
 
 ### 练习：
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/060677346e8955fb1a6c7579859ce92e62e1f406)
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/060677346e8955fb1a6c7579859ce92e62e1f406)
 * 确认[上一节的源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/060677346e8955fb1a6c7579859ce92e62e1f406)
-* Explore further arguments, generic or specific for the type, on the `issues` and `reactions` list fields
-  * Think about ways to beautify the updating mechanism of deeply nested state objects and [contribute your thoughts to it](https://github.com/rwieruch/react-graphql-github-apollo/pull/14)
+> * Explore further arguments, generic or specific for the type, on the `issues` and `reactions` list fields
+  > * Think about ways to beautify the updating mechanism of deeply nested state objects and [contribute your thoughts to it](https://github.com/rwieruch/react-graphql-github-apollo/pull/14)
 * 探索更多关于 `issues` 和 `reactions` 列表字段的参数信息，包括公共和类型独有的参数
   * 思考对深度嵌套状态对象的更新机制的优化方案，并[在此贡献你的想法](https://github.com/rwieruch/react-graphql-github-apollo/pull/14)
 
