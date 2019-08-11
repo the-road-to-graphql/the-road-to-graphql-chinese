@@ -21,7 +21,7 @@ https://api.domain.com/authors/7
 
 > Though REST was the status quo for a long time, a Facebook technology called GraphQL has recently emerged as a potential successor. The following sections introduce GraphQL's advantages and disadvantages, as well as possible alternatives for developers who need options.
 
-尽管 REST 已经成为现行通用标准很长一段时间了，但最近出现了一个来自 Facebook 的技术，GraphQL，它很可能成为其潜在的继任者。接下来的部分将介绍 GraphQL 的优劣势，以便需要 REST 替代方案的开发人员做选择。
+尽管 REST 已经成为现行通用标准很长一段时间了，但最近出现了一个来自 Facebook 的技术，GraphQL，它很可能成为其潜在的继任者。接下来的部分将介绍 GraphQL 的优劣势，以便能提供给需要 REST 替代方案的开发人员更多选择。
 
 > ## What is GraphQL? 
 
@@ -218,7 +218,7 @@ GraphQL 的生态系统在不断成长。现在不仅仅有为 GraphQL 强类型
 
 > ### GraphQL Query Complexity             
 
-### 查询的复杂性
+### GraphQL 查询的复杂性
 
 > People often mistake GraphQL as a replacement for server-side databases, but it's just a query language. Once a query needs to be resolved with data on the server, a GraphQL agnostic implementation usually performs database access. GraphQL isn't opinionated about that. Also, GraphQL doesn't take away performance bottlenecks when you have to access multiple fields (authors, articles, comments) in one query. Whether the request was made in a RESTful architecture or GraphQL, the varied resources and fields still have to be retrieved from a data source. As a result, problems arise when a client requests too many nested fields at once. Frontend developers are not always aware of the work a server-side application has to perform to retrieve data, so there must be a mechanism like maximum query depths, query complexity weighting, avoiding recursion, or persistent queries for stopping inefficient requests from the other side.
 
@@ -226,7 +226,7 @@ GraphQL 的生态系统在不断成长。现在不仅仅有为 GraphQL 强类型
 
 > ### GraphQL Rate Limiting             
 
-### 速率限制（Rate Limiting）
+### GraphQL 速率限制
 
 > Another problem is rate limiting. Whereas in REST it is simpler to say "we allow only so many resource requests in one day", it becomes difficult to make such a statement for individual GraphQL operations, because it can be everything between a cheap or expensive operation. That's where companies with [public GraphQL APIs come up with their specific rate limiting calculations](https://developer.github.com/v4/guides/resource-limitations/) which often boil down to the previously mentioned maximum query depths and query complexity weighting.
 
@@ -234,7 +234,7 @@ GraphQL 的生态系统在不断成长。现在不仅仅有为 GraphQL 强类型
 
 > ### GraphQL Caching           
 
-### 缓存
+### GraphQL 的缓存
 
 > Implementing a simplified cache with GraphQL is more complex than implementing it in REST. In REST, resources are accessed with URLs, so you can cache on a resource level because you have the resource URL as identifier. In GraphQL, this becomes complex because each query can be different, even though it operates on the same entity. You may only request just the name of an author in one query, but want to know the email address in the next. That's where you need a more fine-grained cache at field level, which can be difficult to implement. However, most of the libraries built on top of GraphQL offer caching mechanisms out of the box.
 

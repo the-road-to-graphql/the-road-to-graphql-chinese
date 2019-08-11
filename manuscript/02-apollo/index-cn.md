@@ -39,7 +39,7 @@
 
 > Tech-savvy companies are taking advantage of Apollo already. Many were familiar with the popular Meteor framework before, but new and extremely popular companies like Airbnb and Twitch are using it. These are just a few of their stories:
 
-​精于技术的公司已经在利用 Apollo 了。像 Airbnb 和 Twitch 这样的新兴和极受欢迎的公司已经在使用它了，即使之前熟悉流行的 Meteor 框架。以下这些是部分案例：
+有很多拥有成熟技术的公司已经在投入 Apollo 的使用了，他们以前熟悉的或许是像 Meteor 那样的流行框架，但像 Airbnb 和 Twitch 这样的新兴并极受欢迎的公司已经在使用它了。以下为部分案例：
 
 * Airbnb [[1]](https://medium.com/airbnb-engineering/reconciling-graphql-and-thrift-at-airbnb-a97e8d290712) [[2]](https://youtu.be/oBOSJFkrNqc)
 * [Twitch](https://about.sourcegraph.com/graphql/twitch-our-graphql-transformation)
@@ -53,7 +53,7 @@
 
 > While Apollo continues to evolve, the team and community behind it keeps the documentation up to date, and they have plenty of insight about how to build applications. In fact, they cover so many areas it can be overwhelming for beginners.
 
-​虽然 Apollo 持续在发展，但它背后的团队和社区仍然使文档保持最新，他们有许多关于如何构建应用程序的洞见。事实上，对于初学者来说他们已经覆盖了绝大多数的领域。
+​虽然 Apollo 持续在发展，但它背后的团队和社区仍然使文档保持最新，他们有许多关于如何构建应用程序的洞见。事实上，他们已经覆盖了初学者所能接触到的绝大多数领域
 
 > ### Apollo Libraries
 
@@ -73,7 +73,7 @@
 
 > Apollo comes with built-in features to pull all the complexity out of applications and handle the intersection between client and server applications. For instance, Apollo Client caches requests, which are not made twice when the result is already in the cache. The function provides a performance boost for applications, saving valuable network traffic. Also, Apollo Client normalizes data, so nested data from a GraphQL query is stored in a normalized data structure in the Apollo Client Cache. Data can be read from the Apollo Client Cache by an identifier, without looking up an "article" entity in an "author" entity. Beyond caching and normalization, Apollo Client comes with many more features like error management, support for pagination and optimistic UI, prefetching of data, and connection of the data layer (Apollo Client) to the view layer (e.g. React).
 
-​Apollo 具有内置功能，可以将复杂性从应用程序中解脱出来，并且处理客户端和服务端应用程序之间的交集。例如： Apollo 客户端缓存请求，从而使当缓存中已经存在结果时，请求不会被发送两次。该功能可为应用程序提供性能提升，节省宝贵的网络流量。并且, Apollo 客户端会规范化数据，从而使 GraphQL 查询中嵌套的数据被存储在 Apollo 客户端缓存中的规范化数据结构中。数据可以通过标识符从 Apollo 客户端缓存中被读取，而不需要在 "author" 实体中查找 "article" 实体。除了缓存和规范化， Apollo 客户端还有很多新功能，比如：错误管理，支持分页和乐观UI ，预获取数据，将数据层（Apollo 客户端）连接到视图层（如：React）。
+​Apollo 内置了许多特性将复杂性从应用间抽离出来，并且处理客户端和服务端应用程序之间的交集。例如： Apollo 客户端缓存请求，从而使当缓存中已经存在结果时，请求不会被发送两次。该功能可为应用程序提供性能提升，节省宝贵的网络流量。并且, Apollo 客户端会规范化数据，从而使 GraphQL 查询中嵌套的数据被存储在 Apollo 客户端缓存中的规范化数据结构中。数据可以通过标识符从 Apollo 客户端缓存中被读取，而不需要在 "author" 实体中查找 "article" 实体。除了缓存和规范化， Apollo 客户端还有很多新功能，比如：错误管理，支持分页和乐观 UI ，预获取数据，将数据层（Apollo 客户端）连接到视图层（如：React）。
 
 > ### Interoperability with other Frameworks
 
@@ -109,7 +109,7 @@
 
 > ### Convenient Development Experience
 
-### 便捷的开发经验
+### 便捷的开发体验
 
 > Using Apollo for JavaScript applications is becoming easier every day. The community is pushing out tools for implementation. There are development tools available as browser extensions, third-party tools to perform GraphQL operations such as GraphiQL, and libraries to simplify developing Apollo applications. For instance, the Apollo Boost library provides an almost zero-configuration Apollo Client setup to get started with GraphQL for client-side applications. Apollo takes away all the boilerplate implementation that comes with the GraphQL reference implementation in JavaScript.
 
@@ -145,7 +145,7 @@
 
 > Rapid development also comes with the price of neglecting obsolete earlier versions. In my experience, [people seemed confused when Apollo abandoned Redux](https://github.com/apollographql/apollo-client/issues/2593) as their internal state management solution. Apollo isn't opinionated about how Redux should be used side by side with it, but since it has been abandoned as internal state management solution, many people didn't know how to proceed when Apollo 2.0 was released. I think the team behind Apollo might be struggling to keep up with the fast-paced GraphQL ecosystem, and it's not always easy to heed all voices in open source development.
 
-​快速开发还伴随着忽视过早期版本的代价。据我的经验，[人们对于 Apollo 放弃 Redux 作为内部状态管理的解决方案感到困惑](https://github.com/apollographql/apollo-client/issues/2593)。Apollo 并没有对 Redux 应该如何与它一起使用发表意见，但是因为它的内部已经决定放弃 Redux 作为内部状态管理的解决方案，当 Apollo 2.0 发布时，许多人并不知道如何继续。我认为Apollo背后的团队可能正在努力跟上快节奏的 GraphQL 生态系统，但是能够注意到开源开发中的所有声音并不是那么容易。
+​快速开发还伴随着忽视过早期版本的代价。据我的经验，[人们对于 Apollo 放弃 Redux 作为内部状态管理的解决方案感到困惑](https://github.com/apollographql/apollo-client/issues/2593)。Apollo 并没有对 Redux 应该如何与它一起使用发表意见，但是因为它的内部已经决定放弃 Redux 作为内部状态管理的解决方案，当 Apollo 2.0 发布时，许多人并不知道如何继续。我认为 Apollo 背后的团队可能正在努力跟上快节奏的 GraphQL 生态系统，但是能够注意到开源开发中的所有声音并不是那么容易。
 
 > ### It is Bold and Fashionable
 
