@@ -6,7 +6,7 @@
 
 > GraphQL is only the query language that has a reference implementation in JavaScript, and Apollo builds its ecosystem on top to make GraphQL available for a wider audience. This includes the client-side as well as the server-side, because they provide a large ecosystem of libraries for both. The libraries provide an intermediate layer too: Apollo Engine, which is a GraphQL gateway. Essentially there's a reason Apollo is one of the most popular choices for using GraphQL in JavaScript applications.
 
-​GraphQL 作为一个查询语言，不仅在 JavaScript 中有一个可供参考的实现，Apollo 在其之上构建了它的生态系统，以使 GraphQL 可供更广泛的用户使用。它包括客户端和服务端，因为他们为两端都提供了一个庞大的库生态系统。这些库也提供了一个中间层 — Apollo Engine，它是一个 GraphQL 网关。本质上讲，Apollo 能成为在 JavaScript 应用中使用 GraphQL 的最流行选择之一也是有原因的。
+​GraphQL 作为一个查询语言，不仅在 JavaScript 中有一个可供参考的实现，Apollo 在其之上构建了它自己的生态系统，以使 GraphQL 可供更广泛的用户使用。它包括客户端和服务端，他们为两端都提供了一个庞大的库生态系统。这些库也提供了一个中间层 — Apollo Engine，它是一个 GraphQL 网关。本质上讲，Apollo 能成为在 JavaScript 应用中使用 GraphQL 的最流行选择之一也是有原因的。
 
 > ## Apollo Advantages
 

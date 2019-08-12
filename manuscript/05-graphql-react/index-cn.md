@@ -904,7 +904,7 @@ const getIssuesOfRepository = path => {
 ### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
-* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
+* 确认[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
 > * Explore and add fields to your organization, repository and issues
 * 探索你的组织、代码库和 issues 中并尝试添加字段
 >   * Extend your components to display the additional information
@@ -1337,7 +1337,7 @@ const Repository = ({ repository, onFetchMoreIssues }) => (
 ### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/060677346e8955fb1a6c7579859ce92e62e1f406)
-* 确认[上一节的源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/060677346e8955fb1a6c7579859ce92e62e1f406)
+* 确认[本节源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/060677346e8955fb1a6c7579859ce92e62e1f406)
 > * Explore further arguments, generic or specific for the type, on the `issues` and `reactions` list fields
   > * Think about ways to beautify the updating mechanism of deeply nested state objects and [contribute your thoughts to it](https://github.com/rwieruch/react-graphql-github-apollo/pull/14)
 * 探索更多关于 `issues` 和 `reactions` 列表字段的参数信息，包括公共和类型独有的参数
@@ -1728,7 +1728,7 @@ const resolveAddStarMutation = mutationResult => state => {
 ### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/3dcd95e32ef24d9e716a1e8ac144b62c0f41ca3c)
-* 确认[上一节的源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/3dcd95e32ef24d9e716a1e8ac144b62c0f41ca3c)
+* 确认[本节源代码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/3dcd95e32ef24d9e716a1e8ac144b62c0f41ca3c)
 > * Implement the `removeStar` mutation, which is used analog to the `addStar` mutation.
   > * The `onStarRepository` class method has already access to the `viewerHasStarred` property.
   > * Conditionally execute a `addStar` or `removeStar` mutation in the class handler.

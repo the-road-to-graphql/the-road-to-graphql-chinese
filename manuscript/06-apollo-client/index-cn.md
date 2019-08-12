@@ -4,7 +4,7 @@
 
 > Apollo is an entire ecosystem built by developers as an infrastructure for GraphQL applications. You can use it on the client-side for a GraphQL client application, or server-side for a GraphQL server application. At the time of writing this tutorial, Apollo offers the richest and most popular ecosystem around GraphQL in JavaScript. There are other libraries for React applications like [Relay](http://facebook.github.io/relay) and [Urql](https://github.com/FormidableLabs/urql), but they are just for React applications, and they are not as popular as the Apollo Client. Apollo is framework agnostic, meaning you can use it with libraries other than React. It can be coupled with other libraries/frameworks like Vue and Angular as well, so everything you learn in this tutorial is likely transferable to the others.
 
-Apollo 是一个由开发人员构建的作为 GraphQL 应用程序基础设施的整个生态系统。你可以在客户端将其用于 GraphQL 客户端应用程序，或者在服务器端将其用于 GraphQL 服务端应用程序。在编写本教程时，Apollo 提供了在 JavaScript 中最丰富和最流行的 GraphQL 生态系统。尽管还有其他用于 React 应用程序的库，如 [Relay](http://facebook.github.io/relay) 和 [Urql](https://github.com/FormidableLabs/urql)，但它们仅适用于 React 应用程序，并不像 Apollo Client 那么受欢迎。Apollo 是与框架无关的，这意味着你还可以将其与 React 之外的库一起使用，比如 Vue 和 Angular 等，因此你在本教程中学到的所有内容都可以迁移到其他库 / 框架中。
+Apollo 是一个由开发人员构建的作为 GraphQL 应用程序基础设施的整个生态系统。你可以在客户端将其用于 GraphQL 客户端应用程序，或者在服务器端将其用于 GraphQL 服务端应用程序。在编写本教程时，Apollo 提供了在 JavaScript 中最丰富和最流行的 GraphQL 生态系统。尽管还有其他用于 React 应用程序的库，如 [Relay](http://facebook.github.io/relay) 和 [Urql](https://github.com/FormidableLabs/urql)，但它们仅适用于 React 应用程序，并不像 Apollo Client 那么受欢迎。Apollo 是与框架无关的，这意味着你还可以将其与 React 之外的库一起使用，比如 Vue 和 Angular 等，因此你在本教程中学到的所有内容都可以迁移到其他库或者框架中。
 
 > ## Starting with Apollo Boost on the Command Line
 
@@ -12,7 +12,7 @@ Apollo 是一个由开发人员构建的作为 GraphQL 应用程序基础设施�
 
 > This application starts by introducing Apollo Client with Apollo Boost. The latter allows you to create a zero-configuration Apollo Client to get started the fastest and most convenient way. This section focuses on the Apollo Client instead of React for the sake of learning. To get started, find the [Node.js boilerplate project and its installation instructions](https://github.com/rwieruch/node-babel-server). You will use Apollo Client on the command line in a Node.js environment for now. On top of the minimal Node.js project, you will introduce the Apollo Client with Apollo Boost to experience the GraphQL client without a view-layer library.
 
-这个应用程序首先通过 Apollo Boost 来引入 Apollo Client。Apollo Boost 可以让你通过创建一个零配置的 Apollo Client 来最快速，最方便地开始。为了便于学习，本节重点放在 Apollo Client 而不是 React。首先，请找到 [Node.js 样板项目及其安装说明](https://github.com/rwieruch/node-babel-server)。目前你将在命令行中的 Node.js 环境中使用 Apollo Client。在一个最小的 Node.js 项目之上，你将通过 Apollo Boost 引入 Apollo Client 来体验没有视图层库的 GraphQL 客户端。
+这个应用程序首先通过 Apollo Boost 来引入 Apollo Client。通过 Apollo Boost， 你可以不做任何配置地，快速、方便地的创建一个 Apollo Client。为了便于学习，本节重点放在 Apollo Client 而不是 React。首先，请找到 [Node.js 样板项目及其安装说明](https://github.com/rwieruch/node-babel-server)。目前你将在命令行中的 Node.js 环境中使用 Apollo Client。在一个最小的 Node.js 项目之上，你将通过 Apollo Boost 引入 Apollo Client 来体验没有视图层库的 GraphQL 客户端。
 
 > In the following, you will consume GitHub's GraphQL API, and then output the queries and mutation results in the command line. To do this, you need a personal access token on GitHub's website, which we covered in a previous chapter. If you haven't done it yet, head to [GitHub's instructions](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) to generate a personal access token with sufficient permissions.
 
@@ -33,11 +33,11 @@ npm install apollo-boost graphql --save
 
 > In the next steps, you will configure and use the Apollo Client that comes with Apollo Boost in the *src/index.js* file of the project. The project stays small, and you will only implement it in this section, so for now we can have everything in one file for the sake of learning.
 
-在接下来的步骤中，你将在项目的 *src/index.js* 文件中配置和使用 Apollo Boost 提供的 Apollo Client。这个项目比较小，而且你只会在本节中实现它，所以便于学习目前我们可以将所有内容都放在一个文件中。
+在接下来的步骤中，你将在项目的 *src/index.js* 文件中配置和使用 Apollo Boost 提供的 Apollo Client。这个项目比较小，而且你只会在本节中实现它，因此，为了便于学习，目前我们可以将所有内容都放在一个文件中。
 
 > In your *src/index.js* file, you can import the Apollo Client from Apollo Boost. After that, you can create a client instance by calling its constructor with a URI. The client needs to know where the data comes from, and where it should be written, so you can pass GitHub's API endpoint to it.
 
-在你的 *src/index.js* 文件中，你可以从 Apollo Boost 导入 Apollo Client。然后，你可以通过使用 URI 为参数调用其构造函数来创建一个客户端实例。客户端需要知道数据的来源以及应该写入的位置，那么你可以将 GitHub 的 API endpoint 传递给它。
+在你的 *src/index.js* 文件中，你可以从 Apollo Boost 导入 Apollo Client。然后，你可以通过使用 URI 为参数调用其构造函数来创建一个客户端实例。客户端需要知道数据的来源以及应该写入的位置，那么你可以将 GitHub 的 API 端点传递给它。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -72,7 +72,7 @@ const client = new ApolloClient({
 
 > You did the same for the previous application, using only axios for plain HTTP requests. You configured axios once with the GraphQL API endpoint to default all requests to this URI, and set up the authorization header. The same happened here, because it's enough to configure your client once for all the following GraphQL requests.
 
-你在之前的应用程序中做了相同的操作，仅使用 axios 进行纯 HTTP 请求。你使用 GraphQL API endpoint 为 axios 配置了一次，从而让所有的请求都默认访问这个 URI，并且设置授权头。这里也一样，为所有后续的 GraphQL 请求配置一次客户端就足够了。
+你在之前的应用程序中做了相同的操作，仅使用 axios 进行纯 HTTP 请求。你使用 GraphQL API 端点为 axios 配置了一次，从而让所有的请求都默认访问这个 URI，并且设置授权头。这里也一样，为所有后续的 GraphQL 请求配置一次客户端就足够了。
 
 > Remember, replace the `YOUR_GITHUB_PERSONAL_ACCESS_TOKEN` string with your personal access token you created on GitHub's website before. However, you may not want to put your access token directly into the source code, so you can create a *.env* file which holds all of your environment variables in your project folder. If you don't want to share the personal token in a public GitHub repository, you can also add the file to your *.gitignore* file. In the command line, you can create this file:
 
@@ -153,11 +153,11 @@ import ApolloClient from 'apollo-boost';
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/fd067ec045861e9832cc0b202b25f8d8efd651c9)
 
-* 确认你 [上一节的源码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/fd067ec045861e9832cc0b202b25f8d8efd651c9)
+* 确认[本节源代码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/fd067ec045861e9832cc0b202b25f8d8efd651c9)
 
 > * Read more about [other view integrations such as Angular and Vue](https://www.apollographql.com/docs/react/integrations.html)
 
-* 阅读更多关于 [其他视图集成，如 Angular 和 Vue](https://www.apollographql.com/docs/react/integrations.html)
+* 延伸阅读：[其他视图集成，如 Angular 和 Vue](https://www.apollographql.com/docs/react/integrations.html)
 
 > * Invest a few minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5T3W9BB)
 
@@ -238,7 +238,7 @@ client
 
 > The requested information from the GraphQL query can be found in the `data` object. There, you will find the `organization` object with its `name` and `url` fields. The Apollo Client automatically requests the GraphQL [meta field](http://graphql.org/learn/queries/#meta-fields) `__typename`. The meta field can be used by the Apollo Client as an identifier, to allow caching and optimistic UI updates.
 
-GraphQL 查询中请求的信息可以在 `data` 对象中找到。`data` 对象包含 `organization` 对象及其 `name` 和 `url` 字段。Apollo Client 会自动请求 GraphQL[元字段](http://graphql.org/learn/queries/#meta-fields) `__typename`。Apollo Client 可以使用元字段作为标识符，以允许缓存和乐观的 UI 更新。
+GraphQL 查询中请求的信息可以在 `data` 对象中找到。`data` 对象包含 `organization` 对象及其 `name` 和 `url` 字段。Apollo Client 会自动请求 GraphQL [元字段](http://graphql.org/learn/queries/#meta-fields) `__typename`。Apollo Client 可以使用元字段作为标识符，以允许缓存和乐观的 UI 更新。
 
 > More meta information about the request can be found next to the `data` object. It shows whether the data is still loading, as well as specific details about the [network status](https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts), and whether the requested data is stale on the server-side.
 
@@ -250,7 +250,7 @@ GraphQL 查询中请求的信息可以在 `data` 对象中找到。`data` 对象
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/7a800c78e0e09f84b47f4e714abac1d23f5e599e)
 
-* 确认你 [上一节的源码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/7a800c78e0e09f84b47f4e714abac1d23f5e599e)
+* 确认[本节源代码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/7a800c78e0e09f84b47f4e714abac1d23f5e599e)
 
 > * Explore GitHub's GraphQL API
 
@@ -266,15 +266,15 @@ GraphQL 查询中请求的信息可以在 `data` 对象中找到。`data` 对象
 
 > * Read more about [why you should use Apollo Client](https://www.apollographql.com/docs/react/why-apollo.html)
 
-* 阅读更多关于 [为什么你应该使用 Apollo Client](https://www.apollographql.com/docs/react/why-apollo.html)
+* 延伸阅读：[为什么你应该使用 Apollo Client](https://www.apollographql.com/docs/react/why-apollo.html)
 
 > * Read more about the [networkStatus property and its possible values](https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts)
 
-* 阅读有关 [networkStatus 属性及其可能值](https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts)
+* 延伸阅读： [networkStatus 属性及其可能值](https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts)
 
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5MF35H5)
 
-* 花 3 分钟时间来进行测验
+* 花 3 分钟时间来进行[测验](https://www.surveymonkey.com/r/5MF35H5)
 
 
 
