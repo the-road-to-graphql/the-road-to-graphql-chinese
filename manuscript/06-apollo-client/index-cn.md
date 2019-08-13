@@ -149,7 +149,7 @@ import ApolloClient from 'apollo-boost';
 
 > ### Exercises:
 
-### 练习
+### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/fd067ec045861e9832cc0b202b25f8d8efd651c9)
 
@@ -246,7 +246,7 @@ GraphQL 查询中请求的信息可以在 `data` 对象中找到。`data` 对象
 
 > ### Exercises:
 
-### 练习
+### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/7a800c78e0e09f84b47f4e714abac1d23f5e599e)
 
@@ -270,7 +270,7 @@ GraphQL 查询中请求的信息可以在 `data` 对象中找到。`data` 对象
 
 > * Read more about the [networkStatus property and its possible values](https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts)
 
-* 延伸阅读： [networkStatus 属性及其可能值](https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts)
+* 延伸阅读：[networkStatus 属性及其可能值](https://github.com/apollographql/apollo-client/blob/master/packages/apollo-client/src/core/networkStatus.ts)
 
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5MF35H5)
 
@@ -363,11 +363,11 @@ client
 
 > ### Exercises:
 
-### 练习
+### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/a5b1ce61a3dae3ead1b9795f5bf6e0d090c5d24f)
 
-* 确认你 [上一节的源代码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/a5b1ce61a3dae3ead1b9795f5bf6e0d090c5d24f)
+* 确认[本节源代码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/a5b1ce61a3dae3ead1b9795f5bf6e0d090c5d24f)
 
 > * Explore GitHub's GraphQL API
 
@@ -383,7 +383,7 @@ client
 
 > * Read more about [pagination in GraphQL](https://graphql.org/learn/pagination)
 
-* 阅读更多关于 [GraphQL 中的分页](https://graphql.org/learn/pagination)
+* 延伸阅读：[GraphQL 中的分页](https://graphql.org/learn/pagination)
 
 > * Add the pagination feature for list of repositories
 
@@ -407,7 +407,7 @@ client
 
 > * Take the three-minute [quiz](https://www.surveymonkey.com/r/SWL9NJ7)
 
-* 花三分钟进行 [测验](https://www.surveymonkey.com/r/SWL9NJ7)
+* 花三分钟进行[测验](https://www.surveymonkey.com/r/SWL9NJ7)
 
 > ## Apollo Client and a GraphQL Mutation
 
@@ -415,7 +415,7 @@ client
 
 > Previously, you learned how to query data from GitHub's GraphQL API using the Apollo Client. Once the client is set up with a configuration, you can use its `query()` method to send a GraphQL `query` with optional `variables`. As you have learned, reading data with GraphQL is not everything, because there are mutations for writing data as well. In this section, you are going to define a mutation to star a repository on GitHub. The Apollo Client instance sends the mutation, but first you have to define it.
 
-前几节你学习了如何使用 Apollo Client 从 GitHub 的 GraphQL API 查询数据。一旦配置好了 Apollo Client，就可以使用其 `query()` 方法发送带有可选 `variables` 的 GraphQL` 查询 `。正如你所了解的那样，我们不仅可以使用 GraphQL 来读取数据，还可以用变更来写入数据。在本节中，你将定义一个变更来为 GitHub 上的代码库加 star。Apollo Client 实例会发送变更，但首先你必须定义它。
+前几节你学习了如何使用 Apollo Client 从 GitHub 的 GraphQL API 查询数据。一旦配置好了 Apollo Client，就可以使用其 `query()` 方法发送带有可选 `variables` 的 GraphQL `查询`。正如你所了解的那样，我们不仅可以使用 GraphQL 来读取数据，还可以通过变更来写入数据。在本节中，你将定义一个变更来为 GitHub 上的代码库加 star。Apollo Client 实例会发送变更，但首先你必须定义它。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -461,19 +461,19 @@ client
 
 > ### Exercises:
 
-### 练习
+### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/ed3363c9981c552223117e5e775bb8c535f79ff5)
 
-* 确认你 [上一节的源码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/ed3363c9981c552223117e5e775bb8c535f79ff5)
+* 确认[本节源码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/ed3363c9981c552223117e5e775bb8c535f79ff5)
 
 > * Implement the `removeStar` mutation next to the `addStar` mutation
 
-* 在 `addStar` 变更旁边实现 `removeStar` 变更
+* 仿照 `addStar` 变更实现 `removeStar` 变更
 
 > * Invest three minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5XMNFSY)
 
-* 花三分钟的时间进行 [测验](https://www.surveymonkey.com/r/5XMNFSY)
+* 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/5XMNFSY)
 
 | |
 
