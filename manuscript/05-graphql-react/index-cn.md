@@ -240,7 +240,7 @@ You might wonder why there is only one input field to grab the information about
 
 ### 练习：
 
-* 查看 [本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/ca7b278b8f602c46dfac64a1304d39a8e8e0006b)
 
 * 如果你不熟悉 React，可以阅读 *React 学习之道*
 
@@ -904,7 +904,7 @@ const getIssuesOfRepository = path => {
 ### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
-* 确认[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-vanilla/tree/c08126a9ec91dde4198ae85bb2f194fa7767c683)
 > * Explore and add fields to your organization, repository and issues
 * 探索你的组织、代码库和 issues 中并尝试添加字段
 >   * Extend your components to display the additional information

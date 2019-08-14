@@ -465,7 +465,7 @@ client
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/ed3363c9981c552223117e5e775bb8c535f79ff5)
 
-* 确认[本节源码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/ed3363c9981c552223117e5e775bb8c535f79ff5)
+* 查看[本节源码](https://github.com/the-road-to-graphql/node-apollo-boost-github-graphql-api/tree/ed3363c9981c552223117e5e775bb8c535f79ff5)
 
 > * Implement the `removeStar` mutation next to the `addStar` mutation
 

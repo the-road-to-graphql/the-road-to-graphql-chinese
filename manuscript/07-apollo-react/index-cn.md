@@ -1,21 +1,21 @@
 > # React with GraphQL and Apollo Client
 
-# React 结合 GraphQL 与 Apollo Client
+# React 结合 GraphQL 与 Apollo 客户端
 
 > In this tutorial, you will learn how to combine React with GraphQL in your application using Apollo. The Apollo toolset can be used to create a GraphQL client, GraphQL server, and other complementary applications, but you will use the Apollo Client for your React client-side application. Along the way, you will build a simplified GitHub client that consumes [GitHub's GraphQL API](https://developer.github.com/v4/) using Apollo instead of plain HTTP requests like the previous application. Apollo Client can be used to perform queries and mutations, and to read and write data. By the end, you should be able to showcase a React application using GraphQL and Apollo that can be used by other developers as a learning tool. You can find the final project as a [repository on GitHub](https://github.com/rwieruch/react-graphql-github-apollo).
 
-在本章中，你会学到如何通过 Apollo 将 GraphQL 与 React 结合。虽然 Apollo 工具集可以创建 GraphQL client、GraphQL server 以及其他通用应用，但是这里你会在 React 客户端应用使用 Apollo Client。通过这种方式，你将实现一个简单 Github client 使用 Apollo (而不是像之前那样直接使用普通 HTTP 请求的方式) 消费[Github 的 GraphQL API](https://developer.github.com/v4/)。Apollo Client 可以通过执行查询（query）和变更（mutation），来读写数据。在学完本章后，你将得到一个使用 Apollo 和 GraphQL 的 React 应用，它可以作为其他开发者的一份学习参考。你可以在这里找到最终的项目——[GitHub 代码库](https://github.com/rwieruch/react-graphql-github-apollo)。
+在本章中，你会学到如何通过 Apollo 将 GraphQL 与 React 结合。虽然 Apollo 工具集可以创建 GraphQL 客户端、GraphQL 服务端以及其他通用应用，但是这里你会在 React 客户端应用使用 Apollo 客户端。通过这种方式，你将实现一个简单 Github 客户端，并使用 Apollo (而不是像之前那样直接使用普通 HTTP 请求的方式) 消费 [Github 的 GraphQL API](https://developer.github.com/v4/)。Apollo 客户端可以通过执行查询和变更，来读写数据。在学完本章后，你将得到一个使用 Apollo 和 GraphQL 的 React 应用，它可以作为其他开发者的一份学习参考。你可以在 [GitHub 代码库](https://github.com/rwieruch/react-graphql-github-apollo)里找到最终的项目。
 
 > ## Writing your first React application with GraphQL and Apollo Client
-## 编写第一个使用 GraphQL 和 Apollo Client 的 React 应用
+## 编写第一个使用 GraphQL 和 Apollo 客户端的 React 应用
 
 > Now we'll focus on using Apollo Client in React by building another client application. Basically, you will learn how to connect the data-layer to the view-layer. We'll cover how to send queries and mutations from the view-layer, and how to update the view-layer to reflect the result. Further, you will learn to use GraphQL features like pagination, optimistic UI, caching, local state management, and prefetching with Apollo Client in React.
 
-现在我们开始在 React 中使用 Apollo Client 构建另一个应用。你会学到如何连接数据层与视图层，涉及如何从视图层发送 query 和 mutation，以及如何根据返回结果更新视图层。然后，你将了解如何在 React 中结合 Apollo Client，使用如分页、乐观 UI、缓存、本地状态管理以及预加载的 GraphQL 特性。
+现在我们开始在 React 中使用 Apollo 客户端构建另一个应用。你会学到如何连接数据层与视图层，涉及如何从视图层发送查询和变更，以及如何根据返回结果更新视图层。然后，你将了解如何在 React 中结合 Apollo 客户端，使用如分页、乐观 UI、缓存、本地状态管理以及预加载的 GraphQL 特性。
 
 > For this application, no elaborate React setup is needed. Simply use [create-react-app](https://github.com/facebook/create-react-app) to create your React application. If you want to have an elaborate React setup instead, see this [setup guide for using Webpack with React](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/). To get started, the following steps have to be performed:
 
-对于这个应用，不需要复杂的初始化配置。使用 [create-react-app](https://github.com/facebook/create-react-app) 创建一个即可。如果你希望有一个定制化的 React 初始化配置，看看这篇 [使用 Webpack 的 React 配置指南](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。首先，你需要完成下面的步骤：
+对于这个应用，不需要复杂的初始化配置。使用 [create-react-app](https://github.com/facebook/create-react-app) 创建一个即可。如果你希望有一个定制化的 React 初始化配置，看看 [使用 Webpack 的 React 配置指南](https://www.robinwieruch.de/minimal-react-webpack-babel-setup/)。首先，你需要完成下面的步骤：
 
 > * Create a new React application with create-react-app
 > * Create a folder/file structure for your project (recommendation below)
@@ -74,24 +74,24 @@
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5N9W2WR)
 
 * 如果你对 React 不熟悉，可以阅读 *React 学习之道*
-* 参考推荐的文件/目录结构完成项目的初始化工作（如果你不想自己设计目录结构的话，也不想直接克隆代码库）
+* 参考推荐的文件/目录结构完成项目的初始化工作（如果你既不想自己设计目录结构，也不想直接克隆代码库的话）
   * 参考 CSS 附录部分，在特定目录创建 *style.css* 文件
   * 为组件创建 *index.js* 文件
   * 接下来的教程中，创建一些自己的组件（比如 Navigation）
 * 使用 `npm start` 运行应用
   * 保证运行无错误
   * 保证只会渲染 *src/index.js* 目录下 *src/App/index.js* 这个基础组件
-* 花费 3 分钟时间，参与这份[测验](https://www.surveymonkey.com/r/5N9W2WR) 
+* 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/5N9W2WR) 
 
 > ## Configure Apollo Client for React and GitHub's GraphQL API
-## 使用 Apollo Client 为 React 配置 GitHub 的 GraphQL API 的初始化
+## 配置使用 React 和 GitHub GraphQL API 的 Apollo 客户端
 
 > In this section, you will set up an Apollo Client instance like we did previously. However, this time you will use Apollo Client directly without the zero-configuration package Apollo Boost, meaning you'll need to configure the Apollo Client yourself without sensible defaults. While it's best to use a tool with sensible defaults for learning, configuring Apollo yourself exposes the composable ecosystem of Apollo Client, how to use it for an initial setup, and how to advance this setup later.
 
-本部分，和前面一样，我们需要设置好一个 Apollo Client 实例。不过，这部分，你需要直接配置 Apollo Client，而不借助于 Apollo Boost 的零配置方式。尽管使用工具的默认配置很适合初学，不过自己去配置 Apollo Client 可以了解 Apollo 里的整个生态，了解最开始使用怎么开始初始化配置，又怎么去扩展增强这份配置。
+本节和前面一样，我们需要设置好一个 Apollo 客户端实例。不过，这部分，你需要直接配置 Apollo 客户端，而不借助于 Apollo Boost 的零配置方式。尽管使用工具的默认配置很适合初学，不过自己去配置 Apollo 客户端可以了解 Apollo 里的整个生态，了解最开始使用怎么开始初始化配置，又怎么去扩展增强这份配置。
 
 > The Apollo Client setup can be completed in the top-level *src/index.js* file, where the React to HTML entry point exists as well. First, install the Apollo Client in your project folder using the command line:
-Apollo Client 可以写在 *src/index.js* 文件中，虽然也可以在 HTML 中的 React 入口点设置。首先，在你的项目目录下，使用命令安装 Apollo Client：
+Apollo 客户端可以写在 *src/index.js* 文件中，虽然也可以在 HTML 中的 React 入口点设置。首先，在你的项目目录下，使用命令安装 Apollo 客户端：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -99,7 +99,7 @@ npm install apollo-client --save
 ~~~~~~~~
 
 > Two utility packages are required for two mandatory configurations used to create the Apollo Client. The [apollo-cache-inmemory](https://github.com/apollographql/apollo-client/tree/master/packages/apollo-cache-inmemory) is a recommended cache (read also as: store or state) for your Apollo Client to manage the data, while apollo-link-http is used to configure the URI and additional network information once for an Apollo Client instance.
-创建 Apollo Client 有两个必须的配置项，需要两个实用工具包。其中 [apollo-cache-inmemory](https://github.com/apollographql/apollo-client/tree/master/packages/apollo-cache-inmemory) 推荐用来缓存（有时也作 store 或者 state） Apollo Client 管理的数据，而 appo-link-http 是用来配置 URI 和 Apollo Client 实例需要的其他网络信息的。
+创建 Apollo 客户端有两个必须的配置项，需要两个实用工具包。其中 [apollo-cache-inmemory](https://github.com/apollographql/apollo-client/tree/master/packages/apollo-cache-inmemory) 推荐用来缓存（有时也作 store 或者 state） Apollo 客户端管理的数据，而 appo-link-http 是用来配置 URI 和 Apollo 客户端实例需要的其他网络信息的。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -107,7 +107,7 @@ npm install apollo-cache-inmemory apollo-link-http --save
 ~~~~~~~~
 
 > As you can see, nothing has been mentioned about React, only the Apollo Client plus two packages for its configuration. There are two additional packages required for Apollo Client to work with GraphQL, to be used as internal dependencies by Apollo. The latter is also used to define queries and mutations. Previously, these utilities came directly from Apollo Boost.
-> 如你所见，并没有提到 React，Apollo Client 加上两个库就是它的配置了。这是 Apollo Client 使用 GraphQL 所必须的两个额外的包，是作为 Apollo 的内部依赖，后者也用来定义 query 和 mutation 的。之前，这些工具，已经包含在 Apollo Boost 了。
+> 如你所见，并没有提到 React，Apollo 客户端加上两个库就是它的配置了。这是 Apollo 客户端使用 GraphQL 所必须的两个额外的包，是作为 Apollo 的内部依赖，后者也用来定义查询和变更。之前，这些工具，已经包含在 Apollo Boost 了。
 
 
 {title="Command Line",lang="json"}
@@ -117,7 +117,7 @@ npm install graphql graphql-tag --save
 
 > That's it for package installation, so now we enter the Apollo Client setup and configuration. In your top level *src/index.js* file, where all the Apollo Client setup will be done in this section, import the necessary classes for the Apollo Client setup from the previously installed packages.
 
-到此就完成了依赖的安装了，现在我们会进入 Apollo Client 的初始化配置。所有的 Apollo Client 配置都会在顶层的 *src/index.js* 文件中，从之前安装的依赖中，导入必要的类，完成 Apollo Client 的初始化。
+到此就完成了依赖的安装了，现在我们会进入 Apollo 客户端的初始化配置。所有的 Apollo 客户端配置都会在顶层的 *src/index.js* 文件中，从之前安装的依赖中，导入必要的类，完成 Apollo 客户端的初始化。
 
 
 {title="src/index.js",lang="javascript"}
@@ -138,7 +138,7 @@ import App from './App';
 
 > The `ApolloClient` class is used to create the client instance, and the `HttpLink` and `InMemoryCache` are used for its mandatory configurations. First, you can create a configured `HttpLink` instance, which will be fed to the Apollo Client creation.
 
-`ApooloClient` 类用来创建 Client 实例，`HttpLink` 和 `InMemoryCache` 用于必须的配置项。首先你需要创建一个可配置的 `HttpLink` 实例，在 Apollo Client 创建的时候有用。
+`ApooloClient` 类用来创建客户端实例，`HttpLink` 和 `InMemoryCache` 用于必须的配置项。首先你需要创建一个可配置的 `HttpLink` 实例，在 Apollo 客户端创建的时候有用。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -156,7 +156,7 @@ const httpLink = new HttpLink({
 
 > You may recall the mandatory configuration from previous applications. The `uri` is a mandatory value to define the only GraphQL API endpoint used by the Apollo Client. In this case, Github's GraphQL endpoint is passed as value. When consuming the GitHub GraphQL API, you have to authorize yourself with your personal access token. You should have already created the token in a previous section, which you can now define in a *.env* file in your project folder. Afterward, it should be accessible with `process.env`. Keep in mind that you have to use the `REACT_APP` prefix when using create-react-app, because that's how it is required by create-react-app. Otherwise, you would be free to choose your own naming for it.
 
-你可能记得在前面的应用中，GraphQL API endpoint 是 Apollo Client 需要的唯一配置项，本书的示例里，传入的是 Github 的 GraphQL endpoint。在消费 Github GraphQL API 前，你必须使用你的个人 access token 进行认证。你应该在前一部分中已经创建了 token（你可以在项目目录中创建一个 *.env* 文件） 了。之后，应该可以通过 `process.env` 获取这个值。记住你在使用 create-react-app 时，需要加上 `REACT_APP` 前缀，这是 create-react-app 规定的。此外，你可以随意命名。
+你可能记得在前面的应用中，GraphQL API 端点是 Apollo Client 需要的唯一配置项，本书的示例里，传入的是 Github 的 GraphQL 端点。在消费 Github GraphQL API 前，你必须使用你的个人访问令牌进行认证。你应该在前一部分中已经创建了令牌（你可以在项目目录中创建一个 *.env* 文件） 了。之后，应该可以通过 `process.env` 获取这个值。记住你在使用 create-react-app 时，需要加上 `REACT_APP` 前缀，这是 create-react-app 规定的。此外，你可以随意命名。
 
 > Second, create the cache as the place where the data is managed in Apollo Client. The cache normalizes your data, caches requests to avoid duplicates, and makes it possible to read and write data to the cache. You will use it multiple times while developing this application. The cache instantiation is straightforward, as it doesn't require you to pass any arguments to it. Check the API to explore further configurations.
 
@@ -169,7 +169,7 @@ const cache = new InMemoryCache();
 ~~~~~~~~
 
 > Finally, you can use both instantiated configurations, the link and the cache, to create the instance of the Apollo Client in the *src/index.js* file.
-最后，你需要将两个实例化的配置——link 和 cache，在 *src/index.js* 文件中添加到 Apollo Client 中，用于创建其实例。
+最后，你需要将两个实例化的配置—— link 和 cache，在 *src/index.js* 文件中添加到 Apollo Client 中，用于创建其实例。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -190,13 +190,13 @@ const client = new ApolloClient({
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5FYZT8T)
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/c7454c9f6b5f7cdf9d65722ccae7ae38f648aef3)
 * 延伸阅读：[Apollo 中的网络层配置](https://www.apollographql.com/docs/react/advanced/network-layer.html)
-* 请花费三分钟时间参与这份[测验](https://www.surveymonkey.com/r/5FYZT8T)
+* 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/5FYZT8T)
 
 > ## Connect Data-Layer to View-Layer: Introducing React Apollo
 ## 绑定数据层与视图层：介绍 React Apollo
 
 > All we've done thus far has been the framework agnostic part of Apollo Client. However, without connecting React to it, you'd have a hard time making effective use of GraphQL. That's why there is an official library to connect both worlds: [react-apollo](https://github.com/apollographql/react-apollo). The great thing about those connecting libraries is that there are solutions for other view-layer solutions like Angular and Vue, too, so you can use the Apollo Client in a framework agnostic way. In the following, it needs two steps to connect the Apollo Client with React. First, install the library in the command line in your project folder:
-目前我们完成的部分，仅仅是 Apollo Client 中框架无关的部分配置。如果没有与 React 进行绑定，那使用 GraphQL 会比较困难。这就是为什么有一个连接两者的官方库[react-apollo](https://github.com/apollographql/react-apollo)存在了。这些绑定库也提供了其他视图层的积极方案，比如说 Angular 和 Vue，使用 Apollo Client 是框架无关的。后面的部分，为了完成 Apollo Client 和 React 的绑定，需要两个步骤。首先在你的项目目录下安装必要的依赖：
+目前我们完成的部分，仅仅是 Apollo 客户端中框架无关的部分配置。如果没有与 React 进行绑定，那使用 GraphQL 会比较困难。这就是为什么有一个连接两者的官方库 [react-apollo](https://github.com/apollographql/react-apollo) 存在了。这些绑定库也提供了其他视图层的积极方案，比如说 Angular 和 Vue，使用 Apollo 客户端是框架无关的。后面的部分，为了完成 Apollo 客户端和 React 的绑定，需要两个步骤。首先在你的项目目录下安装必要的依赖：
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -204,7 +204,7 @@ npm install react-apollo --save
 ~~~~~~~~
 
 >Second, import its ApolloProvider component, and use it as a composing component around your App component in the *src/index.js* file. Under the hood, it uses [React's Context API](https://www.robinwieruch.de/react-context-api/) to pass the Apollo Client through your application.
-其次，导入它的 ApolloProvider 组件，并在 *src/index.js* 中，包裹住你的 APP 组件。这里，它使用了 [React 的 Context API](https://www.robinwieruch.de/react-context-api/)，Apollo Cient 就可以在整个应用中使用了。
+其次，导入它的 ApolloProvider 组件，并在 *src/index.js* 中，包裹住你的 APP 组件。这里，它使用了 [React 的 Context API](https://www.robinwieruch.de/react-context-api/)，Apollo 客户端就可以在整个应用中使用了。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -232,7 +232,7 @@ ReactDOM.render(
 ~~~~~~~~
 
 >Now you have implicit access to the Apollo Client in your React view-layer. It says implicit because most often you will not use the client explicitly. You will see in the next section what this means.
-现在你在 React 视图层中，你可以隐式访问 Apollo Client 了。就是说大多数情况下，你无需直接使用 client，后面的部分会进一步解释。
+现在你在 React 视图层中，你可以隐式访问 Apollo 客户端了。就是说大多数情况下，你无需直接使用客户端，后面的部分会进一步解释。
 
 > ### Exercises:
 ### 练习
@@ -245,10 +245,10 @@ ReactDOM.render(
 * 花费三分钟时间参与[测验](https://www.surveymonkey.com/r/5FHMHW8)
 
 > ## GraphQL Query with Apollo Client in React
-## 在 React 中 使用 Apollo Client 进行 GraphQL 查询（Query）
+## 在 React 中 使用 Apollo 客户端进行 GraphQL 查询
 
 > In this section, you will implement your first GraphQL query using Apollo Client in React. You've seen how different entities, such as the current user (viewer) or repositories, can be queried from GitHub's GraphQL API. This time you will do it in React. A Profile component might be the best place to render the current user and its associated repositories. Start by using the not-yet-implemented Profile component in your App component in the *src/App/index.js* file, which we'll take care of next. It makes sense to extract the Profile component now, because the App component will be the static frame around the application later. Components like Navigation and Footer are static, and components such as Profile and Organization are dynamically rendered based on routing (URLs).
-在这部分，你需要使用 Apollo Client 在 React 中实现第一个 GraphQL 查询。这次你会在 React 中实现不同的实体，比如当前用户（viewer）或者代码库，在 GitHub 的 GraphQL API 的查询。Profile 组件适合渲染当前用户和他关联的代码库。后面我们会在 *src/App/index.js* 文件中使用还未实现的 Profile 组件。抽出 Profile 组件是有意义的，因为 App 组件以后再应用总会作为应用的静态框架，如 Navigation 和 Footer 组件也会是静态的，而 Profile 和 Organization 之类的组件会基于路由（URLs）动态渲染。
+在这部分，你需要使用 Apollo 客户端在 React 中实现第一个 GraphQL 查询。这次你会在 React 中实现不同的实体，比如当前用户（viewer）或者代码库，在 GitHub 的 GraphQL API 的查询。Profile 组件适合渲染当前用户和他关联的代码库。后面我们会在 *src/App/index.js* 文件中使用还未实现的 Profile 组件。抽出 Profile 组件是有意义的，因为 App 组件以后再应用总会作为应用的静态框架，如 Navigation 和 Footer 组件也会是静态的，而 Profile 和 Organization 之类的组件会基于路由（URLs）动态渲染。
 
 {title="src/App/index.js",lang="javascript"}
 ~~~~~~~~
@@ -270,7 +270,7 @@ export default App;
 ~~~~~~~~
 
 > In your *src/Profile/index.js* file, add a simple functional stateless component. In the next step you will extend it with a GraphQL query.
-在 *src/Profile/index.js* 文件中，添加一个简单的无状态组件。下一步，你使用 GraphQL 查询对其进行。 
+在 *src/Profile/index.js* 文件中，添加一个简单的无状态组件。下一步，你使用 GraphQL 查询对其进行扩展。 
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -283,7 +283,7 @@ export default Profile;
 ~~~~~~~~
 
 > Now we'll learn to query data with GraphQL and Apollo Client. The Apollo Client was provided in a previous section with React's Context API in a top level component. You have implicit access to it, but never use it directly for standard queries and mutations. It says "standard" here, because there will be situations where you use the Apollo Client instance directly while implementing this application.
-现在学习在使用 Apollo Client 查询数据。前一部分中，Apollo Client 是以 React Context API 提供的，你可以隐式的获取它，不过还没有使用它直接进行标准查询或变更。这里提到“标准”，是因为在实现这个应用的时候，你使用的是 Apollo Client 实例。
+现在学习在使用 Apollo 客户端查询数据。前一部分中，Apollo 客户端是由 React Context API 提供的，你可以隐式的获取它，不过还没有使用它直接进行标准查询或变更。这里提到“标准”，是因为在实现这个应用的时候，你使用的是 Apollo 客户端实例。
 
 
 > The React Apollo package grants access to a Query component, which takes a query as prop and executes it when its rendered. That's the important part: it executes the query when it is rendered. It uses React's [render props](https://www.robinwieruch.de/react-render-props-pattern/) pattern, using a child as a function implementation where you can access the result of the query as an argument.
@@ -404,7 +404,7 @@ const Profile = () => (
 ~~~~~~~~
 
 > That's how you define a GraphQL query in a declarative way in React. Once the Query component renders, the request is executed. The Apollo Client is used, provided in a top level component, to perform the query. The render props pattern makes it possible to access the result of the query in the child function. You can try it in your browser to verify that it actually works for you.
-这就是怎么使用一种声明的方式定义 GraphQL 查询语句。一旦 Query 组件渲染，请求就会被执行。在顶层组件中注入的 Apollo Client 会被用来执行查询。render props 模式允许在子函数中获得查询结果。你可以在浏览器验证它真实的工作方式。
+这就是怎么使用一种声明的方式定义 GraphQL 查询语句。一旦 Query 组件渲染，请求就会被执行。在顶层组件中注入的 Apollo 客户端会被用来执行查询。render props 模式允许在子函数中获得查询结果。你可以在浏览器验证它真实的工作方式。
 
 > There is more information found in the render prop function. Check the official React Apollo API for additional information beyond the examples in this application. Next, let's show a loading indicator when a query is pending:
 在 render props 函数中，可以获取更多的信息，请查看官方的 React Apollo API 以获取这个应用示例外的信息。然后，我们在请求还在等待结果时，加入一个 loading 指示器。
@@ -643,7 +643,7 @@ export default Link;
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53Q6K3V)
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/44ceb0482442eb07e56d134e6e1da8abefd68afe)
 * 延伸阅读：[在 React 中使用 Apollo Client 进行查询](https://www.apollographql.com/docs/react/essentials/queries.html)
-* 花费 3 分钟参加这个[测验](https://www.surveymonkey.com/r/53Q6K3V)
+* 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/53Q6K3V)
 
 > ## Apollo Client Error Handling in React
 ## Apollo Client 在 React 中的错误处理
