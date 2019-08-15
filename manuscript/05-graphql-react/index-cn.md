@@ -1,6 +1,6 @@
 # React 和 GraphQL 的结合
 
-我们将一起开发一个 GraphQL 的客户端程序，从中你将了解如何将 React 与 GraphQL 结合起来。目前我们不会使用 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay) 这样强大的工具来帮助你快速上手，而是使用基本的 HTTP 请求执行 GraphQL 查询和变更。在之后的下一个应用程序中，我们将引入 Apollo 作为你的 React.js 应用的 GraphQL 客户端。现阶段开发的应用只展示如何在 React 中基于 HTTP 使用 GraphQL。
+我们将一起开发一个 GraphQL 的客户端程序，从中你将了解如何将 React 与 GraphQL 结合起来。目前我们不会使用 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay) 这样强大的工具来帮助你快速上手，而是使用基本的 HTTP 请求执行 GraphQL 查询和变更。在之后应用程序中，我们将引入 Apollo 作为你的 React.js 应用的 GraphQL 客户端。现阶段开发的应用只展示如何在 React 中基于 HTTP 使用 GraphQL。
 
 在此过程中，你将构建一个类似 GitHub 的问题跟踪器，通过执行 GraphQL 的查询和变更来读写数据，基于 [GitHub's GraphQL API](https://developer.github.com/v4/) 的简单 GitHub 客户端。最终实现一个能够在 React 示例中展示 GraphQL的案例，也可以将其作为其他开发人员的学习工具，最终实现的应用程序可以参考 [GitHub 的代码库](https://github.com/rwieruch/react-graphql-github-vanilla)。
 
