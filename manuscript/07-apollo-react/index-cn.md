@@ -1425,7 +1425,7 @@ const updateAddStar = (
 
 > In this section, you will implement an optimistic UI for when a user clicks the watch/unwatch mutation you implemented in a previous exercise. If you haven't, it's time to implement it now, or you can substitute it with the star or unstar mutation. Either way, completing the optimistic UI behavior for all three mutations is the next exercise. For completeness, this is a possible implementation of the watch mutation as a button next to the "Star"/"Unstar" buttons. First, the mutation:
 
-在本节中，你将实现一个乐观 UI，以便用户点击你在上个练习中实现的 watch 或 unwatch 变更。如果你还没有，现在是时候实现它，或者你可以用 star 或 unstar 变更来代替。无论哪种方式，完成这三个变更（操作）的乐观 UI 行为就是下一个练习。为了完整起见，可以将 watch 变更实现为 "Star"/"Unstar" 按钮旁边的按钮。首先，变更：
+在本节中，你将实现一个乐观 UI，以便用户点击你在上个练习中实现的 watch 或 unwatch 变更。如果你还没有，现在是时候实现它，或者你可以用 star 或 unstar 变更来代替。无论哪种方式，完成这三个变更操作的乐观 UI 行为就是下一个练习。为了完整起见，可以将 watch 变更实现为 "Star"/"Unstar" 按钮旁边的按钮。首先，变更如下：
 
 {title="src/Repository/RepositoryItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1630,7 +1630,7 @@ const RepositoryItem = ({ ... }) => (
 
 > * Use Higher-Order Components instead of Render Props to co-locate data-layer, instead of inserting it in the view-layer
 
-* 用高阶组件代替 Render Props 来共同定位数据层，而不是将其插入视图层。 
+* 用高阶组件代替 Render Props 来共同定位数据层，而不是将其插入视图层。
 
 > The first three are about **inserting** a data-layer into the view-layer, while the last is about **co-locating** it. Each comes with drawbacks. Following the second way, you might yourself declaring functions instead of objects, or higher-order functions instead of functions because you need to pass arguments to them. With the fourth, you could encounter the same challenge in keeping HOCs concise. There, you could use the other three ways too, but this time in a HOC rather than a Render Prop.
 
@@ -1661,14 +1661,14 @@ const RepositoryItem = ({ ... }) => (
 
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5B6D8BX)
 
-* 花 3 分钟时间参与[测验](https://www.surveymonkey.com/r/5B6D8BX)
+* 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/5B6D8BX)
 
 > ## GraphQL Pagination with Apollo Client in React
-## React 中 Apollo Client 的 GraphQL 分页
+## React 中 Apollo 客户端的 GraphQL 分页
 
 > Finally, you are going to implement another advanced feature when using a GraphQL API called **pagination**. In this section, you implement a button that allows successive pages of repositories to be queries, a simple "More" button rendered below the list of repositories in the RepositoryList component. When is clicked, another page of repositories is fetched and merged with the previous list as one state into Apollo Client's cache.
 
-最后，你将使用一个叫做 **pagination** 的 GraphQL API，来实现另一个高级特性。在这一节中，你会实现一个按钮，它允许代码库中的后续页面被查询，在 RepositoryList 组件中，一个简单的 "More" 按钮渲染在代码库列表之下。当它被点击时，会获取代码库的另一个页面，并将其与上一个列表合并，作为一个状态保存到 Apollo Client 的缓存中。
+最后，你将使用一个叫做 **pagination** 的 GraphQL API，来实现另一个高级特性。在这一节中，你会实现一个按钮，它允许代码库中的后续页面被查询，在 RepositoryList 组件中，一个简单的 "More" 按钮渲染在代码库列表之下。当它被点击时，会获取代码库的另一个页面，并将其与上一个列表合并，作为一个状态保存到 Apollo 客户端的缓存中。
 
 
 > First, extend the query next for your Profile component with the necessary information to allow pagination for the list of repositories:
@@ -1709,7 +1709,7 @@ const GET_REPOSITORIES_OF_CURRENT_USER = gql`
 
 > The `endCursor` can be used as `$cursor` variable when fetching the next page of repositories, but the `hasNextPage` can disable the functionality (e.g. not showing the "More" button) to fetch another page. The initial request to fetch the first page of repositories will have a `$cursor` variable of `undefined`, though. GitHub's GraphQL API will handle this case gracefully and return the first items from the list of repositories without considering the `after` argument. Every other request to fetch more items from the list will send a defined `after` argument with the cursor, which is the `endCursor` from the query.
 
-当获取代码库的下一页时，`endCursor` 可以当做 `$cursor` 变量来使用，但是 `hasNextPage` 可以禁用获取其他页面的功能（例如：不显示 "More" 按钮）。不过，获取代码库首页的初始请求将会有一个值为 `undefined` 的 `$cursor` 变量。GitHub 的 GraphQL API 可以优雅地处理这种情况，返回代码库列表的第一项，而不用考虑 `after` 参数。每一次从列表中获取更多项的请求，都会发送一个使用游标定义的 `after` 参数，即查询中的 `endCursor`。 
+当获取代码库的下一页时，`endCursor` 可以当做 `$cursor` 变量来使用，但是 `hasNextPage` 可以禁用获取其他页面的功能（例如：不显示 "More" 按钮）。不过，获取代码库首页的初始请求将会有一个值为 `undefined` 的 `$cursor` 变量。GitHub 的 GraphQL API 可以优雅地处理这种情况，返回代码库列表的第一项，而不用考虑 `after` 参数。每一次从列表中获取更多项的请求，都会发送一个使用游标定义的 `after` 参数，即查询中的 `endCursor`。
 
 > Now we have all information to fetch more pages of repositories from GitHub's GraphQL API. The Query component exposes a function to retrieve them in its child function. Since the button to fetch more repositories fits best in the the RepositoryList component, you can pass this function as prop to it.
 
@@ -1811,7 +1811,7 @@ const RepositoryList = ({ repositories, fetchMore }) => (
 
 > If you attempt to click the button, you should get the following error message: *Error: updateQuery option is required.*. The `updateQuery` function is needed to tell Apollo Client how to merge the previous result with a new one. Define the function outside of the button, because it would become too verbose otherwise.
 
-如果你尝试点击这个按钮，你应该得到如下的信息：*错误：updateQuery 是必填的。* `updateQuery` 函数需要告诉 Apollo Client 如何合并上一个结果和新的结果。在按钮的外部定义这个函数，否则它会变得过于冗长。
+如果你尝试点击这个按钮，你应该得到如下的信息：*错误：updateQuery 是必填的。* `updateQuery` 函数需要告诉 Apollo 客户端如何合并上一个结果和新的结果。在按钮的外部定义这个函数，否则它会变得过于冗长。
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1902,7 +1902,7 @@ const Profile = () => (
 
 > When you run your application again and try the "More" button, you should see odd behavior. Every time you load another page of repositories, the loading indicator is shown, but the list of repositories disappears entirely, and the merged list is rendered as assumed. Since the `loading` boolean becomes true with the initial and successive requests, the conditional rendering in the Profile component will always show the loading indicator. It returns from the Profile function early, never reaching the code to render the RepositoryList. A quick change from `||` to `&&` of the condition will allow it to show the loading indicator for the initial request only. Every request after that, where the `viewer` object is available, is beyond this condition, so it renders the RepositoryList component.
 
-当你再次运行你的应用并尝试点击 "More" 按钮时，你应该会看到奇怪的行为。每次加载另一页代码库时，loading 指示符就会显示，但是 代码库列表完全消失，而合并后的列表按照假定的方式渲染。由于`loading` 布尔值随着初始请求和后续请求变为了 true，因此在 Profile 组件中的条件渲染会始终显示加载指示符。它过早地从 Profile 函数返回，从未到达用于渲染 RepositoryList 的代码。条件从 `||` 到 `&&` 的快速修改将允许它只显示初始请求的加载指示符。此后的每个请求（在  `viewer` 对象可用的情况下）都超出了这个条件，因此它渲染了 RepositoryList 组件。
+当你再次运行你的应用并尝试点击 "More" 按钮时，你应该会看到奇怪的行为。每次加载另一页代码库时，loading 指示符就会显示，但是 代码库列表完全消失，而合并后的列表按照假定的方式渲染。由于 `loading` 布尔值随着初始请求和后续请求变为了 true，因此在 Profile 组件中的条件渲染会始终显示加载指示符。它过早地从 Profile 函数返回，从未到达用于渲染 RepositoryList 的代码。条件从 `||` 到 `&&` 的快速修改将允许它只显示初始请求的加载指示符。此后的每个请求（在 `viewer` 对象可用的情况下）都超出了这个条件，因此它渲染了 RepositoryList 组件。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1978,7 +1978,7 @@ const RepositoryList = ({ repositories, loading, fetchMore }) => (
 
 > The pagination feature is complete now, and you are fetching successive pages of an initial page, then merging the results in Apollo Client's cache. In addition, you show your user feedback about pending requests for either the initial request or further page requests.
 
-分页功能现在已经完成，你将获取初始页面的后续页面，然后将结果合并到 Apollo Client 的缓存中。此外，你还可以向用户展示有关挂起请求的反馈，不管是初始请求还是后续页面请求。 
+分页功能现在已经完成，你将获取初始页面的后续页面，然后将结果合并到 Apollo 客户端的缓存中。此外，你还可以向用户展示有关挂起请求的反馈，不管是初始请求还是后续页面请求。
 
 > Now we'll take it a step further, making the button used to fetch more repositories reusable. Let me explain why this would be a neat abstraction. In an upcoming section, you have another list field that could potentially implement the pagination feature. There, you have to introduce the `More` button, which could be nearly identical to the `More` button you have in the RepositoryList component. Having only one button in a UI would be a satisfying abstraction, but this abstraction wouldn't work in a real-world coding scenario. You would have to introduce a second list field first, implement the pagination feature for it, and then consider an abstraction for the `More` button. For the sake of the tutorial, we implement this abstraction for the pagination feature only in this section, though you should be aware this is a premature optimization put in place for you to learn it.
 
@@ -2028,7 +2028,7 @@ export default RepositoryList;
 
 > Now this FetchMore component can be used by other paginated lists as well, because every part that can be dynamic is passed as props to it. Implementing a FetchMore component in the *src/FetchMore/index.js* is the next step. First, the main part of the component:
 
-现在 FetchMore 组件也可以被其他分页列表使用，因为每个可以被动态化的部分都作为 prop 传递给它了。下一步就是在 *src/FetchMore/index.js* 中实现 FetchMore 组件。首先，组件的主要部分： 
+现在 FetchMore 组件也可以被其他分页列表使用，因为每个可以被动态化的部分都作为 prop 传递给它了。下一步就是在 *src/FetchMore/index.js* 中实现 FetchMore 组件。首先，组件的主要部分：
 
 {title="src/FetchMore/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2142,7 +2142,7 @@ export default FetchMore;
 
 > That's it for the abstraction of the FetchMore button for paginated lists with Apollo Client. Basically, you pass in everything needed by the `fetchMore()` function, including the function itself. You can also pass all booleans used for conditional renderings. You end up with a reusable FetchMore button that can be used for every paginated list.
 
-这就是对 Apollo Client 分页列表的 FetchMore 按钮的抽象。基本上，你将传入 `fetchMore()` 函数需要的所有东西，包括函数本身。你还可以传递用于条件渲染的所有布尔值。最终得到一个可重用的 FetchMore 按钮，可用于每一个分页列表。
+这就是对 Apollo 客户端分页列表的 FetchMore 按钮的抽象。基本上，你将传入 `fetchMore()` 函数需要的所有东西，包括函数本身。你还可以传递用于条件渲染的所有布尔值。最终得到一个可重用的 FetchMore 按钮，可用于每一个分页列表。
 
 > ### Exercises:
 ### 练习：
@@ -2157,15 +2157,15 @@ export default FetchMore;
 
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5HYMGN7)
 
-* 花 3 分钟时间参与[测验](https://www.surveymonkey.com/r/5HYMGN7)
+* 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/5HYMGN7)
 
 > ## GraphQL Caching of Queries with Apollo Client in React
 
-## React 中通过 Apollo Client 实现 GraphQL 缓存查询
+## React 中通过 Apollo 客户端实现 GraphQL 缓存查询
 
 > In this section, you introduce [React Router](https://github.com/ReactTraining/react-router) to show two separate pages for your application. At the moment, you are only showing one page with a Profile component that displays all your repositories. We want to add another Organization component that shows repositories by an organization, and there could be a search field as well, to lookup individual organizations with their repositories on that page. Let's do this by introducing React Router to your application. If you haven't used React Router before, make sure to conduct the exercises of this section to learn more about it.
 
-在这一小节中，为了在程序里展示两个页面，你需要引入[React Router](https://github.com/ReactTraining/react-router)来实现。到目前为止，你还只是在一个页面中用 Profile 组件展示你所有的代码库。 我们想要添加另一个 Organization 组件来按组织展示你的代码库，并且加上搜索框实现在这个页面上查找不同组织的代码库的功能。让我们通过在你的程序引入 React Router 中来实现它吧。如果你之前没有使用过 React Router，请务必进行此小节的练习来更好地了解它。
+在这一小节中，为了在程序里展示两个页面，你需要引入 [React Router](https://github.com/ReactTraining/react-router) 来实现。到目前为止，你还只是在一个页面中用 Profile 组件展示你所有的代码库。 我们想要添加另一个 Organization 组件来按组织展示你的代码库，并且加上搜索框实现在这个页面上查找不同组织的代码库的功能。让我们通过在你的程序引入 React Router 中来实现它吧。如果你之前没有使用过 React Router，请务必进行此小节的练习来更好地了解它。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -2174,7 +2174,7 @@ npm install react-router-dom --save
 
 > In your *src/constants/routes.js* file, you can specify both routes you want to make accessible by React Router. The `ORGANIZATION` route points to the base URL, while the `PROFILE` route points to a more specific URL.
 
-在 *src/constants/routes.js* 文件中你可以指定要通过 React Router 访问的路由。`ORGANIZATION` 路由指向根URL，`PROFILE` 路由指向更具体的URL。
+在 *src/constants/routes.js* 文件中你可以指定要通过 React Router 访问的路由。`ORGANIZATION` 路由指向根 URL，`PROFILE` 路由指向更具体的 URL。
 
 {title="src/constants/routes.js",lang="javascript"}
 ~~~~~~~~
@@ -2315,7 +2315,7 @@ Profile 页面与之前一样，只是 Organization 页面是空的。在最后�
 
 > Another great feature of the Apollo Client is that it caches query requests. When navigating from the Profile page to the Organization page and back to the Profile page, the results appear immediately because the Apollo Client checks its cache before making the query to the remote GraphQL API. It's a pretty powerful tool.
 
-Apollo Client 的另一个重要功能就是它的缓存查询请求。当页面从 Profile 页面跳转到 Organization 页面再回到 Profile 页面时，结果会立即显示出来，因为 Apollo Client 会在查询远程 GraphQL API 之前检查缓存。这是个非常强大的功能。
+Apollo 客户端的另一个重要功能就是它的缓存查询请求。当页面从 Profile 页面跳转到 Organization 页面再回到 Profile 页面时，结果会立即显示出来，因为 Apollo 客户端会在查询远程 GraphQL API 之前检查缓存。这是个非常强大的功能。
 
 > The next part of this section is the Organization component. It is the same as the Profile component, except the query differs because it takes a variable for the organization name to identify the organization's repositories.
 
@@ -2367,7 +2367,7 @@ Organization 组件中的 Query 组件实现对组织的定制查询作为查询
 
 > Next, extend the query to fit the requirements of the pagination feature. It requires the `cursor` argument to identify the next page of repositories. The `notifyOnNetworkStatusChange` prop is used to update the `loading` boolean for paginated requests as well.
 
-接下来，对查询进行扩展以满足分页功能。这里需要 `cursor` 参数来标识代码库的下一页。`notifyOnNetworkStatusChange` prop 用来更新分页请求的 `loading` 状态(布尔值)。
+接下来，对查询进行扩展以满足分页功能。这里需要 `cursor` 参数来标识代码库的下一页。`notifyOnNetworkStatusChange` prop 用来更新分页请求布尔值的 `loading` 状态。
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2505,7 +2505,7 @@ class App extends Component {
 
  > When the top level object changes from page to page, the ideal next step is to tell the RepositoryList component its top level object from the outside. With the Organization component, its the top-level object `organization`, which could be passed as a string and reused as a dynamic key later:
 
-当顶层对象在页面切换发生改变时，理想的下一步是从外部告诉 RepositoryList 组件它的顶层对象。对于Organization 组件，顶层对象是 `organization`，可以将它作为字符串传递并在后面作为 key 使用：
+当顶层对象在页面切换发生改变时，理想的下一步是从外部告诉 RepositoryList 组件它的顶层对象。对于 Organization 组件，顶层对象是 `organization`，可以将它作为字符串传递并在后面作为 key 使用：
 
 {title="src/Organization/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2557,7 +2557,7 @@ const Profile = () => (
 
 > Now you can handle the new case in the RepositoryList component by passing the entry as [computed property name](https://developer.mozilla.org/my/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names) to the `updateQuery` function. Instead of passing the `updateQuery` function directly to the FetchMore component, it can be derived from a higher-order function needed to pass the new `entry` property.
 
-现在，你可以通过在 RepositoryList 组件中给 `updateQuery` 函数传入参数作为[计算属性名](https://developer.mozilla.org/my/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names) 来进行处理。它不是直接将 `updateQuery` 函数传递给 FetchMore 组件，而是从传递的新 `entry` 属性所需的高阶函数派生而来的。
+现在，你可以通过在 RepositoryList 组件中给 `updateQuery` 函数传入参数作为[计算属性名](https://developer.mozilla.org/my/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names)来进行处理。它不是直接将 `updateQuery` 函数传递给 FetchMore 组件，而是从传递的新 `entry` 属性所需的高阶函数派生而来的。
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2675,7 +2675,7 @@ export default withRouter(Navigation);
 
 > The OrganizationSearch component is implemented next to the Navigation component in the next steps. Before that can work, there needs to be some kind of initial state for the OrganizationSearch, as well as a callback function to update the initial state in the Navigation component. To accommodate this, the Navigation component becomes a class component.
 
-后续步骤中， NavigationSearch 组件将紧接着 Navigation 组件实现。在此之前，我们需要在 Navigation 组件中设置 OrganizationSearch 的某种初始状态和更新初始状态的回调函数。Navigation 组件需要变成类组件来实现这个需求。
+后续步骤中，NavigationSearch 组件将紧接着 Navigation 组件实现。在此之前，我们需要在 Navigation 组件中设置 OrganizationSearch 的某种初始状态和更新初始状态的回调函数。Navigation 组件需要变成类组件来实现这个需求。
 
 {title="src/App/Navigation/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2724,7 +2724,7 @@ export default withRouter(Navigation);
 
 > The OrganizationSearch component implemented in the same file would also work with the following implementation. It handles its own local state, the value that shows up in the input field, but uses it as an initial value from the parent component. It also receives a callback handler, which can be used in the `onSubmit()` class method to propagate the search fields value on a submit interaction up the component tree.
 
-在同一文件中实现的 OrganizationSearch 组件也可以采用如下实现方式。它处理自己的本地状态 ，即输入框中显示的值，不过初始值来自于父组件。它还接受一个回调函数，该回调在 `onSubmit()` 中使用，用来在组件树中向上传递搜索的字段。
+在同一文件中实现的 OrganizationSearch 组件也可以采用如下实现方式。它处理自己的本地状态，即输入框中显示的值，不过初始值来自于父组件。它还接受一个回调函数，该回调在 `onSubmit()` 中使用，用来在组件树中向上传递搜索的字段。
 
 {title="src/App/Navigation/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2895,7 +2895,7 @@ export default App;
 
 > You have implemented a dynamic GraphQL query with a search field. Once a new `organizationName` is passed to the Organization component from a local state change, the Query component triggers another request due to a re-render. The request is not always made to the remote GraphQL API, though. The Apollo Client cache is used when an organization is searched twice. Also, you have used the well-known technique called lifting state in React to share the state across components.
 
-你已实现了使用搜索字段进行动态的GraphQL查询。一旦将新的 `organizationName` 变化从本地状态传递给 Organization 组件，Query 组件就会因为重新渲染而触发另一个请求。但它并不会总是向远程 GraphQL API 发送请求。一个组织被搜索多次时，则是使用的 Apollo Client 缓存。此外，你也在 React 中使用了众所周知的被称之为状态提升的技巧，来使组件之间的状态共享。
+你已实现了使用搜索字段进行动态的 GraphQL 查询。一旦将新的 `organizationName` 变化从本地状态传递给 Organization 组件，Query 组件就会因为重新渲染而触发另一个请求。但它并不会总是向远程 GraphQL API 发送请求。一个组织被搜索多次时，则是使用的 Apollo 客户端缓存。此外，你也在 React 中使用了众所周知的被称之为状态提升的技巧，来使组件之间的状态共享。
 
 > ### Exercises:
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
@@ -2903,10 +2903,9 @@ export default App;
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5HFQ3TD)
 
 ### 练习：
-
 * 查看 [本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
-* 如果你还不熟悉 React Router ，请练习 [这个实用的教程](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
-* 花3分钟进行[测验](https://www.surveymonkey.com/r/5HFQ3TD)
+* 如果你还不熟悉 React Router，请练习 [这个实用的教程](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
+* 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/5HFQ3TD)
 
 ## Implementing the Issues Feature: Setup
 
