@@ -2907,15 +2907,25 @@ export default App;
 * 如果你还不熟悉 React Router，请练习 [这个实用的教程](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
 * 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/5HFQ3TD)
 
-## Implementing the Issues Feature: Setup
+> ## Implementing the Issues Feature: Setup
+## 实现 Issues 功能：准备
 
-In the previous sections you have implemented most of the common Apollo Client features in your React application. Now you can start implementing extensions for the application on your own. This section showcases how a full-fledged feature can be implemented with Apollo Client in React.
+> In the previous sections you have implemented most of the common Apollo Client features in your React application. Now you can start implementing extensions for the application on your own. This section showcases how a full-fledged feature can be implemented with Apollo Client in React.
 
-So far, you have dealt with GitHub repositories from organizations and your account. This will take that one step further, fetching GitHub issues that are made available using a list field associated to a repository in a GraphQL query. However, this section doesn't only show you how to render a nested list field in your React application.
+在前面的小节中你已经在你的 React 应用中实现了大部分常用的 Apollo Client 的功能。现在你可以开始自己实现应用的扩展。本节将展示如何在 React 中使用 Apollo Client 实现一个完整的功能。
 
-The foundation will be rendering the list of issues. You will implement client-side filtering with plain React to show opened, closed, or no issue. Finally, you will refactor the filtering to a server-side filtering using GraphQL queries. We will only fetch the issues by their state from the server rather than filtering the issue's state on the client-side. Implementing pagination for the issues will be your exercise.
+> So far, you have dealt with GitHub repositories from organizations and your account. This will take that one step further, fetching GitHub issues that are made available using a list field associated to a repository in a GraphQL query. However, this section doesn't only show you how to render a nested list field in your React application.
 
-First, render a new component called 'Issues' in your RepositoryList component. This component takes two props that are used later in a GraphQL query to identify the repository from which you want to fetch the issues.
+到目前为止，你已经处理了来自组织和你的账户的 GitHub 代码库。我们将更进一步，获取 GitHub issues，这会使用 GraphQL 查询中与代码库关联的列表字段。然而，本节不仅仅向你展示如何在 React 中渲染嵌套列表。
+
+> The foundation will be rendering the list of issues. You will implement client-side filtering with plain React to show opened, closed, or no issue. Finally, you will refactor the filtering to a server-side filtering using GraphQL queries. We will only fetch the issues by their state from the server rather than filtering the issue's state on the client-side. Implementing pagination for the issues will be your exercise.
+
+最基本的就是渲染 issue 列表，你将使用最简单的 React 来实现客户端的打开，关闭或者不显示 issue 的筛选。最后，你将使用 GraphQL 查询将筛选重构为服务器端筛选。我们只根据 issue 的状态从服务端获取，而不是在客户端去过滤 issue 的状态。你的练习是为这些 issue 列表实现分页。
+
+
+> First, render a new component called 'Issues' in your RepositoryList component. This component takes two props that are used later in a GraphQL query to identify the repository from which you want to fetch the issues.
+
+首先，在 RepositoryList 组件中渲染一个名叫 Issues 的新组件。这个组件接收两个 props，稍后将用于 GraphQL 查询，以标识从中要从中获取 issue 列表的代码库。
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2956,7 +2966,9 @@ const RepositoryList = ({
 export default RepositoryList;
 ~~~~~~~~
 
-In the *src/Issue/index.js* file, import and export the Issues component. Since the issue feature can be kept in a module on its own, it has this *index.js* file again. That's how you can tell other developers to access only this feature module, using the *index.js* file as its interface. Everything else is kept private.
+> In the *src/Issue/index.js* file, import and export the Issues component. Since the issue feature can be kept in a module on its own, it has this *index.js* file again. That's how you can tell other developers to access only this feature module, using the *index.js* file as its interface. Everything else is kept private.
+
+在 src/Issue/index.js 文件中，引入和导出 Issues 组件，由于 issue 功能可以保持在单独的模块中，所以它有这个 *index.js* 文件，这样你可以告诉别的开发人员仅仅使用 *index.js* 访问这个功能模块。*index.js* 文件作为接口，而其他的都保持私有。
 
 {title="src/Issue/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2965,19 +2977,33 @@ import Issues from './IssueList';
 export default Issues;
 ~~~~~~~~
 
-Note how the component is named Issues, not IssueList. The naming convention is used to break down the rendering of a list of items: Issues, IssueList and IssueItem. Issues is the container component, where you query the data and filter the issues, and the IssueList and IssueItem are only there as presentational components for rendering. In contrast, the Repository feature module hasn't a Repositories component, because there was no need for it. The list of repositories already came from the Organization and Profile components and the Repository module's components are mainly only there for the rendering. This is only one opinionated approach of naming the components, however.
+> Note how the component is named Issues, not IssueList. The naming convention is used to break down the rendering of a list of items: Issues, IssueList and IssueItem. Issues is the container component, where you query the data and filter the issues, and the IssueList and IssueItem are only there as presentational components for rendering. In contrast, the Repository feature module hasn't a Repositories component, because there was no need for it. The list of repositories already came from the Organization and Profile components and the Repository module's components are mainly only there for the rendering. This is only one opinionated approach of naming the components, however.
 
-Let's start implementing Issues and IssueList components in the *src/Issue/IssueList/index.js* file. You could argue to split both components up into their own files, but for the sake of this tutorial, they are kept together in one file.
+请注意组件的名字是 Issues，而不是 IssueList。拆分渲染列表的命名约定为：Issues, IssueList 和 IssueItem。Issues 是容器组件，用来查询数据和过滤 issue，IssueList 和 IssueItem 组件仅仅用做内容展示。相反，代码库功能模块并没有一个 Repositories 组件，因为并不需要它，代码库列表已经在 Organization 和 Profile 组件中，并且代码库模块的组件主要用于内容展示。当然，这只是命名组件的一种固执己见的方式。
 
-First, there needs to be a new query for the issues. You might wonder: Why do we need a new query here? It would be simpler to include the issues list field in the query at the top next to the Organization and Profile components. That's true, but it comes with a cost. Adding more nested (list) fields to a query often results into performance issues on the server-side. There you may have to make multiple roundtrips to retrieve all the entities from the database.
+> Let's start implementing Issues and IssueList components in the *src/Issue/IssueList/index.js* file. You could argue to split both components up into their own files, but for the sake of this tutorial, they are kept together in one file.
 
-* Roundtrip 1: get organization by name
-* Roundtrip 2: get repositories of organization by organization identifier
-* Roundtrip 3: get issues of repository by repository identifier
+让我们开始在 *src/Issue/IssueList/index.js* 文件中实现 Issues 和 IssueList 组件，你可以认为应该将这两个组件拆分到各自的文件中，但由于本教程的缘故，它们被保存在同一个文件中。
 
-It is simple to conclude that nesting queries in a naive way solves all of our problems. Whereas it solves the problem of only requesting the data once and not with multiple network request (similar roundtrips as shown for the database), GraphQL doesn't solve the problem of retrieving all the data from the database for you. That's not the responsibility of GraphQL after all. So by having a dedicated query in the Issues component, you can decide **when** to trigger this query. In the next steps, you will just trigger it on render because the Query component is used. But when adding the client-side filter later on, it will only be triggered when the "Filter" button is toggled. Otherwise the issues should be hidden. Finally, that's how all the initial data loading can be delayed to a point when the user actually wants to see the data.
+> First, there needs to be a new query for the issues. You might wonder: Why do we need a new query here? It would be simpler to include the issues list field in the query at the top next to the Organization and Profile components. That's true, but it comes with a cost. Adding more nested (list) fields to a query often results into performance issues on the server-side. There you may have to make multiple roundtrips to retrieve all the entities from the database.
 
-First, define the Issues component which has access to the props which were passed in the RepositoryList component. It doesn't render much yet.
+首先，需要对 issue 进行一个新的查询，你可能会想：为什么这里需要一个新的查询？将 issue 列表字段包含在 Organization 和 Profile 组件顶部的查询会更简单。确实是这样，但也会有代价。向查询添加更多嵌套（列表）字段常常会导致服务器端的性能问题。所以你可能需要多次往返才能从数据库中检索所有的实体。
+
+> * Roundtrip 1: get organization by name
+> * Roundtrip 2: get repositories of organization by organization identifier
+> * Roundtrip 3: get issues of repository by repository identifier
+
+* 往返1：根据名称获取组织
+* 往返2：根据组织标识获取组织下的代码库
+* 往返3：根据代码库标识获取 issue 列表
+
+> It is simple to conclude that nesting queries in a naive way solves all of our problems. Whereas it solves the problem of only requesting the data once and not with multiple network request (similar roundtrips as shown for the database), GraphQL doesn't solve the problem of retrieving all the data from the database for you. That's not the responsibility of GraphQL after all. So by having a dedicated query in the Issues component, you can decide **when** to trigger this query. In the next steps, you will just trigger it on render because the Query component is used. But when adding the client-side filter later on, it will only be triggered when the "Filter" button is toggled. Otherwise the issues should be hidden. Finally, that's how all the initial data loading can be delayed to a point when the user actually wants to see the data.
+
+很容易得出一个结论，以一种简单的方式嵌套查询可以解决我们所有的问题。虽然它解决了只请求一次数据而不是用多个网络请求（类似于数据库的往返）的问题，但是 GraphQL 并没有为你解决从数据库检索所有数据的问题，这毕竟不是 GraphQL 的责任。因此，通过在 Issues 组件中有个专门的查询，你可以决定**何时**触发这个查询。在接下来的步骤中，你只需要在渲染时触发它，因为使用了 Query 组件。但当稍后添加了客户端过滤器时，只有切换“过滤”按钮才会触发查询，否则 issue 列表应该被隐藏。最终，这就是如何将所有初始数据加载延迟到用户真正想要查看数据的时候。
+
+> First, define the Issues component which has access to the props which were passed in the RepositoryList component. It doesn't render much yet.
+
+首先，定义一个能获取从 RepositoryList 组件传递下来 props 的 Issues 组件，它暂时还没渲染太多内容。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2985,14 +3011,16 @@ import React from 'react';
 
 import './style.css';
 
-const Issues = ({ repositoryOwner, repositoryName }) =>
+const Issues = ({ repositoryOwner, re positoryName }) =>
   <div className="Issues">
   </div>
 
 export default Issues;
 ~~~~~~~~
 
-Second, define the query in the *src/Issue/IssueList/index.js* file to retrieve issues of a repository. The repository is identified by its owner and name. Also, add the `state` field as one of the fields for the query result. This is used for client-side filtering, for showing issues with an open or closed state.
+> Second, define the query in the *src/Issue/IssueList/index.js* file to retrieve issues of a repository. The repository is identified by its owner and name. Also, add the `state` field as one of the fields for the query result. This is used for client-side filtering, for showing issues with an open or closed state.
+
+然后，在 *src/Issue/IssueList/index.js* 文件中定义查询用来获取代码库 issue。代码库的所有者和名字作为唯一标识，另外，添加 `state` 字段作为查询结果的字段之一。这个用于客户端的筛选，用来显示打开或关闭状态的 issue。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3027,7 +3055,9 @@ const GET_ISSUES_OF_REPOSITORY = gql`
 ...
 ~~~~~~~~
 
-Third, introduce the Query component and pass it the previously defined query and the necessary variables. Use its render prop child function to access the data, to cover all edge cases and to render a IssueList component eventually.
+> Third, introduce the Query component and pass it the previously defined query and the necessary variables. Use its render prop child function to access the data, to cover all edge cases and to render a IssueList component eventually.
+
+第三步，引入 Query 组件，并将前面定义的查询和必要的变量传递给它。使用 children 函数作为 render prop 访问数据来覆盖所有边缘情况并最终渲染一个 IssueList 组件。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3090,7 +3120,9 @@ const IssueList = ({ issues }) => (
 export default Issues;
 ~~~~~~~~
 
-Finally, implement a basic IssueItem component in the *src/Issue/IssueItem/index.js* file. The snippet below shows a placeholder where you can implement the Commenting feature, which we'll cover later.
+> Finally, implement a basic IssueItem component in the *src/Issue/IssueItem/index.js* file. The snippet below shows a placeholder where you can implement the Commenting feature, which we'll cover later.
+
+最后，在 *src/Issue/IssueItem/index.js* 中实现一个基本的 IssueItem 组件。下面的代码片段展示了一个占位符，你可以在其中实现评论的功能，稍后我们将会进行介绍。
 
 {title="src/Issue/IssueItem/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3102,7 +3134,7 @@ import './style.css';
 
 const IssueItem = ({ issue }) => (
   <div className="IssueItem">
-    {/* placeholder to add a show/hide comment button later */}
+    {/* 稍后添加一个 显示/隐藏 评论按钮的占位符 */}
 
     <div className="IssueItem-content">
       <h3>
@@ -3110,7 +3142,7 @@ const IssueItem = ({ issue }) => (
       </h3>
       <div dangerouslySetInnerHTML={{ __html: issue.bodyHTML }} />
 
-      {/* placeholder to render a list of comments later */}
+      {/* 稍后用于渲染评论列表的占位符 */}
     </div>
   </div>
 );
@@ -3118,18 +3150,30 @@ const IssueItem = ({ issue }) => (
 export default IssueItem;
 ~~~~~~~~
 
-Once you start your application again, you should see the initial page of paginated issues rendered below each repository. That's a performance bottleneck. Worse, the GraphQL requests are not bundled in one request, as with the issues list field in the Organization and Profile components. In the next steps you are implementing client-side filtering. The default is to show no issues, but it can toggle between states of showing none, open issues, and closed issues using a button, so the issues will not be queried before toggling one of the issue states.
+> Once you start your application again, you should see the initial page of paginated issues rendered below each repository. That's a performance bottleneck. Worse, the GraphQL requests are not bundled in one request, as with the issues list field in the Organization and Profile components. In the next steps you are implementing client-side filtering. The default is to show no issues, but it can toggle between states of showing none, open issues, and closed issues using a button, so the issues will not be queried before toggling one of the issue states.
 
-### Exercises:
+当你再次启动程序时，你应该会看到每个代码库下面渲染出了分页后 issue 的初始页面。这是个性能瓶颈，更糟糕的是，和 Organization 和 Profile 组件中的 issue 列表字段一样，GraphQL 请求没有合并在一个请求中。在接下来的步骤中，你将实现客户端的筛选。默认情况不显示任何 issue，但是它可以使用一个按钮在不显示，打开 issue 和关闭 issue 的状态之间切换，因此在切换 issue 状态之前不会查询 issue。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/6781b487d6799e55a4deea48dfe706253b373f0a)
-* Read more about [the rate limit when using a (or in this case GitHub's) GraphQL API](https://developer.github.com/v4/guides/resource-limitations/)
+> ### Exercises:
+### 练习
 
-## Implementing the Issues Feature: Client-Side Filter
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/6781b487d6799e55a4deea48dfe706253b373f0a)
+> * Read more about [the rate limit when using a (or in this case GitHub's) GraphQL API](https://developer.github.com/v4/guides/resource-limitations/)
 
-In this section, we enhance the Issue feature with client-side filtering. It prevents the initial issue querying because it happens with a button, and it lets the user filter between closed and open issues.
+* 确认[最后一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/6781b487d6799e55a4deea48dfe706253b373f0a)
+* 阅读有关[使用（或者在本例中是 Github 的）GraphQL API 时的速率限制](https://developer.github.com/v4/guides/resource-limitations/)的更多信息
 
-First, let's introduce our three states as enumeration next to the Issues component. The `NONE` state is used to show no issues; otherwise, the other states are used to show open or closed issues.
+> ## Implementing the Issues Feature: Client-Side Filter
+
+## 实现 Issue 功能: 客户端过滤
+
+> In this section, we enhance the Issue feature with client-side filtering. It prevents the initial issue querying because it happens with a button, and it lets the user filter between closed and open issues.
+
+在本节中，我们将用客户端筛选增强 issue 功能。它可以防止初始的 issue 查询，因为将由一个按钮触发，并且允许用户在已关闭和打开 issue 之间进行筛选。
+
+> First, let's introduce our three states as enumeration next to the Issues component. The `NONE` state is used to show no issues; otherwise, the other states are used to show open or closed issues.
+
+首先，让我介绍在 Issues 组件旁边的三个枚举状态，`NONE` 状态用于不显示 issue 列表，否则，其他状态用于显示打开或者关闭的 issue。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3140,14 +3184,18 @@ const ISSUE_STATES = {
 };
 ~~~~~~~~
 
-Second, let's implement a short function that decides whether it is a state to show the issues or not. This function can be defined in the same file.
+> Second, let's implement a short function that decides whether it is a state to show the issues or not. This function can be defined in the same file.
+
+其次，让我们实现一个简短函数来决定 issue 是否显示的状态。这个函数可以在同一个文件中进行定义。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
 const isShow = issueState => issueState !== ISSUE_STATES.NONE;
 ~~~~~~~~
 
-Third, the function can be used for conditional rendering, to either query the issues and show the IssueList, or to do nothing. It's not clear yet where the `issueState` property comes from.
+> Third, the function can be used for conditional rendering, to either query the issues and show the IssueList, or to do nothing. It's not clear yet where the `issueState` property comes from.
+
+第三，该函数可以用于条件渲染，查询 issue 并显示 IssueList，或者什么也不做，目前还不清楚 `issueState` 属性的来源。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3164,7 +3212,9 @@ const Issues = ({ repositoryOwner, repositoryName }) => (
 );
 ~~~~~~~~
 
-The `issueState` property must come from the local state to toggle it via a button in the component, so the Issues component must be refactored to a class component to manage this state.
+> The `issueState` property must come from the local state to toggle it via a button in the component, so the Issues component must be refactored to a class component to manage this state.
+
+`issueState` 属性必须来自组件内状态，才能通过组件内的按钮切换它，因此必须将 Issues 组件重构为一个类组件来管理这个状态。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3192,7 +3242,9 @@ class Issues extends React.Component {
 # leanpub-end-insert
 ~~~~~~~~
 
-The application should be error-free now, because the initial state is set to `NONE` and the conditional rendering prevents the query and the rendering of a result. However, the client-side filtering is not done yet, as you still need to toggle the `issueState` property with React's local state. The ButtonUnobtrusive component has the appropriate style, so we can reuse it to implement this toggling behavior to transition between the three available states.
+> The application should be error-free now, because the initial state is set to `NONE` and the conditional rendering prevents the query and the rendering of a result. However, the client-side filtering is not done yet, as you still need to toggle the `issueState` property with React's local state. The ButtonUnobtrusive component has the appropriate style, so we can reuse it to implement this toggling behavior to transition between the three available states.
+
+程序现在应该是无错的，因为初始状态被设置为 `NONE`，条件渲染阻止查询和结果渲染。但是，客户端的筛选还未完成，因为你仍然需要使用 React 的组件状态来切换 `issueState` 属性。ButtonUnobtrusive 组件具有适合的样式，因此我们可以复用它来实现这种切换行为，以便在三种可用状态中进行转换。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3243,7 +3295,9 @@ class Issues extends React.Component {
 }
 ~~~~~~~~
 
-In the last step, you introduced the button to toggle between the three states. You used two enumerations, `TRANSITION_LABELS` and `TRANSITION_STATE`, to show an appropriate button label and to define the next state after a state transition. These enumerations can be defined next to the `ISSUE_STATES` enumeration.
+> In the last step, you introduced the button to toggle between the three states. You used two enumerations, `TRANSITION_LABELS` and `TRANSITION_STATE`, to show an appropriate button label and to define the next state after a state transition. These enumerations can be defined next to the `ISSUE_STATES` enumeration.
+
+在最后一步中，你引入了用于在三种状态中切换的按钮，你使用了两个枚举，`TRANSITION_LABELS` 和 `TRANSITION_STATE` 来显示合适的按钮标签，并定义状态转换后的下一个状态。这些枚举可以在 `ISSUE_STATES` 旁边定义。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3260,7 +3314,9 @@ const TRANSITION_STATE = {
 };
 ~~~~~~~~
 
-As you can see, whereas the former enumeration only matches a label to a given state, the latter enumeration matches the next state to a given state. That's how the toggling to a next state can be made simple. Last but not least, the `issueState` from the local state has to be used to filter the list of issues after they have been queried and should be rendered.
+> As you can see, whereas the former enumeration only matches a label to a given state, the latter enumeration matches the next state to a given state. That's how the toggling to a next state can be made simple. Last but not least, the `issueState` from the local state has to be used to filter the list of issues after they have been queried and should be rendered.
+
+正如你所看到的，前一个枚举只将标签匹配到给定状态，而下一个枚举将下一个状态匹配到给定状态，这就是如何简单的切换到下一个状态的方法。最后一个重点是，在 issue 列表被查询并且渲染之后，必须使用组件内状态 `issueState` 来过滤 issue 列表。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3317,25 +3373,38 @@ class Issues extends React.Component {
 }
 ~~~~~~~~
 
-You have implemented client-side filtering. The button is used to toggle between the three states managed in the local state of the component.  The issues are only queried in filtered and rendered states. In the next step, the existing client-side filtering should be advanced to a server-side filtering, which means the filtered issues are already requested from the server and not filtered afterward on the client.
+> You have implemented client-side filtering. The button is used to toggle between the three states managed in the local state of the component.  The issues are only queried in filtered and rendered states. In the next step, the existing client-side filtering should be advanced to a server-side filtering, which means the filtered issues are already requested from the server and not filtered afterward on the client.
 
-### Exercises:
+你已经实现了客户端筛选，这个按钮用于在组件内状态中管理三个状态之间的切换。issue 只有在过滤和渲染状态下才会被查询。在下一步中，应该将现有的客户端过滤提升到服务端过滤，这意味着过滤后的 issue 是从服务端请求，而不是在客户端上过滤。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/0f261b13696046832ad65f1909266957d6275d6c)
-* Install the [recompose](https://github.com/acdlite/recompose) library which implements many higher-order components
-* Refactor the Issues component from class component to functional stateless component
-* Use the `withState` HOC for the Issues component to manage the `issueState`
+> ### Exercises:
+### 练习：
 
-## Implementing the Issues Feature: Server-Side Filter
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/0f261b13696046832ad65f1909266957d6275d6c)
+> * Install the [recompose](https://github.com/acdlite/recompose) library which implements many higher-order components
+> * Refactor the Issues component from class component to functional stateless component
+> * Use the `withState` HOC for the Issues component to manage the `issueState`
 
-Before starting with the server-side filtering, let's recap the last exercise in case you had difficulties with it. Basically you can perform the refactoring in three steps. First, install recompose as package for your application on the command line:
+* 确查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/0f261b13696046832ad65f1909266957d6275d6c)
+* 安装实现了很多高阶组件的 [recompose](https://github.com/acdlite/recompose) 库
+* 将 Issues 组件从类组件重构为无状态组件
+* 用 `withState` 高阶组件来管理 Issues 组件的 `issueState`
+
+> ## Implementing the Issues Feature: Server-Side Filter
+## 实现 Issues 功能: 服务端过滤
+
+> Before starting with the server-side filtering, let's recap the last exercise in case you had difficulties with it. Basically you can perform the refactoring in three steps. First, install recompose as package for your application on the command line:
+
+开始学习服务端过滤前，以防你遇到困难，让我们先回顾最近一次的练习。基本来说，我们可以分3个步骤来开始我们的重构。首先，在命令行为你的应用安装 recompose 依赖包。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
 npm install recompose --save
 ~~~~~~~~
 
-Second, import the `withState` higher-order component in the *src/Issue/IssueList/index.js* file and use it to wrap your exported Issues component, where the first argument is the property name in the local state, the second argument is the handler to change the property in the local state, and the third argument is the initial state for that property.
+> Second, import the `withState` higher-order component in the *src/Issue/IssueList/index.js* file and use it to wrap your exported Issues component, where the first argument is the property name in the local state, the second argument is the handler to change the property in the local state, and the third argument is the initial state for that property.
+
+其次，导入位于 *src/Issue/IssueList/index.js* 的高阶组件 `withState`，然后用它包裹你导出的 Issues 组件，高阶组件第一个参数是当前 state 下的属性名字，第二个参数是改变当前 state 属性的 handler，第三个参数是属性的初始 state。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3357,7 +3426,9 @@ export default withState(
 # leanpub-end-insert
 ~~~~~~~~
 
-Finally, refactor the Issues component from a class component to a functional stateless component. It accesses the `issueState` and `onChangeIssueState()` function in its props now. Remember to change the usage of the `onChangeIssueState` prop to being a function and not a class method anymore.
+>  Finally, refactor the Issues component from a class component to a functional stateless component. It accesses the `issueState` and `onChangeIssueState()` function in its props now. Remember to change the usage of the `onChangeIssueState` prop to being a function and not a class method anymore.
+
+最后，将 Issues 组件从类组件重构为函数式无状态组件。 现在，它可以访问 `props` 中的 `issueState` 和 `onChangeissueState()` 函数。记得将 `onChangeIssueState` 的使用方式修改为函数而不再是类的方法调用。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3389,7 +3460,9 @@ const Issues = ({
 ...
 ~~~~~~~~
 
-The previous section makes writing stateful components, where the state is much more convenient. Next, advance the filtering from client-side to server-side. We use the defined GraphQL query and its arguments to make a more exact query by requesting only open or closed issues. In the *src/Issue/IssueList/index.js* file, extend the query with a variable to specify the issue state:
+>  The previous section makes writing stateful components, where the state is much more convenient. Next, advance the filtering from client-side to server-side. We use the defined GraphQL query and its arguments to make a more exact query by requesting only open or closed issues. In the *src/Issue/IssueList/index.js* file, extend the query with a variable to specify the issue state:
+
+在上一节使编写状态组件变得更加方便。接下来，改进过滤从客户端到服务端。我们使用已定义的  GraphQL  查询和它的参数通过请求仅打开或关闭的 issues 来构造更加精确的查询。在文件 *src/Issue/IssueList/index.js* 中，通过指定 issue 状态扩展查询属性。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3421,7 +3494,9 @@ const GET_ISSUES_OF_REPOSITORY = gql`
 `;
 ~~~~~~~~
 
-Next, you can use the `issueState` property as variable for your Query component. In addition, remove the client-side filter logic from the Query component's render prop function.
+> Next, you can use the `issueState` property as variable for your Query component. In addition, remove the client-side filter logic from the Query component's render prop function.
+
+接下来，你可以使用 `issueState`  作为你的 Query 组件的查询属性。此外，从 Query 组件的 render props 函数中移除客户端过滤逻辑。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3464,21 +3539,35 @@ const Issues = ({
 );
 ~~~~~~~~
 
-You are only querying open or closed issues. Your query became more exact, and the filtering is no longer handled by the client.
+> You are only querying open or closed issues. Your query became more exact, and the filtering is no longer handled by the client.
 
-### Exercises:
+你仅在查询打开或关闭状态的issues。你的查询变得更加精确，客户端也不再处理筛选。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/df737276a4bc8d2d889d182937b77ba9e474e70c)
-* Implement the pagination feature for the Issue feature
-  * Add the pageInfo information to the query
-  * Add the additional cursor variable and argument to the query
-  * Add the FetchMore component to the IssueList component
+> ### Exercises:
 
-## Apollo Client Prefetching in React
+### 练习：
 
-This section is all about prefetching data, though the user doesn't need it immediately. It is another UX technique that can be deployed to the optimistic UI technique you used earlier. You will implement the prefetching data feature for the list of issues, but feel free to implement it for other data fetching later as your exercise.
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/df737276a4bc8d2d889d182937b77ba9e474e70c)
+> * Implement the pagination feature for the Issue feature
+>   * Add the pageInfo information to the query
+>   * Add the additional cursor variable and argument to the query
+>   * Add the FetchMore component to the IssueList component
 
-When your application renders for the first time, there no issues fetched, so no issues are rendered. The user has to toggle the filter button to fetch open issues, and do it again to fetch closed issues. The third click will hide the list of issues again. The goal of this section is to prefetch the next bulk of issues when the user hovers the filter button. For instance, when the issues are still hidden and the user hovers the filter button, the issues with the open state are prefetched in the background. When the user clicks the button, there is no waiting time, because the issues with the open state are already there. The same scenario applies for the transition from open to closed issues. To prepare this behavior, split out the filter button as its own component in the *src/Issue/IssueList/index.js* file:
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/df737276a4bc8d2d889d182937b77ba9e474e70c)
+* 为 issue 实现分页
+  * 为查询新增 pageInfo 信息
+  * 为查询新增额外的锚点属性和参数
+  * 新增 FetchMore 组件到 IssueList 组件中
+
+> ##  Apollo Client Prefetching in React
+## React 中 Apollo 客户端预加载
+> This section is all about prefetching data, though the user doesn't need it immediately. It is another UX technique that can be deployed to the optimistic UI technique you used earlier. You will implement the prefetching data feature for the list of issues, but feel free to implement it for other data fetching later as your exercise.
+
+本节全是关于数据预加载的内容，虽然用户并不一定会立刻用到。它是另一种 UX 技术，可以应用在你之前使用过的乐观 UI 上。你将能在 issues 列表中实现数据预加载的特性，不过作为你的练习，稍后你可以随意实现其他的数据预加载。
+
+> When your application renders for the first time, there no issues fetched, so no issues are rendered. The user has to toggle the filter button to fetch open issues, and do it again to fetch closed issues. The third click will hide the list of issues again. The goal of this section is to prefetch the next bulk of issues when the user hovers the filter button. For instance, when the issues are still hidden and the user hovers the filter button, the issues with the open state are prefetched in the background. When the user clicks the button, there is no waiting time, because the issues with the open state are already there. The same scenario applies for the transition from open to closed issues. To prepare this behavior, split out the filter button as its own component in the *src/Issue/IssueList/index.js* file:
+
+当你的应用首次渲染的时候，没有已经请求到的 issues，因此不会渲染任何 issues。用户必须切换筛选按钮来请求打开的 issues，然后再次切换筛选按钮来请求关闭的 issues。第三次点击将会再次隐藏列表的 issues。本章节的目标是当用户悬浮在筛选按钮上时预加载下一批的 issues。例如，当 issues 仍然是在隐藏时，用户悬浮在筛选按钮上，打开状态的 issues 将会在后台预加载。当用户点击筛选按钮，由于打开状态的 issues 已经获取到，因此不会再有等待时间。同样的情况适用于 issues 打开到关闭的过渡。为了给这种行为做准备，在文件 *src/Issue/IssueList/index.js* 中，分离筛选按钮作为自己单独的组件。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3513,7 +3602,9 @@ const IssueFilter = ({ issueState, onChangeIssueState }) => (
 # leanpub-end-insert
 ~~~~~~~~
 
-Now it is easier to focus on the IssueFilter component where most of the logic for data prefetching is implemented. Like before, the prefetching should happen when the user hovers over the button. There needs to be a prop for it, and a callback function which is executed when the user hovers over it. There is such a prop (attribute) for a button (element). We are dealing with HTML elements here.
+> Now it is easier to focus on the IssueFilter component where most of the logic for data prefetching is implemented. Like before, the prefetching should happen when the user hovers over the button. There needs to be a prop for it, and a callback function which is executed when the user hovers over it. There is such a prop (attribute) for a button (element). We are dealing with HTML elements here.
+
+现在，当大部分关于数据预加载的逻辑已经实现，更容易将注意力集中在 IssueFilter 组件。像之前一样，预加载应该发生在用户悬浮在按钮上的时候。它需要一个属性和一个回调函数，当用户悬停在它上面时执行该函数。这是按钮元素的属性。我们将在这里处理 HTML 元素。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3535,7 +3626,9 @@ const IssueFilter = ({ issueState, onChangeIssueState }) => (
 );
 ~~~~~~~~
 
-The `prefetchIssue()` function has to execute the identical GraphQL query executed by the Query component in the Issues component, but this time it is done in an imperative way instead of declarative. Rather than using the Query component for it, use the the Apollo Client instance directly to execute a query. Remember, the Apollo Client instance is hidden in the component tree, because you used React's Context API to provide the Apollo Client instance the component tree's top level. The Query and Mutation components have access to the Apollo Client, even though you have never used it yourself directly. However, this time you use it to query the prefetched data. Use the ApolloConsumer component from the React Apollo package to expose the Apollo Client instance in your component tree. You have used the ApolloProvider somewhere to provide the client instance, and you can use the ApolloConsumer to retrieve it now. In the *src/Issue/IssueList/index.js* file, import the ApolloConsumer component and use it in the IssueFilter component. It gives you access to the Apollo Client instance via its render props child function.
+> The `prefetchIssue()` function has to execute the identical GraphQL query executed by the Query component in the Issues component, but this time it is done in an imperative way instead of declarative. Rather than using the Query component for it, use the the Apollo Client instance directly to execute a query. Remember, the Apollo Client instance is hidden in the component tree, because you used React's Context API to provide the Apollo Client instance the component tree's top level. The Query and Mutation components have access to the Apollo Client, even though you have never used it yourself directly. However, this time you use it to query the prefetched data. Use the ApolloConsumer component from the React Apollo package to expose the Apollo Client instance in your component tree. You have used the ApolloProvider somewhere to provide the client instance, and you can use the ApolloConsumer to retrieve it now. In the *src/Issue/IssueList/index.js* file, import the ApolloConsumer component and use it in the IssueFilter component. It gives you access to the Apollo Client instance via its render props child function.
+
+函数 `prefetchIssue() ` 必须通过 Issues 组件中的 Query 组件，执行同样的 GraphQL 查询，但这一次它是以命令式的方式完成，而不是声明式的。与其使用 Query 组件，不如直接使用 Apollo 客户端实例来执行查询。记住， Apollo 客户端实例隐藏在组件树中，因为你使用了React的 Context API 在组件树的顶层为其提供 Apollo 客户端实例。查询和突变组件可以访问 Apollo 客户端，即使您从未直接使用过它。但是，这次你可以使用它来查询预加载的数据。使用 React Apollo 包中的 ApolloConsumer 组件在组件树中暴露 Apollo 客户端实例。你已经在某个地方使用了 ApolloProvider 来提供客户端实例，现在可以使用 ApolloConsumer 来取到它。在文件 *src/Issue/IssueList/index.js* 中，导入 ApolloConsumer 组件并在 IssueFilter 组件中使用它。它允许你通过其渲染 props 子函数访问 Apollo 客户端实例。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3570,7 +3663,9 @@ const IssueFilter = ({ issueState, onChangeIssueState }) => (
 );
 ~~~~~~~~
 
-Now you have access to the Apollo Client instance to perform queries and mutations, which will enable you to query GitHub's GraphQL API imperatively. The variables needed to perform the prefetching of issues are the same ones used in the Query component. You need to pass those to the IssueFilter component, and then to the `prefetchIssues()` function.
+> Now you have access to the Apollo Client instance to perform queries and mutations, which will enable you to query GitHub's GraphQL API imperatively. The variables needed to perform the prefetching of issues are the same ones used in the Query component. You need to pass those to the IssueFilter component, and then to the `prefetchIssues()` function.
+
+现在，您可以访问 Apollo 客户端实例来执行查询和变更，这将使您能够强制查询 Github 的 GraphQL API。执行 issues 预加载所需的变量与查询组件中使用的变量相同。你需要将这些传递到 IssueFilter 组件，然后传递给函数 `prefetchIssues()`。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3632,7 +3727,9 @@ const IssueFilter = ({
 ...
 ~~~~~~~~
 
-Use this information to perform the prefetching data query. The Apollo Client instance exposes a `query()` method for this. Make sure to retrieve the next `issueState`, because when prefetching open issues, the current `issueState` should be `NONE`.
+> Use this information to perform the prefetching data query. The Apollo Client instance exposes a `query()` method for this. Make sure to retrieve the next `issueState`, because when prefetching open issues, the current `issueState` should be `NONE`.
+
+使用此信息执行数据预加载查询。Apollp 客户端实例为此暴露了一个 `query()` 方法。确保得到下一个 `issueState`，因为预加载打开的 issues 时，当前的  `issueState`  应为 `NONE`。
 
 {title="src/Issue/IssueList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3661,13 +3758,21 @@ const prefetchIssues = (
 };
 ~~~~~~~~
 
-That's it. Once the button is hovered, it should prefetch the issues for the next `issueState`. The Apollo Client makes sure that the new data is updated in the cache like it would do for the Query component. There shouldn't be any visible loading indicator in between except when the network request takes too long and you click the button right after hovering it. You can verify that the request is happening in your network tab in the developer development tools of your browser. In the end, you have learned about two UX improvements that can be achieved with ease when using Apollo Client: optimistic UI and prefetching data.
+> That's it. Once the button is hovered, it should prefetch the issues for the next `issueState`. The Apollo Client makes sure that the new data is updated in the cache like it would do for the Query component. There shouldn't be any visible loading indicator in between except when the network request takes too long and you click the button right after hovering it. You can verify that the request is happening in your network tab in the developer development tools of your browser. In the end, you have learned about two UX improvements that can be achieved with ease when using Apollo Client: optimistic UI and prefetching data.
 
-### Exercises:
+就是这样。一旦该按钮悬停，它将预加载下一个 `issueState` 的 issues。Apollo 客户端确保新数据更新到缓存，就像对 Query 组件所做的那样。中间不应该有任何可见的加载指示器，除非网络请求花费了太长时间，并且你在悬停之后单击了按钮。你可以验证请求是否在浏览器的开发者工具的网络选项卡中发生。在最后，你已经了解了使用 Apollo 客户端可以轻松实现的两个 UX 改进：乐观 UI 和数据预加载。
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/87dc6eee7948dad6e1eb4c15078063337eff94db)
-* Read more about [Apollo Prefetching and Query Splitting in React](https://www.apollographql.com/docs/react/recipes/performance.html)
-* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5PLMBR3)
+> ### Exercises:
+### 练习：
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/87dc6eee7948dad6e1eb4c15078063337eff94db)
+> * Read more about [Apollo Prefetching and Query Splitting in React](https://www.apollographql.com/docs/react/recipes/performance.html)
+> * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/5PLMBR3)
+
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/87dc6eee7948dad6e1eb4c15078063337eff94db)
+
+* 延伸阅读：[Apollo 在 React 中预加载和查询分离](https://www.apollographql.com/docs/react/recipes/performance.html)
+
+* 花三分钟的时间来做一个[测验](https://www.surveymonkey.com/r/5PLMBR3)
 
 > ## Exercise: Commenting Feature
 ## 练习：评论功能
@@ -3686,7 +3791,7 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 
 > * Use the Query component from React Apollo in your container Comments component to fetch a list of comments. It should be similar to the query that fetches the list of issues. You only need to identify the issue for which the comments should be fetched.
 
-* 在你的容器组件：评论组件( Comments ) 中用 React Apollo 的 Query 组件来获取评论列表。这跟查询获取 issues 列表很相似。你只需确定哪些评论是应该被获取的。
+* 在你的容器组件：评论组件中用 React Apollo 的 Query 组件来获取评论列表。这跟查询获取 issues 列表很相似。你只需确定哪些评论是应该被获取的。
 
 > * Handle all edge cases in the Comments to show loading indicator, no data, or error messages. Render the list of comments in the CommentList component and a single comment in the CommentItem component.
 
@@ -3694,7 +3799,7 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 
 > * Implement the pagination feature for comments. Add the necessary fields in the query, the additional props and variables to the Query component, and the reusable FetchMore component. Handle the merging of the state in the `updateQuery` prop.
 
-* 实现评论的分页功能。在查询(操作)中添加必要的字段，在 Query 组件和可复用的 FetchMore 组件中添加附加的属性和变量。在 `updateQuery` 属性中处理状态的合并。
+* 实现评论的分页功能。在查询操作中添加必要的字段，在 Query 组件和可复用的 FetchMore 组件中添加附加的属性和变量。在 `updateQuery` 属性中处理状态的合并。
 
 > * Enable prefetching of the comments when hovering the "Show/Hide Comments" button.
 
@@ -3706,18 +3811,18 @@ That's it. Once the button is hovered, it should prefetch the issues for the nex
 
 > * Improve the AddComment component with the optimistic UI feature (perhaps read again the [Apollo documentation about the optimistic UI with a list of items](https://www.apollographql.com/docs/react/features/optimistic-ui.html)). A comment should show up in the list of comments, even if the request is pending.
 
-* 用乐观 UI 特性(你或许想再读一遍[乐观 UI 结合列表项的 Apollo 文档](https://www.apollographql.com/docs/react/features/optimistic-ui.html)) 来优化 AddComment 组件。哪怕是请求还在继续，评论列表中也要展示出评论。
+* 用乐观 UI 特性(你或许想再读一遍[乐观 UI 结合列表项的 Apollo 文档](https://www.apollographql.com/docs/react/features/optimistic-ui.html))来优化 AddComment 组件。哪怕是请求还在继续，评论列表中也要展示出评论。
 
 > I hope this section, building your own feature in the application with all the learned tools and techniques, matched your skills and challenged you to implement React applications with Apollo and GraphQL. I would recommend working to improve and extend the existing application. If you haven't implemented a GraphQL server yet, find other third-party APIs that offer a GraphQL API and build your own React with Apollo application by consuming it. Keep yourself challenged to grow your skills as a developer.
 
-在这部分中，我希望你通过掌握的工具及方法并结合你的技能与遇到的挑战，去实现 Apollo 和 GraphQL 结合 React 的应用，在其中构建你自己的特性。我会建议你提升并且拓展当前已有的应用。如果你到目前为止还没有实现 GraphQL server，就找一个提供 GraphQL API 的第三方 API 库，用它来构建一个你自己的 React 结合 Apollo 的应用。作为一个开发者，不断挑战自己，提升自己的技能吧。
+在这部分中，我希望你通过掌握的工具及方法并结合你的技能与遇到的挑战，去实现 Apollo 和 GraphQL 结合 React 的应用，在其中构建你自己的特性。我会建议你提升并且拓展当前已有的应用。如果你到目前为止还没有实现 GraphQL 服务端，就找一个提供 GraphQL API 的第三方 API 库，用它来构建一个你自己的 React 结合 Apollo 的应用。作为一个开发者，不断挑战自己，提升自己的技能吧。
 
 > ## Appendix: CSS Files and Styles
-## 附录: CSS文件与样式 
+## 附录: CSS 文件与样式 
 
 > This section has all the CSS files as well as their content and locations, to give your React with GraphQL and Apollo Client application a nice touch. It even makes it responsive for mobile and tablet devices. These are only recommendations, though; you can experiment with them, or come up with your own styles.
 
-这个部分涵盖了所有CSS文件的内容与文件存放路径，给你的集成了 GraphQL 和 Apollo Client 的 React 应用之旅带来一场绝妙体验。这些样式甚至可以在手机和平板设备上适配。当然了，这不过是些建议，你也可以完全自己写样式来达到你想要的效果。
+这个部分涵盖了所有 CSS 文件的内容与文件存放路径，给你的集成了 GraphQL 和 Apollo 客户端的 React 应用之旅带来一场绝妙体验。这些样式甚至可以在手机和平板设备上适配。当然了，这不过是些建议，你也可以完全自己写样式来达到你想要的效果。
 
 {title="src/style.css",lang="css"}
 ~~~~~~~~
@@ -4068,4 +4173,4 @@ pre {
 
 > You can find the final [repository on GitHub](https://github.com/rwieruch/react-graphql-github-apollo) that showcases most of the exercise tasks. The application is not feature-complete and it doesn't cover all edge cases, but it should give insight into using GraphQL with Apollo in React applications. If you want to dive more deeply into different topics like testing and state management with GraphQL on the client-side, you can start here: [A minimal Apollo Client in React Example](https://www.robinwieruch.de/react-apollo-client-example). Try to apply what you've learned in this application (e.g. testing, state management). Otherwise, I encourage you to try to build your own GraphQL client library, which helps you understand more of the GraphQL internals: [How to build a GraphQL client library for React](https://www.robinwieruch.de/react-graphql-client-library). Whichever you decide, keep tinkering on this application, or start with another GraphQL client application to fortify your skill set. You have finished all the GraphQL client chapters now.
 
-你可以在 [Github的代码库](https://github.com/rwieruch/react-graphql-github-apollo) 中发现，绝大部分的练习任务都已被陈列出来。尽管这些案例的功能并不完善，也没有覆盖到涉及边界的所有情况，但它应该表达出了对 React 应用中与 Apollo 一起使用 GraphQL 的深刻理解。假如你想钻研更多类似于在客户端中使用 GraphQL 进行测试和状态管理等深层次主题的话，你可以从这里开始：[Apollo Client 在 React 中的小例子](https://www.robinwieruch.de/react-apollo-client-example)。试着在这个应用结合你所学到的东西(例如：测试、状态管理)，否则的话，我更支持你去尝试着构建一个自己的 GraphQL client 库，[如何为 React 构建一个 GraphQL client 库](https://www.robinwieruch.de/react-graphql-client-library) 可以让你了解到更多 GraphQL 的内部构件，不管你最后怎么决定，记住要对这个应用反复锤炼，或者再另启一个 GraphQL client 应用来加强你的综合技能，做到学以致用。至此，你已经完成了 GraphQL client 的所有章节。
+你可以在 [Github的代码库](https://github.com/rwieruch/react-graphql-github-apollo)中发现，绝大部分的练习任务都已被陈列出来。尽管这些案例的功能并不完善，也没有覆盖到涉及边界的所有情况，但它应该表达出了对 React 应用中与 Apollo 一起使用 GraphQL 的深刻理解。假如你想钻研更多类似于在客户端中使用 GraphQL 进行测试和状态管理等深层次主题的话，你可以从这里开始：[Apollo 客户端在 React 中的小例子](https://www.robinwieruch.de/react-apollo-client-example)。试着在这个应用结合你所学到的东西(例如：测试、状态管理)，否则的话，我更支持你去尝试着构建一个自己的 GraphQL 客户端库，[如何为 React 构建一个 GraphQL 客户端库](https://www.robinwieruch.de/react-graphql-client-library) 可以让你了解到更多 GraphQL 的内部构件，不管你最后怎么决定，记住要对这个应用反复锤炼，或者再另启一个 GraphQL 客户端应用来加强你的综合技能，做到学以致用。至此，你已经完成了 GraphQL 客户端的所有章节。
