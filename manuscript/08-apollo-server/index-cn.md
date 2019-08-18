@@ -1,27 +1,27 @@
 > # Node.js with GraphQL and Apollo Server
 
-# 在GraphQL 和 Apollo Server 中使用Node.js 
+# 在 GraphQL 和 Apollo 服务端中使用 Node.js 
 > In this chapter, you will implement server-side architecture using GraphQL and Apollo Server. The GraphQL query language is implemented as a reference implementation in JavaScript by Facebook, while Apollo Server builds on it to simplify building GraphQL servers in JavaScript. Since GraphQL is a query language, its transport layer and data format is not set in stone. GraphQL isn't opinionated about it, but it is used as alternative to the popular REST architecture for client-server communication over HTTP with JSON.
 
-在本章你将会使用 GraphQL 和 Apollo Server 构建服务端。 FaceBook 用 JavaScript 实现了 GraphQL 查询语言的参考实现，而 Apollo Server 基于此实现，以便用 JavaScript 构建 GraphQL Server 变得更简单。由于 GraphQL 是一种查询语言，所以它的传输层和数据格式不是固定的。在通过 HTTP 与 JSON 的客户-服务端传输中，它常常被视为流行的 REST 架构的替代品，虽然 GraphQL 没有刻意提到这一点。
+在本章你将会使用 GraphQL 和 Apollo 服务端构建服务端。FaceBook 用 JavaScript 实现了 GraphQL 查询语言的参考实现，而 Apollo 服务端基于此实现，以便用 JavaScript 构建 GraphQL 服务端变得更简单。由于 GraphQL 是一种查询语言，所以它的传输层和数据格式不是固定的。在通过 HTTP 与 JSON 的客户-服务端传输中，它常常被视为流行的 REST 架构的替代品，虽然 GraphQL 没有刻意提到这一点。
 > In the end, you should have a fully working GraphQL server boilerplate project that implements authentication, authorization, a data access layer with a database, domain specific entities such as users and messages, different pagination strategies, and real-time abilities due to subscriptions. You can find a working solution of it, as well as a working client-side application in React, in this GitHub repository: [Full-stack Apollo with React and Express Boilerplate Project](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate). I consider it an ideal starter project to realize your own idea.
 
-在章节的最后，你能拥有一个完全工作的  GraphQL 服务样脚手架目，这个项目包括身份验证，授权，连接着数据库的数据访问层，像用户、消息这样的具体的领域实体，不同的分页策略和由订阅带来的实时推送功能。你可以在这个 GitHub 代码库： [使用 React 和 Express 的全栈 Apollo 脚手架项目](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate) 找到一个已经实现了这些功能的服务端解决方案和一个由 React 实现的客户端解决方案。我认为这是一个理想的实现自己想法的入门项目。
+在章节的最后，你能拥有一个完全工作的 GraphQL 服务端脚手架项目，这个项目包括身份验证，授权，连接着数据库的数据访问层，像用户、消息这样的具体的领域实体，不同的分页策略和由订阅带来的实时推送功能。你可以在这个 GitHub 代码库：[使用 React 和 Express 的全栈 Apollo 脚手架项目](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate)找到一个已经实现了这些功能的服务端解决方案和一个由 React 实现的客户端解决方案。我认为这是一个理想的实现自己想法的入门项目。
 > While building this application with me in the following sections, I recommend to verify your implementations with the built-in GraphQL client application (e.g. GraphQL Playground). Once you have your database setup done, you can verify your stored data over there as well. In addition, if you feel comfortable with it, you can implement a client application (in React or something else) which consumes the GraphQL API of this server. So let's get started!
 
-当你在和我一起构建这个应用程序时，推荐使用内置的 GraphQL 客户端应用程序（比如  GraphQL Playground ）来验证你的实现。完成数据库设置的话，也可以在那里验证存储数据。此外，如果你感觉还有余力的话，还可以实现一个使用这个服务提供的 GraphQL API 的客户端应用程序（使用 React 或者其他什么）。那让我们开始吧！
+当你在和我一起构建这个应用程序时，推荐使用内置的 GraphQL 客户端应用程序（比如 GraphQL Playground）来验证你的实现。完成数据库设置的话，也可以在那里验证存储数据。此外，如果你感觉还有余力的话，还可以实现一个使用这个服务提供的 GraphQL API 的客户端应用程序（使用 React 或者其他什么）。那让我们开始吧！
 > ## Apollo Server Setup with Express
 
-## 使用 Express 设置 Apollo Server
+## 使用 Express 设置 Apollo 服务端
 > There are two ways to start out with this application. You can follow my guidance in [this minimal Node.js setup guide step by step](https://www.robinwieruch.de/minimal-node-js-babel-setup) or you can find a starter project in this [GitHub repository](https://github.com/rwieruch/node-babel-server) and follow its installation instructions.
 
-有两种方法来开始这个应用程序。你可以按照我在这个 [手把手教你启动最小 Node.js 的指南](https://www.robinwieruch.de/minimal-node-js-babel-setup) 里的指导，或者在这个 [GitHub 代码库](https://github.com/rwieruch/node-babel-server) 里找到一个启动项目，并根据它的安装说明进行操作。
+有两种方法来开始这个应用程序。你可以按照我在这个[手把手教你启动最小 Node.js 的指南](https://www.robinwieruch.de/minimal-node-js-babel-setup)里的指导，或者在这个 [GitHub 代码库](https://github.com/rwieruch/node-babel-server)里找到一个启动项目，并根据它的安装说明进行操作。
 > Apollo Server can be used with several popular libraries for Node.js like Express, Koa, Hapi. It is kept library agnostic, so it's possible to connect it with many different third-party libraries in client and server applications. In this application, you will use [Express](https://expressjs.com/), because it is the most popular and common middleware library for Node.js.
 
-Apollo Server 可以与 Express、Koa、Hapi 等常用的 Node.js 库一起使用。因为它与库无关，所以可以将它与客户端和服务器应用程序的许多不同第三方库结合使用。在这个应用程序中，你将使用 [Express](https://expressjs.com/) ，因为它是 Node.js 最流行和最常见的中间件库。
+Apollo 服务端可以与 Express、Koa、Hapi 等常用的 Node.js 库一起使用。因为它与库无关，所以可以将它与客户端和服务器应用程序的许多不同第三方库结合使用。在这个应用程序中，你将使用 [Express](https://expressjs.com/)，因为它是 Node.js 最流行和最常见的中间件库。
 > Install these two dependencies to the *package.json* file and *node_modules* folder:
 
-将这两个依赖包安装到  *package.json* 文件和 *node_modules* 文件夹中
+将这两个依赖包安装到 *package.json* 文件和 *node_modules* 文件夹中
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -29,7 +29,7 @@ npm install apollo-server apollo-server-express --save
 ~~~~~~~~
 > As you can see by the library names, you can use any other middleware solution (e.g. Koa, Hapi) to complement your standalone Apollo Server. Apart from these libraries for Apollo Server, you need the core libraries for Express and GraphQL:
 
-从库名可以看出，你可以使用任何其他中间件解决方案（例如 Koa、Hapi ）来填充你自己的 Apollo Server。除了用于 Apollo Server 的这些库之外，你还需要 Express 和 GraphQL:
+从库名可以看出，你可以使用任何其他中间件解决方案（例如 Koa、Hapi）来填充你自己的 Apollo 服务端。除了用于 Apollo 服务端的这些库之外，你还需要 Express 和 GraphQL:
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -37,7 +37,7 @@ npm install express graphql --save
 ~~~~~~~~
 > Now every library is set to get started with the source code in the *src/index.js* file. First, you have to import the necessary parts for getting started with Apollo Server in Express:
 
-现在，每个库都设置为从 *src/index.js* 文件中的源代码开始。为了启动使用 Express 的 Apollo Server，首先，你需要导入必要的模块：
+现在，每个库都设置为从 *src/index.js* 文件中的源代码开始。为了启动使用 Express 的 Apollo 服务端，首先，你需要导入必要的模块：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -46,7 +46,7 @@ import { ApolloServer } from 'apollo-server-express';
 ~~~~~~~~
 > Second, use both imports for initializing your Apollo Server with Express:
 
-然后，使用这两个导入的模块通过 Express 来初始化 Apollo Server。
+然后，使用这两个导入的模块通过 Express 来初始化 Apollo 服务端。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -73,7 +73,7 @@ app.listen({ port: 8000 }, () => {
 ~~~~~~~~
 > Using Apollo Server's `applyMiddleware()` method, you can opt-in any middleware, which in this case is Express. Also, you can specify the path for your GraphQL API endpoint. Beyond this, you can see how the Express application gets initialized. The only missing items are the definition for the schema and resolvers for creating the Apollo Server instance. We'll implement them first and learn about them after:
 
-使用 Apollo Server 的 `applyMiddleware()` 方法，你可以添加任意中间件，这里使用了 Express。此外，还可以指定 GraphQL API endpoint 的路径。而且，你还可以自定义初始化 Express 应用程序。现在惟一缺少的是用于创建 Apollo Server 实例的 schema 和 resolvers 的定义。我们将先实现它们，之后再来学习它们：
+使用 Apollo 服务端的 `applyMiddleware()` 方法，你可以添加任意中间件，这里使用了 Express。此外，还可以指定 GraphQL API 端点的路径。而且，你还可以自定义初始化 Express 应用程序。现在惟一缺少的是用于创建 Apollo 服务端实例的 schema 和 resolvers 的定义。我们将先实现它们，之后再来学习它们：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -110,7 +110,7 @@ const resolvers = {
 ~~~~~~~~
 > The **GraphQL schema** provided to the Apollo Server is all the available data for reading and writing data via GraphQL. It can happen from any client who consumes the GraphQL API. The schema consists of **type definitions**, starting with a mandatory top level **Query type** for reading data, followed by **fields** and **nested fields**. In the schema from the Apollo Server setup, you have defined a `me` field, which is of the **object type** `User`. In this case, a User type has only a `username` field, a **scalar type**. There are various scalar types in the GraphQL specification for defining strings (String), booleans (Boolean), integers (Int), and more. At some point, the schema has to end at its leaf nodes with scalar types to resolve everything properly. Think about it as similar to a JavaScript object with objects or arrays inside, except it requires primitives like strings, booleans, or integers at some point.
 
-**GraphQL schema** 是 Apollo Server 提供出的所有，能通过 GraphQL 读写的可用数据。它可以提供给任何消费这个 GraphQL API 的客户端。 Schema 由**类型定义**组成，首先在顶级必须有用于读取数据的 **Query 类型**，然后是**字段**和**嵌套字段**。在这个准备设置给 Apollo Server 的 schema 中，定义了一个 `me` 字段，它的类型是**对象类型** `User`。在这里，User 类型只有一个 `username` 字段， 它是**标量**类型的。 GraphQL规范中有各种标量类型，用于定义字符串（ String ）、布尔值（ Boolean ）、整数（ Int ）等。一般情况下， schema 的叶子节点必须以标量类型结束，以便正确地解析所有内容。可以将其类比为 JavaScript 对象，其中包含对象、数组，此外也包括字符串、布尔值和整数等基本类型。
+**GraphQL 模式** 是 Apollo 服务端提供出的所有，能通过 GraphQL 读写的可用数据。它可以提供给任何消费这个 GraphQL API 的客户端。模式 由**类型定义**组成，首先在顶级必须有用于读取数据的 **查询类型**，然后是**字段**和**嵌套字段**。在这个准备设置给 Apollo 服务端的模式中，定义了一个 `me` 字段，它的类型是**对象类型** `User`。在这里，User 类型只有一个 `username` 字段， 它是**标量**类型的。 GraphQL 规范中有各种标量类型，用于定义字符串（String）、布尔值（Boolean）、整数（Int）等。一般情况下， 模式的叶子节点必须以标量类型结束，以便正确地解析所有内容。可以将其类比为 JavaScript 对象，其中包含对象、数组，此外也包括字符串、布尔值和整数等基本类型。
 
 {title="Code Playground",lang="javascript"}
 ~~~~~~~~
@@ -122,10 +122,10 @@ const data = {
 ~~~~~~~~
 > In the GraphQL schema for setting up an Apollo Server, **resolvers** are used to return data for fields from the schema. The data source doesn't matter, because the data can be hardcoded, can come from a database, or from another (RESTful) API endpoint. You will learn more about potential data sources later. For now, it only matters that the resolvers are agnostic according to where the data comes from, which separates GraphQL from your typical database query language. Resolvers are functions that resolve data for your GraphQL fields in the schema. In the previous example, only a user object with the username "Robin Wieruch" gets resolved from the `me` field.
 
-在这个为了设置 Apollo Server 而准备的 GraphQL 的 schema 中， **resolvers** 可以设定返回 schema 的字段组成的数据。数据源并不重要，数据可以是硬编码的，可以是来自数据库的，也可以是来自其他 （RESTful） API endpoint 的。你将会在之后学习这些潜在的数据来源。现在只需要知道 resolvers 的数据与数据源无关，这是 GraphQL 和典型的数据库查询语言不同的地方。 Resolvers 是 schema 中解析 GraphQL 字段的函数。上面的例子中，只有一个 me 字段含有一个 username 为 "Robin Wieruch" 的 User 对象 。
+在这个为了设置 Apollo 服务端而准备的 GraphQL 的模式中，**resolvers** 可以设定返回模式的字段组成的数据。数据源并不重要，数据可以是硬编码的，可以是来自数据库的，也可以是来自其他 （RESTful） API 端点的。你将会在之后学习这些潜在的数据来源。现在只需要知道 resolvers 的数据与数据源无关，这是 GraphQL 和典型的数据库查询语言不同的地方。 Resolvers 是模式中解析 GraphQL 字段的函数。上面的例子中，只有一个 me 字段含有一个 username 为 "Robin Wieruch" 的 User 对象 。
 > Your GraphQL API with Apollo Server and Express should be working now. On the command line, you can always start your application with the `npm start` script to verify it works after you make changes. To verify it without a client application, Apollo Server comes with GraphQL Playground, a built-in client for consuming GraphQL APIs. It is found by using a GraphQL API endpoint in a browser at `http://localhost:8000/graphql`. In the application, define your first GraphQL query to see its result:
 
-现在，你通过使用 Express 设置的 Apollo Server 实现的 GraphQL API 应该已经可以运行了。在命令行中，你可以使用 “npm start” 脚本启动应用程序，以便在你进行更改后验证它是否工作。为了在没有客户端应用程序的情况下验证它，Apollo Server 附带了 GraphQL Playground，这是一个用于消费 GraphQL api 的内置客户端。可以通过在浏览器访问 http://localhost:8000/graphql 使用 GraphQL API endpoint。在应用中定义你的一个 GraphQL 的 query 然后查看结果：
+现在，你通过使用 Express 设置的 Apollo 服务端实现的 GraphQL API 应该已经可以运行了。在命令行中，你可以使用 “npm start” 脚本启动应用程序，以便在你进行更改后验证它是否工作。为了在没有客户端应用程序的情况下验证它，Apollo 服务端附带了 GraphQL Playground，这是一个用于消费 GraphQL api 的内置客户端。可以通过在浏览器访问 http://localhost:8000/graphql 使用 GraphQL API 端点。在应用中定义你的一个 GraphQL 的 查询然后查看结果：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -151,7 +151,7 @@ const data = {
 ~~~~~~~~
 > I might not mention GraphQL Playground as much moving forward, but I leave it to you to verify your GraphQL API with it after you make changes. It is useful tool to experiment and explore your own API. Optionally, you can also add [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) to your Express middleware. First, install CORS on the command line:
 
-我可能不会过多地提到 GraphQL Playground，但希望你在进行更改之后用它来验证一下你的 GraphQL API。它是一个有用的工具，可以用来试验和探索你的API。你还可以选择将 [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) 添加到你的 Express 中间件中。
+我可能不会过多地提到 GraphQL Playground，但希望你在进行更改之后用它来验证一下你的 GraphQL API。它是一个有用的工具，可以用来试验和探索你的 API。你还可以选择将 [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) 添加到你的 Express 中间件中。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -180,15 +180,15 @@ app.use(cors());
 ~~~~~~~~
 > CORS is needed to perform HTTP requests from another domain than your server domain to your server. Otherwise you may run into cross-origin resource sharing errors for your GraphQL server.
 
-服务器的HTTP跨域请求需要用 CORS 来处理。否则，你的 GraphQL server 可能会遇到跨域错误。
+服务器的 HTTP 跨域请求需要用 CORS 来处理。否则，你的 GraphQL 服务端可能会遇到跨域错误。
 > ### Exercises:
 
 ### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/b6468a84ad77018bf940d951016b7e2c1e07404f)
-* 完成你的[最后一部分源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/b6468a84ad77018bf940d951016b7e2c1e07404f)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/b6468a84ad77018bf940d951016b7e2c1e07404f)
 > * Read more about [GraphQL](https://graphql.org/learn)
-* 学习更多关于 [GraphQL](https://graphql.org/learn) 的知识 
+* 延伸阅读：[GraphQL](https://graphql.org/learn)
 > * Experiment with the schema and the resolver
 * 尝试完善 schema 和 resolver
 >   * Add more fields to the user type
@@ -198,18 +198,18 @@ app.use(cors());
 >  * Query your fields in the GraphQL Playground
   * 在 GraphQL Playground 中查询出你的字段
 > * Read more about [Apollo Server Standalone](https://www.apollographql.com/docs/apollo-server/v2/getting-started.html)
-* 学习更多关于[独立的 Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/getting-started.html) 的知识 
+* 延伸阅读：[独立的 Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/getting-started.html)
 > * Read more about [Apollo Server in Express Setup](https://www.apollographql.com/docs/apollo-server/v2/essentials/server.html)
-* 学习更多关于[在 Express 中设置 Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/essentials/server.html) 的知识
+* 延伸阅读：[在 Express 中设置 Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/essentials/server.html)
 > ## Apollo Server: Type Definitions
 
-## Apollo Server： 类型定义
+## Apollo 服务端： 类型定义
 > This section is all about GraphQL type definitions and how they are used to define the overall GraphQL schema. A GraphQL schema is defined by its types, the relationships between the types, and their structure. Therefore GraphQL uses a **Schema Definition Language (SDL)**. However, the schema doesn't define where the data comes from. This responsibility is handled by resolvers outside of the SDL. When you used Apollo Server before, you used a User object type within the schema and defined a resolver which returned a user for the corresponding `me` field.
 
-本节关于 GraphQL 的类型定义以及如何使用它们定义 GraphQL schema。一个 GraphQL schema 由其类型、类型之间的关系及其结构定义。为此，GraphQL使用了一种**模式定义语言（SDL）**。不过，schema并不定义数据来自何处。此职责由 SDL 之外的解析器处理。在使用 Apollo Server 之前，你在 schema 中使用了一个 User 对象类型，并定义了一个 resolver，该 resolver 为相应的 `me` 字段返回一个 user。
+本节关于 GraphQL 的类型定义以及如何使用它们定义 GraphQL 模式。一个 GraphQL 模式由其类型、类型之间的关系及其结构定义。为此，GraphQL 使用了一种**模式定义语言（SDL）**。不过，模式 并不定义数据来自何处。此职责由 SDL 之外的解析器处理。在使用 Apollo 服务端之前，你在模式中使用了一个 User 对象类型，并定义了一个 resolver，该 resolver 为相应的 `me` 字段返回一个 user。
 > Note the exclamation point for the `username` field in the User object type. It means that the `username` is a **non-nullable** field. Whenever a field of type User with a `username` is returned from the GraphQL schema, the user has to have a `username`. It cannot be undefined or null. However, there isn't an exclamation point for the user type on the `me` field. Does it mean that the result of the `me` field can be null? That is the case for this particular scenario. There shouldn't be always a user returned for the `me` field, because a server has to know what the field contains before it can respond. Later, you will implement an authentication mechanism (sign up, sign in, sign out) with your GraphQL server. The `me` field is populated with a user object like account details only when a user is authenticated with the server. Otherwise, it remains null. When you define GraphQL type definitions, there must be conscious decisions about the types, relationships, structure and (non-null) fields.
 
-注意 User 对象类型中的 `username` 字段的感叹号。意思是这个 `username` 字段是一个**不能为空**的字段。每当从 GraphQL schema 返回拥有 `username` 的 User 类型时， `username` 字段必须有值，不能是 undefined 或者 null。不过，在 `me` 字段中， User 类型没有感叹号，是否这意味着返回结果中的 `me` 字段可以为空？这是一种特殊的情况。因为服务器必须知道该字段包含什么才能响应，所以 `me` 字段不应该必然有 user 返回。稍后，你将使用 GraphQL server 实现身份验证机制(注册、登录、退出)。只有当用户通过服务器进行身份验证时， `me` 字段才会填充 User 对象，比如帐户详细信息。否则，它仍然为空。在定义 GraphQL 类型定义时，必须对类型、关系、结构和(非null)字段进行特意的设计。
+注意 User 对象类型中的 `username` 字段的感叹号。意思是这个 `username` 字段是一个**不能为空**的字段。每当从 GraphQL 模式返回拥有 `username` 的 User 类型时， `username` 字段必须有值，不能是 undefined 或者 null。不过，在 `me` 字段中， User 类型没有感叹号，是否这意味着返回结果中的 `me` 字段可以为空？这是一种特殊的情况。因为服务器必须知道该字段包含什么才能响应，所以 `me` 字段不应该必然有 user 返回。稍后，你将使用 GraphQL 服务端实现身份验证机制(注册、登录、退出)。只有当用户通过服务器进行身份验证时， `me` 字段才会填充 User 对象，比如帐户详细信息。否则，它仍然为空。在定义 GraphQL 类型定义时，必须对类型、关系、结构和(非 null)字段进行特意的设计。
 > We extend the schema by extending or adding more type definitions to it, and use **GraphQL arguments** to handle user fields:
 
 我们通过扩展或添加更多类型定义来扩展 schema，并使用 **GraphQL参数** 来处理 user 字段：
@@ -232,7 +232,7 @@ const schema = gql`
 
 > **GraphQL arguments** can be used to make more fine-grained queries because you can provide them to the GraphQL query. Arguments can be used on a per-field level with parentheses. You must also define the type, which in this case is a non-nullable identifier to retrieve a user from a data source. The query returns the User type, which can be null because a user entity might not be found in the data source when providing a non identifiable `id` for it. Now you can see how two queries share the same GraphQL type, so when adding fields to the it, a client can use them implicitly for both queries `id` field:
 
-GraphQL 参数可用于进行更细粒度的查询，因为可以将它们提供给 GraphQL 查询。参数可以在带有括号的每个字段级上使用。你还必须定义类型，在这个例子中，该类型是一个非可空标识符，用于从数据源那里获取 user。 Query 返回的 User 类型可以为空，因为在为其提供非法的 `id` 时，可能在数据源中找不到一个 user 实体。现在你可以看到两个 query 共享了相同的GraphQL 类型，因此在向其添加字段时，客户端还可以隐式地使用两个 query 的 `id` 字段：
+GraphQL 参数可用于进行更细粒度的查询，因为可以将它们提供给 GraphQL 查询。参数可以在带有括号的每个字段级上使用。你还必须定义类型，在这个例子中，该类型是一个非可空标识符，用于从数据源那里获取 user。 查询返回的 User 类型可以为空，因为在为其提供非法的 `id` 时，可能在数据源中找不到一个 user 实体。现在你可以看到两个查询共享了相同的 GraphQL 类型，因此在向其添加字段时，客户端还可以隐式地使用两个查询的 `id` 字段：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -252,7 +252,7 @@ const schema = gql`
 ~~~~~~~~
 > You may be wondering about the ID scalar type. The ID denotes an identifier used internally for advanced features like caching or refetching. It is a superior string scalar type. All that's missing from the new GraphQL query is the resolver, so we'll add it to the map of resolvers with sample data:
 
-你可能想知道 ID 这个标量类型。ID 是表示用于诸如缓存或者获取的内部高级特性标识符。它是继承自标量类型 string 的标量类型。新的 GraphQL query 缺少的只是 resolver，所以我们将为示例数据添加一个叫做 resolvers 的映射:
+你可能想知道 ID 这个标量类型。ID 是表示用于诸如缓存或者获取的内部高级特性标识符。它是继承自标量类型 string 的标量类型。新的 GraphQL 查询缺少的只是 resolver，所以我们将为示例数据添加一个叫做 resolvers 的映射:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -275,7 +275,7 @@ const resolvers = {
 ~~~~~~~~
 > Second, make use of the incoming `id` argument from the GraphQL query to decide which user to return. All the arguments can be found in the second argument in the resolver function's signature:
 
-其次，使用来自 GraphQL query 的传入 `id` 参数来决定返回哪个 user。所有的参数都可以在 resolver 的函数的第二个参数中找到:
+其次，使用来自 GraphQL 查询的传入 `id` 参数来决定返回哪个 user。所有的参数都可以在 resolver 的函数的第二个参数中找到:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -368,7 +368,7 @@ const resolvers = {
 ~~~~~~~~
 > Querying a list of of users will be our third query. First, add the query to the schema again:
 
-查询 users 列表将是我们的第三个 query。首先，再次将 query 添加到 schema 中:
+查询 users 列表将是我们的第三个查询。首先，再次将 query 添加到 schema 中:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -389,7 +389,7 @@ const schema = gql`
 ~~~~~~~~
 > In this case, the `users` field returns a list of users of type User, which is denoted with the square brackets. Within the list, no user is allowed to be null, but the list itself can be null in case there are no users (otherwise, it could be also `[User!]!`). Once you add a new query to your schema, you are obligated to define it in your resolvers within the Query object:
 
-在本例中，`users` 字段返回一个 User 类型的列表，该列表用方括号表示。在列表中，不允许任何 user 为空，但是如果没有 user，列表本身可以为空（否则，它应该是  `[User!]!` 的）。一旦你在你的 schema 中添加了一个新的查询，你必须在 Query 对象的解析器中定义它:
+在本例中，`users` 字段返回一个 User 类型的列表，该列表用方括号表示。在列表中，不允许任何 user 为空，但是如果没有 user，列表本身可以为空（否则，它应该是  `[User!]!` 的）。一旦你在你的模式中添加了一个新的查询，你必须在 Query 对象的解析器中定义它:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -417,17 +417,17 @@ const resolvers = {
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/469080f810a0049442f02393fae746cebc391cc0)
 * 完成你的[最后一部分源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/469080f810a0049442f02393fae746cebc391cc0)
 > * Read more about [the GraphQL schema with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/essentials/schema.html)
-* 学习更多关于 [Apollo Server 中的 GraphQL schema](https://www.apollographql.com/docs/apollo-server/v2/essentials/schema.html) 的知识
+* 延伸阅读：[Apollo Server 中的 GraphQL 模式](https://www.apollographql.com/docs/apollo-server/v2/essentials/schema.html)
 > * Read more about [the GraphQL mindset: Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/)
-* 学习更多关于 [GraphQL 思维模式：用图来思考](https://graphql.github.io/learn/thinking-in-graphs/)的知识
+* 延伸阅读：[GraphQL 思维模式：用图来思考](https://graphql.github.io/learn/thinking-in-graphs/)
 > * Read more about [nullability in GraphQL](https://blog.apollographql.com/using-nullability-in-graphql-2254f84c4ed7)
-* 学习更多关于 [GraphQL 中的可空](https://blog.apollographql.com/using-nullability-in-graphql-2254f84c4ed7)的知识
+* 延伸阅读：[GraphQL 中的可空](https://blog.apollographql.com/using-nullability-in-graphql-2254f84c4ed7)
 > ## Apollo Server: Resolvers
 
-## Apollo Server: 解析器
+## Apollo 服务端: 解析器
 > This section continuous with the GraphQL schema in Apollo Server, but transitions more to the resolver side of the subject. In your GraphQL type definitions you have defined types, their relations and their structure. But there is nothing about how to get the data. That's where the GraphQL resolvers come into play.
 
-本节将继续介绍 Apollo Server 中的 GraphQL schema，但更多的是过渡到解析器方面。在你的 GraphQL 类型定义中，你已经定义了类型、它们的关系和结构。但还没有涉及到关于如何获取数据的。这就是 GraphQL 的解析器发挥作用的地方。
+本节将继续介绍 Apollo Server 中的 GraphQL 模式，但更多的是过渡到解析器方面。在你的 GraphQL 类型定义中，你已经定义了类型、它们的关系和结构。但还没有涉及到关于如何获取数据的。这就是 GraphQL 的解析器发挥作用的地方。
 > In JavaScript, the resolvers are grouped in a JavaScript object, often called a **resolver map**. Each top level query in your Query type has to have a resolver. Now, we'll resolve things on a per-field level.
 
 在 JavaScript 中，如果解析器一个 JavaScript 对象，那么通常将称其为 **解析器映射**。 Query 类型中的每个顶级查询都必须有一个解析器。现在，我们将在每个字段级别上也对它进行处理。
@@ -489,7 +489,7 @@ const resolvers = {
 GraphQL 解析器可以在每个字段上进行更具体地操作。你可以通过解析一个 `username` 字段来覆盖每个 User 类型的 username。如果没有这么做的话，就会获取 User 实体的默认 `username` 属性。一般来说，这适用于每个字段。返回什么字段既可以是你在解析器函数中具体决定，也可以由 GraphQL 从 JavaScript 实体自动检索属性来尝试获取。
 > Let's evolve this a bit by diving into the function signatures of resolver functions. Previously, you have seen that the second argument of the resolver function is the incoming arguments of a query. That's how you were able to retrieve the `id` argument for the user from the Query. The first argument is called the parent or root argument, and always returns the previously resolved field. Let's check this for the new username resolver function.
 
-让我们通过深入研究解析器函数的参数来进一步改进它。在前面，你已经知道解析器函数的第二个参数是一次查询的传入参数。就是如何从 Query 中获取 user 的 `id` 参数。第一个参数称为父参数或根参数，并且总是返回以前解析过的字段。让我们看一下新的 username 解析器函数。
+让我们通过深入研究解析器函数的参数来进一步改进它。在前面，你已经知道解析器函数的第二个参数是一次查询的传入参数。就是如何从查询中获取 user 的 `id` 参数。第一个参数称为父参数或根参数，并且总是返回以前解析过的字段。让我们看一下新的 username 解析器函数。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -553,7 +553,7 @@ const resolvers = {
 ~~~~~~~~
 > For now, we are going to leave out the `username` resolver, because it only mimics the default behavior with Apollo Server. These are called **default resolvers**, because they work without explicit definitions. Next, look to the other arguments in the function signature of a GraphQL resolver:
 
-因为 `username` 解析器只是在仿写 Apollo Server 的默认行为，所以现在我们将省略掉它。这样的写法被称为**默认解析器**，因为它们被没有显式地定义。接下来，我们再看看 GraphQL 解析器中的其他参数:
+因为 `username` 解析器只是在仿写 Apollo 服务端的默认行为，所以现在我们将省略掉它。这样的写法被称为**默认解析器**，因为它们被没有显式地定义。接下来，我们再看看 GraphQL 解析器中的其他参数:
 
 {title="Code Playground",lang="javascript"}
 ~~~~~~~~
@@ -561,7 +561,7 @@ const resolvers = {
 ~~~~~~~~
 > The context argument is the third argument in the resolver function used to inject dependencies from the outside to the resolver function. Assume the signed-in user is known to the outside world of your GraphQL layer because a request to your GraphQL server is made and the authenticated user is retrieved from elsewhere. You might decide to inject this signed in user to your resolvers for application functionality, which is done with the `me` user for the `me` field. Remove the declaration of the `me` user (`let me = ...`) and pass it in the context object when Apollo Server gets initialized instead:
 
-上下文参数是解析器函数中的第三个参数，用于将依赖项从外部注入解析器函数。因为从其他地方取得的经过身份验证的用户也可以向 GraphQL 服务器发出请求，因此我们假设已登录 user 对 GraphQL 的外部世界是已知的。你可能想要将这个已登录的用户注入到应用程序的 resolvers 的方法中，这是可以通过 `me` 字段的 `me` user 完成。移除 `me` user 的声明 （`let me = ...`），并在Apollo Server初始化时将其传递给上下文对象:
+上下文参数是解析器函数中的第三个参数，用于将依赖项从外部注入解析器函数。因为从其他地方取得的经过身份验证的用户也可以向 GraphQL 服务器发出请求，因此我们假设已登录 user 对 GraphQL 的外部世界是已知的。你可能想要将这个已登录的用户注入到应用程序的 resolvers 的方法中，这是可以通过 `me` 字段的 `me` user 完成。移除 `me` user 的声明 （`let me = ...`），并在 Apollo 服务端初始化时将其传递给上下文对象:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -610,13 +610,13 @@ const resolvers = {
 
 ### 练习：
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/5d8ebc22260455ac6803af20838cbc1f2636be8f)
-* 完成你的[最后一部分源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/5d8ebc22260455ac6803af20838cbc1f2636be8f)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/5d8ebc22260455ac6803af20838cbc1f2636be8f)
 > * Read more about [GraphQL resolvers in Apollo](https://www.apollographql.com/docs/apollo-server/v2/essentials/data.html)
-* 学习更多关于 [Apollo 中的 GraphQL 解析器](https://www.apollographql.com/docs/apollo-server/v2/essentials/data.html) 的知识
+* 延伸阅读：[Apollo 中的 GraphQL 解析器](https://www.apollographql.com/docs/apollo-server/v2/essentials/data.html)
 
 >## Apollo Server: Type Relationships
 
-## Apollo Server: 关系类型
+## Apollo 服务端: 关系类型
 
 >You started to evolve your GraphQL schema by defining queries, mutations, and type definitions. In this section, let's add a second GraphQL type called Message and see how it behaves with your User type. In this application, a user can have messages. Basically, you could write a simple chat application with both types. First, add two new top level queries and the new Message type to your GraphQL schema:
 
@@ -653,7 +653,7 @@ const schema = gql`
 
 >Second, you have to add two resolvers for Apollo Server to match the two new top level queries:
 
-然后，你需要向 Apollo Server 添加两个解析器来匹配这两个新的顶级查询:
+然后，你需要向 Apollo 服务端添加两个解析器来匹配这两个新的顶级查询:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -952,20 +952,20 @@ const resolvers = {
 >* Query a list of messages with their user
 >* Read more about [the GraphQL schema](https://graphql.github.io/learn/schema/)
 
-### 练习:
+### 练习：
 
-* 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/491d93a90f4ee3413d9226e0a18c10b7407949ef)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/491d93a90f4ee3413d9226e0a18c10b7407949ef)
 * 查询用户列表及其消息
 * 查询消息列表及其用户
-* 阅读更多关于 [ GraphQL 模式](https://graphql.github.io/learn/schema/)
+* 延伸阅读：[GraphQL 模式](https://graphql.github.io/learn/schema/)
 
 >## Apollo Server: Queries and Mutations
 
-## Apollo Server: 查询与变更
+## Apollo 服务端: 查询与变更
 
 >So far, you have only defined queries in your GraphQL schema using two related GraphQL types for reading data. These should work in GraphQL Playground, because you have given them equivalent resolvers. Now we'll cover GraphQL mutations for writing data. In the following, you create two mutations: one to create a message, and one to delete it. Let's start with creating a message as the currently signed in user (the `me` user).
 
-到目前为止，你只使用两个 GraphQL 相关的类型在 GraphQL 模式中定义了查询来读取数据。这些应该可以在 GraphQL Playground 中使用，因为你已经为它们提供了对应的解析器。现在我们将介绍用于编写数据的 GraphQL 变更。接下来，你将创建两个变更：一个用于创建消息，另一个用于删除消息。让我们从创建当前登录用户( `me` 用户)的消息开始 。
+到目前为止，你只使用两个 GraphQL 相关的类型在 GraphQL 模式中定义了查询来读取数据。这些应该可以在 GraphQL Playground 中使用，因为你已经为它们提供了对应的解析器。现在我们将介绍用于编写数据的 GraphQL 变更。接下来，你将创建两个变更：一个用于创建消息，另一个用于删除消息。让我们从创建当前登录用户(`me` 用户)的消息开始 。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1019,7 +1019,7 @@ const resolvers = {
 
 >The mutation's resolver has access to the text in its second argument. It also has access to the signed-in user in the third argument, used to associate the created message with the user. The parent argument isn't used. The one thing missing to make the message complete is an identifier. To make sure a unique identifier is used, install this neat library in the command line:
 
-变更的解析器可以从第二个参数中获取 text 。 它还可以从第三个参数中获取已登录用户，用于将创建的消息与用户相关联。parent 参数未被使用。要使消息完整还缺少一个标志符。要使标志符唯一的话，请确保在命令行中安装这个整洁的库:
+变更的解析器可以从第二个参数中获取 text。 它还可以从第三个参数中获取已登录用户，用于将创建的消息与用户相关联。parent 参数未被使用。要使消息完整还缺少一个标志符。要使标志符唯一的话，请确保在命令行中安装这个整洁的库:
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -1067,7 +1067,7 @@ const resolvers = {
 
 >So far, the mutation creates a message object and returns it to the API. However, most mutations have side-effects, because they are writing data to your data source or performing another action. Most often, it will be a write operation to your database, but in this case, you only need to update your `users` and `messages` variables. The list of available messages needs to be updated, and the user's reference list of `messageIds` needs to have the new message `id`.
 
-截至目前，变更会创建一个消息对象并返回给API。但是，大多数变更都有副作用，因为它们正在将数据写入数据源或执行其他操作。通常，这是对数据库的写入操作，但在这种情况下，你只需要更新 `users` 和 `messages` 变量。需要更新可用消息列表，并且用户的 `messageIds` 参考列表应当包含新消息的 `id` 。
+截至目前，变更会创建一个消息对象并返回给 API。但是，大多数变更都有副作用，因为它们正在将数据写入数据源或执行其他操作。通常，这是对数据库的写入操作，但在这种情况下，你只需要更新 `users` 和 `messages` 变量。需要更新可用消息列表，并且用户的 `messageIds` 参考列表应当包含新消息的 `id` 。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1141,7 +1141,7 @@ const schema = gql`
 
 >The mutation returns a boolean that tells if the deletion was successful or not, and it takes an identifier as input to identify the message. The counterpart of the GraphQL schema implementation is a resolver:
 
-这个变更返回一个布尔值告诉我们是否删除成功，并接受一个标识符作为输入来标识消息。这在GraphQL 模式的实现中对应着一个解析器:
+这个变更返回一个布尔值告诉我们是否删除成功，并接受一个标识符作为输入来标识消息。这在 GraphQL 模式的实现中对应着一个解析器:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1174,7 +1174,7 @@ const resolvers = {
 
 >The resolver finds the message by id from the messages object using destructuring. If there is no message, the resolver returns false. If there is a message, the remaining messages without the deleted message are the updated versions of the messages object. Then, the resolver returns true. Otherwise, if no message is found, the resolver returns false. Mutations in GraphQL and Apollo Server aren't much different from GraphQL queries, except they write data.
 
-解析器使用从消息对象中解构的 id 查找消息。如果没有消息，解析器将返回 false 。如果有消息，解析器返回 true ，消息对象更新为不包含删除内容的消息。否则，如果没有找到消息，解析器返回 false 。除了写入数据，GraphQL 和 Apollo Server 中的变更与 GraphQL 查询没有太大区别。
+解析器使用从消息对象中解构的 id 查找消息。如果没有消息，解析器将返回 false 。如果有消息，解析器返回 true ，消息对象更新为不包含删除内容的消息。否则，如果没有找到消息，解析器返回 false 。除了写入数据，GraphQL 和 Apollo 服务端中的变更与 GraphQL 查询没有太大区别。
 
 >There is only one GraphQL operation missing for making the messages features complete. It is possible to read, create, and delete messages, so the only operation left is updating them as an exercise.
 
@@ -1182,7 +1182,7 @@ const resolvers = {
 
 >### Exercises:
 
-### 练习:
+### 练习：
 
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
 >* Create a message in GraphQL Playground with a mutation
@@ -1194,7 +1194,7 @@ const resolvers = {
 >* Implement an `updateMessage` mutation for completing all CRUD operations for a message in GraphQL
 >* Read more about [GraphQL queries and mutations](https://graphql.github.io/learn/queries/)
 
-* 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/a10c54ec1b82043d98fcff2a6395fcd8e405bfda)
 * 使用一个变更在 GraphQL Playground 中创建消息
   * 查询所有消息
   * 通过消息查询 `me` 用户
@@ -1202,7 +1202,7 @@ const resolvers = {
   * 查询所有消息
   * 通过消息查询 `me` 用户
 * 实现一个 `updateMessage` 变更，用于在 GraphQL 中完成消息的所有 CRUD 操作
-* 阅读更多关于 [GraphQL 查询与变更](https://graphql.github.io/learn/queries/)
+* 延伸阅读：[GraphQL 查询与变更](https://graphql.github.io/learn/queries/)
 
 >## GraphQL Schema Stitching with Apollo Server
 
