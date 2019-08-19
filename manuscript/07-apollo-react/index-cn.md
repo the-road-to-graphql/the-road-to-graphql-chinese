@@ -7,7 +7,7 @@
 在本章中，你会学到如何通过 Apollo 将 GraphQL 与 React 结合。虽然 Apollo 工具集可以创建 GraphQL 客户端、GraphQL 服务端以及其他通用应用，但是这里你会在 React 客户端应用使用 Apollo 客户端。通过这种方式，你将实现一个简单 Github 客户端，并使用 Apollo (而不是像之前那样直接使用普通 HTTP 请求的方式) 消费 [Github 的 GraphQL API](https://developer.github.com/v4/)。Apollo 客户端可以通过执行查询和变更来读写数据。在学完本章后，你将得到一个使用 Apollo 和 GraphQL 的 React 应用，它可以作为其他开发者的一份学习参考。你可以在 [GitHub 代码库](https://github.com/rwieruch/react-graphql-github-apollo)里找到最终的项目。
 
 > ## Writing your first React application with GraphQL and Apollo Client
-## 编写第一个使用 GraphQL 和 Apollo 客户端的 React 应用
+## 编写你的第一个使用 GraphQL 和 Apollo 客户端的 React 应用
 
 > Now we'll focus on using Apollo Client in React by building another client application. Basically, you will learn how to connect the data-layer to the view-layer. We'll cover how to send queries and mutations from the view-layer, and how to update the view-layer to reflect the result. Further, you will learn to use GraphQL features like pagination, optimistic UI, caching, local state management, and prefetching with Apollo Client in React.
 
@@ -1072,14 +1072,14 @@ const RepositoryItem = ({ ... }) => (
 
 > ## GraphQL Query/Mutation with Higher-Order Components in React
 
-## GraphQL 查询/变更操作在 React 高阶组件中的运用
+## 使用 React 高阶组件来完成 GraphQL 的查询/变更操作
 >We've done Query and Mutation components from React Apollo to connect a data-layer (Apollo Client) with a view-layer (React). The Query component executes the query when it is rendered, whereas the Mutation component gives access to a function that triggers the mutation. Both components use the render props pattern to make the results accessible in their child functions.
 
 我们已经在 React Apollo 中使用 Query 和 Mutation 组件完成了数据层（ Apollo Client ）和视图层（ React ）的连接。Query 组件在渲染后就会执行查询操作，而 Mutation 组件允许访问一个函数来触发变更。两个组件都使用的是 render props 模式，以便可以在子函数中访问结果。
 
 >[Higher-Order Components (HOC)](https://www.robinwieruch.de/gentle-introduction-higher-order-components/) is a widely accepted alternative to React's render prop pattern. The React Apollo package implements a Higher-Order Component for queries and mutations as well, though the team behind Apollo doesn't advertise it, and even spoke in favor of render props as their first choice. Nonetheless, this section shows you the alternative, using a Higher-Order Component instead of a Render Prop, though this application will continue to use the render prop pattern afterward. If you already have access to the query result in the Profile component's arguments, there is no Query component needed in the component itself:
 
-[高阶组件](https://www.robinwieruch.de/gentle-introduction-higher-order-components/)是 React 中被广泛接受的用来替换 render prop 模式的方式。React Apollo 包也为查询和变更提供了高阶组件，尽管 Apollo 团队没有宣传它，甚至支持 render props 模式作为他们的首选。尽管如此，本节还是会�使用高阶组件来取代 render prop 模式，虽然这个应用之会在后续依然使用 render prop 模式。如果你可以在 Profile 组件的参数中访问查询的结果，那么组件本身并不需要使用 Query 组件：
+[高阶组件](https://www.robinwieruch.de/gentle-introduction-higher-order-components/)是 React 中被广泛接受的用来替换 render prop 模式的方式。React Apollo 包也为查询和变更提供了高阶组件，尽管 Apollo 团队没有宣传它，甚至支持 render props 模式作为他们的首选。尽管如此，本节还是会使用高阶组件来取代 render prop 模式，虽然这个应用之会在后续依然使用 render prop 模式。如果你可以在 Profile 组件的参数中访问查询的结果，那么组件本身并不需要使用 Query 组件：
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1150,7 +1150,7 @@ export default graphql(GET_REPOSITORIES_OF_CURRENT_USER)(Profile);
 
 >Apollo Client doesn't update the count of stars after the mutation, though. Normally, it is assumed that the count of stars increments by one when it is starred, with the opposite for unstarring. Since we don't return a count of stargazers in the mutation result, you have to handle the update in Apollo Client's cache yourself. Using Apollo Client's `refetchQueries` option is the naive approach for a mutation call, or a Mutation component to trigger a refetch for all queries, where the query result might be affected by the mutation. But that's not the best way to deal with this problem. It costs another query request to keep the data consistent after a mutation. In a growing application, this approach will eventually become problematic. Fortunately, the Apollo Client offers other functionalities to read/write manually from/to the cache locally without more network requests. The Mutation component offers a prop where you can insert update functionality that has access to the Apollo Client instance for the update mechanism.
 
-Apollo 客户 不会在变更成功后更新 star 的数量，通常情况下，假设 star 的数量在被点加星标识的时候增加一个，相反条件下减一个。因为我们没有在变更的结果中返回 stargazer 的数量，所以你必须自己去更新 Apollo 客户端中的缓存。对于变更操作来说，使用 Apollo 客户端中的 `refetchQueries` 选项是一个朴素的方式，或者使用 Mutation 组件重新触发所有查询，查询的结果可能会因受到变更的影响而改变。但是这不是最好的处理方式，因为这种方式会在变更之后使用了一个查询来保持数据的一致性。在一个不断壮大的应用程序中，这种方法最终会成为一个问题。幸运的是，Apollo 客户端提供了其它的功能，让我们可以在不使用更多网络请求的情况下，在本地读写操作缓存。Mutation 组件提供了一个 prop，你可以通过这个 prop 插入一个可以访问 Apollo 客户端实例的更新功能，来实现更新机制。
+Apollo 客户端不会在变更成功后更新 star 的数量，通常情况下，假设 star 的数量在被点加星标识的时候增加一个，相反条件下减一个。因为我们没有在变更的结果中返回 stargazer 的数量，所以你必须自己去更新 Apollo 客户端中的缓存。对于变更操作来说，使用 Apollo 客户端中的 refetchQueries 选项或者使用 Mutation 组件重新触发所有查询是很天真的做法，查询的结果可能会因受到变更的影响而改变。但是这不是最好的处理方式，因为这种方式会在变更之后使用了一个查询来保持数据的一致性。在一个不断壮大的应用程序中，这种方法最终会成为一个问题。幸运的是，Apollo 客户端提供了其它的功能，让我们可以在不使用更多网络请求的情况下，在本地读写操作缓存。Mutation 组件提供了一个 prop，你可以通过这个 prop 插入一个可以访问 Apollo 客户端实例的更新功能，来实现更新机制。
 > Before implementing the update functionality for the local state management, let's refactor another piece of code that will be useful for a local state update mechanism. The query definition next to your Profile component has grown to several fields with multiple object nestings. Previously, you learned about GraphQL fragments, and how they can be used to split parts of a query to reuse later. Next, we will split all the field information you used for the repository's node. You can define this fragment in the *src/Repository/fragments.js* file to keep it reusable for other components.
 
 在实现这个更新功能之前，让我们重构一段对本地状态更新机制更有用的代码。在 Profile 组件中运用到的查询定义已经增长到多个字段并且有多个嵌套对象。之前，你已经学习了 GraphQL 片段，以及它们如何用于拆分查询以便在以后重用。接下来，我们将拆分所有用于代码仓库的节点的字段信息，你可以在 *src/Repository/fragments.js* 文件中定义这个片段，以便它可以被其他组件重用。
