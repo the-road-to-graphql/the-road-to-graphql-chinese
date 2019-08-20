@@ -125,7 +125,7 @@ const data = {
 在这个为了设置 Apollo 服务端而准备的 GraphQL 的模式中，**resolvers** 可以设定返回模式的字段组成的数据。数据源并不重要，数据可以是硬编码的，可以是来自数据库的，也可以是来自其他 （RESTful） API 端点的。你将会在之后学习这些潜在的数据来源。现在只需要知道 resolvers 的数据与数据源无关，这是 GraphQL 和典型的数据库查询语言不同的地方。 Resolvers 是模式中解析 GraphQL 字段的函数。上面的例子中，只有一个 me 字段含有一个 username 为 "Robin Wieruch" 的 User 对象 。
 > Your GraphQL API with Apollo Server and Express should be working now. On the command line, you can always start your application with the `npm start` script to verify it works after you make changes. To verify it without a client application, Apollo Server comes with GraphQL Playground, a built-in client for consuming GraphQL APIs. It is found by using a GraphQL API endpoint in a browser at `http://localhost:8000/graphql`. In the application, define your first GraphQL query to see its result:
 
-现在，你通过使用 Express 设置的 Apollo 服务端实现的 GraphQL API 应该已经可以运行了。在命令行中，你可以使用 “npm start” 脚本启动应用程序，以便在你进行更改后验证它是否工作。为了在没有客户端应用程序的情况下验证它，Apollo 服务端附带了 GraphQL Playground，这是一个用于消费 GraphQL api 的内置客户端。可以通过在浏览器访问 http://localhost:8000/graphql 使用 GraphQL API 端点。在应用中定义你的一个 GraphQL 的 查询然后查看结果：
+现在，你通过使用 Express 设置的 Apollo 服务端实现的 GraphQL API 应该已经可以运行了。在命令行中，你可以使用 “npm start” 脚本启动应用程序，以便在你进行更改后验证它是否工作。为了在没有客户端应用程序的情况下验证它，Apollo 服务端附带了 GraphQL Playground，这是一个用于消费 GraphQL API 的内置客户端。可以通过在浏览器访问 http://localhost:8000/graphql 使用 GraphQL API 端点。在应用中定义你的一个 GraphQL 的 查询然后查看结果：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -206,7 +206,7 @@ app.use(cors());
 ## Apollo 服务端： 类型定义
 > This section is all about GraphQL type definitions and how they are used to define the overall GraphQL schema. A GraphQL schema is defined by its types, the relationships between the types, and their structure. Therefore GraphQL uses a **Schema Definition Language (SDL)**. However, the schema doesn't define where the data comes from. This responsibility is handled by resolvers outside of the SDL. When you used Apollo Server before, you used a User object type within the schema and defined a resolver which returned a user for the corresponding `me` field.
 
-本节关于 GraphQL 的类型定义以及如何使用它们定义 GraphQL 模式。一个 GraphQL 模式由其类型、类型之间的关系及其结构定义。为此，GraphQL 使用了一种**模式定义语言（SDL）**。不过，模式 并不定义数据来自何处。此职责由 SDL 之外的解析器处理。在使用 Apollo 服务端之前，你在模式中使用了一个 User 对象类型，并定义了一个 resolver，该 resolver 为相应的 `me` 字段返回一个 user。
+本节关于 GraphQL 的类型定义以及如何使用它们定义 GraphQL 模式。一个 GraphQL 模式由其类型、类型之间的关系及其结构定义。为此，GraphQL 使用了一种**模式定义语言（SDL）**。不过，模式并不定义数据来自何处。此职责由 SDL 之外的解析器处理。在使用 Apollo 服务端之前，你在模式中使用了一个 User 对象类型，并定义了一个 resolver，该 resolver 为相应的 `me` 字段返回一个 user。
 > Note the exclamation point for the `username` field in the User object type. It means that the `username` is a **non-nullable** field. Whenever a field of type User with a `username` is returned from the GraphQL schema, the user has to have a `username`. It cannot be undefined or null. However, there isn't an exclamation point for the user type on the `me` field. Does it mean that the result of the `me` field can be null? That is the case for this particular scenario. There shouldn't be always a user returned for the `me` field, because a server has to know what the field contains before it can respond. Later, you will implement an authentication mechanism (sign up, sign in, sign out) with your GraphQL server. The `me` field is populated with a user object like account details only when a user is authenticated with the server. Otherwise, it remains null. When you define GraphQL type definitions, there must be conscious decisions about the types, relationships, structure and (non-null) fields.
 
 注意 User 对象类型中的 `username` 字段的感叹号。意思是这个 `username` 字段是一个**不能为空**的字段。每当从 GraphQL 模式返回拥有 `username` 的 User 类型时， `username` 字段必须有值，不能是 undefined 或者 null。不过，在 `me` 字段中， User 类型没有感叹号，是否这意味着返回结果中的 `me` 字段可以为空？这是一种特殊的情况。因为服务器必须知道该字段包含什么才能响应，所以 `me` 字段不应该必然有 user 返回。稍后，你将使用 GraphQL 服务端实现身份验证机制(注册、登录、退出)。只有当用户通过服务器进行身份验证时， `me` 字段才会填充 User 对象，比如帐户详细信息。否则，它仍然为空。在定义 GraphQL 类型定义时，必须对类型、关系、结构和(非 null)字段进行特意的设计。
@@ -2171,11 +2171,11 @@ mydatabase=# SELECT text from messages;
 
 > ## Apollo Server: Validation and Errors
 
-## Apollo Server：校验和错误处理
+## Apollo 服务端：校验和错误处理
 
 > Validation, error, and edge case handling are not often verbalized in programming. This section should give you some insights into these topics for Apollo Server and GraphQL. With GraphQL, you are in charge of what returns from GraphQL resolvers. It isn't too difficult inserting business logic into your resolvers, for instance, before they read from your database.
 
-我们通常不会在编码过程中明确提出对于校验，错误以及边缘场景的处理。这节中会介绍一些关于 Apollo Server 和 GraphQL 在这方面的内容。通常使用 GraphQL 过程中，你只需要负责 GraphQL 解析器的返回值。例如，在从数据库读取数据之前，将业务逻辑插入到解析器中并不太困难。
+我们通常不会在编码过程中明确提出对于校验，错误以及边缘场景的处理。这节中会介绍一些关于 Apollo 服务端和 GraphQL 在这方面的内容。通常使用 GraphQL 过程中，你只需要负责 GraphQL 解析器的返回值。例如，在从数据库读取数据之前，将业务逻辑插入到解析器中并不太困难。
 
 {title="src/resolvers/user.js",lang="javascript"}
 ~~~~~~~~
@@ -2295,7 +2295,7 @@ mutation {
 
 > It seems like Apollo Server's resolvers make sure to transform [JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) into valid GraphQL output. It is already possible to use this common error format in your client application without any additional error handling.
 
-看起来 Apollo Server 的解析器一定能将 [JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) 转换为有效的 GraphQL 输出。现在已经可以在客户端应用中使用这种常见错误格式，而无需任何其他错误处理。
+看起来 Apollo 服务端的解析器一定能将 [JavaScript errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) 转换为有效的 GraphQL 输出。现在已经可以在客户端应用中使用这种常见错误格式，而无需任何其他错误处理。
 
 > If you want to add custom error handling to your resolver, you always can add the commonly try/catch block statements for async/await:
 
@@ -2391,7 +2391,7 @@ export default message;
 
 > That's one of the main benefits of using Apollo Server for GraphQL. Error handling is often free, because an error--be it from the database, a custom JavaScript error or another third-party--gets transformed into a valid GraphQL error result. On the client side, you don't need to worry about the error result's shape, because it comes in a common GraphQL error format where the data object is null but the errors are captured in an array. If you want to change your custom error, you can do it on a resolver per-resolver basis. Apollo Server comes with a solution for global error handling:
 
-这也是在 GraphQL 中使用 Apollo Server 最主要的原因之一。错误处理通常是不受约束的，因为错误可能来源于数据库、自定义抛出的 JavaScript 错误或者其他第三方，这些错误都将被转换成有效的 GraphQL 错误。在客户端，你不必担心具体的错误长什么样子，因为它有一个常见的 GraphQL 错误格式，其中数据对象为 null 但错误却是在数组中被捕获。如果你想更改自定义错误，你可以在解析器的基础上挨个处理。Apollo Server 还提供了一种全局错误处理的解决方案：
+这也是在 GraphQL 中使用 Apollo 服务端最主要的原因之一。错误处理通常是不受约束的，因为错误可能来源于数据库、自定义抛出的 JavaScript 错误或者其他第三方，这些错误都将被转换成有效的 GraphQL 错误。在客户端，你不必担心具体的错误长什么样子，因为它有一个常见的 GraphQL 错误格式，其中数据对象为 null 但错误却是在数组中被捕获。如果你想更改自定义错误，你可以在解析器的基础上挨个处理。Apollo 服务端还提供了一种全局错误处理的解决方案：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -2421,7 +2421,7 @@ const server = new ApolloServer({
 
 > These are the essentials for validation and error handling with GraphQL in Apollo Server. Validation can happen on a database (model) level or on a business logic level (resolvers). It can happen on a directive level too (see exercises). If there is an error, GraphQL and Apollo Server will format it to work with GraphQL clients. You can also format errors globally in Apollo Server.
 
-这些是在 Apollo Server 中进行 GraphQL 校验和错误处理的基本要素。校验可以在数据库（模型）层或者业务逻辑（解析器）层，也可以在 directive 层（见练习）。如果出现错误，GraphQL 和 Apollo Server 将对其进行格式化以兼容 GraphQL 客户端。你也可以在 Apollo Server 中进行全局的错误格式化处理。
+这些是在 Apollo 服务端中进行 GraphQL 校验和错误处理的基本要素。校验可以在数据库（模型）层或者业务逻辑（解析器）层，也可以在 directive 层（见练习）。如果出现错误，GraphQL 和 Apollo 服务端 、将对其进行格式化以兼容 GraphQL 客户端。你也可以在 Apollo 服务端中进行全局的错误格式化处理。
 
 > ### Exercises:
 ### 练习：
@@ -2436,11 +2436,11 @@ const server = new ApolloServer({
 
 > * Read more about validation in the Sequelize documentation
 
-* 阅读更多关于 Sequelize 校验规则的文档
+* 延伸阅读： Sequelize 校验规则的文档
 
 > * Read more about [Error Handling with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/errors.html)
 
-* 延伸阅读：[Apollo Server的错误处理](https://www.apollographql.com/docs/apollo-server/v2/features/errors.html)
+* 延伸阅读：[Apollo 服务端的错误处理](https://www.apollographql.com/docs/apollo-server/v2/features/errors.html)
 
 > * Get to know the different custom errors in Apollo Server
 
@@ -2448,23 +2448,23 @@ const server = new ApolloServer({
 
 > * Read more about [GraphQL field level validation with custom directives](https://blog.apollographql.com/graphql-validation-using-directives-4908fd5c1055)
 
-* 延伸阅读：[GraphQL字段级校验以及自定义directive](https://blog.apollographql.com/graphql-validation-using-directives-4908fd5c1055)
+* 延伸阅读：[GraphQL 字段级校验以及自定义 directive](https://blog.apollographql.com/graphql-validation-using-directives-4908fd5c1055)
 
 > * Read more about [custom schema directives](https://www.apollographql.com/docs/apollo-server/v2/features/directives.html)
 
-* 延伸阅读：[自定义schema directive](https://www.apollographql.com/docs/apollo-server/v2/features/directives.html)
+* 延伸阅读：[自定义模式 directive](https://www.apollographql.com/docs/apollo-server/v2/features/directives.html)
 
 > ## Apollo Server: Authentication
 
-## Apollo Server: 认证
+## Apollo 服务端: 认证
 
 > Authentication in GraphQL is a popular topic. There is no opinionated way of doing it, but many people need it for their applications. GraphQL itself isn't opinionated about authentication since it is only a query language. If you want authentication in GraphQL, consider using GraphQL mutations. In this section, we use a minimalistic approach to add authentication to your GraphQL server. Afterward, it should be possible to register (sign up) and login (sign in) a user to your application. The previously used `me` user will be the authenticated user.
 
-在 GraphQL 中认证是一个很热门的话题。没有固定的方法去做认证，但大多数人的应用都需要认证。GraphQL 本身并没有固定的认证机制，因为它只是一种查询语言。如果你想要在 GraphQL 中实现认证，考虑用 GraphQL 变更（操作）。在这一部分中，我们用最简化的方法去给你的 GraphQL 服务器添加认证。之后，应该可以通过服务器注册和登录一个用户到你的应用。之前用过的`me`用户将会做为一个认证过的用户。
+在 GraphQL 中认证是一个很热门的话题。没有固定的方法去做认证，但大多数人的应用都需要认证。GraphQL 本身并没有固定的认证机制，因为它只是一种查询语言。如果你想要在 GraphQL 中实现认证，考虑用 GraphQL 变更操作。在这一部分中，我们用最简化的方法去给你的 GraphQL 服务器添加认证。之后，应该可以通过服务器注册和登录一个用户到你的应用。之前用过的 `me` 用户将会做为一个认证过的用户。
 
 > In preparation for the authentication mechanism with GraphQL, extend the user model in the _src/models/user.js_ file. The user needs an email address (as unique identifier) and a password. Both email address and username (another unique identifier) can be used to sign in to the application, which is why both properties were used for the user's `findByLogin()` method.
 
-在准备用 GraphQL 实现认证机制时，在_src/models/user.js_文件中扩展用户模型。用户需要一个电子邮件地址（作为唯一标识）和一个密码。电子邮件地址和用户名（另一种唯一标识）都可以被用于登录到应用，这就是为什么这两个属性都被用于用户的`findByLogin()`方法。
+在准备用 GraphQL 实现认证机制时，在 _src/models/user.js_ 文件中扩展用户模型。用户需要一个电子邮件地址（作为唯一标识）和一个密码。电子邮件地址和用户名（另一种唯一标识）都可以被用于登录到应用，这就是为什么这两个属性都被用于用户的 `findByLogin()` 方法。
 
 {title="src/models/user.js",lang="javascript"}
 
@@ -2512,11 +2512,11 @@ export default user;
 
 > The two new entries for the user model have their own validation rules, same as before. The password of a user should be between 7 and 42 characters, and the email should have a valid email format. If any of these validations fails during user creation, it generates a JavaScript error, transforms and transfers the error with GraphQL. The registration form in the client application could display the validation error then.
 
-同以前一样，用户模型的两个新字段拥有自己的验证规则。用户密码应该是 7 到 42 位的字符串，并且电子邮件应该具有合法的电子邮件格式。如果在用户创建期间任何一个验证失败了，则会生成一个 JavaScript 错误，并用GraphQL转换和传输错误。在客户端应用程序中的注册表单可能会显示验证错误。
+同以前一样，用户模型的两个新字段拥有自己的验证规则。用户密码应该是 7 到 42 位的字符串，并且电子邮件应该具有合法的电子邮件格式。如果在用户创建期间任何一个验证失败了，则会生成一个 JavaScript 错误，并用 GraphQL 转换和传输错误。在客户端应用程序中的注册表单可能会显示验证错误。
 
 > You may want to add the email, but not the password, to your GraphQL user schema in the _src/schema/user.js_ file too:
 
-你也可能想添加电子邮件而不是密码到文件_src/schema/user.js_中的 GraphQL 用户模式:
+你也可能想添加电子邮件而不是密码到文件 _src/schema/user.js_ 中的 GraphQL 用户模式:
 
 {title="src/schema/user.js",lang="javascript"}
 
@@ -2539,7 +2539,7 @@ export default gql`
 
 > Next, add the new properties to your seed data in the _src/index.js_ file:
 
-然后，添加新的属性到文件`src/index.js`中的种子数据：
+然后，添加新的属性到文件 `src/index.js` 中的种子数据：
 
 {title="src/index.js",lang="javascript"}
 
@@ -2585,7 +2585,7 @@ const createUsersWithMessages = async () => {
 
 > Now, let's examine the details for GraphQL authentication. You will implement two GraphQL mutations: one to register a user, and one to log in to the application. Let's start with the sign up mutation in the _src/schema/user.js_ file:
 
-现在，让我们来考察 GraphQL 认证的具体细节。你将会实现两个 GraphQL 变更（操作）：一个用于注册用户，另一个用于登录到应用程序。让我们从_src/schema/user.js_ 文件中的注册变更（操作）开始：
+现在，让我们来考察 GraphQL 认证的具体细节。你将会实现两个 GraphQL 变更操作：一个用于注册用户，另一个用于登录到应用程序。让我们从 _src/schema/user.js_ 文件中的注册变更操作开始：
 
 {title="src/schema/user.js",lang="javascript"}
 
@@ -2625,15 +2625,15 @@ export default gql`
 
 > The `signUp` mutation takes three non-nullable arguments: username, email, and password. These are used to create a user in the database. The user should be able to take the username or email address combined with the password to enable a successful login.
 
-`signUP` 变更（操作）接受三个不为空的参数：用户名，电子邮件和密码。这些参数是用于在数据库中创建用户。用户应该能够使用用户名或者电子邮件组合密码来成功登录。
+`signUP` 变更操作接受三个不为空的参数：用户名，电子邮件和密码。这些参数是用于在数据库中创建用户。用户应该能够使用用户名或者电子邮件组合密码来成功登录。
 
 > Now we'll consider the return type of the `signUp` mutation. Since we are going to use a token-based authentication with GraphQL, it is sufficient to return a token that is nothing more than a string. However, to distinguish the token in the GraphQL schema, it has its own GraphQL type. You will learn more about tokens in the following, because the token is all about the authentication mechanism for this application.
 
-现在我们将会考虑`signUp`变更（操作）的返回值类型。由于我们准备使用 GraphQL 基于 token 的认证，因此仅仅返回一个字符串 token 就足够了。然而，为了在 GraphQL 模式中区分 token，它具有自己的 GraphQL 类型。你将会在如下学习到更多关于 token 的知识，因为这个应用所有关于认证机制的都跟 token 有关。
+现在我们将会考虑 `signUp` 变更操作的返回值类型。由于我们准备使用 GraphQL 基于 token 的认证，因此仅仅返回一个字符串 token 就足够了。然而，为了在 GraphQL 模式中区分 token，它具有自己的 GraphQL 类型。你将会在如下学习到更多关于 token 的知识，因为这个应用所有关于认证机制的都跟 token 有关。
 
 > First, add the counterpart for your new mutation in the GraphQL schema as a resolver function. In your _src/resolvers/user.js_ file, add the following resolver function that creates a user in the database and returns an object with the token value as string.
 
-首先，在 GraphQL 模式中添加一份新的变更（操作）做为一个解析函数。在你的_src/resolvers/user.js_ 文件中，添加如下解析函数用于在数据库中创建一个用户并且返回一个对象包含对应的字符串 token。
+首先，在 GraphQL 模式中添加一份新的变更操作做为一个解析函数。在你的 _src/resolvers/user.js_ 文件中，添加如下解析函数用于在数据库中创建一个用户并且返回一个对象包含对应的字符串 token。
 
 {title="src/resolvers/user.js",lang="javascript"}
 
@@ -2673,7 +2673,7 @@ export default {
 
 > That's the GraphQL framework around a token-based registration. You created a GraphQL mutation and resolver for it, which creates a user in the database based on certain validations and its incoming resolver arguments. It creates a token for the registered user. For now, the set up is sufficient to create a new user with a GraphQL mutation.
 
-这就是 GraphQL 框架关于创建一个基于 token 的注册。你已经为注册创建了一个 GraphQL 变更（操作）和 一个解析器，它基于某些验证和传入的解析器参数在数据库中创建用户。它为注册的用户创建一个 token。目前的设置足以创建具有GraphQL 变更（操作）的新用户。
+这就是 GraphQL 框架关于创建一个基于 token 的注册。你已经为注册创建了一个 GraphQL 变更操作和一个解析器，它基于某些验证和传入的解析器参数在数据库中创建用户。它为注册的用户创建一个 token。目前的设置足以创建具有GraphQL 变更操作的新用户。
 
 ### Securing Passwords with Bcrypt
 
@@ -2681,7 +2681,7 @@ export default {
 
 There is one major security flaw in this code: the user password is stored in plain text in the database, which makes it much easier for third parties to access it. To remedy this, we use add-ons like [bcrypt](https://github.com/kelektiv/node.bcrypt.js) to hash passwords. First, install it on the command line:
 
-> 这段代码中有一个主要的安全的漏洞：用户密码是直接以文本形式存储在数据库中，这样会让第三方很容易的获取密码。为了补救这个问题，我们用[bcrypt](https://github.com/kelektiv/node.bcrypt.js)库来哈希密码。首先，通过命令行将其安装：
+> 这段代码中有一个主要的安全的漏洞：用户密码是直接以文本形式存储在数据库中，这样会让第三方很容易的获取密码。为了补救这个问题，我们用 [bcrypt](https://github.com/kelektiv/node.bcrypt.js) 库来哈希密码。首先，通过命令行将其安装：
 
 {title="Command Line",lang="json"}
 
@@ -2691,11 +2691,11 @@ npm install bcrypt --save
 
 > Note: If you run into any problems with bcrypt on Windows while installing it, you can try out a substitute called [bcrypt.js](https://github.com/dcodeIO/bcrypt.js). It is slower, but people reported that it works on their machine.
 
-注意：如果你在 Windows 上安装 bcrypt 的过程中出现任何问题，你可以尝试用一个叫[bcrypt.js](https://github.com/dcodeIO/bcrypt.js)的代替方案。尽管它有点慢，但是有人报告过它可以在他们的机器上运行。
+注意：如果你在 Windows 上安装 bcrypt 的过程中出现任何问题，你可以尝试用一个叫 [bcrypt.js](https://github.com/dcodeIO/bcrypt.js) 的代替方案。尽管它有点慢，但是有人报告过它可以在他们的机器上运行。
 
 > Now it is possible to hash the password with bcrypt in the user's resolver function when it gets created on a `signUp` mutation. There is also an alternative way with Sequelize. In your user model, define a hook function that is executed every time a user entity is created:
 
-到此，当用户被signUp变更（操作）创建的时候可以用bcrypt在用户的解析函数中哈希密码。还有一种代替的方法是通过 Sequelize。在你的用户模型中，定义一个钩子函数每当用户实例被创建的时候被调用。
+到此，当用户被 signUp 变更操作创建的时候可以用 bcrypt 在用户的解析函数中哈希密码。还有一种代替的方法是通过 Sequelize。在你的用户模型中，定义一个钩子函数每当用户实例被创建的时候被调用。
 
 {title="src/models/user.js",lang="javascript"}
 
@@ -2721,7 +2721,7 @@ export default user;
 
 > In this hook function, add the functionalities to alter your user entity's properties before they reach the database. Let's do it for the hashed password by using bcrypt.
 
-在这个钩子函数中，添加修改用户实例属性的功能在其被存储到数据库前。让我们使用 bcrypt 来哈希密码。
+在这个钩子函数中，添加修改用户实例属性的功能在其被存储到数据库前。让我们使用 bcrypt 来对密码进行哈希运算。
 
 {title="src/models/user.js",lang="javascript"}
 
@@ -2758,11 +2758,11 @@ export default user;
 
 > The bcrypt `hash()` method takes a string--the user's password--and an integer called salt rounds. Each salt round makes it more costly to hash the password, which makes it more costly for attackers to decrypt the hash value. A common value for salt rounds nowadays ranged from 10 to 12, as increasing the number of salt rounds might cause performance issues both ways.
 
-bcrypt 的`hash()`方法接受一个字符串--用户密码和一个叫salt rounds的整数。每次salt循环使得密码哈希成本更高，同时这也使得攻击者解密哈希值的成本更高。现在一般的salt rounds的范围是 10 到 12，因为增加salt rounds的范围可能会同时在哈希和解密的过程中导致性能问题。
+bcrypt 的 `hash()` 方法接受一个字符串--用户密码和一个叫 salt rounds 的整数。每次 salt 循环使得密码哈希成本更高，同时这也使得攻击者解密哈希值的成本更高。现在一般的 salt rounds 的范围是 10 到 12，因为增加 salt rounds 的范围可能会同时在哈希和解密的过程中导致性能问题。
 
 > In this implementation, the `generatePasswordHash()` function is added to the user's prototype chain. That's why it is possible to execute the function as method on each user instance, so you have the user itself available within the method as `this`. You can also take the user instance with its password as an argument, which I prefer, though using JavaScript's prototypal inheritance a good tool for any web developer. For now, the password is hashed with bcrypt before it gets stored every time a user is created in the database,.
 
-在这个实现中，`generatePasswordHash()` 函数被添加到用户的原型链中。这就是为什么我们可以在每一个用户的实例中执行这个函数，所以你可以在这个函数中通过`this`访问到这个用户本身。你也可以把包含密码的用户实例作为参数，我更喜欢这样做，尽管对于任何Web开发者来说使用 JavaScript 的原型链继承是一个好的工具。现在，每一个用户在数据库中被创建的时候都是通过 bcrypt 哈希过密码的。
+在这个实现中，`generatePasswordHash()` 函数被添加到用户的原型链中。这就是为什么我们可以在每一个用户的实例中执行这个函数，所以你可以在这个函数中通过 `this` 访问到这个用户本身。你也可以把包含密码的用户实例作为参数，我更喜欢这样做，尽管对于任何 Web 开发者来说使用 JavaScript 的原型链继承是一个好的工具。现在，每一个用户在数据库中被创建的时候，他的密码都是通过 bcrypt 哈希运算过的。
 
 ### Token based Authentication in GraphQL
 
@@ -2770,15 +2770,15 @@ bcrypt 的`hash()`方法接受一个字符串--用户密码和一个叫salt roun
 
 > We still need to implement the token based authentication. So far, there is only a placeholder in your application for creating the token that is returned on a sign up and sign in mutation. A signed in user can be identified with this token, and is allowed to read and write data from the database. Since a registration will automatically lead to a login, the token is generated in both phases.
 
-我们仍然需要实现基于 token 的认证。目前为止，在你的应用中只有一个占位符用于创建被注册和登录变更（操作）返回的 token。一个已经登录的用户可以被这个 token 标识，并被允许从数据库读写数据。因为用户注册后会自动登录，所以在两个阶段中都会生成 token。
+我们仍然需要实现基于 token 的认证。目前为止，在你的应用中只有一个占位符用于创建被注册和登录变更操作返回的 token。一个已经登录的用户可以被这个 token 标识，并被允许从数据库读写数据。因为用户注册后会自动登录，所以在两个阶段中都会生成 token。
 
 > Next are the implementation details for the token-based authentication in GraphQL. Regardless of GraphQL, you are going to use a [JSON web token (JWT)](https://jwt.io/) to identify your user. The definition for a JWT from the official website says: _JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties._ In other words, a JWT is a secure way to handle the communication between two parties (e.g. a client and a server application). If you haven't worked on security related applications before, the following section will guide you through the process, and you'll see the token is just a secured JavaScript object with user information.
 
-接下来是在 GraphQL 中基于 token 认证的实现细节。与 GraphQL 无关，你将会用[JSON web token (JWT)](https://jwt.io/)去识别你的用户。JWT 官方网站给出的定义说：_JSON Web Tokens 是一种开放的，行业标准为RFC 7519的，为了在双方之间安全的表示请求的方法。_ 换句话说，JWT 是一种处理两端之间通信的安全方法（例如 客户端和服务端）。如果你之前没有在安全相关的应用上工作过，如下部分将会引导你完成整个过程，同时你也会明白 token 只是一种安全的带有用户信息的 JavaScript 对象。
+接下来是在 GraphQL 中基于 token 认证的实现细节。与 GraphQL 无关，你将会用 [JSON web token (JWT)](https://jwt.io/) 去识别你的用户。JWT 官方网站给出的定义说：_JSON Web Tokens 是一种开放的，行业标准为 RFC 7519 的，为了在双方之间安全的表示请求的方法。_ 换句话说，JWT 是一种处理两端之间通信的安全方法（例如客户端和服务端）。如果你之前没有在安全相关的应用上工作过，如下部分将会引导你完成整个过程，同时你也会明白 token 只是一种安全的带有用户信息的 JavaScript 对象。
 
 > To create JWT in this application, we'll use the popular [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) node package. Install it on the command line:
 
-为了在这个应用中创建 JWT，你将会使用流行的[jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)node 包。在命令行中将其安装。
+为了在这个应用中创建 JWT，你将会使用流行的 [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) 的 node 包。在命令行中将其安装。
 
 {title="Command Line",lang="json"}
 
@@ -2788,7 +2788,7 @@ npm install jsonwebtoken --save
 
 > Now, import it in your _src/resolvers/user.js_ file and use it to create the token:
 
-现在，将其倒入到_src/resolvers/user.js_文件并用它来创建 token：
+现在，将其倒入到 _src/resolvers/user.js_ 文件并用它来创建 token：
 
 {title="src/resolvers/user.js",lang="javascript"}
 
@@ -2813,7 +2813,7 @@ const createToken = async user => {
 
 > Add the secret to your environment variables in the *.env* file:
 
-在*.env*文件中，将密钥添加到你的环境变量：
+在 *.env* 文件中，将密钥添加到你的环境变量：
 
 {title=".env",lang="javascript"}
 
@@ -2829,7 +2829,7 @@ SECRET=wr3r23fwfwefwekwself.2456342.dawqdq
 
 > Then, in the _src/index.js_ file, pass the secret via Apollo Server's context to all resolver functions:
 
-然后，在文件_src/index.js_中，通过 Apollo Server 的上下文将密钥传入到所有的解析函数：
+然后，在文件 _src/index.js_ 中，通过 Apollo 服务端的上下文将密钥传入到所有的解析函数：
 
 {title="src/index.js",lang="javascript"}
 
@@ -2850,7 +2850,7 @@ const server = new ApolloServer({
 
 > Next, use it in your `signUp` resolver function by passing it to the token creation. The `sign` method of JWT handles the rest. You can also pass in a third argument for setting an expiration time or date for a token. In this case, the token is only valid for 30 minutes, after which a user has to sign in again.
 
-接下来，通过将其传递给 token 的创建方法，在`signUp` 解析函数中使用它。JWT 的`sign`方法处理剩下的事情。你也可以传入第三个参数来设置 token 的过期时间或者日期。在这个例子中，token 只有30分钟的合法时间，之后用户只能再次登录。
+接下来，通过将其传递给 token 的创建方法，在 `signUp` 解析函数中使用它。JWT 的 `sign` 方法处理剩下的事情。你也可以传入第三个参数来设置 token 的过期时间或者日期。在这个例子中，token 只有 30 分钟的合法时间，之后用户必须再次登录。
 
 {title="src/resolvers/user.js",lang="javascript"}
 
@@ -2901,11 +2901,11 @@ export default {
 
 > Now you have secured your information in the token as well. If you would want to decode it, in order to access the secured data (the first argument of the `sign` method), you would need the secret again. Furthermore, the token is only valid for 30 minutes.
 
-现在你已经将你的信息保护在了 token 中。如果你想解密它，为了获取保护的数据（`sign`方法的第一个参数），你将再次需要这个密钥。此外，这个 token 的合法时间只有三十分钟。
+现在你已经将你的信息保护在了 token 中。如果你想解密它，为了获取保护的数据（`sign` 方法的第一个参数），你将再次需要这个密钥。此外，这个 token 的合法时间只有三十分钟。
 
 > That's it for the registration: you are creating a user and returning a valid token that can be used from the client application to authenticate the user. The server can decode the token that comes with every request and allows the user to access sensitive data. You can try out the registration with GraphQL Playground, which should create a user in the database and return a token for it. Also, you can check your database with `psql` to test if the use was created and with a hashed password.
 
-这就是注册：你正在创建一个用户并返回一个合法的 token，可以从客户端应用使用该 token 来认证用户。服务器可以解密每一个从请求附带的 token 并允许用户访问敏感的数据。你可以尝试使用 GraphQL Playground 注册，这个应该可以在数据库中创建一个用户并为其返回一个 token。此外，你可以使用`psql`检查你的数据库来判断用户是否被创建并且包含一个哈希过的密码。
+这就是注册：你正在创建一个用户并返回一个合法的 token，可以从客户端应用使用该 token 来认证用户。服务器可以解密每一个从请求附带的 token 并允许用户访问敏感的数据。你可以尝试使用 GraphQL Playground 注册，这个应该可以在数据库中创建一个用户并为其返回一个 token。此外，你可以使用 `psql` 检查你的数据库来判断用户是否被创建并且包含一个经过哈希计算过的密码。
 
 ### Login (Sign In) with GraphQL
 
@@ -2913,7 +2913,7 @@ export default {
 
 > Before you dive into the authorization with the token on a per-request basis, let's implement the second mutation for the authentication mechanism: the `signIn` mutation (or login mutation). Again, first we add the GraphQL mutation to your user's schema in the _src/schema/user.js_ file:
 
-在你深入将基于 token 的认证应用于每一个请求之前，让我们为了认证机制实现第二个变更（操作）：`signIn` 变更（操作）（或者登录变更）。同样，首先我们添加 GraphQL 变更（操作）到你用户的模式，在文件_src/schema/user.js_中：
+在你深入将基于 token 的认证应用于每一个请求之前，让我们为了认证机制实现第二个变更操作：`signIn` 变更操作（或者登录变更）。同样，首先我们添加 GraphQL 变更操作到你用户的模式，在文件 _src/schema/user.js_ 中：
 
 {title="src/schema/user.js",lang="javascript"}
 
@@ -2945,7 +2945,7 @@ export default gql`
 
 > Second, add the resolver counterpart to your _src/resolvers/user.js_ file:
 
-然后，添加解析副本到你的_src/resolvers/user.js_文件：
+然后，添加解析副本到你的 _src/resolvers/user.js_ 文件：
 
 {title="src/resolvers/user.js",lang="javascript"}
 
@@ -2998,11 +2998,11 @@ export default {
 
 > Let's go through the new resolver function for the login step by step. As arguments, the resolver has access to the input arguments from the GraphQL mutation (login, password) and the context (models, secret). When a user tries to sign in to your application, the login, which can be either the unique username or unique email, is taken to retrieve a user from the database. If there is no user, the application throws an error that can be used in the client application to notify the user. If there is an user, the user's password is validated. You will see this method on the user model in the next example. If the password is not valid, the application throws an error to the client application. If the password is valid, the `signIn` mutation returns a token identical to the `signUp` mutation. The client application either performs a successful login or shows an error message for invalid credentials. You can also see specific Apollo Server Errors used over generic JavaScript Error classes.
 
-让我们逐步完成登录的新解析函数。作为参数，解析函数拥有访问 GraphQL 变更（login，password）和上下文（models，secret）的输入参数。当用户尝试登录你的应用，登录，可以是唯一的用户名或者是唯一的电子邮件，将会被用于从数据库中获取用户。如果没有该用户，应用将会抛出一个错误用于客户端提示用户。如果用户存在，用户的密码将会被验证。你将会在下一个例子的用户模型中看到这个方法。如果密码不合法，应用抛出一个错误给客户端应用。如果密码合法，`signIn`变更（操作）返回一个同`signUp`变更（操作）一样的 token。客户端应用要么登录成功要么给不合法的凭据显示一个错误信息。你还可以看到在通用 JavaScript Error 类上使用特殊的 Apollo Server Errors。
+让我们逐步完成登录的新解析函数。作为参数，解析函数拥有访问 GraphQL 变更（login，password）和上下文（models，secret）的输入参数。当用户尝试登录你的应用，登录，可以是唯一的用户名或者是唯一的电子邮件，将会被用于从数据库中获取用户。如果没有该用户，应用将会抛出一个错误用于客户端提示用户。如果用户存在，用户的密码将会被验证。你将会在下一个例子的用户模型中看到这个方法。如果密码不合法，应用抛出一个错误给客户端应用。如果密码合法，`signIn` 变更操作返回一个同 `signUp` 变更操作一样的 token。客户端应用要么登录成功要么给不合法的凭据显示一个错误信息。你还可以看到在通用 JavaScript Error 类上使用特殊的 Apollo 服务端错误。
 
 > Next, we want to implement the `validatePassword()` method on the user instance. Place it in the _src/models/user.js_ file, because that's where all the model methods for the user are stored, same as the `findByLogin()` method.
 
-接下来，我们要在用户实例上实现`validatePassword()` 方法。将其放在_src/models/user.js_文件中，因为这是所有用户模型方法放置的地方，同`findByLogin()`方法一样。
+接下来，我们要在用户实例上实现 `validatePassword()` 方法。将其放在 _src/models/user.js_ 文件中，因为这是所有用户模型方法放置的地方，同 `findByLogin()` 方法一样。
 
 {title="src/models/user.js",lang="javascript"}
 
@@ -3049,37 +3049,36 @@ export default user;
 
 > Again, it's a prototypical JavaScript inheritance for making a method available in the user instance. In this method, the user (this) and its password can be compared with the incoming password from the GraphQL mutation using bcrypt, because the password on the user is hashed, and the incoming password is plain text. Fortunately, bcrypt will tell you whether the password is correct or not when a user signs in.
 
-同样，它是一个典型的 JavaScript 继承让一个方法可以在用户实例上可用。在这个方法中，用户（this）和其密码可以和从 GraphQL 变更（操作）传入的密码一起使用 bcrypt 进行比较。因为用户的密码是加过密的，传入的密码是普通文本。幸运的是，在用户登录的时候，bcrypt 将会告诉你密码是否是正确的。
+同样，它是一个典型的 JavaScript 继承让一个方法可以在用户实例上可用。在这个方法中，用户（this）和其密码可以和从 GraphQL 变更操作传入的密码一起使用 bcrypt 进行比较。因为用户的密码是加过密的，传入的密码是普通文本。幸运的是，在用户登录的时候，bcrypt 将会告诉你密码是否是正确的。
 
 > Now you have set up registration (sign up) and login (sign in) for your GraphQL server application. You used bcrypt to hash and compare a plain text password before it reaches the database with a Sequelize hook function, and you used JWT to encrypt user data with a secret to a token. Then the token is returned on every sign up and sign in. Then the client application can save the token (e.g. local storage of the browser) and send it along with every GraphQL query and mutation as authorization.
 
-现在你已经给你的 GraphQL 服务器应用设置好了注册和登录。你通过使用 Sequelize 钩子函数对即将到达数据库的明文密码使用 bcrypt 进行哈希和比较，同时你使用 JWT 和一个密钥将用户数据加密到一个 token。然后在每次注册和登录的时候返回这个 token。然后客户端应用可以保存 token（例如 浏览器本地存储）并做为认证随同每一个 GraphQL 查询（操作）和变更（操作）一起发送。
+现在你已经给你的 GraphQL 服务器应用设置好了注册和登录。你通过使用 Sequelize 钩子函数对即将到达数据库的明文密码使用 bcrypt 进行哈希和比较，同时你使用 JWT 和一个密钥将用户数据加密到一个 token。然后在每次注册和登录的时候返回这个 token。然后客户端应用可以保存 token（例如浏览器本地存储）并做为认证随同每一个 GraphQL 查询操作和变更操作一起发送。
 
 > The next section will teach you about authorization in GraphQL on the server-side, and what should you do with the token once a user is authenticated with your application after a successful registration or login.
 
 下一节将会向你介绍关于服务器端的 GraphQL 授权，和当成功注册或者登录并得到应用的认证过后，可以用 token 做什么。
 
-### Exercises:
+> ### Exercises:
 
 ### 练习：
 
-* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/831ab566f0b5c5530d9270a49936d102f7fdf73c)
-* Register (sign up) a new user with GraphQL Playground
-* Check your users and their hashed passwords in the database with `psql`
-* Read more about [JSON web tokens (JWT)](https://jwt.io/)
-* Login (sign in) a user with GraphQL Playground
-  * copy and paste the token to the interactive token decoding on the JWT website (conclusion: the information itself isn't secure, that's why you shouldn't put a password in the token)
-
-
-> ## Authorization with GraphQL and Apollo Server
-## 使用 GraphQL 和 Apollo Server 进行授权
+> * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/831ab566f0b5c5530d9270a49936d102f7fdf73c)
+> * Register (sign up) a new user with GraphQL Playground
+> * Check your users and their hashed passwords in the database with `psql`
+> * Read more about [JSON web tokens (JWT)](https://jwt.io/)
+> * Login (sign in) a user with GraphQL Playground
+>  * copy and paste the token to the interactive token decoding on the JWT website (conclusion: the information itself isn't secure, that's why you shouldn't put a password in the token)
 
 * 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/831ab566f0b5c5530d9270a49936d102f7fdf73c)
 * 用 GraphQL Playground 注册一个新用户
-* 用`psql`在数据库中检查你的用户和其加密的密码
+* 用 `psql` 在数据库中检查你的用户和其加密的密码
 * 延伸阅读: [JSON web tokens (JWT)](https://jwt.io/)
 * 用 GraphQL Playground 登录一个用户
   * 复制和粘贴 token 到 JWT 网站上的交互式 token 解密（总结：信息本身并没有被保护，这就是为什么你不能将你的密码放在你的 token 中）
+
+> ## Authorization with GraphQL and Apollo Server
+## 使用 GraphQL 和 Apollo Server 进行授权
 
 > In the last section, you set up GraphQL mutations to enable authentication with the server. You can register a new user with bcrypt hashed passwords and you can login with your user's credentials. Both GraphQL mutations related to authentication return a token (JWT) that secures non-sensitive user information with a secret.
 

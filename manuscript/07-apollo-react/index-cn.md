@@ -1079,7 +1079,7 @@ const RepositoryItem = ({ ... }) => (
 
 >[Higher-Order Components (HOC)](https://www.robinwieruch.de/gentle-introduction-higher-order-components/) is a widely accepted alternative to React's render prop pattern. The React Apollo package implements a Higher-Order Component for queries and mutations as well, though the team behind Apollo doesn't advertise it, and even spoke in favor of render props as their first choice. Nonetheless, this section shows you the alternative, using a Higher-Order Component instead of a Render Prop, though this application will continue to use the render prop pattern afterward. If you already have access to the query result in the Profile component's arguments, there is no Query component needed in the component itself:
 
-[高阶组件](https://www.robinwieruch.de/gentle-introduction-higher-order-components/)是 React 中被广泛接受的用来替换 render prop 模式的方式。React Apollo 包也为查询和变更提供了高阶组件，尽管 Apollo 团队没有宣传它，甚至支持 render props 模式作为他们的首选。尽管如此，本节还是会使用高阶组件来取代 render prop 模式，虽然这个应用之会在后续依然使用 render prop 模式。如果你可以在 Profile 组件的参数中访问查询的结果，那么组件本身并不需要使用 Query 组件：
+[高阶组件](https://www.robinwieruch.de/gentle-introduction-higher-order-components/)是 React 中被广泛接受的用来替换 render prop 模式的方式。React Apollo 包也为查询和变更提供了高阶组件，尽管 Apollo 团队没有宣传它，甚至支持 render props 模式作为他们的首选。尽管如此，本节还是会使用高阶组件来取代 render prop 模式，虽然这个应用会在后续依然使用 render prop 模式。如果你可以在 Profile 组件的参数中访问查询的结果，那么组件本身并不需要使用 Query 组件：
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1668,7 +1668,7 @@ const RepositoryItem = ({ ... }) => (
 
 > Finally, you are going to implement another advanced feature when using a GraphQL API called **pagination**. In this section, you implement a button that allows successive pages of repositories to be queries, a simple "More" button rendered below the list of repositories in the RepositoryList component. When is clicked, another page of repositories is fetched and merged with the previous list as one state into Apollo Client's cache.
 
-最后，你将使用一个叫做 **pagination** 的 GraphQL API，来实现另一个高级特性。在这一节中，你会实现一个按钮，它允许代码库中的后续页面被查询，在 RepositoryList 组件中，一个简单的 "More" 按钮渲染在代码库列表之下。当它被点击时，会获取代码库的另一个页面，并将其与上一个列表合并，作为一个状态保存到 Apollo 客户端的缓存中。
+最后，你将使用一个叫做 **pagination** 的 GraphQL API，来实现另一个高级特性。在这一节中，你会实现一个按钮，它允许代码库中的后续页面被查询，在 RepositoryList 组件中，一个简单的 "More" 按钮渲染在代码库列表之下。当它被点击时，会获取下一页代码库列表，并将其与上一个列表合并，作为一个状态保存到 Apollo 客户端的缓存中。
 
 
 > First, extend the query next for your Profile component with the necessary information to allow pagination for the list of repositories:
@@ -2912,7 +2912,7 @@ export default App;
 
 > In the previous sections you have implemented most of the common Apollo Client features in your React application. Now you can start implementing extensions for the application on your own. This section showcases how a full-fledged feature can be implemented with Apollo Client in React.
 
-在前面的小节中你已经在你的 React 应用中实现了大部分常用的 Apollo Client 的功能。现在你可以开始自己实现应用的扩展。本节将展示如何在 React 中使用 Apollo Client 实现一个完整的功能。
+在前面的小节中你已经在你的 React 应用中实现了大部分常用的 Apollo 客户端的功能。现在你可以开始自己实现应用的扩展。本节将展示如何在 React 中使用 Apollo Client 实现一个完整的功能。
 
 > So far, you have dealt with GitHub repositories from organizations and your account. This will take that one step further, fetching GitHub issues that are made available using a list field associated to a repository in a GraphQL query. However, this section doesn't only show you how to render a nested list field in your React application.
 
@@ -2925,7 +2925,7 @@ export default App;
 
 > First, render a new component called 'Issues' in your RepositoryList component. This component takes two props that are used later in a GraphQL query to identify the repository from which you want to fetch the issues.
 
-首先，在 RepositoryList 组件中渲染一个名叫 Issues 的新组件。这个组件接收两个 props，稍后将用于 GraphQL 查询，以标识从中要从中获取 issue 列表的代码库。
+首先，在 RepositoryList 组件中渲染一个名叫 Issues 的新组件。这个组件接收两个 props，稍后将用于 GraphQL 查询，以标识要从中获取 issue 列表的代码库。
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3011,7 +3011,7 @@ import React from 'react';
 
 import './style.css';
 
-const Issues = ({ repositoryOwner, re positoryName }) =>
+const Issues = ({ repositoryOwner, repositoryName }) =>
   <div className="Issues">
   </div>
 
