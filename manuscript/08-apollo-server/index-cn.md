@@ -5099,7 +5099,7 @@ mutation {
 
 > Programs called Mocha and Chai are really all you need to test the application we've created. Mocha is a test runner that lets you execute tests from an npm script, while providing an organized testing structure; Chai gives you all the functionalities to make assertions, e.g. "Expect X to be equal to Y" based on real-world scenarios and run through them.
 
-这里使用测试组件 Mocha 和 Chai 用来测试我们的程序。Mocha 是一个测试运行器，它允许你从 npm 脚本执行测试，同时提供有组织的测试结构；Chai为你提供很多断言方法，例如： 基于真实场景，“期望 X 等于 Y ”。
+这里使用测试组件 Mocha 和 Chai 用来测试我们的程序。Mocha 是一个测试运行器，它允许你从 npm 脚本执行测试，同时提供有组织的测试结构；Chai 为你提供很多断言方法，例如： 在真实场景中通过“期望 X 等于 Y” 这样的测试。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -5108,7 +5108,7 @@ npm install mocha chai --save-dev
 
 > To use these programs, you must first install a library called [axios](https://github.com/axios/axios) for making requests to the GraphQL API. When testing user sign-up, you can send a GraphQL mutation to the GraphQL API that creates a user in the database and returns their information.
 
-要使用这些程序，必须先安装 [axios](https://github.com/axios/axios) ，以便向 GraphQL API 发出请求。在测试用户注册时，你可以将 GraphQL 变更操作发送到 GraphQL API，然后在数据库中创建用户并返回其信息。
+要使用这些程序，必须先安装 [axios](https://github.com/axios/axios)，以便向 GraphQL API 发出请求。在测试用户注册时，你可以将 GraphQL 变更操作发送到 GraphQL API，然后在数据库中创建用户并返回其信息。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -5156,7 +5156,7 @@ describe('users', () => {
 
 > Before you can write end-to-end tests for the GraphQL server, the database must be addressed. Since the tests run against the actual GraphQL server, so you only need to run against a test database rather than the production database. Add an npm script in the *package.json* to start the GraphQL server with a test database:
 
-在为 GraphQL 服务器编写E2E 测试之前，必须先解决数据库问题。由于测试需要在真实的 GraphQL 服务器上运行，所以需要使用测试数据库而不是生产数据库。 在 *package.json* 中添加 npm 脚本以使用测试数据库启动 GraphQL 服务器：
+在为 GraphQL 服务器编写 E2E 测试之前，必须先解决数据库问题。由于测试需要在真实的 GraphQL 服务器上运行，所以需要使用测试数据库而不是生产数据库。 在 *package.json* 中添加 npm 脚本以使用测试数据库启动 GraphQL 服务器：
 
 {title="package.json",lang="javascript"}
 ~~~~~~~~
@@ -5287,11 +5287,11 @@ describe('users', () => {
 
 > Each test should be as straightforward as this one. You make a GraphQL API request with axios, expecting a query/mutation result from the API. Behind the scenes, data is read or written from or to the database. The business logic such as authentication, authorization, and pagination works in between. A request goes through the whole GraphQL server stack from API to database. An end-to-end test doesn't test an isolated unit (unit test) or a smaller composition of units (integration test), but the entire pipeline.
 
-每个测试都应该像这个一样简单直接。使用 axios 发出 GraphQL API 请求，期望来自 API 的查询/变更结果。 在幕后，数据从数据库读取或写入，身份验证、授权和分页等业务逻辑在期间执行。 请求会走完整个从 API 到数据库的 GraphQL 服务器流程。 E2E 测试不会测试隔离单元（单元测试）或较小的单元组合（集成测试），而是整个管道（流程）。
+每个测试都应该像这个一样简单直接。使用 axios 发出 GraphQL API 请求，期望来自 API 的查询/变更结果。 在幕后，数据从数据库读取或写入，身份验证、授权和分页等业务逻辑在期间执行。 请求会走完整个从 API 到数据库的 GraphQL 服务器流程。 E2E 测试不会测试隔离单元（单元测试）或较小的单元组合（集成测试），而是整个流程。
 
 > The `userApi` function is the final piece needed to set up effective testing for this application. It's not implemented in the test, but in another *src/tests/api.js* file for portability. In this file, you will find all your functions which can be used to run requests against your GraphQL test server.
 
-`userApi` 函数是确保此测试有效的最后一部分。它没有在这个测试中实现，而是在 *src/tests/api.js* 文件中测试的，在此文件中，你将找到用于请求 GraphQL 测试服务器的所有函数（的测试）。
+`userApi` 函数是确保此测试有效的最后一部分。它没有在这个测试中实现，而是在 *src/tests/api.js* 文件中测试的，在此文件中，你将找到用于请求 GraphQL 测试服务器的所有函数的测试。
 
 {title="src/tests/api.js",lang="javascript"}
 ~~~~~~~~
@@ -5357,7 +5357,7 @@ users
 
 > If your output is erroneous, the console logs may help you figure out what went wrong. Another option is to take the query from the axios request and put it into GraphQL Playground. The error reporting in Playground might make it easier to find problems.
 
-如果输出错误，控制台日志可能会帮助你找出问题所在。另一种选择是从 axios 请求中复制查询代码并将其放入GraphQL Playground 执行。 Playground 中的错误报告可以使查找问题变得更容易。
+如果输出错误，控制台日志可能会帮助你找出问题所在。另一种选择是从 axios 请求中复制查询代码并将其放入 GraphQL Playground 执行。Playground 中的错误报告可以使查找问题变得更容易。
 
 > That's your first E2E test against a GraphQL server. The next one uses the same API, and you can see how useful it is to extract the API layer as reusable functions. In your *src/tests/user.spec.js* file add another test:
 
@@ -5487,7 +5487,7 @@ describe('users', () => {
 
 > First, you are using the `signIn` mutation to login a user to the application. The login is fulfilled once the token is returned. The token can then be used for every other GraphQL operation. In this case, it is used for the `deleteUser` mutation. The mutation still fails, however, because the current user is not admin. You can try the same scenario on your own with an admin to test the simple path for reusing APIs.
 
-首先，使用 `signIn` 登录用户，登录成功后返回 token。然后，此 token 可用于其他每个 GraphQL 操作。在这种场景下，它用于 `deleteUser` 。 但是，这个操作仍然失败了，因为当前用户不是管理员。你可以自行使用管理员账户并通过同样的 API 来再次尝试这个的场景。
+首先，使用 `signIn` 登录用户，登录成功后返回 token。然后，此 token 可用于其他每个 GraphQL 操作。在这种场景下，它用于 `deleteUser`。 但是，这个操作仍然失败了，因为当前用户不是管理员。你可以自行使用管理员账户并通过同样的 API 来再次尝试这个的场景。
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -5507,7 +5507,7 @@ users
 
 > This section only covered E2E tests. With Chai and Mocha at your disposal, you can also add smaller unit and integration tests for your different application layers (e.g. resolvers). If you need a library to spy, stub, or mock something, I recommend [Sinon](https://sinonjs.org) as a complementary testing library.
 
-本节仅涉及 E2E 测试。使用 Chai 和 Mocha ，你还可以为不同的应用层（例如：解析器层）添加更小的单元和集成测试。如果你需要一个库来实现测试替身、测试桩或模拟某些东西，我建议使用 [Sinon](https://sinonjs.org) 作为补充测试库。
+本节仅涉及 E2E 测试。使用 Chai 和 Mocha，你还可以为不同的应用层（例如：解析器层）添加更小的单元和集成测试。如果你需要一个库来实现测试替身、测试桩或模拟某些东西，我建议使用 [Sinon](https://sinonjs.org) 作为补充测试库。
 
 > ### Exercises:
 
@@ -5519,11 +5519,11 @@ users
 > * Read more about [GraphQL and HTTP](https://graphql.github.io/learn/serving-over-http/)
 > * Read more about [Mocking with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/mocking.html)
 
-* 查看 [本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/d11e0487085e014170146ec7479d0154c4a6fce4)
+* 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/d11e0487085e014170146ec7479d0154c4a6fce4)
 * 为消息领域实现与用户领域类似的测试
 * 为这两个领域编写更精细的单元/集成测试
-* 延伸阅读： [GraphQL and HTTP](https://graphql.github.io/learn/serving-over-http/)
-* 延伸阅读： [Mocking with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/features/mocking.html)
+* 延伸阅读：[GraphQL 和 HTTP](https://graphql.github.io/learn/serving-over-http/)
+* 延伸阅读：[Apollo 服务端的 mock](https://www.apollographql.com/docs/apollo-server/v2/features/mocking.html)
 
 > ## Batching and Caching in GraphQL with Data Loader
 
@@ -5531,7 +5531,7 @@ users
 
 > The section is about improving the requests to your database. While only one request (e.g. a GraphQL query) hits your GraphQL API, you may end up with multiple database reads and writes to resolve all fields in the resolvers. Let's see this problem in action using the following query in GraphQL Playground:
 
-这一部分内容介绍了如何优化数据库请求。每当有请求 (比如一个 GraphQL 查询) 调用 GraphQL API，可能在 resolver 层需要有多数据库执行读和写操作。我们在 GraphQL Playground 中使用以下的查询来看看有什么问题：
+这一部分内容介绍了如何优化数据库请求。每当有请求 (比如一个 GraphQL 查询) 调用 GraphQL API，可能在解析器需要有多数据库执行读和写操作。我们在 GraphQL Playground 中使用以下的查询来看看有什么问题：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -5594,7 +5594,7 @@ Executing (default): SELECT "id", "username", "email", "password", "role", "crea
 
 > There is one request made for the list of messages, and three requests for each individual user. That's the nature of GraphQL. Even though you can nest your GraphQL relationships and query structure, there will still be database requests. Check the resolvers for the message user in your *src/resolvers/message.js* file to see where this is happening. At some point, you may run into performance bottlenecks when nesting GraphQL queries or mutations too deeply, because a lot of items need to be retrieved from your database.
 
-有一个请求来获取 message 列表，三个请求分别获取每个用户信息。这是 GraphQL 的特性。尽管可以嵌套地使用 GraphQL 关系和 query 结构, 数据库请求还是会存在. 在 *src/resolvers/message.js* 文件中查看 resolever 可以找到这些请求。在使用深层内嵌查询或者更改的时候，你可能会遇到性能瓶颈，那是因为有特别多的数据需要从数据库读取。
+有一个请求来获取 message 列表，三个请求分别获取每个用户信息。这是 GraphQL 的特性。尽管可以嵌套地使用 GraphQL 关系和 query 结构, 数据库请求还是会存在. 在 *src/resolvers/message.js* 文件中查看解析器可以找到这些请求。在使用深层内嵌查询或者更改的时候，你可能会遇到性能瓶颈，那是因为有特别多的数据需要从数据库读取。
 
 > In the following, you will optimize these database accesses with batching. It's a strategy used for a GraphQL server and its database, but also for other programming environments. Compare the query result in GraphQL Playground and your database output in the command line.
 
@@ -5674,7 +5674,7 @@ const server = new ApolloServer({
 
 > The loaders act as abstraction on top of the models, and can be passed as context to the resolvers. The user loader in the following example is used instead of the models directly.
 
-loaders 实际上是 models 的上层抽象，可以作为上下文传递给 resolver，下列示例中直接用 user loader 代替了 model。
+loaders 实际上是模型的上层抽象，可以作为上下文传递给解析器，下列示例中直接用 user loader 代替了模型。
 
 > Now we'll consider the function as argument for the DataLoader instantiation. The function gives you access to a list of keys in its arguments. These keys are your set of identifiers, purged of duplication, which can be used to retrieve items from a database. That's why keys (identifiers) and models (data access layer) are passed to the `batchUser()` function. The function then takes the keys to retrieve the entities via the model from the database. By the end of the function, the keys are mapped in the same order as the retrieved entities. Otherwise, it's possible to return users right after their retrieval from the database, though they have a different order than the incoming keys. As a result, users need to be returned in the same order as their incoming identifiers (keys).
 
@@ -5683,7 +5683,7 @@ loaders 实际上是 models 的上层抽象，可以作为上下文传递给 res
 > That's the setup for the loader, an improved abstraction on top of the model. Now, since you are passing the loader for the batched user retrieval as context to the resolvers, you can make use of it in the *src/resolvers/message.js* file:
  Now, s you can make use of it in the *src/resolvers/message.js* file:
 
-以上就是 loader 的设置方法，一种在模型上层有效的抽象。由于把 loader 作为上下文传递给了 resolver，现在可以在 *src/resolvers/message.js* 中这样使用它：
+以上就是 loader 的设置方法，一种在模型上层有效的抽象。由于把 loader 作为上下文传递给了解析器，现在可以在 *src/resolvers/message.js* 中这样使用它：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -5799,8 +5799,7 @@ Executing (default): SELECT "id", "text", "createdAt", "updatedAt", "userId" FRO
 
 > It's difficult to find the right timing for invalidating the cache, so I recommended performing the dataloader instantiation with every incoming GraphQL request. You lose the benefit of caching over multiple GraphQL requests, but still use the cache for every database access with one incoming GraphQL request. The dataloader package expresses it like this: *"DataLoader caching does not replace Redis, Memcache, or any other shared application-level cache. DataLoader is first and foremost a data loading mechanism, and its cache only serves the purpose of not repeatedly loading the same data in the context of a single request to your Application."* If you want to get into real caching on the database level, give [Redis](https://redis.io/) a shot.
 
-
-选择合适的时机清除缓存比较困难，所以我建议在每个 GraphQL 请求的时候重新初始化 dataloader。你将会失去在多个请求之间缓存数据的能力，但是还是可以在一个 GraphQL 请求里缓存所有的数据库请求。在 dataloader 包里这样描述： *“Dataloader 缓存不是为了替代 Redis，Memcache，或者是别的任何应用层缓存组件。Dataloader 首先是一种数据加载机制，它的缓存目的在于同一个请求上下文中，避免重复请求相同的数据。”*  假如你需要真正的数据库级别缓存，可以试试[Redis](https://redis.io/) 。
+选择合适的时机清除缓存比较困难，所以我建议在每个 GraphQL 请求的时候重新初始化 dataloader。你将会失去在多个请求之间缓存数据的能力，但是还是可以在一个 GraphQL 请求里缓存所有的数据库请求。在 dataloader 包里这样描述： *“Dataloader 缓存不是为了替代 Redis、Memcache 或者是别的任何应用层缓存组件。Dataloader 首先是一种数据加载机制，它的缓存目的在于同一个请求上下文中，避免重复请求相同的数据。”*  假如你需要真正的数据库级别缓存，可以试试 [Redis](https://redis.io/) 。
 
 > Outsource the loaders into a different folder/file structure. Put the batching for the individual users into a new *src/loaders/user.js* file:
 
@@ -5927,8 +5926,8 @@ const server = new ApolloServer({
 > * Read more about [GraphQL Best Practices](https://graphql.github.io/learn/best-practices/)
 
 * 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9ff0542f620a0d9939c1adcbd21951f8fc1693f4)
-* 阅读更多关于[GraphQL 和 Dataloader](https://www.apollographql.com/docs/graphql-tools/connectors.html#dataloader)
-* 阅读更多关于[GraphQL 最佳实践](https://graphql.github.io/learn/best-practices/)
+* 延伸阅读：[GraphQL 和 Dataloader](https://www.apollographql.com/docs/graphql-tools/connectors.html#dataloader)
+* 延伸阅读：[GraphQL 最佳实践](https://graphql.github.io/learn/best-practices/)
 
 > ## GraphQL Server + PostgreSQL Deployment to Heroku
 
@@ -5940,7 +5939,7 @@ const server = new ApolloServer({
 
 > This section guides you through the process in the command line. For the visual approach check this [GraphQL server on Heroku deployment tutorial](https://www.apollographql.com/docs/apollo-server/deployment/heroku.html) which, however, doesn't include the PostgreSQL database deployment.
 
-这一章节提供基于命令行工具的快速上手教程。这里可以查看视频教程[Heroku 部署 GraphQL 服务器教程](https://www.apollographql.com/docs/apollo-server/deployment/heroku.html)。视频里没有包含 PostgreSQL 数据库有关内容。
+这一章节提供基于命令行工具的快速上手教程。这里可以查看视频教程 [Heroku 部署 GraphQL 服务器教程](https://www.apollographql.com/docs/apollo-server/deployment/heroku.html)。视频里没有包含 PostgreSQL 数据库有关内容。
 
 > Initially you need to complete three requirements to use Heroku:
 
@@ -5989,11 +5988,11 @@ Use heroku addons:docs heroku-postgresql to view documentation
 
 > Check the [Heroku PostgreSQL documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for more in depth instructions for your database setup.
 
-查看 [Heroku PostgreSQL 文档](https://devcenter.heroku.com/articles/heroku-postgresql) 以获得关于数据库安装的更多信息。
+查看 [Heroku PostgreSQL 文档](https://devcenter.heroku.com/articles/heroku-postgresql)以获得关于数据库安装的更多信息。
 
 > You are ready to take your application online. With the PostgreSQL add-on, you received a database URL as well. You can find it with `heroku config`. Now, let's step into your GraphQL server's code to make a couple of adjustments for production. In your *src/models/index.js*, you need to decide between development (coding, testing) and production (live) build. Because you have a new environment variable for your database URL, you can use this to make the decision:
 
-你已经准备好将自己的应用部署上线了。使用 PostgreSQL 插件，你应该也有个数据库 URL。可以通过 `heroku config` 找到它。现在需要检查 GraphQL 服务器的代码，为生产环境做一些改动。在 *src/models/index.js* 文件里，你需要在 development(coding, testing) 和 production(live) 构建中选择一个。由于你有一个新的环境变量来保存数据库 URL，可以这样来修改环境：
+你已经准备好将自己的应用部署上线了。使用 PostgreSQL 插件，你应该也有个数据库 URL。可以通过 `heroku config` 找到它。现在需要检查 GraphQL 服务器的代码，为生产环境做一些改动。在 *src/models/index.js* 文件里，你需要在 development（coding, testing）和 production（live）构建中选择一个。由于你有一个新的环境变量来保存数据库 URL，可以这样来修改环境：
 
 {title="src/models/index.js",lang="javascript"}
 ~~~~~~~~
@@ -6028,7 +6027,7 @@ if (process.env.DATABASE_URL) {
 
 > Another environment variable used in the *src/index.js* file is called *SECRET* for your authentication strategy. If you haven't included an *.env* file in your project's version control (see .gitignore), you need to set the `SECRET` for your production code in Heroku using `heroku config:set SECRET=wr3r23fwfwefwekwself.2456342.dawqdq`. The secret is just made up and you can choose your own custom string for it.
 
-另一个在 *src/index.js* 文件中使用的环境变量是用于授权策略的 *SECRET*。如果你还没有在版本控制中添加 *.env* 文件(查看 .gitignore)，你就需要在 Heroku 的项目中使用 `heroku config:set SECRET=wr3r23fwfwefwekwself.2456342.dawqdq` 来设置 `SECRET`。这里的密钥是胡编的，你可以用自己的密钥代替。
+另一个在 *src/index.js* 文件中使用的环境变量是用于授权策略的 *SECRET*。如果你还没有在版本控制中添加 *.env* 文件（查看 .gitignore），你就需要在 Heroku 的项目中使用 `heroku config:set SECRET=wr3r23fwfwefwekwself.2456342.dawqdq` 来设置 `SECRET`。这里的密钥是胡编的，你可以用自己的密钥代替。
 
 > Also, consider the application's port in the *src/index.js* file. Heroku adds its own `PORT` environment variable, and you should use the port from an environment variable as a fallback.
 
@@ -6088,15 +6087,15 @@ sequelize.sync({ force: isTest || isProduction }).then(async () => {
 
 > Remember to remove the flag after, or the database will be purged and seeded with every deployment. Depending on development or production, you are choosing a database, seeding it (or not), and selecting a port for your GraphQL server. Before pushing your application to Heroku, push all recent changes to your GitHub repository. After that, push all the changes to your Heroku remote repository as well, since you created a Heroku application before: `git push heroku master`. Open the application with `heroku open`, and add the `/graphql` suffix to your URL in the browser to open up GraphQL Playground. If it doesn't work, check the troubleshoot area below.
 
-记得之后删除 flag，否者每次部署数据库都会被清空然后用种子数据填充。根据应用处在 development 或者 production 环境，你都要选择一个数据库，使用数据填充 (也可以用空数据库)，并且为 GraphQL 选择一个端口。在推送到 Heroku 之前，把所有的改动 push 到 github 仓库。然后，由于之前已经创建了 Heroku 应用，使用 `git push heroku master` 把所有改动也推送到 Heroku 远程仓库。使用 `heroku open` 打开 Heroku 应用，添加 `/graphql` 后缀到浏览器的 URL 中来打开 GraphQL Playground。如果打开失败，请阅读下面的故障排除部分。
+记得之后删除 flag，否者每次部署数据库都会被清空然后用种子数据填充。根据应用处在 development 或者 production 环境，你都要选择一个数据库，使用数据填充（也可以用空数据库），并且为 GraphQL 选择一个端口。在推送到 Heroku 之前，把所有的改动 push 到 github 仓库。然后，由于之前已经创建了 Heroku 应用，使用 `git push heroku master` 把所有改动也推送到 Heroku 远程仓库。使用 `heroku open` 打开 Heroku 应用，添加 `/graphql` 后缀到浏览器的 URL 中来打开 GraphQL Playground。如果打开失败，请阅读下面的故障排除部分。
 
 > Depending on your seeding strategy, your database will either be empty or contain seeded data. If its empty, register a user and create messages via GraphQL mutations. If its seeded, request a list of messages with a GraphQL query.
 
-根据你选择的数据填充策略，你的数据库将为空或包含种子数据。如果为空，则使用 GraphQL mutation 注册用户并且创建消息。如果有种子数据，则使用 GraphQL 查询请求消息列表。
+根据你选择的数据填充策略，你的数据库将为空或包含种子数据。如果为空，则使用 GraphQL 变更来注册用户并且创建消息。如果有种子数据，则使用 GraphQL 查询请求消息列表。
 
 > Congratulations, your application should be live now. Not only is your GraphQL server running on Heroku, but your PostgreSQL database. Follow the exercises to learn more about Heroku.
 
-恭喜，你的应用已经正常上线了。现在 GraphQL 服务器和 PostgreSQL 都已经在Heroku上成功运行。按照下面的练习了解有关 Heroku 的更多信息。
+恭喜，你的应用已经正常上线了。现在 GraphQL 服务器和 PostgreSQL 都已经在 Heroku 上成功运行。按照下面的练习了解有关 Heroku 的更多信息。
 
 > ### Heroku Troubleshoot
 
@@ -6104,7 +6103,7 @@ sequelize.sync({ force: isTest || isProduction }).then(async () => {
 
 > It can happen that the GraphQL schema is not available in GraphQL Playground for application in production. It's because the `introspection` flag for Apollo Server is disabled. In order to fix it, you can set it to true. Another improvement to add may be the `playground` flag to enable GraphQL Playground for Heroku:
 
-生产环境下可能会发生 GraphQL schema 在 GraphQL Playground 中不可用的情况，这是因为禁用了 Apollo Serve 的 `introspection` 标志。你可以将其设置为 true 来修复。另一个改进是添加 `playground` 标志来为 Heroku 启用 GraphQL Playground：
+生产环境下可能会发生 GraphQL 模式在 GraphQL Playground 中不可用的情况，这是因为禁用了 Apollo 服务器的 `introspection` 标志。你可以将其设置为 true 来修复。另一个改进是添加 `playground` 标志来为 Heroku 启用 GraphQL Playground：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -6121,7 +6120,7 @@ const server = new ApolloServer({
 
 > Another issue may be that Heroku doesn't install the dev dependencies for production. Although it does install the dev dependencies for building the application on Heroku, it purges the dev dependencies afterward. However, in our case, in order to start the application (npm start script), we rely on a few dev dependencies that need to be available in production. [You can tell Heroku to keep the dev dependencies:](https://devcenter.heroku.com/articles/nodejs-support#package-installation)
 
-另一个问题可能是 Heroku 没有为生产环境安装 dev 依赖库。虽然在 Heroku 上构建应用时确实安装了 dev 依赖库，但在之后会被自动清除。但是在我们的示例中，为了启动应用程序 (npm start script)，在生产环境中需要的几个dev依赖库。参考：[配置 Heroku 保存 dev 依赖库:](https://devcenter.heroku.com/articles/nodejs-support#package-installation)
+另一个问题可能是 Heroku 没有为生产环境安装 dev 依赖库。虽然在 Heroku 上构建应用时确实安装了 dev 依赖库，但在之后会被自动清除。但是在我们的示例中，为了启动应用程序（npm start script），在生产环境中需要的几个 dev 依赖库。参考：[配置 Heroku 保存 dev 依赖库:](https://devcenter.heroku.com/articles/nodejs-support#package-installation)
 
 {title="Command Line",lang="javascript"}
 ~~~~~~~~
@@ -6134,7 +6133,7 @@ heroku config:set NPM_CONFIG_PRODUCTION=false YARN_PRODUCTION=false
 
 > ### Exercises:
 
-### 练习:
+### 练习：
 
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9dbfb30226cdc4843adbcc09d16871b2a902a4d3)
@@ -6148,13 +6147,13 @@ heroku config:set NPM_CONFIG_PRODUCTION=false YARN_PRODUCTION=false
 * 查看[本章源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/9dbfb30226cdc4843adbcc09d16871b2a902a4d3)
 * 欢迎给我们关于 Heroku 的故障排除区域是否有用的反馈
 * 使用 GraphQL Playground 创建生产环境测试数据
-* 熟悉[Heroku Dashboard](https://dashboard.heroku.com/apps)
+* 熟悉 [Heroku Dashboard](https://dashboard.heroku.com/apps)
   * 找到应用日志
   * 找到应用环境变量
-* 使用`heroku pg:psql` 访问 PostgreSQL 数据库
+* 使用 `heroku pg:psql` 访问 PostgreSQL 数据库
 
 <hr class="section-divider">
 
 > You built a sophisticated GraphQL server boilerplate project with Express and Apollo Server. You should have learned that GraphQL isn't opinionated about various things, and about authentication, authorization, database access, and pagination. Most of the operations we learned were more straightforward because of Apollo Server over the GraphQL reference implementation in JavaScript. That's okay, because many people are using Apollo Server to build GraphQL servers. Use this application as a starter project to realize your own ideas, or find my starter project with a GraphQL client built in React in [this GitHub repository](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate).
 
-你已经使用 Express 和 Apollo Server 构建了一个复杂的 GraphQL 服务器示例项目。也应该已经了解到 GraphQL 不会强制要求身份验证，授权，数据库访问和分页等等。由于 Apollo Server 使用了基于 JavaScript 实现的 GraphQL，因此我们学到的大多数操作都更直接。没关系，因为很多人都在使用 Apollo Server 来构建 GraphQL 服务器。使用此应用作为入门项目来实现你自己的想法，或者使用我的入门项目，也就是 [这个 GitHub 仓库](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate) 中用 React 实现的 GraphQL 客户端。
+你已经使用 Express 和 Apollo 服务器构建了一个复杂的 GraphQL 服务器示例项目。也应该已经了解到 GraphQL 不会强制要求身份验证，授权，数据库访问和分页等等。由于 Apollo 服务端使用了基于 JavaScript 实现的 GraphQL，因此我们学到的大多数操作都更直接。没关系，因为很多人都在使用 Apollo 服务端来构建 GraphQL 服务器。使用此应用作为入门项目来实现你自己的想法，或者使用我的入门项目，也就是[这个 GitHub 仓库](https://github.com/the-road-to-graphql/fullstack-apollo-express-postgresql-boilerplate) 中用 React 实现的 GraphQL 客户端。
