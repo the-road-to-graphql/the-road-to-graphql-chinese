@@ -8,7 +8,7 @@
     - **30% 演示** - 代码演示贯穿本书.
     - **50% 评论** (注: 这里有一个 [Slack 组](https://slack-the-road-to-learn-react.wieruch.com/) 你可以参与其中)
     - **75% 动手练习** - 通过实践章节和购买源码来加深你的理解.
-    - **90% 教授别人** - 在 Slack 社区, Open Source, 或其它平台(如Facebook Groups 和 Reddit) 上帮助其它小伙伴
+    - **90% 教授别人** - 在 Slack 社区, 开源社区, 或其它平台(如 Facebook Groups 和 Reddit) 上帮助其他小伙伴
 
     本书开头我就说过没人能通过读书掌握编程，并且全书我一直强调课程的运用才是记住他们最好的方法。金字塔中能获得最大投资回报是最后一条：教导别人。我有这样的经历，我开始开博客记录我在 web 开发方面的经验，回答 Quora， Reddit， Stack Overflow 上的问题，并且写书。 教别人迫使你更深入地研究这些话题，学习细微差异，因为你不想误人子弟。想想朋友，同事，以及来自 Stack Overflow 和 Reddit 上的同伴，他们渴望学习 GraphQL 在现代程序中与 React.js 和 Node.js 一起使用。订一个见面会， 教他们 GraphQL。教导者和学习者都会从中收获成长。
 
