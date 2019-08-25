@@ -61,11 +61,11 @@
 
 > Apollo offers plenty of libraries for implementing an effective GraphQL tech stack for JavaScript applications, and their libraries are open-sourced to be more manageable. For instance, [Apollo Link](https://www.apollographql.com/docs/link/) provides an API for chaining different features into a GraphQL control flow. This makes it possible for automatic network retries or RESTful API endpoints instead of a GraphQL endpoints (the endpoints can be used together, too).
 
-​Apollo 提供了大量的库，用于为 JavaScript 应用程序实现更高效的 GraphQL 技术栈，并且他们的库都是开源的，以便更易于管理。例如：[Apollo Link](https://www.apollographql.com/docs/link/) 提供了一个 API 用于将不同功能链接到 GraphQL 的控制流中。这使得自动的网络重试或 RESTful API endpoints 替代 GraphQL endpoints 成为可能（这些 endpoints 也可以一起使用）。
+​Apollo 提供了大量的库，用于为 JavaScript 应用程序实现更高效的 GraphQL 技术栈，并且他们的库都是开源的，以便更易于管理。例如：[Apollo Link](https://www.apollographql.com/docs/link/) 提供了一个 API 用于将不同功能链接到 GraphQL 的控制流中。这使得自动的网络重试或 RESTful API 端点替代 GraphQL 端点成为可能（这些端点也可以一起使用）。
 
 > Apollo is also offering exchangeable libraries which can be seen in the Apollo Client Cache. The Apollo Client itself is not biased toward its cache, where the data is stored, as any cache advertised by Apollo or its community works. There are already caches available that can be used to setup a Apollo Client instance.
 
-​	Apollo 还提供了可替换的库，可以在 Apollo Client缓存中看到。Apollo Client 本身是不会偏向其存储数据的缓存的，就像 Apollo 或者其社区宣传的任何缓存一样。已有可用缓存可以用于设置 Apollo Client 实例。
+​	Apollo 还提供了可替换的库，可以在 Apollo 客户端缓存中看到。Apollo 客户端本身是不会偏向其存储数据的缓存的，就像 Apollo 或者其社区宣传的任何缓存一样。已有可用缓存可以用于设置 Apollo 客户端实例。
 
 > ### Apollo's Features
 
@@ -185,7 +185,7 @@
 
 > * plain HTTP request: Even though sophisticated GraphQL libraries can be used to perform your GraphQL operations, GraphQL itself isn't opinionated about the network layer. So it is possible for you to use GraphQL with plain HTTP methods using only one endpoint with an opinionated payload structure for GraphQL queries and mutations.
 
-* 普通的 HTTP 请求：尽管可以使用复杂的 GraphQL 库来操作 GraphQL，GraphQL 并不关注它自身的网络层。因此你可以将 GraphQL 和普通的 HTTP 方法结合使用，只使用一个 endpoint ，其中包括固定的针对 GraphQL 查询和变更的负载结构。
+* 普通的 HTTP 请求：尽管可以使用复杂的 GraphQL 库来操作 GraphQL，GraphQL 并不关注它自身的网络层。因此你可以将 GraphQL 和普通的 HTTP 方法结合使用，只使用一个端点 ，其中包括固定的针对 GraphQL 查询和变更的负载结构。
 
 > * [Relay](https://github.com/facebook/relay): Relay is Facebook's library for consuming GraphQL on the client-side in React applications. It was among the first GraphQL client libraries before Apollo emerged.
 
@@ -201,7 +201,7 @@
 
 > * [AWS Amplify - GraphQL Client](https://github.com/aws/aws-amplify): The AWS Amplify family offers libraries for cloud-enabled applications. One of the modules is a GraphQL client used for general GraphQL servers or AWS AppSync APIs.
 
-* [AWS Amplify - GraphQL Client](https://github.com/aws/aws-amplify): AWS Amplify 系列为支持云的应用提供库。其中一个模块是被用于常规 GraphQL 服务或 AWS AppSync APIs 的 GraphQL 客户端。
+* [AWS Amplify - GraphQL 客户端](https://github.com/aws/aws-amplify): AWS Amplify 系列为支持云的应用提供库。其中一个模块是被用于常规 GraphQL 服务或 AWS AppSync APIs 的 GraphQL 客户端。
 
 > ### Apollo Server Alternatives for Node.js
 

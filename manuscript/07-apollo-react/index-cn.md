@@ -61,7 +61,7 @@
 这个应用只会使用纯粹的 CSS 类和纯粹的 CSS 文件。使用纯粹 CSS 类，你可以避免其他工具中可能出现的困难。你可以在附录中针对此应用程序的部分找到所有的 CSS 文件和它的内容。还有就是这些组件名直接使用它的类名，不会加以阐述。接下来的部分将专注于 JavaScript、React 和 GraphQL。
 
 > ### Exercises:
-### 练习
+### 练习：
 
 > * If you are not familiar with React, read up *The Road to learn React*
 > * Set up the recommended folder/file structure (if you are not going with your own structure and didn't clone the repository)
@@ -156,11 +156,11 @@ const httpLink = new HttpLink({
 
 > You may recall the mandatory configuration from previous applications. The `uri` is a mandatory value to define the only GraphQL API endpoint used by the Apollo Client. In this case, Github's GraphQL endpoint is passed as value. When consuming the GitHub GraphQL API, you have to authorize yourself with your personal access token. You should have already created the token in a previous section, which you can now define in a *.env* file in your project folder. Afterward, it should be accessible with `process.env`. Keep in mind that you have to use the `REACT_APP` prefix when using create-react-app, because that's how it is required by create-react-app. Otherwise, you would be free to choose your own naming for it.
 
-你可能记得在前面的应用中，GraphQL API 端点是 Apollo Client 需要的唯一配置项，本书的示例里，传入的是 Github 的 GraphQL 端点。在消费 Github GraphQL API 前，你必须使用你的个人访问令牌进行认证。你应该在前一部分中已经创建了令牌（你可以在项目目录中创建一个 *.env* 文件） 了。之后，应该可以通过 `process.env` 获取这个值。记住你在使用 create-react-app 时，需要加上 `REACT_APP` 前缀，这是 create-react-app 规定的。此外，你可以随意命名。
+你可能记得在前面的应用中，GraphQL API 端点是 Apollo 客户端需要的唯一配置项，本书的示例里，传入的是 Github 的 GraphQL 端点。在消费 Github GraphQL API 前，你必须使用你的个人访问令牌进行认证。你应该在前一部分中已经创建了令牌（你可以在项目目录中创建一个 *.env* 文件） 了。之后，应该可以通过 `process.env` 获取这个值。记住你在使用 create-react-app 时，需要加上 `REACT_APP` 前缀，这是 create-react-app 规定的。此外，你可以随意命名。
 
 > Second, create the cache as the place where the data is managed in Apollo Client. The cache normalizes your data, caches requests to avoid duplicates, and makes it possible to read and write data to the cache. You will use it multiple times while developing this application. The cache instantiation is straightforward, as it doesn't require you to pass any arguments to it. Check the API to explore further configurations.
 
-第二步，创建 Apollo Client 管理数据的缓存。缓存能归一化数据，缓存可以避免多余重复的请求，也允许通过缓存读写数据。在开发这个应用中会多次用到它。实例化缓存非常直观，不需要传递任何参数。详细了解下它的 API 以便将来的进一步配置吧。
+第二步，创建 Apollo 客户端管理数据的缓存。缓存能归一化数据，缓存可以避免多余重复的请求，也允许通过缓存读写数据。在开发这个应用中会多次用到它。实例化缓存非常直观，不需要传递任何参数。详细了解下它的 API 以便将来的进一步配置吧。
 
 
 {title="src/index.js",lang="javascript"}
@@ -169,7 +169,7 @@ const cache = new InMemoryCache();
 ~~~~~~~~
 
 > Finally, you can use both instantiated configurations, the link and the cache, to create the instance of the Apollo Client in the *src/index.js* file.
-最后，你需要将两个实例化的配置—— link 和 cache，在 *src/index.js* 文件中添加到 Apollo Client 中，用于创建其实例。
+最后，你需要将两个实例化的配置—— link 和 cache，在 *src/index.js* 文件中添加到 Apollo 客户端中，用于创建其实例。
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -180,7 +180,7 @@ const client = new ApolloClient({
 ~~~~~~~~
 
 > To initialize Apollo Client, you must specify link and cache properties on the config object. Once you start your application again, there should be no errors. If there are any, check whether you have implemented a basic App component in your *src/App/index.js* file because the ReactDOM API needs to hook this component into the HTML.
-为了实例化 Apollo Client，你必须在配置对象中，指定 link 和 cache 属性。应用一旦启动，应该没有报错。如果有报错信息，请检查在 *src/App/index.js* 文件中是否实现了基本的 App 组件，因为 ReactDOM API 需要一个组件用于在 HTML 中渲染。
+为了实例化 Apollo 客户端，你必须在配置对象中，指定 link 和 cache 属性。应用一旦启动，应该没有报错。如果有报错信息，请检查在 *src/App/index.js* 文件中是否实现了基本的 App 组件，因为 ReactDOM API 需要一个组件用于在 HTML 中渲染。
 
 > ### Exercises:
 ### 练习：
@@ -235,7 +235,7 @@ ReactDOM.render(
 现在你在 React 视图层中，你可以隐式访问 Apollo 客户端了。就是说大多数情况下，你无需直接使用客户端，后面的部分会进一步解释。
 
 > ### Exercises:
-### 练习
+### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/8377cbc55de3c860df0150d8946e261938a67db5)
 > * Read more about [configuring and connecting Apollo Client to React](https://www.apollographql.com/docs/react/essentials/get-started.html)
@@ -270,7 +270,7 @@ export default App;
 ~~~~~~~~
 
 > In your *src/Profile/index.js* file, add a simple functional stateless component. In the next step you will extend it with a GraphQL query.
-在 *src/Profile/index.js* 文件中，添加一个简单的无状态组件。下一步，你使用 GraphQL 查询对其进行扩展。 
+在 *src/Profile/index.js* 文件中，添加一个简单的无状态组件。下一步，你使用 GraphQL 查询对其进行扩展。
 
 {title="src/Profile/index.js",lang="javascript"}
 ~~~~~~~~
@@ -636,13 +636,13 @@ export default Link;
 到现在的所有实现都是纯粹的 React 实现，不过这只是一种方式去组织组件。其中最重要的部分是在 Profile 组件中，引入了 Query 组件，介绍一个 query prop。一旦 Query 组件渲染，它会执行 GraphQL 查询。查询的结果会通过 React 的 render props 模式的参数获取。
 
 > ### Exercises:
-### 练习
+### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/44ceb0482442eb07e56d134e6e1da8abefd68afe)
 > * Read more about [queries with Apollo Client in React](https://www.apollographql.com/docs/react/essentials/queries.html)
 > * Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53Q6K3V)
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/44ceb0482442eb07e56d134e6e1da8abefd68afe)
-* 延伸阅读：[在 React 中使用 Apollo Client 进行查询](https://www.apollographql.com/docs/react/essentials/queries.html)
+* 延伸阅读：[在 React 中使用 Apollo 客户端进行查询](https://www.apollographql.com/docs/react/essentials/queries.html)
 * 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/53Q6K3V)
 
 > ## Apollo Client Error Handling in React
@@ -810,7 +810,7 @@ const client = new ApolloClient({
 > * Read more about [composable Apollo Links](https://www.apollographql.com/docs/link/composition.html)
 * 延伸阅读：[可组合的 Apollo 链接](https://www.apollographql.com/docs/link/composition.html)
 >* Implement the [apollo-link-retry](https://www.apollographql.com/docs/link/links/retry.html) in case a network request fails
-* 实现[ Apollo 链接重试](https://www.apollographql.com/docs/link/links/retry.html)功能来处理网络请求失败
+* 实现 [Apollo 链接重试](https://www.apollographql.com/docs/link/links/retry.html)功能来处理网络请求失败
 >* Invest 3 minutes of your time and take the [quiz](https://www.surveymonkey.com/r/53HLLFX)
 * 花三分钟的时间进行[测试](https://www.surveymonkey.com/r/53HLLFX)
 
@@ -1051,13 +1051,13 @@ const RepositoryItem = ({ ... }) => (
 
 > When you star a repository as above, the "Star" button disappears. This is what we want, because it means the `viewerHasStarred` boolean has been updated in Apollo Client's cache for the identified repository. Apollo Client was able to match the mutation result with the repository identifier to the repository entity in Apollo Client's cache, the props were updated, and the UI re-rendered. Yet, on the other side, the count of stargazers who have starred the repository isn't updated because it cannot be retrieved from GitHub's API. The count must be updated in the Apollo Client's cache. You will find out more about this topic in one of the following sections.
 
-当你如上所诉地加星标注一个代码仓库时，"Star" 按钮将消失。这正是我们想要的，因为这意味着在 Apollo Client 的缓存中已经更新了所标识的仓库的 `viewerHasStarred` 布尔值。当 props 更新，UI 重新渲染时，Apollo Client 也能够将标识的代码仓库的变更结果与 Apollo Client 缓存中代码仓库实体相匹配。另一方面，stargazer 的数量并没有更新，这是因为它不能从 Github 的 API 中检索得到，stargazer 的数量必须在 Apollo Client 的缓存中更新。你将会后续章节学习到更多相关主题的知识。
+当你如上所诉地加星标注一个代码仓库时，"Star" 按钮将消失。这正是我们想要的，因为这意味着在 Apollo 客户端的缓存中已经更新了所标识的仓库的 `viewerHasStarred` 布尔值。当 props 更新，UI 重新渲染时，Apollo 客户端也能够将标识的代码仓库的变更结果与 Apollo 客户端缓存中代码仓库实体相匹配。另一方面，stargazer 的数量并没有更新，这是因为它不能从 Github 的 API 中检索得到，stargazer 的数量必须在 Apollo 客户端的缓存中更新。你将会后续章节学习到更多相关主题的知识。
 > ### Exercises:
 ### 练习：
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/feb2b794392f9c5b1d2566ed39ad4ca5f650f194)
 >* Read more about [mutations with Apollo Client in React](https://www.apollographql.com/docs/react/essentials/mutations.html)
-* 延伸阅读：[ Apollo Client 变更](https://www.apollographql.com/docs/react/essentials/mutations.html)
+* 延伸阅读：[ Apollo 客户端变更](https://www.apollographql.com/docs/react/essentials/mutations.html)
 > * Implement other mutations in the RepositoryItem component
 >  * Implement the `removeStar` mutation when the `viewerHasStarred` boolean is true
 >  * Show a button with the watchers count which should be used to watch/unwatch a repository
@@ -1075,7 +1075,7 @@ const RepositoryItem = ({ ... }) => (
 ## 使用 React 高阶组件来完成 GraphQL 的查询/变更操作
 >We've done Query and Mutation components from React Apollo to connect a data-layer (Apollo Client) with a view-layer (React). The Query component executes the query when it is rendered, whereas the Mutation component gives access to a function that triggers the mutation. Both components use the render props pattern to make the results accessible in their child functions.
 
-我们已经在 React Apollo 中使用 Query 和 Mutation 组件完成了数据层（ Apollo Client ）和视图层（ React ）的连接。Query 组件在渲染后就会执行查询操作，而 Mutation 组件允许访问一个函数来触发变更。两个组件都使用的是 render props 模式，以便可以在子函数中访问结果。
+我们已经在 React Apollo 中使用 Query 和 Mutation 组件完成了数据层（Apollo 客户端）和视图层（React）的连接。Query 组件在渲染后就会执行查询操作，而 Mutation 组件允许访问一个函数来触发变更。两个组件都使用的是 render props 模式，以便可以在子函数中访问结果。
 
 >[Higher-Order Components (HOC)](https://www.robinwieruch.de/gentle-introduction-higher-order-components/) is a widely accepted alternative to React's render prop pattern. The React Apollo package implements a Higher-Order Component for queries and mutations as well, though the team behind Apollo doesn't advertise it, and even spoke in favor of render props as their first choice. Nonetheless, this section shows you the alternative, using a Higher-Order Component instead of a Render Prop, though this application will continue to use the render prop pattern afterward. If you already have access to the query result in the Profile component's arguments, there is no Query component needed in the component itself:
 
@@ -1398,9 +1398,9 @@ const updateAddStar = (
 >* Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/24bb647ac94f1af1c52b61e41cebba6a6fd95f4f)
 >* Read more about [Local State Management in Apollo Client](https://www.apollographql.com/docs/react/essentials/local-state.html)
-* 延伸阅读：[ Apollo 客户端组件本地状态管理](https://www.apollographql.com/docs/react/essentials/local-state.html)
+* 延伸阅读：[Apollo 客户端组件本地状态管理](https://www.apollographql.com/docs/react/essentials/local-state.html)
 >* Read more about [Fragments in Apollo Client](https://www.apollographql.com/docs/react/advanced/fragments.html)
-* 延伸阅读：[ Apollo 客户端中片段](https://www.apollographql.com/docs/react/advanced/fragments.html)
+* 延伸阅读：[Apollo 客户端中片段](https://www.apollographql.com/docs/react/advanced/fragments.html)
 
 >* Implement local cache updates for all the other mutations from the previous exercises
 >  * Implement the identical local cache update, but with decreasing the count of stargazers, for your `removeStar` mutation
@@ -1413,11 +1413,11 @@ const updateAddStar = (
   * 为 `removeStar` 变更实现相同的本地缓存更新，不过是去减少 stargazer 的数量
   * 为 `updateSubscription` 变更实现本地缓存更新
   * 你将会在下一节看到一个可行的解决方案
-* 延伸阅读：[ Apollo 客户端中的缓存以及用于标识实体的组合键](https://www.apollographql.com/docs/react/advanced/caching.html)
+* 延伸阅读：[Apollo 客户端中的缓存以及用于标识实体的组合键](https://www.apollographql.com/docs/react/advanced/caching.html)
 * 花三分钟的时间进行[测试](https://www.surveymonkey.com/r/5BSDXF7)
 
 > ## Apollo Client Optimistic UI in React 
-## React 中的 Apollo Client 乐观 UI
+## React 中的 Apollo 客户端乐观 UI
 
 > We've covered the basics, so now it's time for the advanced topics. One of those topics is the optimistic UI with React Apollo, which makes everything onscreen more synchronous. For instance, when liking a post on Twitter, the like appears immediately. As developers, we know there is a request that sends the information for the like to the Twitter backend. This request is asynchronous and doesn't resolve immediately with a result. The optimistic UI immediately assumes a successful request and mimics the result of such request for the frontend so it can update its UI immediately, before the real response arrives later. With a failed request, the optimistic UI performs a rollback and updates itself accordingly. Optimistic UI improves the user experience by omitting inconvenient feedback (e.g. loading indicators) for the user. The good thing is that React Apollo comes with this feature out of the box.
 
@@ -1634,7 +1634,7 @@ const RepositoryItem = ({ ... }) => (
 
 > The first three are about **inserting** a data-layer into the view-layer, while the last is about **co-locating** it. Each comes with drawbacks. Following the second way, you might yourself declaring functions instead of objects, or higher-order functions instead of functions because you need to pass arguments to them. With the fourth, you could encounter the same challenge in keeping HOCs concise. There, you could use the other three ways too, but this time in a HOC rather than a Render Prop.
 
-前三个是关于将数据层 **插入** 视图层，而最后一个是关于 **共同定位**，每一个都有缺点。按照第二种方式，你可以自己声明函数而不是对象，或者声明高阶函数而不是函数，因为你需要将参数传递给它们。第四种方式，你可能会在保持 HOC 简洁方面遇到相同的挑战。在这个问题上，你也可以使用其他三种方式，但这一次是在 HOC 而不是 Render Prop 中。
+前三个是关于将数据层**插入**视图层，而最后一个是关于**共同定位**，每一个都有缺点。按照第二种方式，你可以自己声明函数而不是对象，或者声明高阶函数而不是函数，因为你需要将参数传递给它们。第四种方式，你可能会在保持 HOC 简洁方面遇到相同的挑战。在这个问题上，你也可以使用其他三种方式，但这一次是在 HOC 而不是 Render Prop 中。
 
 > ### Exercises:
 ### 练习：
@@ -1811,7 +1811,7 @@ const RepositoryList = ({ repositories, fetchMore }) => (
 
 > If you attempt to click the button, you should get the following error message: *Error: updateQuery option is required.*. The `updateQuery` function is needed to tell Apollo Client how to merge the previous result with a new one. Define the function outside of the button, because it would become too verbose otherwise.
 
-如果你尝试点击这个按钮，你应该得到如下的信息：*错误：updateQuery 是必填的。* `updateQuery` 函数需要告诉 Apollo 客户端如何合并上一个结果和新的结果。在按钮的外部定义这个函数，否则它会变得过于冗长。
+如果你尝试点击这个按钮，你应该得到如下的信息：*Error: updateQuery option is required.* `updateQuery` 函数需要告诉 Apollo 客户端如何合并上一个结果和新的结果。在按钮的外部定义这个函数，否则它会变得过于冗长。
 
 {title="src/Repository/RepositoryList/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1878,7 +1878,7 @@ const updateQuery = (previousResult, { fetchMoreResult }) => {
 
 > In this function, you can merge both results with the JavaScript spread operator. If there is no new result, return the previous result. The important part is merging the `edges` of both repositories objects to have a merge list of items. The `fetchMoreResult` takes precedence over the `previousResult` in the `repositories` object because it contains the new `pageInfo`, with its `endCursor` and `hasNextPage` properties from the last paginated result. You need to have those when clicking the button another time to have the correct cursor as an argument. If you want to checkout an alternative to the verbose JavaScript spread operator when dealing with deeply nested data, checkout the changes in [this GitHub Pull Request](https://github.com/the-road-to-graphql/react-graphql-github-apollo/pull/14) that uses Lenses from Ramda.js.
 
-在这个函数中，你使用 JavaScript 展开操作符来合并这两个结果。如果没有新的结果，则返回上一个结果。重要的部分是合并两个 repositories 对象的 `edges`，使其拥有一个合并列表。 在 `repositories`  对象中，`fetchMoreResult` 的优先级高于 `previousResult`，因为它包含新的 `pageInfo`，以及最后一个分页结果中的 `endCursor` 和 `hasNextPage` 属性。你需要在再次点击按钮时使用正确的 cursor 作为参数。在处理深层嵌套数据时，如果你想了解详细的 JavaScript 展开操作符，请查看 [这个 GitHub Pull Request](https://github.com/the-road-to-graphql/react-graphql-github-apollo/pull/14) 中的更改，它使用了 Ramda.js 中的 Lenses。
+在这个函数中，你使用 JavaScript 展开操作符来合并这两个结果。如果没有新的结果，则返回上一个结果。重要的部分是合并两个 repositories 对象的 `edges`，使其拥有一个合并列表。 在 `repositories`  对象中，`fetchMoreResult` 的优先级高于 `previousResult`，因为它包含新的 `pageInfo`，以及最后一个分页结果中的 `endCursor` 和 `hasNextPage` 属性。你需要在再次点击按钮时使用正确的 cursor 作为参数。在处理深层嵌套数据时，如果你想了解详细的 JavaScript 展开操作符，请查看[这个 GitHub Pull Request](https://github.com/the-road-to-graphql/react-graphql-github-apollo/pull/14) 中的更改，它使用了 Ramda.js 中的 Lenses。
 
 > To add one more small improvement for user friendliness, add a loading indicator when more pages are fetched. So far, the `loading` boolean in the Query component of the Profile component is only true for the initial request, but not for the following requests. Change this behavior with a prop that is passed to the Query component, and the loading boolean will be updated accordingly.
 
@@ -2904,7 +2904,7 @@ export default App;
 
 ### 练习：
 * 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/3ab9c752ec0ec8c3e5f7a1ead4519ea3a626785b)
-* 如果你还不熟悉 React Router，请练习 [这个实用的教程](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
+* 如果你还不熟悉 React Router，请练习[这个实用的教程](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/)
 * 花三分钟的时间进行[测验](https://www.surveymonkey.com/r/5HFQ3TD)
 
 > ## Implementing the Issues Feature: Setup
@@ -2912,7 +2912,7 @@ export default App;
 
 > In the previous sections you have implemented most of the common Apollo Client features in your React application. Now you can start implementing extensions for the application on your own. This section showcases how a full-fledged feature can be implemented with Apollo Client in React.
 
-在前面的小节中你已经在你的 React 应用中实现了大部分常用的 Apollo 客户端的功能。现在你可以开始自己实现应用的扩展。本节将展示如何在 React 中使用 Apollo Client 实现一个完整的功能。
+在前面的小节中你已经在你的 React 应用中实现了大部分常用的 Apollo 客户端的功能。现在你可以开始自己实现应用的扩展。本节将展示如何在 React 中使用 Apollo 客户端实现一个完整的功能。
 
 > So far, you have dealt with GitHub repositories from organizations and your account. This will take that one step further, fetching GitHub issues that are made available using a list field associated to a repository in a GraphQL query. However, this section doesn't only show you how to render a nested list field in your React application.
 
@@ -2921,7 +2921,6 @@ export default App;
 > The foundation will be rendering the list of issues. You will implement client-side filtering with plain React to show opened, closed, or no issue. Finally, you will refactor the filtering to a server-side filtering using GraphQL queries. We will only fetch the issues by their state from the server rather than filtering the issue's state on the client-side. Implementing pagination for the issues will be your exercise.
 
 最基本的就是渲染 issue 列表，你将使用最简单的 React 来实现客户端的打开，关闭或者不显示 issue 的筛选。最后，你将使用 GraphQL 查询将筛选重构为服务器端筛选。我们只根据 issue 的状态从服务端获取，而不是在客户端去过滤 issue 的状态。你的练习是为这些 issue 列表实现分页。
-
 
 > First, render a new component called 'Issues' in your RepositoryList component. This component takes two props that are used later in a GraphQL query to identify the repository from which you want to fetch the issues.
 
@@ -3155,13 +3154,13 @@ export default IssueItem;
 当你再次启动程序时，你应该会看到每个代码库下面渲染出了分页后 issue 的初始页面。这是个性能瓶颈，更糟糕的是，和 Organization 和 Profile 组件中的 issue 列表字段一样，GraphQL 请求没有合并在一个请求中。在接下来的步骤中，你将实现客户端的筛选。默认情况不显示任何 issue，但是它可以使用一个按钮在不显示，打开 issue 和关闭 issue 的状态之间切换，因此在切换 issue 状态之前不会查询 issue。
 
 > ### Exercises:
-### 练习
+### 练习：
 
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/6781b487d6799e55a4deea48dfe706253b373f0a)
 > * Read more about [the rate limit when using a (or in this case GitHub's) GraphQL API](https://developer.github.com/v4/guides/resource-limitations/)
 
-* 确认[最后一节的代码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/6781b487d6799e55a4deea48dfe706253b373f0a)
-* 阅读有关[使用（或者在本例中是 Github 的）GraphQL API 时的速率限制](https://developer.github.com/v4/guides/resource-limitations/)的更多信息
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/6781b487d6799e55a4deea48dfe706253b373f0a)
+* 延伸阅读：[使用（或者在本例中是 Github 的）GraphQL API 时的速率限制](https://developer.github.com/v4/guides/resource-limitations/)的更多信息
 
 > ## Implementing the Issues Feature: Client-Side Filter
 
@@ -3385,7 +3384,7 @@ class Issues extends React.Component {
 > * Refactor the Issues component from class component to functional stateless component
 > * Use the `withState` HOC for the Issues component to manage the `issueState`
 
-* 确查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/0f261b13696046832ad65f1909266957d6275d6c)
+* 查看[本节源码](https://github.com/the-road-to-graphql/react-graphql-github-apollo/tree/0f261b13696046832ad65f1909266957d6275d6c)
 * 安装实现了很多高阶组件的 [recompose](https://github.com/acdlite/recompose) 库
 * 将 Issues 组件从类组件重构为无状态组件
 * 用 `withState` 高阶组件来管理 Issues 组件的 `issueState`
@@ -3460,7 +3459,7 @@ const Issues = ({
 ...
 ~~~~~~~~
 
->  The previous section makes writing stateful components, where the state is much more convenient. Next, advance the filtering from client-side to server-side. We use the defined GraphQL query and its arguments to make a more exact query by requesting only open or closed issues. In the *src/Issue/IssueList/index.js* file, extend the query with a variable to specify the issue state:
+> The previous section makes writing stateful components, where the state is much more convenient. Next, advance the filtering from client-side to server-side. We use the defined GraphQL query and its arguments to make a more exact query by requesting only open or closed issues. In the *src/Issue/IssueList/index.js* file, extend the query with a variable to specify the issue state:
 
 在上一节使编写状态组件变得更加方便。接下来，改进过滤从客户端到服务端。我们使用已定义的  GraphQL  查询和它的参数通过请求仅打开或关闭的 issues 来构造更加精确的查询。在文件 *src/Issue/IssueList/index.js* 中，通过指定 issue 状态扩展查询属性。
 
@@ -3541,7 +3540,7 @@ const Issues = ({
 
 > You are only querying open or closed issues. Your query became more exact, and the filtering is no longer handled by the client.
 
-你仅在查询打开或关闭状态的issues。你的查询变得更加精确，客户端也不再处理筛选。
+你仅在查询打开或关闭状态的 issues。你的查询变得更加精确，客户端也不再处理筛选。
 
 > ### Exercises:
 
@@ -3772,7 +3771,7 @@ const prefetchIssues = (
 
 * 延伸阅读：[Apollo 在 React 中预加载和查询分离](https://www.apollographql.com/docs/react/recipes/performance.html)
 
-* 花三分钟的时间来做一个[测验](https://www.surveymonkey.com/r/5PLMBR3)
+* 花三分钟进行[测验](https://www.surveymonkey.com/r/5PLMBR3)
 
 > ## Exercise: Commenting Feature
 ## 练习：评论功能
@@ -3783,11 +3782,11 @@ const prefetchIssues = (
 
 > * Introduce components for fetching a list of comments (e.g. Comments), rendering a list of comments (e.g. CommentList), and rendering a single comment (e.g. CommentItem). They can render sample data for now.
 
-* 介绍获取评论列表的组件(例如：Comments)，渲染评论列表的组件(例如：CommentList)，渲染一条评论的组件(例如：CommentItem)，这些组件现在可以渲染样本数据。
+* 介绍获取评论列表的组件（例如：Comments），渲染评论列表的组件（例如：CommentList），渲染一条评论的组件（例如：CommentItem），这些组件现在可以渲染样本数据。
 
 > * Use the top level comments component (e.g. Comments), which will be your container component that is responsible to query the list of comments, in the *src/Issue/IssueItem/index.js* file. In addition, add a toggle to either show or hide comments. The IssueItem component has to become a class component or needs to make use of the `withState` HOC from the recompose library.
 
-* 使用 *src/Issue/IssueItem/index.js* 文件中最顶层的评论组件(例如：Comments)，它会是负责查询评论列表的容器组件。此外，添加一个切换展示或隐藏评论的按钮。IssueItem 组件必须转为类组件或利用 recompose 库中的 `withState` 高阶组件。
+* 使用 *src/Issue/IssueItem/index.js* 文件中最顶层的评论组件（例如：Comments），它会是负责查询评论列表的容器组件。此外，添加一个切换展示或隐藏评论的按钮。IssueItem 组件必须转为类组件或利用 recompose 库中的 `withState` 高阶组件。
 
 > * Use the Query component from React Apollo in your container Comments component to fetch a list of comments. It should be similar to the query that fetches the list of issues. You only need to identify the issue for which the comments should be fetched.
 
@@ -3795,7 +3794,7 @@ const prefetchIssues = (
 
 > * Handle all edge cases in the Comments to show loading indicator, no data, or error messages. Render the list of comments in the CommentList component and a single comment in the CommentItem component.
 
-* 处理评论组件( Comments )中的所有边界情况：展示加载标识、无数据、或错误信息。在 CommentList 组件中渲染评论列表，在 CommentItem 组件中渲染单条评论。
+* 处理评论组件（Comments）中的所有边界情况：展示加载标识、无数据、或错误信息。在 CommentList 组件中渲染评论列表，在 CommentItem 组件中渲染单条评论。
 
 > * Implement the pagination feature for comments. Add the necessary fields in the query, the additional props and variables to the Query component, and the reusable FetchMore component. Handle the merging of the state in the `updateQuery` prop.
 
@@ -4173,4 +4172,4 @@ pre {
 
 > You can find the final [repository on GitHub](https://github.com/rwieruch/react-graphql-github-apollo) that showcases most of the exercise tasks. The application is not feature-complete and it doesn't cover all edge cases, but it should give insight into using GraphQL with Apollo in React applications. If you want to dive more deeply into different topics like testing and state management with GraphQL on the client-side, you can start here: [A minimal Apollo Client in React Example](https://www.robinwieruch.de/react-apollo-client-example). Try to apply what you've learned in this application (e.g. testing, state management). Otherwise, I encourage you to try to build your own GraphQL client library, which helps you understand more of the GraphQL internals: [How to build a GraphQL client library for React](https://www.robinwieruch.de/react-graphql-client-library). Whichever you decide, keep tinkering on this application, or start with another GraphQL client application to fortify your skill set. You have finished all the GraphQL client chapters now.
 
-你可以在 [Github的代码库](https://github.com/rwieruch/react-graphql-github-apollo)中发现，绝大部分的练习任务都已被陈列出来。尽管这些案例的功能并不完善，也没有覆盖到涉及边界的所有情况，但它应该表达出了对 React 应用中与 Apollo 一起使用 GraphQL 的深刻理解。假如你想钻研更多类似于在客户端中使用 GraphQL 进行测试和状态管理等深层次主题的话，你可以从这里开始：[Apollo 客户端在 React 中的小例子](https://www.robinwieruch.de/react-apollo-client-example)。试着在这个应用结合你所学到的东西(例如：测试、状态管理)，否则的话，我更支持你去尝试着构建一个自己的 GraphQL 客户端库，[如何为 React 构建一个 GraphQL 客户端库](https://www.robinwieruch.de/react-graphql-client-library) 可以让你了解到更多 GraphQL 的内部构件，不管你最后怎么决定，记住要对这个应用反复锤炼，或者再另启一个 GraphQL 客户端应用来加强你的综合技能，做到学以致用。至此，你已经完成了 GraphQL 客户端的所有章节。
+你可以在 [Github 的代码库](https://github.com/rwieruch/react-graphql-github-apollo)中发现，绝大部分的练习任务都已被陈列出来。尽管这些案例的功能并不完善，也没有覆盖到涉及边界的所有情况，但它应该表达出了对 React 应用中与 Apollo 一起使用 GraphQL 的深刻理解。假如你想钻研更多类似于在客户端中使用 GraphQL 进行测试和状态管理等深层次主题的话，你可以从这里开始：[Apollo 客户端在 React 中的小例子](https://www.robinwieruch.de/react-apollo-client-example)。试着在这个应用结合你所学到的东西(例如：测试、状态管理)，否则的话，我更支持你去尝试着构建一个自己的 GraphQL 客户端库，[如何为 React 构建一个 GraphQL 客户端库](https://www.robinwieruch.de/react-graphql-client-library) 可以让你了解到更多 GraphQL 的内部构件，不管你最后怎么决定，记住要对这个应用反复锤炼，或者再另启一个 GraphQL 客户端应用来加强你的综合技能，做到学以致用。至此，你已经完成了 GraphQL 客户端的所有章节。

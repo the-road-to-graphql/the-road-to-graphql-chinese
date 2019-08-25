@@ -72,7 +72,7 @@
 
 > Yes, I would love to hear your feedback. You can open an issue on [GitHub](http://github.com/rwieruch/the-road-to-graphql) and express improvements to the technical aspects or the text content. You can also open pull requests on GitHub for documents or repositories.
 
-是的，我非常乐意收到你的反馈。你可以在 [GitHub](https://github.com/the-road-to-graphql/the-road-to-graphql) （[中文翻译版](https://github.com/the-road-to-graphql/the-road-to-graphql-chinese)）上提一个 issue 来表述在技术方面或者文本内容方面可以改进的地方。你也可以在 GitHub 上针对文件或者仓库提 pull request。
+是的，我非常乐意收到你的反馈。你可以在 [GitHub](https://github.com/the-road-to-graphql/the-road-to-graphql)（[中文翻译版](https://github.com/the-road-to-graphql/the-road-to-graphql-chinese)）上提一个 issue 来表述在技术方面或者文本内容方面可以改进的地方。你也可以在 GitHub 上针对文件或者仓库提 pull request。
 
 > **How do I support the project?**
 

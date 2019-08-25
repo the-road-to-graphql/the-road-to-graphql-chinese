@@ -1,6 +1,6 @@
 # React 和 GraphQL 的结合
 
-我们将一起开发一个 GraphQL 的客户端程序，从中你将了解如何将 React 与 GraphQL 结合起来。目前我们不会使用 [Apollo Client](https://github.com/apollographql/apollo-client) 或 [Relay](https://github.com/facebook/relay) 这样强大的工具来帮助你快速上手，而是使用基本的 HTTP 请求执行 GraphQL 查询和变更。在之后应用程序中，我们将引入 Apollo 作为你的 React.js 应用的 GraphQL 客户端。现阶段开发的应用只展示如何在 React 中基于 HTTP 使用 GraphQL。
+我们将一起开发一个 GraphQL 的客户端程序，从中你将了解如何将 React 与 GraphQL 结合起来。目前我们不会使用 [Apollo 客户端](https://github.com/apollographql/apollo-client)或 [Relay](https://github.com/facebook/relay) 这样强大的工具来帮助你快速上手，而是使用基本的 HTTP 请求执行 GraphQL 查询和变更。在之后应用程序中，我们将引入 Apollo 作为你的 React.js 应用的 GraphQL 客户端。现阶段开发的应用只展示如何在 React 中基于 HTTP 使用 GraphQL。
 
 在此过程中，你将构建一个类似 GitHub 的问题跟踪器，通过执行 GraphQL 的查询和变更来读写数据，基于 [GitHub's GraphQL API](https://developer.github.com/v4/) 的简单 GitHub 客户端。最终实现一个能够在 React 示例中展示 GraphQL的案例，也可以将其作为其他开发人员的学习工具，最终实现的应用程序可以参考 [GitHub 的代码库](https://github.com/rwieruch/react-graphql-github-vanilla)。
 
@@ -100,7 +100,7 @@ touch .env
 REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN=xxxXXX
 ~~~~~~~~
 
-现在，你可以将 access token 作为环境变量传递给 axios 配置，并使用字符串插值（[模板字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)创建一个配置好的axios实例。
+现在，你可以将 access token 作为环境变量传递给 axios 配置，并使用字符串插值（[模板字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)创建一个配置好的 axios 实例。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
@@ -478,7 +478,7 @@ const Organization = ({ organization, errors }) => {
 # leanpub-end-insert
 ~~~~~~~~
 
-你已经在 React 应用程序中执行了第一个 GraphQL 查询，虽然这只是一个以查询语句作为有效负载的普通 HTTP POST 请求。使用了配置好的 axios client 实例。之后，你可以将结果存储在 React 的本地状态中，以便稍后显示。
+你已经在 React 应用程序中执行了第一个 GraphQL 查询，虽然这只是一个以查询语句作为有效负载的普通 HTTP POST 请求。使用了配置好的 axios 客户端实例。之后，你可以将结果存储在 React 的本地状态中，以便稍后显示。
 
 > ### GraphQL Nested Objects in React
 
@@ -1165,7 +1165,7 @@ const GET_ISSUES_OF_REPOSITORY = `
 
 > Now, you can use this information to fetch the next page of issues by providing the cursor as a variable to your query. The cursor, or the `after` argument, defines the starting point to fetch more items from the paginated list.
 
-通过这些信息，现在你能将这个游标（cursor）作为变量传入查询中，从而获取下一页的 issues 内容。这个游标，也就是 `after` 参数，在分页列表中定义了获取更多条目所需的起始位置。
+通过这些信息，现在你能将这个游标作为变量传入查询中，从而获取下一页的 issues 内容。这个游标，也就是 `after` 参数，在分页列表中定义了获取更多条目所需的起始位置。
 
 {title="src/App.js",lang="javascript"}
 ~~~~~~~~
