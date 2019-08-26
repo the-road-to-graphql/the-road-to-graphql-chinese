@@ -73,7 +73,7 @@ app.listen({ port: 8000 }, () => {
 ~~~~~~~~
 > Using Apollo Server's `applyMiddleware()` method, you can opt-in any middleware, which in this case is Express. Also, you can specify the path for your GraphQL API endpoint. Beyond this, you can see how the Express application gets initialized. The only missing items are the definition for the schema and resolvers for creating the Apollo Server instance. We'll implement them first and learn about them after:
 
-使用 Apollo 服务端的 `applyMiddleware()` 方法，你可以添加任意中间件，这里使用了 Express。此外，还可以指定 GraphQL API 端点的路径。而且，你还可以自定义初始化 Express 应用程序。现在惟一缺少的是用于创建 Apollo 服务端实例的 schema 和 resolvers 的定义。我们将先实现它们，之后再来学习它们：
+使用 Apollo 服务端的 `applyMiddleware()` 方法，你可以添加任意中间件，这里使用了 Express。此外，还可以指定 GraphQL API 端点的路径。而且，你还可以自定义初始化 Express 应用程序。现在惟一缺少的是用于创建 Apollo 服务端实例的模式（schema）和解析器（resolvers）的定义。我们将先实现它们，之后再来学习它们：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -190,7 +190,7 @@ app.use(cors());
 > * Read more about [GraphQL](https://graphql.org/learn)
 * 延伸阅读：[GraphQL](https://graphql.org/learn)
 > * Experiment with the schema and the resolver
-* 尝试完善 schema 和 resolver
+* 尝试完善模式和解析器
 >   * Add more fields to the user type
   * 为 user 类型添加更多字段
 >   * Fulfill the requirements in the resolver
@@ -198,9 +198,9 @@ app.use(cors());
 >  * Query your fields in the GraphQL Playground
   * 在 GraphQL Playground 中查询出你的字段
 > * Read more about [Apollo Server Standalone](https://www.apollographql.com/docs/apollo-server/v2/getting-started.html)
-* 延伸阅读：[独立的 Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/getting-started.html)
+* 延伸阅读：[独立的 Apollo 服务器](https://www.apollographql.com/docs/apollo-server/v2/getting-started.html)
 > * Read more about [Apollo Server in Express Setup](https://www.apollographql.com/docs/apollo-server/v2/essentials/server.html)
-* 延伸阅读：[在 Express 中设置 Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/essentials/server.html)
+* 延伸阅读：[在 Express 中设置 Apollo 服务器](https://www.apollographql.com/docs/apollo-server/v2/essentials/server.html)
 > ## Apollo Server: Type Definitions
 
 ## Apollo 服务端： 类型定义
@@ -212,7 +212,7 @@ app.use(cors());
 注意 User 对象类型中的 `username` 字段的感叹号。意思是这个 `username` 字段是一个**不能为空**的字段。每当从 GraphQL 模式返回拥有 `username` 的 User 类型时， `username` 字段必须有值，不能是 undefined 或者 null。不过，在 `me` 字段中， User 类型没有感叹号，是否这意味着返回结果中的 `me` 字段可以为空？这是一种特殊的情况。因为服务器必须知道该字段包含什么才能响应，所以 `me` 字段不应该必然有 user 返回。稍后，你将使用 GraphQL 服务端实现身份验证机制(注册、登录、退出)。只有当用户通过服务器进行身份验证时， `me` 字段才会填充 User 对象，比如帐户详细信息。否则，它仍然为空。在定义 GraphQL 类型定义时，必须对类型、关系、结构和(非 null)字段进行特意的设计。
 > We extend the schema by extending or adding more type definitions to it, and use **GraphQL arguments** to handle user fields:
 
-我们通过扩展或添加更多类型定义来扩展 schema，并使用 **GraphQL参数** 来处理 user 字段：
+我们通过扩展或添加更多类型定义来扩展模式，并使用 **GraphQL参数** 来处理 user 字段：
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -368,7 +368,7 @@ const resolvers = {
 ~~~~~~~~
 > Querying a list of of users will be our third query. First, add the query to the schema again:
 
-查询 users 列表将是我们的第三个查询。首先，再次将 query 添加到 schema 中:
+查询 users 列表将是我们的第三个查询。首先，再次将 query 添加到模式中:
 
 {title="src/index.js",lang="javascript"}
 ~~~~~~~~
@@ -417,7 +417,7 @@ const resolvers = {
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/469080f810a0049442f02393fae746cebc391cc0)
 * 完成你的[最后一部分源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/469080f810a0049442f02393fae746cebc391cc0)
 > * Read more about [the GraphQL schema with Apollo Server](https://www.apollographql.com/docs/apollo-server/v2/essentials/schema.html)
-* 延伸阅读：[Apollo Server 中的 GraphQL 模式](https://www.apollographql.com/docs/apollo-server/v2/essentials/schema.html)
+* 延伸阅读：[Apollo 服务器中的 GraphQL 模式](https://www.apollographql.com/docs/apollo-server/v2/essentials/schema.html)
 > * Read more about [the GraphQL mindset: Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/)
 * 延伸阅读：[GraphQL 思维模式：用图来思考](https://graphql.github.io/learn/thinking-in-graphs/)
 > * Read more about [nullability in GraphQL](https://blog.apollographql.com/using-nullability-in-graphql-2254f84c4ed7)
@@ -1390,7 +1390,7 @@ export default {
 ~~~~~~~~
 
 > The resolvers receive all sample data as models in the context argument rather than operating directly on the sample data as before. As mentioned, it keeps the resolver functions pure. Later, you will have an easier time testing resolver functions in isolation. Next, move your schema's type definitions in the *src/schema/index.js* file:
-解析器在上下文参数中接收所有示例数据作为模型，而不像之前直接操作示例数据。如上所述，它使解析器函数保持纯净。稍后，你可以更轻松地单独测试解析器函数。接下来，把 schema 的类型定义移动到 *src/schema/index.js* 文件中：
+解析器在上下文参数中接收所有示例数据作为模型，而不像之前直接操作示例数据。如上所述，它使解析器函数保持纯净。稍后，你可以更轻松地单独测试解析器函数。接下来，把模式的类型定义移动到 *src/schema/index.js* 文件中：
 
 {title="src/schema/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1426,12 +1426,12 @@ export default gql`
 ~~~~~~~~
 
 > The technical separation is complete, but the separation by domains, where schema stitching is needed, isn't done yet. So far, you have only outsourced the schema, resolvers and data (models) from your Apollo Server instantiation file. Everything is separated by technical concerns now. You also made a small improvement for passing the models through the context, rather than importing them in resolver files.
-技术分离已经完成，但是需要进行 schema 组合的域分离还没有完成。到目前为止，你只从 Apollo 服务端实例化文件中拆分了模式，解析器和数据（模型）。现在一切都被技术关注点分开。你也通过上下文传递模型做了一些改进，而不是在解析器文件中导入它们。
+技术分离已经完成，但是需要进行模式组合的域分离还没有完成。到目前为止，你只从 Apollo 服务端实例化文件中拆分了模式，解析器和数据（模型）。现在一切都被技术关注点分开。你也通过上下文传递模型做了一些改进，而不是在解析器文件中导入它们。
 
 > ### Domain Separation
 ### 域分离
 > In the next step, modularize the GraphQL schema by domains (user and message). First, separate the user-related entity in its own schema definition file called *src/schema/user.js*:
-在下一步，按域（user 和 message）模块化 GraphQL 模式。首先，将用户相关实体 schema 分离到名为 *src/schema/user.js*的 schema 定义文件中：
+在下一步，按域（user 和 message）模块化 GraphQL 模式。首先，将用户相关实体模式分离到名为 *src/schema/user.js*的模式定义文件中：
 
 {title="src/schema/user.js",lang="javascript"}
 ~~~~~~~~
@@ -1455,7 +1455,7 @@ export default gql`
 ~~~~~~~~
 
 > The same applies for the message schema definition in *src/schema/message.js*:
-这同样适用于 *src/schema/message.js* 中的消息 schema 定义：
+这同样适用于 *src/schema/message.js* 中的消息模式定义：
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -1485,7 +1485,7 @@ export default gql`
 ~~~~~~~~
 
 > Each file only describes its own entity, with a type and its relations. A relation can be a type from a different file, such as a Message type that still has the relation to a User type even though the User type is defined somewhere else. Note the `extend` statement on the Query and Mutation types. Since you have more than one of those types now, you need to extend the types. Next, define shared base types for them in the *src/schema/index.js*:
-每个文件只描述自己的实体，具有类型及其关系。关系可以是来自不同文件的类型，例如一个 Message 类型与一个 User 类型存在关系，即使 User 类型是在其他位置定义的。请注意 Query 和 Mutation 类型的 `extend` 语句，由于你拥有多个这样类型，因此需要使用 extend 语句去扩展这些类型。接下来，在 *src / schema / index.js* 中为它们定义共享基类型。
+每个文件只描述自己的实体，具有类型及其关系。关系可以是来自不同文件的类型，例如一个 Message 类型与一个 User 类型存在关系，即使 User 类型是在其他位置定义的。请注意 Query 和 Mutation 类型的 `extend` 语句，由于你拥有多个这样类型，因此需要使用 extend 语句去扩展这些类型。接下来，在 *src/schema/index.js* 中为它们定义共享基类型。
 
 {title="src/schema/index.js",lang="javascript"}
 ~~~~~~~~
@@ -1512,10 +1512,10 @@ export default [linkSchema, userSchema, messageSchema];
 ~~~~~~~~
 
 > In this file, both schemas are merged with the help of a utility called `linkSchema`. The `linkSchema` defines all types shared within the schemas. It already defines a Subscription type for GraphQL subscriptions, which may be implemented later. As a workaround, there is an empty underscore field with a Boolean type in the merging utility schema, because there is no official way of completing this action yet. The utility schema defines the shared base types, extended with the `extend` statement in the other domain-specific schemas.
-在此文件中，两个模式都在名为 `linkSchema` 的实用程序的帮助下合并。`linkSchema` 定义了模式中共享的所有类型。它已经为 GraphQL 订阅集定义了一个 Subscription 类型，可以在之后实现。因为还没有正式的方法来完成此操作，作为一种变通方法，在合并通用 schema 中存在一个带有 Boolean 类型的空下划线字段。通用 schema 定义共享基类型，在其他特定域 schemas 中使用 extend 进行扩展。
+在此文件中，两个模式都在名为 `linkSchema` 的实用程序的帮助下合并。`linkSchema` 定义了模式中共享的所有类型。它已经为 GraphQL 订阅集定义了一个 Subscription 类型，可以在之后实现。因为还没有正式的方法来完成此操作，作为一种变通方法，在合并通用模式中存在一个带有 Boolean 类型的空下划线字段。通用模式定义共享基类型，在其他特定域模式中使用 extend 进行扩展。
 
 > This time, the application runs with a stitched schema instead of one global schema. What's missing are the domain separated resolver maps. Let's start with the user domain again in file in the *src/resolvers/user.js* file, whereas I leave out the implementation details for saving space here:
-这次，应用程序使用组合 schema 而不是一个全局 schema 运行。缺少的是域分离的解析器映射。让我们再次从 *src/resolvers/user.js* 文件中的用户域开始，而这里我为了节省空间省略了实现细节：
+这次，应用程序使用组合模式而不是一个全局模式运行。缺少的是域分离的解析器映射。让我们再次从 *src/resolvers/user.js* 文件中的用户域开始，而这里我为了节省空间省略了实现细节：
 
 {title="src/resolvers/user.js",lang="javascript"}
 ~~~~~~~~
@@ -1614,7 +1614,7 @@ export default [userResolvers, messageResolvers];
 > * Confirm your [source code for the last section](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/953ef4b2ac8edc7c6338fb73ecdc1446e9cbdc4d)
 * 查看[本节源码](https://github.com/the-road-to-graphql/fullstack-apollo-react-express-boilerplate-project/tree/953ef4b2ac8edc7c6338fb73ecdc1446e9cbdc4d)
 > * Read more about [schema stitching with Apollo Server](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
-* 延伸阅读：[使用 Apollo Server 进行模式组合](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
+* 延伸阅读：[使用 Apollo 服务器进行模式组合](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
 > * Schema stitching is only a part of **schema delegation**
 * schema 组合只是 ** schema 委派** 的一部分
   > * Read more about [schema delegation](https://www.apollographql.com/docs/graphql-tools/schema-delegation.html)
@@ -3867,7 +3867,7 @@ npm install graphql-iso-date --save
 
 > Second, introduce a `Date` scalar in your schema in the *src/schema/index.js* file:
 
-然后，在 *src/schema/index.js* 文件中的 schema 中引入一个 `Date` 标量：
+然后，在 *src/schema/index.js* 文件中的模式中引入一个 `Date` 标量：
 
 {title="src/schema/index.js",lang="javascript"}
 ~~~~~~~~
@@ -3920,7 +3920,7 @@ export default [
 
 > And last but not least, change the scalar type from String to Date for your message schema in the *src/schema/message.js*:
 
-最后，在 *src/schema/message.js* 文件中，把消息 schema 中的 createdAt 字段的标量类型从 String 变为 Date
+最后，在 *src/schema/message.js* 文件中，把消息模式中的 createdAt 字段的标量类型从 String 变为 Date
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -4004,7 +4004,7 @@ export default gql`
 
 > We set the message schema in the *src/schema/message.js* file to consider the two new arguments:
 
-我们在文件 *src/schema/message.js* 中修改消息的 schema，增加两个新的参数：
+我们在文件 *src/schema/message.js* 中修改消息的模式，增加两个新的参数：
 
 {title="src/schema/message.js",lang="javascript"}
 ~~~~~~~~
@@ -4090,7 +4090,7 @@ query {
 
 > In cursor-based pagination, the offset is given an identifier called a **cursor** rather counting items like offset/limit pagination. The cursor can be used to express "give me a limit of X items from cursor Y". A common approach to use dates (e.g. creation date of an entity in the database) to identify an item in the list. In our case, each message already has a `createdAt` date that is assigned to the entity when it is written to the database and we expose it already in the schema of the message entity. That's the creation date of each message that will be the cursor.
 
-与偏移/限制分页中用数据量的个数标记偏移量不同，在游标分页中，我们用**游标**标记偏移量。游标可用于表达：”给我从游标 Y 开始的 X 个数据”。一个常用的方法是用时间（例如：一个实体在数据库中的创建时间）来标识一个列表中的某条数据。在我们的例子中，每条消息已经有一个 `createdAt` 时间，即这个实体被写入数据库的时间，而且我们已经在消息实体的 schema 中暴露了这个字段。这个消息的创建时间就是游标。
+与偏移/限制分页中用数据量的个数标记偏移量不同，在游标分页中，我们用**游标**标记偏移量。游标可用于表达：”给我从游标 Y 开始的 X 个数据”。一个常用的方法是用时间（例如：一个实体在数据库中的创建时间）来标识一个列表中的某条数据。在我们的例子中，每条消息已经有一个 `createdAt` 时间，即这个实体被写入数据库的时间，而且我们已经在消息实体的模式中暴露了这个字段。这个消息的创建时间就是游标。
 
 > Now we have to change the original pagination to cursor-based in the *src/schema/message.js* file. You only need to exchange the offset with the cursor. Instead of an offset that can only be matched implicitly to an item in a list and changes once an item is deleted from the list, the cursor has a stable position within, because the message creation dates won't change.
 
@@ -4124,7 +4124,7 @@ export default gql`
 
 > Since you adjusted the schema for the messages, reflect these changes in your *src/resolvers/message.js* file as well:
 
-因为你修改了消息的 schema，你也需要相应地修改 *src/resolvers/message.js* 文件：
+因为你修改了消息的模式，你也需要相应地修改 *src/resolvers/message.js* 文件：
 
 {title="src/resolvers/message.js",lang="javascript"}
 ~~~~~~~~
@@ -4841,7 +4841,7 @@ const server = new ApolloServer({
 
 > To complete the subscription setup, you'll need to use one of the available [PubSub engines](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html#PubSub-Implementations) for publishing and subscribing to events. Apollo Server comes with its own by default, but there are links for other options should you find it lacking. In a new *src/subscription/index.js* file, add the following:
 
-要完成订阅设置，你需要使用一个可用的 [PubSub 引擎](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html#PubSub-Implementations)来发布和订阅事件。默认情况下，Apollo Server 自带 PubSub 引擎，但是你可能会发现它缺少一些其他的配置。新建一个 *src/subscription/index.js* 文件，配置以下内容:
+要完成订阅设置，你需要使用一个可用的 [PubSub 引擎](https://www.apollographql.com/docs/apollo-server/v2/features/subscriptions.html#PubSub-Implementations)来发布和订阅事件。默认情况下，Apollo 服务器自带 PubSub 引擎，但是你可能会发现它缺少一些其他的配置。新建一个 *src/subscription/index.js* 文件，配置以下内容:
 
 {title="src/subscription/index.js",lang="javascript"}
 ~~~~~~~~
