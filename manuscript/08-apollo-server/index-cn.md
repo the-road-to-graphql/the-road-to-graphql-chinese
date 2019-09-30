@@ -206,7 +206,7 @@ app.use(cors());
 ## Apollo 服务端： 类型定义
 > This section is all about GraphQL type definitions and how they are used to define the overall GraphQL schema. A GraphQL schema is defined by its types, the relationships between the types, and their structure. Therefore GraphQL uses a **Schema Definition Language (SDL)**. However, the schema doesn't define where the data comes from. This responsibility is handled by resolvers outside of the SDL. When you used Apollo Server before, you used a User object type within the schema and defined a resolver which returned a user for the corresponding `me` field.
 
-本节关于 GraphQL 的类型定义以及如何使用它们定义 GraphQL 模式。一个 GraphQL 模式由其类型、类型之间的关系及其结构定义。为此，GraphQL 使用了一种**模式定义语言（SDL）**。不过，模式并不定义数据来自何处。此职责由 SDL 之外的解析器处理。在使用 Apollo 服务端之前，你在模式中使用了一个 User 对象类型，并定义了一个 resolver，该 resolver 为相应的 `me` 字段返回一个 user。
+本节介绍了 GraphQL 的类型定义以及如何使用它们定义 GraphQL 模式。一个 GraphQL 模式由其类型、类型之间的关系及其结构定义。为此，GraphQL 使用了一种**模式定义语言（SDL）**。不过，模式并不定义数据来自何处。此职责由 SDL 之外的解析器处理。在使用 Apollo 服务端之前，你在模式中使用了一个 User 对象类型，并定义了一个 resolver，该 resolver 为相应的 `me` 字段返回一个 user。
 > Note the exclamation point for the `username` field in the User object type. It means that the `username` is a **non-nullable** field. Whenever a field of type User with a `username` is returned from the GraphQL schema, the user has to have a `username`. It cannot be undefined or null. However, there isn't an exclamation point for the user type on the `me` field. Does it mean that the result of the `me` field can be null? That is the case for this particular scenario. There shouldn't be always a user returned for the `me` field, because a server has to know what the field contains before it can respond. Later, you will implement an authentication mechanism (sign up, sign in, sign out) with your GraphQL server. The `me` field is populated with a user object like account details only when a user is authenticated with the server. Otherwise, it remains null. When you define GraphQL type definitions, there must be conscious decisions about the types, relationships, structure and (non-null) fields.
 
 注意 User 对象类型中的 `username` 字段的感叹号。意思是这个 `username` 字段是一个**不能为空**的字段。每当从 GraphQL 模式返回拥有 `username` 的 User 类型时， `username` 字段必须有值，不能是 undefined 或者 null。不过，在 `me` 字段中， User 类型没有感叹号，是否这意味着返回结果中的 `me` 字段可以为空？这是一种特殊的情况。因为服务器必须知道该字段包含什么才能响应，所以 `me` 字段不应该必然有 user 返回。稍后，你将使用 GraphQL 服务端实现身份验证机制(注册、登录、退出)。只有当用户通过服务器进行身份验证时， `me` 字段才会填充 User 对象，比如帐户详细信息。否则，它仍然为空。在定义 GraphQL 类型定义时，必须对类型、关系、结构和(非 null)字段进行特意的设计。
@@ -5099,7 +5099,7 @@ mutation {
 
 > Programs called Mocha and Chai are really all you need to test the application we've created. Mocha is a test runner that lets you execute tests from an npm script, while providing an organized testing structure; Chai gives you all the functionalities to make assertions, e.g. "Expect X to be equal to Y" based on real-world scenarios and run through them.
 
-这里使用测试组件 Mocha 和 Chai 用来测试我们的程序。Mocha 是一个测试运行器，它允许你从 npm 脚本执行测试，同时提供有组织的测试结构；Chai 为你提供很多断言方法，例如： 在真实场景中通过“期望 X 等于 Y” 这样的测试。
+这里使用 Mocha 和 Chai 用来测试我们的程序。Mocha 是一个测试运行器，它允许你从 npm 脚本执行测试，同时提供有组织的测试结构；Chai 为你提供很多断言方法，例如： 在真实场景中通过“期望 X 等于 Y” 这样的测试。
 
 {title="Command Line",lang="json"}
 ~~~~~~~~
@@ -5531,7 +5531,7 @@ users
 
 > The section is about improving the requests to your database. While only one request (e.g. a GraphQL query) hits your GraphQL API, you may end up with multiple database reads and writes to resolve all fields in the resolvers. Let's see this problem in action using the following query in GraphQL Playground:
 
-这一部分内容介绍了如何优化数据库请求。每当有请求 (比如一个 GraphQL 查询) 调用 GraphQL API，可能在解析器需要有多数据库执行读和写操作。我们在 GraphQL Playground 中使用以下的查询来看看有什么问题：
+这一部分内容介绍了如何优化数据库请求。每当有请求 (比如一个 GraphQL 查询) 调用 GraphQL API，解析器可能需要执行多次数据库读和写操作。我们在 GraphQL Playground 中使用以下的查询来看看有什么问题：
 
 {title="GraphQL Playground",lang="json"}
 ~~~~~~~~
@@ -6087,7 +6087,7 @@ sequelize.sync({ force: isTest || isProduction }).then(async () => {
 
 > Remember to remove the flag after, or the database will be purged and seeded with every deployment. Depending on development or production, you are choosing a database, seeding it (or not), and selecting a port for your GraphQL server. Before pushing your application to Heroku, push all recent changes to your GitHub repository. After that, push all the changes to your Heroku remote repository as well, since you created a Heroku application before: `git push heroku master`. Open the application with `heroku open`, and add the `/graphql` suffix to your URL in the browser to open up GraphQL Playground. If it doesn't work, check the troubleshoot area below.
 
-记得之后删除 flag，否者每次部署数据库都会被清空然后用种子数据填充。根据应用处在 development 或者 production 环境，你都要选择一个数据库，使用数据填充（也可以用空数据库），并且为 GraphQL 选择一个端口。在推送到 Heroku 之前，把所有的改动 push 到 github 仓库。然后，由于之前已经创建了 Heroku 应用，使用 `git push heroku master` 把所有改动也推送到 Heroku 远程仓库。使用 `heroku open` 打开 Heroku 应用，添加 `/graphql` 后缀到浏览器的 URL 中来打开 GraphQL Playground。如果打开失败，请阅读下面的故障排除部分。
+记得之后删除 flag，否则每次部署数据库都会被清空然后用种子数据填充。根据应用处在 development 或者 production 环境，你都要选择一个数据库，使用数据填充（也可以用空数据库），并且为 GraphQL 选择一个端口。在推送到 Heroku 之前，把所有的改动 push 到 github 仓库。然后，由于之前已经创建了 Heroku 应用，使用 `git push heroku master` 把所有改动也推送到 Heroku 远程仓库。使用 `heroku open` 打开 Heroku 应用，添加 `/graphql` 后缀到浏览器的 URL 中来打开 GraphQL Playground。如果打开失败，请阅读下面的故障排除部分。
 
 > Depending on your seeding strategy, your database will either be empty or contain seeded data. If its empty, register a user and create messages via GraphQL mutations. If its seeded, request a list of messages with a GraphQL query.
 

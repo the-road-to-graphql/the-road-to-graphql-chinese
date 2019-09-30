@@ -8,7 +8,7 @@
 
 > I want this book to provide you with more hands on experience and challenges to help you grow as a programmer. The challenges are meant to create a flow experience, a scenario where challenges are met by your skills and tools. If the book manages to keep the balance of challenging you and respecting your skill level, you might experience a [state of flow](https://www.robinwieruch.de/lessons-learned-deep-work-flow/). I found this insight astonishing when I read about it myself, so I hope I can induce it in this book.
 
-我希望这本书能够为你提供更多的实战经验和挑战来帮助你成为一名程序员。这些挑战旨在创造一个循序渐进的学习体验，每个挑战都契合你当前的学习进度。如果本书能够将挑战与你的技能水平控制在一个良好的平衡点上，那么你的学习体验应该是一个[循序渐进](https://www.robinwieruch.de/lessons-learned-deep-work-flow/)的过程。我是从《Deep Work》这本书中了解到的这种方式 *（这句话是我加入的，不然没有上下文确定很明白作者在说什么）*，当我阅读那它时，它的洞察令我赞叹，所以我希望把这种循序渐进的学习方式引进到这本书当中。
+我希望这本书能够为你提供更多的实战经验和挑战来帮助你成为一名程序员。这些挑战旨在创造一个循序渐进的学习体验，每个挑战都契合你当前的学习进度。如果本书能够将挑战与你的技能水平控制在一个良好的平衡点上，那么你的学习体验应该是一个[循序渐进](https://www.robinwieruch.de/lessons-learned-deep-work-flow/)的过程。我是从《Deep Work》这本书中了解到的这种方式，当我阅读那它时，它的洞察令我赞叹，所以我希望把这种循序渐进的学习方式引进到这本书当中。
 
 > ### Tips & Tricks
 
