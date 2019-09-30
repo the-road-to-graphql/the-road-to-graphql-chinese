@@ -1,13 +1,15 @@
-## Never stop Learning
+## 永远不要停止学习
 
-The learning pyramid shows the relation between retention rates and mental activities, proving usable data for both teaching and learning. It is one of the most effective ways to measure effective lessons since I started teaching programming. This is how typical mental activities break down according to retention rates:
+    学习金字塔显示了记忆存留率和脑力活动之间的关系, 提供了有用的数据给教和学。自我教编程以来, 它一直是我测算教学效果最有效的方法之一。 下面是典型的脑力活动如何随着记忆存留率消退的。
 
-- **5% Lecture**
-- **10% Reading** - This book is a great start!
-- **20% Audiovisual** - Screencasts are an excellent source of hands-on learning.
-- **30% Demonstration** - Code was demonstrated throughout this book.
-- **50% Discussion** (FYI: There is a [Slack Group](https://slack-the-road-to-learn-react.wieruch.com/) where you can participate)
-- **75% Practice by Doing** - Use the practical chapters and purchase the source code to extend your understanding.
-- **90% Teach Others** - Assist your peers in Slack communities, Open Source, or on platforms like Facebook Groups and Reddit.
+    - **5% 听课**
+    - **10% 阅读** - 本书是一个不错的开始
+    - **20% 视听教程** -  录屏教程是不错的动手学习资料.
+    - **30% 演示** - 代码演示贯穿本书.
+    - **50% 评论** (注: 这里有一个 [Slack 组](https://slack-the-road-to-learn-react.wieruch.com/) 你可以参与其中)
+    - **75% 动手练习** - 通过实践章节和购买源码来加深你的理解.
+    - **90% 教授别人** - 在 Slack 社区, 开源社区, 或其它平台(如 Facebook Groups 和 Reddit) 上帮助其他小伙伴
 
-In the beginning of the book, I mentioned that no one masters programming by reading a book, and throughout I have emphasized application of the lessons is the best way to retain them. The last item in the pyramid that has the biggest return of investment: teaching others. I had the same experience when I started blogging about my experiences in web development, answered questions on Quora, Reddit, Stack Overflow, and wrote books. Teaching others forces you to dive deeper into topics, so you learn about the nuances because you want to teach them the right way. Think of friends, coworkers, or online peers from Stack Overflow or Reddit who are keen to learn about GraphQL in modern applications with React.js and Node.js. Schedule a get-together, and teach them GraphQL. Both mentor and student will grow from the experience.
+    本书开头我就说过没人能通过读书掌握编程，并且全书我一直强调课程的运用才是记住他们最好的方法。金字塔中能获得最大投资回报是最后一条：教导别人。我有这样的经历，我开始开博客记录我在 web 开发方面的经验，回答 Quora， Reddit， Stack Overflow 上的问题，并且写书。 教别人迫使你更深入地研究这些话题，学习细微差异，因为你不想误人子弟。想想朋友，同事，以及来自 Stack Overflow 和 Reddit 上的同伴，他们渴望学习 GraphQL 在现代程序中与 React.js 和 Node.js 一起使用。订一个见面会， 教他们 GraphQL。教导者和学习者都会从中收获成长。
+
+
