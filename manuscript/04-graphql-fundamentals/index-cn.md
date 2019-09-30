@@ -178,12 +178,12 @@ fragment sharedOrganizationFields on Organization {
 > As you can see, you have to specify on which **type** of object the fragment should be used. In this case, it is the type `Organization`, which is a custom type defined by GitHub's GraphQL API. This is how you use fragments to extract and reuse parts of your queries. At this point, you might want to open "Docs" on the right side of your GraphiQL application. The documentation gives you access to the GraphQL **schema**. A schema exposes the GraphQL API used by your GraphiQL application, which is Github's GraphQL API in this case. It defines the GraphQL **graph** that is accessible via the GraphQL API using queries and mutations. Since it is a graph, objects and fields can be deeply nested in it, which we'll certainly encounter as we move along.
 
 
-如你所见，你必须指定该片段用在哪种**类型**的对象上。在这个例子中，应该是 `Organization` 类型，它是由 GitHub 的 GraphQL API 定义的自定义类型。这是你使用片段和重用部分构建查询时需要注意的。关于这点，如果你在 GraphiQL 应用程序的右侧打开 “Docs” 面板。你可以看到 GraphQL 定义的 **模式**。模式定义了 GraphiQL 如何使用某个 GraphQL API，在这个例子中，它是 Github 提供的 GraphQL API。它定义了 GraphQL **graph**，可以使用查询和变更对 GraphQL API 进行调用。由于它是一个图形结构，因此对象和字段可以深深地嵌套在其中，随着学习的深入，我们会对此有更深入的体会。
+如你所见，你必须指定该片段用在哪种**类型**的对象上。在这个例子中，应该是 `Organization` 类型，它是由 GitHub 的 GraphQL API 定义的自定义类型。以上为如何使用片段进行提取和重用你的部分查询的示例。关于这点，如果你在 GraphiQL 应用程序的右侧打开 “Docs” 面板。你可以看到 GraphQL 定义的 **schema**。schema 定义了 GraphiQL 如何使用某个 GraphQL API，在这个例子中，它是 Github 提供的 GraphQL API。它定义了 GraphQL **graph**，可以使用查询和变更对 GraphQL API 进行调用。由于它是一个图形结构，因此对象和字段可以深深地嵌套在其中，随着学习的深入，我们会对此有更深入的体会。
 
 
 > Since we're exploring queries and not mutations at the moment, select "Query" in the "Docs" sidebar. Afterward, traverse the objects and fields of the graph, explore their optional arguments. By clicking them, you can see the accessible fields within those objects in the graph. Some fields are common GraphQL types such as `String`, `Int` and `Boolean`, while some other types are **custom types** like the `Organization` type we used. In addition, you can see whether arguments are required when requesting fields on an object. It can be identified by the exclamation point. For instance, a field with a `String!` argument requires that you pass in a `String` argument whereas a field with a `String` argument doesn't require you to pass it.
 
-由于我们目前在探索查询相关的内容，所以可以在 “Docs” 侧边栏中选择 “Query” 标签来了解更多信息。对比 graph 中的对象和字段，浏览它们的可选参数。点击它们，你可以在文档中查看这些对象中的可访问字段。有些字段是常见的 GraphQL 类型，如 `String`，`Int` 和 `Boolean`，而其他一些类型是**自定义类型**，就像我们使用的 `Organization` 类型。此外，通过感叹号标记你可以查看在对象上的字段的参数是否为必填。例如，带有 `String！` 参数的字段要求你必须传入 `String` 参数，而带有 `String` 参数的字段则是可选的。
+由于我们目前在探索查询相关的内容，所以可以在 “Docs” 侧边栏中选择 “Query” 标签来了解更多信息。对比 graph 中的对象和字段，浏览它们的可选参数。点击它们，你可以在文档中查看这些对象中的可访问字段。有些字段是常见的 GraphQL 类型，如 `String`，`Int` 和 `Boolean`，而其他一些类型是**自定义类型**，就像我们使用的 `Organization` 类型。此外，通过感叹号标记你可以查看在对象上的字段的参数是否为必填。例如，带有 `String!` 参数的字段要求你必须传入 `String` 参数，而带有 `String` 参数的字段则是可选的。
 
 
 > In the previous queries, you provided arguments that identified an organization to your fields; but you **inlined these arguments** in your query. Think about a query like a function, where it's important to provide dynamic arguments to it. That's where the **variable** in GraphQL comes in, as it allows arguments to be extracted as variables from queries. Here's how an organization's `login` argument can be extracted to a dynamic variable:
@@ -207,7 +207,7 @@ query ($organization: String!) {
 使用 `$` 符号将 `organization` 参数定义为变量。此外，参数的类型被定义为 `String`。由于该参数是完成查询所必需的，因此 `String` 类型有一个感叹号。
 
 
-In the "Query Variables" panel, the variables would have the following content for providing the `organization` variable as argument for the query:
+> In the "Query Variables" panel, the variables would have the following content for providing the `organization` variable as argument for the query:
 
 在 “Query Variables” 面板中，需要像下面这样定义变量内容，用于提供 `organization` 变量作为查询的参数：
 
@@ -247,7 +247,7 @@ query ($organization: String = "the-road-to-learn-react") {
 > Now, let's take a step back to examine the structure of the GraphQL query. After you introduced variables, you encountered the `query` statement in your query structure for the first time. Before, you used the **shorthand version of a query** by omitting the `query` statement, but the `query` statement has to be there now that it's using variables. Try the following query without variables, but with the `query` statement, to verify that the long version of a query works.
 
 
-现在，让我们回过头来检查 GraphQL 查询的结构。在引入变量之后，第一次在查询结构中遇到了 `query` 语句。之前，实际上是省略 `query` 语句的 **查询的简写版本**，但是现在使用变量后， `query` 语句就是必须的了。尝试不带变量的以下查询，但使用 `query` 语句，来验证查询的非简写版本是否有效。
+现在，让我们回过头来检查 GraphQL 查询的结构。在引入变量之后，第一次在查询结构中遇到了 `query` 语句。之前，实际上是省略 `query` 语句的**查询的简写版本**，但是现在使用变量后， `query` 语句就是必须的了。尝试不带变量的以下查询，但使用 `query` 语句，来验证查询的非简写版本是否有效。
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -263,7 +263,7 @@ query {
 
 > While it's not the shorthand version of the query, it still returns the same data as before, which is the desired outcome. The query statement is also called **operation type** in GraphQL lingua. For instance, it can also be a `mutation` statement. In addition to the operation type, you can also define an **operation name**.
 
-虽然使用了非简写版本，但仍然返回了与之前相同的数据，和我们设想的结果一样。查询语句在 GraphQL 语言中也称为**操作类型**。例如，它也可以是`mutation` 语句。除了操作类型，你还可以定义**操作名称**。
+虽然使用了非简写版本，但仍然返回了与之前相同的数据，和我们设想的结果一样。查询语句在 GraphQL 语言中也称为**操作类型**。例如，它也可以是 `mutation` 语句。除了操作类型，你还可以定义**操作名称**。
 
 
 {title="GitHub GraphQL Explorer",lang="json"}
@@ -280,7 +280,7 @@ query OrganizationForLearningReact {
 
 > Compare it to anonymous and named functions in your code. A **named query** provides a certain level of clarity about what you want to achieve with the query in a declarative way, and it helps with debugging multiple queries, so it should be used when you want to implement an application. Your final query, without showing the variables panel again, could look like the following:
 
-同它与代码中的匿名和命名函数进行对比。**具名查询**更为清晰，表明你希望以声明方式实现查询，在调试多个查询时非常有帮助，推荐在真实的项目中这样操作。完成查询的最终版本（省略了变量表），应该像下面一样：
+将代码中的匿名和具名函数进行对比。**具名查询**更为清晰，表明你希望以声明方式实现查询，在调试多个查询时非常有帮助，推荐在真实的项目中这样操作。完成查询的最终版本（省略了变量表），应该像下面一样：
 
 
 {title="GitHub GraphQL Explorer",lang="json"}
@@ -295,7 +295,7 @@ query OrganizationForLearningReact($organization: String!) {
 
 > So far you've only accessed one object, an organization with a couple of its fields. The GraphQL schema implements a whole graph, so let's see how to access a **nested object** from within the graph with a query. It's not much different from before:
 
-到目前为止，你只请求了一个对象，只有几个字段的组织对象。 GraphQL 模式能实现一个完整的图形结构，所以让我们看看如何使用查询实现**嵌套对象**的获取。写法和之前基本一样：
+到目前为止，你仅获取了包含一些简单字段的对象。 GraphQL 模式能实现一个完整的图形结构，所以让我们看看如何使用查询实现**嵌套对象**的获取。写法和之前基本一样：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -334,13 +334,11 @@ query OrganizationForLearningReact(
 
 > The organization that teaches about React has translated versions of its content, and one of its repositories teaches students about React in simplified Chinese. Fields in GraphQL can be nested objects again, and you have queried two associated objects from the graph. The requests are made on a graph that can have a deeply nested structure. While exploring the "Docs" sidebar in GraphiQL before, you might have seen that you can jump from object to object in the graph.
 
-
 包含 React 教程的一个组织含有翻译后的版本，其中一个仓库是简体中文版本。 GraphQL 中的字段可以是嵌套对象，并且你已从 graph 中查询了两个关联对象。通过 graph 可以构建出深层嵌套的查询。在之前探索 GraphiQL 中的 “Docs” 侧边栏时，你可能已经看到可以在对象跳转到另外一个对象的功能。
 
 > A **directive** can be used to query data from your GraphQL API in a more powerful way, and they can be applied to fields and objects. Below, we use two types of directives: an **include directive**, which includes the field when the Boolean type is set to true; and the **skip directive**, which excludes it instead. With these directives, you can apply conditional structures to your shape of query. The following query showcases the include directive, but you can substitute it with the skip directive to achieve the opposite effect:
 
-
-**指令**可用于以更强大的方式查询 GraphQL API 中的数据，并且它们可以应用于字段和对象。下面，我们来尝试使用两种指令：**include 指令**，用来包含布尔类型设置为 true 的字段; 和 **skip 指令**，与之相反排除那些为 true 的字段。使用这些指令，你可以将条件结构应用于查询。以下查询展示了include 指令，你也可以使用 skip 指令替换它实现相反的效果：
+**指令**可用于以更强大的方式查询 GraphQL API 中的数据，并且它们可以应用于字段和对象。下面，我们来尝试使用两种指令：**include 指令**，用来包含布尔类型设置为 true 的字段; 和 **skip 指令**，与之相反排除那些为 true 的字段。使用这些指令，你可以将条件结构应用于查询。以下查询展示了 include 指令，你也可以使用 skip 指令替换它实现相反的效果：
 
 
 {title="GitHub GraphQL Explorer",lang="json"}
@@ -383,7 +381,7 @@ query OrganizationForLearningReact(
 > The query in GraphQL gives you all you need to read data from a GraphQL API. The last section may have felt like a whirlwind of information, so these exercises provide additional practice until you feel comfortable.
 
 
-GraphQL中的查询为你提供了从 GraphQL API 读取数据时的全部功能。不过最后一部分可能让人感到困惑，如果你依然没有掌握，下面提供了一些练习来帮助你。
+GraphQL 中的查询为你提供了从 GraphQL API 读取数据时的全部功能。不过最后一部分可能让人感到困惑，如果你依然没有掌握，下面提供了一些练习来帮助你。
 
 > ### Exercises:
 * Read more about [the Query in GraphQL](http://graphql.org/learn/queries).
@@ -396,7 +394,7 @@ GraphQL中的查询为你提供了从 GraphQL API 读取数据时的全部功能
   * operation names
   * directives
 
-### 练习
+### 练习：
 
 * 延伸阅读：[GraphQL 中的查询](http://graphql.org/learn/queries).
 * 使用 GraphiQL 中的 “Docs” 侧边栏探索 GitHub 的查询操作
@@ -418,11 +416,11 @@ GraphQL中的查询为你提供了从 GraphQL API 读取数据时的全部功能
 
 > In this section, you will star a repository on GitHub, the same one you used a query to request before, using a mutation [from GitHub's API](https://developer.github.com/v4/mutation/addstar). You can find the `addStar` mutation in the "Docs" sidebar. The repository is a project for teaching developers about the fundamentals of React, so starring it should prove useful.
 
-接下来你将会 star 一个 GitHub 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 GitHub API ](https://developer.github.com/v4/mutation/addstar)的一个变更请求。你可以在 "Docs" 侧边栏中找到 `addStar` 这种变更操作。这是一个存放为开发者讲解 React 基础课程的代码库，所以 star 这个代码库能够证明它有用。
+接下来你将会 star 一个 GitHub 上的代码库，而和你之前使用一个查询来请求一样，你将使用[来自 GitHub API](https://developer.github.com/v4/mutation/addstar) 的一个变更请求。你可以在 "Docs" 侧边栏中找到 `addStar` 这种变更操作。这是一个存放为开发者讲解 React 基础课程的代码库，所以 star 这个代码库能够证明它有用。
 
 > You can visit [the repository](https://github.com/the-road-to-learn-react/the-road-to-learn-react) to see if you've given a star to the repository already. We want an unstarred repository so we can star it using a mutation. Before you can star a repository, you need to know its identifier, which can be retrieved by a query:
 
-你可以访问[这个代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来查看你是否已经成功 star 。我们想要一个尚未 star 过的代码库，这样我们可以通过一个变更操作来 star 它。在你 star 一个代码库前，你需要知道它的唯一标识。这个唯一标识你可以通过下面的查询获取：
+你可以访问[这个代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来查看你是否已经成功 star。我们想要一个尚未 star 过的代码库，这样我们可以通过一个变更操作来 star 它。在你 star 一个代码库前，你需要知道它的唯一标识。这个唯一标识你可以通过下面的查询获取：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -467,7 +465,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > The mutation's name is given by GitHub's API: `addStar`. You are required to pass it the `starrableId` as `input` to identify the repository; otherwise, the GitHub server won't know which repository to star with the mutation. In addition, the mutation is a named mutation: `AddStar`. It's up to you to give it any name. Last but not least, you can define the return values of the mutation by using objects and fields again. It's identical to a query. Finally, the variables tab provides the variable for the mutation you retrieved with the last query:
 
-这个变更操作的名称是由 GitHub API 起的： `addStar` 。你需要传递 `starrableId` 作为 `input` 来指定代码库；否则 GitHub 服务器无从得知这次变更操作是要 star 哪个代码库。另外，这个变更是一个具名变更为： `AddStar` 。你也可以给它任意名称。最后但也同样重要的是，你可以再次通过对象和字段来定义这个变更的返回值，这和查询是相同的。最终，在变量区中提供你在上一次查询得到的变量将被用于这一次变更操作：
+这个变更操作的名称是由 GitHub API 起的：`addStar`。你需要传递 `starrableId` 作为 `input` 来指定代码库；否则 GitHub 服务器无从得知这次变更操作是要 star 哪个代码库。另外，这个变更是一个具名变更为： `AddStar` 。你也可以给它任意名称。最后但也同样重要的是，你可以再次通过对象和字段来定义这个变更的返回值，这和查询是相同的。最终，在变量区中提供你在上一次查询得到的变量将被用于这一次变更操作：
 
 {title="GitHub GraphQL Explorer",lang="json"}
 ~~~~~~~~
@@ -496,7 +494,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > The repository is starred now. It's visible in the result, but you can verify it in the [repository on GitHub](https://github.com/the-road-to-learn-react/the-road-to-learn-react). Congratulations, you made your first mutation.
 
-这个代码库现在已经被 star 了。在返回的结果中能够看到，但你也可以通过查看[ GitHub 上的代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来确认。恭喜，你完成了你的第一个变更操作。
+这个代码库现在已经被 star 了。在返回的结果中能够看到，但你也可以通过查看 [GitHub 上的代码库](https://github.com/the-road-to-learn-react/the-road-to-learn-react)来确认。恭喜，你完成了你的第一个变更操作。
 
 > ### Exercises:
 
@@ -504,7 +502,7 @@ mutation AddStar($repositoryId: ID!) {
 
 > * Read more about [the Mutation in GraphQL](http://graphql.org/learn/queries/#mutations)
 
-* 阅读更多关于[ GraphQL 中的变更](http://graphql.org/learn/queries/#mutations)
+* 延伸阅读：[GraphQL 中的变更](http://graphql.org/learn/queries/#mutations)
 
 > * Explore GitHub's mutations by using the "Docs" sidebar in GraphiQL
 
@@ -531,7 +529,7 @@ mutation AddStar($repositoryId: ID!) {
 > * Read more about [the schema and types](http://graphql.org/learn/schema)
 >   * Make yourself a picture of it, but don't worry if you don't understand everything yet
 
-* 延伸阅读：[schema 和类型](http://graphql.org/learn/schema)
+* 延伸阅读：[模式和类型](http://graphql.org/learn/schema)
 	* 你可以只是大概了解一下，不要担心你有不理解的地方
 
 > ## GraphQL Pagination
@@ -717,7 +715,7 @@ query OrganizationForLearningReact {
 
 > * Exchange the `first` argument with a `last` argument.
 
-* 把`first` 参数替换为 `last` 参数。
+* 把 `first` 参数替换为 `last` 参数。
 
 > * Search for the `repositories` field in the GraphiQL "Docs" sidebar which says: "A list of repositories that the ... owns."
 >   * Explore the other arguments that can be passed to this list field.

@@ -1,4 +1,6 @@
-# Introduction 简介
+> # Introduction 
+
+# 简介
 
 > The central theme of this book is GraphQL in modern applications. While GraphQL is only a specification that can be used in many programming languages, this book focuses on GraphQL in JavaScript. Facebook, the company behind the GraphQL specification, released GraphQL’s reference implementation in JavaScript, and for good reason: JavaScript is currently the most compelling programming language and ecosystem for companies and their client-server architecture.
 
