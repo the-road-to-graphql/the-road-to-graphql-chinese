@@ -1,4 +1,4 @@
-# 《GraphQL 学习之道》 The Road to GraphQL  (简体中文版) （正在翻译中……）
+# 《GraphQL 学习之道》 The Road to GraphQL  (简体中文版)
 
 [![Slack](https://slack-the-road-to-learn-react.wieruch.com/badge.svg)](https://slack-the-road-to-learn-react.wieruch.com/)
 
